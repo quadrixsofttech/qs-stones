@@ -55,13 +55,13 @@ const Signup = () => {
 
   return (
     <>
-      {redirectOnLogin && <Navigate to='/dashboard' />}
+      {redirectOnLogin && <Navigate to="/dashboard" />}
       <SignupLayout
-        title='Sign up for an account'
+        title="Sign up for an account"
         subtitle={
           <>
             Already have an account?
-            <Text as={Link} to='/login' color={'blue.400'} ml={1}>
+            <Text as={Link} to="/login" color={'blue.400'} ml={1}>
               Log in now
             </Text>
           </>
@@ -80,13 +80,13 @@ const Signup = () => {
           {({ handleSubmit, errors, touched }) => (
             <Form onSubmit={handleSubmit}>
               {signupSuccess && (
-                <Alert status='success' mb={3}>
+                <Alert status="success" mb={3}>
                   <AlertIcon />
                   {signupSuccess}
                 </Alert>
               )}
               {signupError && (
-                <Alert status='error' mb={3}>
+                <Alert status="error" mb={3}>
                   <AlertIcon />
                   {signupError}
                 </Alert>
@@ -97,10 +97,10 @@ const Signup = () => {
                     <FormLabel>First Name</FormLabel>
                     <Field
                       as={Input}
-                      id='firstName'
-                      type='text'
-                      name='firstName'
-                      placeholder='First Name'
+                      id="firstName"
+                      type="text"
+                      name="firstName"
+                      placeholder="First Name"
                     />
                     {errors.firstName && touched.firstName ? (
                       <FormErrorMessage>{errors.firstName}</FormErrorMessage>
@@ -110,10 +110,10 @@ const Signup = () => {
                     <FormLabel>Last Name</FormLabel>
                     <Field
                       as={Input}
-                      id='lastName'
-                      type='text'
-                      name='lastName'
-                      placeholder='Last Name'
+                      id="lastName"
+                      type="text"
+                      name="lastName"
+                      placeholder="Last Name"
                     />
                     {errors.lastName && touched.lastName ? (
                       <FormErrorMessage>{errors.lastName}</FormErrorMessage>
@@ -124,10 +124,10 @@ const Signup = () => {
                   <FormLabel>Email address</FormLabel>
                   <Field
                     as={Input}
-                    id='email'
-                    type='email'
-                    name='email'
-                    placeholder='Email address'
+                    id="email"
+                    type="email"
+                    name="email"
+                    placeholder="Email address"
                   />
                   {errors.email && touched.email ? (
                     <FormErrorMessage>{errors.email}</FormErrorMessage>
@@ -137,10 +137,10 @@ const Signup = () => {
                   <FormLabel>Password</FormLabel>
                   <Field
                     as={Input}
-                    id='password'
-                    type='password'
-                    name='password'
-                    placeholder='Password'
+                    id="password"
+                    type="password"
+                    name="password"
+                    placeholder="Password"
                   />
                   {errors.password && touched.password ? (
                     <FormErrorMessage>{errors.password}</FormErrorMessage>
@@ -149,7 +149,7 @@ const Signup = () => {
                 <Stack>
                   <Button
                     {...styles.button}
-                    type='submit'
+                    type="submit"
                     isLoading={registerMutation.isLoading}
                   >
                     Sign Up
