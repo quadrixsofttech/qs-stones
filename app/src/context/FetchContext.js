@@ -10,7 +10,7 @@ const FetchProvider = ({ children }) => {
   const auth = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
-  const protectedFetch = axios.create({
+  const   protectedFetch = axios.create({
     baseURL: process.env.REACT_APP_API_URL,
   });
 

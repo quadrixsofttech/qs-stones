@@ -1,14 +1,18 @@
-import React, { Suspense } from 'react';
+import React, { Suspense } from "react";
 
-import { ChakraProvider } from '@chakra-ui/react';
-import { AuthProvider } from './context/AuthContext';
-import { FetchProvider } from './context/FetchContext';
+import { ChakraProvider } from "@chakra-ui/react";
+import { AuthProvider } from "./context/AuthContext";
+import { FetchProvider } from "./context/FetchContext";
 
-import AppRoutes from './routes';
-import Loading from './components/Loading';
-import { BrowserRouter as Router } from 'react-router-dom';
+import AppRoutes from "./routes";
+import Loading from "./components/Loading";
+import { BrowserRouter as Router } from "react-router-dom";
 
-import theme from './theme';
+import { QueryClient, QueryClientProvider } from "react-query";
+
+import theme from "./theme";
+
+const queryClient = new QueryClient();
 
 function App() {
   return (
@@ -17,7 +21,9 @@ function App() {
         <Suspense fallback={<Loading />}>
           <AuthProvider>
             <FetchProvider>
-              <AppRoutes />
+              <QueryClientProvider client={queryClient}>
+                <AppRoutes />
+              </QueryClientProvider>
             </FetchProvider>
           </AuthProvider>
         </Suspense>

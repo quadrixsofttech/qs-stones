@@ -1,12 +1,12 @@
-import { useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
-import { FetchContext } from '../context/FetchContext';
-import { publicFetch } from '../util/fetch';
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
+import { FetchContext } from "../context/FetchContext";
+import { publicFetch } from "../util/fetch";
 
 const useUser = () => {
   const { protectedFetch } = useContext(FetchContext);
   const auth = useContext(AuthContext);
-  const user = auth ? auth.authState.userInfo : { role: '' };
+  const user = auth ? auth.authState.userInfo : { role: "" };
 
   const authenticate = async ({ email, password }, onSuccess, onError) => {
     try {
@@ -36,13 +36,17 @@ const useUser = () => {
       auth.setAuthState(data);
       onSuccess(data);
     } catch (error) {
-      onError(error.response);
+      if (typeof onError === 'function') {
+        onError(error.response);
+      }
     }
   };
 
+  
+
   const setUserRole = async (role, onSuccess, onError) => {
     try {
-      const { data } = await protectedFetch.patch('user-role', {
+      const { data } = await protectedFetch.patch("user-role", {
         role,
       });
       auth.setUserInfo((old) => ({ ...old, role }));

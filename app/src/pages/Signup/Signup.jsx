@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Field, Form, Formik } from 'formik';
-import * as Yup from 'yup';
-import { Link, Navigate } from 'react-router-dom';
-import SignupLayout from '../../layout/SignupLayout/SignupLayout';
+import React, { useState } from "react";
+import { Field, Form, Formik } from "formik";
+import * as Yup from "yup";
+import { Link, Navigate } from "react-router-dom";
+import SignupLayout from "../../layout/SignupLayout/SignupLayout";
 import {
   Alert,
   AlertIcon,
@@ -14,15 +14,16 @@ import {
   Input,
   Stack,
   Text,
-} from '@chakra-ui/react';
-import styles from './Signup.styles';
-import useUser from '../../hooks/useUser';
+} from "@chakra-ui/react";
+import styles from "./Signup.styles";
+import useUser from "../../hooks/useUser";
+import { useMutation } from "react-query";
 
 const SignupSchema = Yup.object().shape({
-  firstName: Yup.string().required('First name is required'),
-  lastName: Yup.string().required('Last name is required'),
-  email: Yup.string().email('Invalid email').required('Email is required'),
-  password: Yup.string().required('Password is required'),
+  firstName: Yup.string().required("First name is required"),
+  lastName: Yup.string().required("Last name is required"),
+  email: Yup.string().email("Invalid email").required("Email is required"),
+  password: Yup.string().required("Password is required"),
 });
 
 const Signup = () => {
@@ -30,25 +31,26 @@ const Signup = () => {
   const [signupSuccess, setSignupSuccess] = useState();
   const [signupError, setSignupError] = useState();
   const [redirectOnLogin, setRedirectOnLogin] = useState(false);
-  const [loginLoading, setLoginLoading] = useState(false);
+  const [loginLoading,setLoginLoading] = useState(false);
+
+  const registerMutation = useMutation((credentials) => register(credentials));
 
   const submitCredentials = async (credentials) => {
-    setLoginLoading(true);
-    register(
-      credentials,
-      ({ message }) => {
-        setSignupSuccess(message);
-        setSignupError(null);
-        setTimeout(() => {
-          setRedirectOnLogin(true);
-        }, 700);
-      },
-      ({ message }) => {
-        setLoginLoading(false);
-        setSignupError(message);
-        setSignupSuccess(null);
-      }
-    );
+    setLoginLoading(loginLoading);
+    try {
+      setLoginLoading(prevState => !prevState);
+      await registerMutation.mutateAsync(credentials);
+      setSignupSuccess("Registration successful!");
+      setSignupError(null);
+      setTimeout(() => {
+        setRedirectOnLogin(true);
+      }, 700);
+    } catch (error) {
+      setSignupError(error.message);
+      setSignupSuccess(null);
+    } finally {
+      setLoginLoading(prevState => !prevState);
+    }
   };
 
   return (
@@ -59,7 +61,7 @@ const Signup = () => {
         subtitle={
           <>
             Already have an account?
-            <Text as={Link} to="/login" color={'blue.400'} ml={1}>
+            <Text as={Link} to="/login" color={"blue.400"} ml={1}>
               Log in now
             </Text>
           </>
@@ -67,10 +69,10 @@ const Signup = () => {
       >
         <Formik
           initialValues={{
-            firstName: '',
-            lastName: '',
-            email: '',
-            password: '',
+            firstName: "",
+            lastName: "",
+            email: "",
+            password: "",
           }}
           onSubmit={(values) => submitCredentials(values)}
           validationSchema={SignupSchema}
@@ -148,7 +150,7 @@ const Signup = () => {
                   <Button
                     {...styles.button}
                     type="submit"
-                    isLoading={loginLoading}
+                    isLoading={registerMutation.isLoading}
                   >
                     Sign Up
                   </Button>
