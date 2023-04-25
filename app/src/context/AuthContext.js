@@ -1,5 +1,5 @@
-import React, { createContext, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React, { createContext, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 const { Provider } = AuthContext;
@@ -8,8 +8,8 @@ const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const startLocation = useLocation();
 
-  const userInfo = localStorage.getItem('userInfo');
-  const expiresAt = localStorage.getItem('expiresAt');
+  const userInfo = localStorage.getItem("userInfo");
+  const expiresAt = localStorage.getItem("expiresAt");
 
   const [authState, setAuthState] = useState({
     loading: true,
@@ -20,8 +20,8 @@ const AuthProvider = ({ children }) => {
   });
 
   const setAuthInfo = ({ token, userInfo, expiresAt }) => {
-    localStorage.setItem('userInfo', JSON.stringify(userInfo));
-    localStorage.setItem('expiresAt', expiresAt);
+    localStorage.setItem("userInfo", JSON.stringify(userInfo));
+    localStorage.setItem("expiresAt", expiresAt);
 
     setAuthState((old) => ({
       ...old,
@@ -44,14 +44,14 @@ const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    localStorage.removeItem('userInfo');
-    localStorage.removeItem('expiresAt');
+    localStorage.removeItem("userInfo");
+    localStorage.removeItem("expiresAt");
     setAuthState((old) => ({
       token: null,
       expiresAt: null,
       userInfo: {},
     }));
-    navigate('/login');
+    navigate("/login");
   };
 
   const isAuthenticated = () => {
@@ -62,7 +62,7 @@ const AuthProvider = ({ children }) => {
   };
 
   const isAdmin = () => {
-    return authState.userInfo.role === 'admin';
+    return authState.userInfo.role === "admin";
   };
 
   return (

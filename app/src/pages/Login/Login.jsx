@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Field, Form, Formik } from 'formik';
-import * as Yup from 'yup';
-import { Navigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { Field, Form, Formik } from "formik";
+import * as Yup from "yup";
+import { Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   FormControl,
   FormLabel,
@@ -13,15 +13,15 @@ import {
   Alert,
   AlertIcon,
   FormErrorMessage,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 
-import styles from './Login.styles';
-import SignupLayout from '../../layout/SignupLayout/SignupLayout';
-import useUser from '../../hooks/useUser';
+import styles from "./Login.styles";
+import SignupLayout from "../../layout/SignupLayout/SignupLayout";
+import useUser from "../../hooks/useUser";
 
 const LoginSchema = Yup.object().shape({
-  email: Yup.string().required('Email is required'),
-  password: Yup.string().required('Password is required'),
+  email: Yup.string().required("Email is required"),
+  password: Yup.string().required("Password is required"),
 });
 
 const Login = () => {
@@ -31,24 +31,43 @@ const Login = () => {
   const [redirectOnLogin, setRedirectOnLogin] = useState(false);
   const [loginLoading, setLoginLoading] = useState(false);
 
+  // const submitCredentials = async (credentials) => {
+  //   setLoginLoading(true);
+  //   authenticate(
+  //     credentials,
+  //     ({ message }) => {
+  //       setLoginSuccess(message);
+  //       setLoginError(null);
+  //       setTimeout(() => {
+  //         setRedirectOnLogin(true);
+  //       }, 700);
+  //     },
+  //     ({ message }) => {
+  //       setLoginLoading(false);
+  //       setLoginError(message);
+  //       setLoginSuccess(null);
+  //     }
+  //   );
+  // };
+
   const submitCredentials = async (credentials) => {
-    setLoginLoading(true);
-    authenticate(
-      credentials,
-      ({ message }) => {
-        setLoginSuccess(message);
-        setLoginError(null);
-        setTimeout(() => {
-          setRedirectOnLogin(true);
-        }, 700);
-      },
-      ({ message }) => {
-        setLoginLoading(false);
-        setLoginError(message);
-        setLoginSuccess(null);
-      }
-    );
+    setLoginLoading(!loginLoading);
+    try {
+      setLoginLoading((prevState) => !prevState);
+      await authenticate.mutateAsync(credentials);
+      setLoginSuccess("Login successful!");
+      setLoginError(null);
+      setTimeout(() => {
+        setRedirectOnLogin(true);
+      }, 700);
+    } catch (error) {
+      setLoginError(error.message);
+      setLoginSuccess(null);
+    } finally {
+      setLoginLoading((prevState) => !prevState);
+    }
   };
+
   return (
     <>
       {redirectOnLogin && <Navigate to="/dashboard" />}
@@ -57,7 +76,7 @@ const Login = () => {
         subtitle={
           <>
             Don't have an account?
-            <Text as={Link} to="/signup" color={'blue.400'} ml={1}>
+            <Text as={Link} to="/signup" color={"blue.400"} ml={1}>
               Sign up now
             </Text>
           </>
@@ -65,8 +84,8 @@ const Login = () => {
       >
         <Formik
           initialValues={{
-            email: '',
-            password: '',
+            email: "",
+            password: "",
           }}
           onSubmit={(values) => submitCredentials(values)}
           validationSchema={LoginSchema}
@@ -112,7 +131,7 @@ const Login = () => {
                     <FormErrorMessage>{errors.password}</FormErrorMessage>
                   ) : null}
                 </FormControl>
-                <Text as={Link} to="/forgot-password" color={'blue.400'}>
+                <Text as={Link} to="/forgot-password" color={"blue.400"}>
                   Forgot password?
                 </Text>
                 <Stack>
