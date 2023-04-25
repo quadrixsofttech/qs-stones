@@ -31,25 +31,6 @@ const Login = () => {
   const [redirectOnLogin, setRedirectOnLogin] = useState(false);
   const [loginLoading, setLoginLoading] = useState(false);
 
-  // const submitCredentials = async (credentials) => {
-  //   setLoginLoading(true);
-  //   authenticate(
-  //     credentials,
-  //     ({ message }) => {
-  //       setLoginSuccess(message);
-  //       setLoginError(null);
-  //       setTimeout(() => {
-  //         setRedirectOnLogin(true);
-  //       }, 700);
-  //     },
-  //     ({ message }) => {
-  //       setLoginLoading(false);
-  //       setLoginError(message);
-  //       setLoginSuccess(null);
-  //     }
-  //   );
-  // };
-
   const submitCredentials = async (credentials) => {
     setLoginLoading(!loginLoading);
     try {
