@@ -25,14 +25,13 @@ const useUser = () => {
       password,
     });
     return data;
-    
+  };
   const authenticate = useMutation(authenticateCallback, {
     onSuccess: (data) => auth.setAuthState(data),
     onError: (error) => {
       return error.response?.data || 'An unknown error occurred';
     },
   });
-  };
 
   const register = useMutation(registerCallback, {
     onSuccess: (data) => auth.setAuthState(data),

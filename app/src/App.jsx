@@ -3,7 +3,6 @@ import React, { Suspense } from 'react';
 import { ChakraProvider } from '@chakra-ui/react';
 import { AuthProvider } from './context/AuthContext';
 import { FetchProvider } from './context/FetchContext';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import AppRoutes from './routes';
 import Loading from './components/Loading';
