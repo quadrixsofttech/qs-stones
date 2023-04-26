@@ -9,17 +9,12 @@ const useUser = () => {
   const auth = useContext(AuthContext);
   const user = auth ? auth.authState.userInfo : { role: '' };
 
-  const authenticate = async ({ email, password }, onSuccess, onError) => {
-    try {
-      const { data } = await publicFetch.post(`authenticate`, {
-        email,
-        password,
-      });
-      auth.setAuthState(data);
-      onSuccess(data);
-    } catch (error) {
-      onError(error.response);
-    }
+  const authenticateCallback = async ({ email, password }) => {
+    const { data } = await publicFetch.post('authenticate', {
+      email,
+      password,
+    });
+    return data;
   };
 
   const registerCallback = async ({ firstName, lastName, email, password }) => {
@@ -30,6 +25,13 @@ const useUser = () => {
       password,
     });
     return data;
+    
+  const authenticate = useMutation(authenticateCallback, {
+    onSuccess: (data) => auth.setAuthState(data),
+    onError: (error) => {
+      return error.response?.data || 'An unknown error occurred';
+    },
+  });
   };
 
   const register = useMutation(registerCallback, {
@@ -56,6 +58,7 @@ const useUser = () => {
     register,
     registerIsLoading: register.isLoading,
     authenticate,
+    authenticationLoading: authenticate.isLoading,
     setUserRole,
   };
 };

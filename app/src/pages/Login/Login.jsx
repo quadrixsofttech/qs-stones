@@ -25,30 +25,27 @@ const LoginSchema = Yup.object().shape({
 });
 
 const Login = () => {
-  const { authenticate } = useUser();
+  const { authenticate, authenticationLoading } = useUser();
   const [loginSuccess, setLoginSuccess] = useState();
   const [loginError, setLoginError] = useState();
   const [redirectOnLogin, setRedirectOnLogin] = useState(false);
-  const [loginLoading, setLoginLoading] = useState(false);
 
   const submitCredentials = async (credentials) => {
-    setLoginLoading(true);
-    authenticate(
-      credentials,
-      ({ message }) => {
-        setLoginSuccess(message);
-        setLoginError(null);
-        setTimeout(() => {
-          setRedirectOnLogin(true);
-        }, 700);
-      },
-      ({ message }) => {
-        setLoginLoading(false);
-        setLoginError(message);
-        setLoginSuccess(null);
-      }
-    );
+    try {
+      await authenticate.mutateAsync(credentials);
+      setLoginSuccess('Login successful!');
+      setLoginError(null);
+      setTimeout(() => {
+        setRedirectOnLogin(true);
+      }, 700);
+    } catch (error) {
+      setLoginError(
+        error.response?.data?.message || 'An unknown error occurred'
+      );
+      setLoginSuccess(null);
+    }
   };
+
   return (
     <>
       {redirectOnLogin && <Navigate to="/dashboard" />}
@@ -119,7 +116,7 @@ const Login = () => {
                   <Button
                     {...styles.button}
                     type="submit"
-                    isLoading={loginLoading}
+                    isLoading={authenticationLoading}
                   >
                     Sign In
                   </Button>
