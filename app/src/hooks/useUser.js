@@ -9,23 +9,6 @@ const useUser = () => {
   const auth = useContext(AuthContext);
   const user = auth ? auth.authState.userInfo : { role: '' };
 
-  const register = async ({ firstName, lastName, email, password }) => {
-    try {
-      const { data } = await publicFetch.post(`signup`, {
-        firstName,
-        lastName,
-        email,
-        password,
-      });
-      auth.setAuthState(data);
-      return data;
-    } catch (error) {
-      throw new Error(error.response.data);
-    }
-  };
-
-  const registerMutation = useMutation(register);
-
   const authenticate = async ({ email, password }) => {
     try {
       const { data } = await publicFetch.post(`authenticate`, {
@@ -38,6 +21,23 @@ const useUser = () => {
       throw new Error(error.response.data);
     }
   };
+  const register = async ({ firstName, lastName, email, password }) => {
+    try {
+      const { data } = await publicFetch.post(`signup`, {
+        firstName,
+        lastName,
+        email,
+        password,
+      });
+      auth.setAuthState(data);
+      return data;
+     } catch (error) {
+      throw new Error(error.response.data);
+    }
+  };
+
+  const registerMutation = useMutation(register);
+
 
   const setUserRole = async (role) => {
     try {
