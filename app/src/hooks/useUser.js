@@ -5,32 +5,6 @@ import { publicFetch } from '../util/fetch';
 import { useMutation } from 'react-query';
 
 
-const useRegisterMutation = () => {
-  const auth = useContext(AuthContext);
-
-  const register = async ({ firstName, lastName, email, password }) => {
-    try {
-      const { data } = await publicFetch.post(`signup`, {
-        firstName,
-        lastName,
-        email,
-        password,
-      });
-      auth.setAuthState(data);
-      return data;
-    } catch (error) {
-      throw new Error(error.response.data);
-    }
-  };
-
-  const registerMutation = useMutation(register);
-
-  return {
-    mutateAsync: registerMutation.mutateAsync,
-    isLoading: registerMutation.isLoading,
-  };
-};
-
 const useUser = () => {
   const { protectedFetch } = useContext(FetchContext);
   const auth = useContext(AuthContext);
@@ -49,7 +23,22 @@ const useUser = () => {
     }
   };
 
-  const registerMutation = useRegisterMutation();
+  const registerCallback = async ({ firstName, lastName, email, password }) => {
+    try {
+      const { data } = await publicFetch.post(`signup`, {
+        firstName,
+        lastName,
+        email,
+        password,
+      });
+      auth.setAuthState(data);
+      return data;
+    } catch (error) {
+      throw new Error(error.response.data);
+    }
+  };
+
+  const register = useMutation(registerCallback);
 
   const setUserRole = async (role) => {
     try {
@@ -65,7 +54,8 @@ const useUser = () => {
 
   return {
     user,
-    registerMutation,
+    register: register.mutateAsync,
+    registerIsLoading: register.isLoading,
     authenticate,
     setUserRole,
   };
