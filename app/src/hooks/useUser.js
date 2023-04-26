@@ -2,30 +2,14 @@ import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { FetchContext } from '../context/FetchContext';
 import { publicFetch } from '../util/fetch';
+import { useMutation } from 'react-query';
 
 const useUser = () => {
   const { protectedFetch } = useContext(FetchContext);
   const auth = useContext(AuthContext);
   const user = auth ? auth.authState.userInfo : { role: '' };
 
-  const authenticate = async ({ email, password }, onSuccess, onError) => {
-    try {
-      const { data } = await publicFetch.post(`authenticate`, {
-        email,
-        password,
-      });
-      auth.setAuthState(data);
-      onSuccess(data);
-    } catch (error) {
-      onError(error.response);
-    }
-  };
-
-  const register = async (
-    { firstName, lastName, email, password },
-    onSuccess,
-    onError
-  ) => {
+  const register = async ({ firstName, lastName, email, password }) => {
     try {
       const { data } = await publicFetch.post(`signup`, {
         firstName,
@@ -34,30 +18,43 @@ const useUser = () => {
         password,
       });
       auth.setAuthState(data);
-      onSuccess(data);
+      return data;
     } catch (error) {
-      if (typeof onError === 'function') {
-        onError(error.response);
-      }
+      throw new Error(error.response.data);
     }
   };
 
-  const setUserRole = async (role, onSuccess, onError) => {
+  const registerMutation = useMutation(register);
+
+  const authenticate = async ({ email, password }) => {
+    try {
+      const { data } = await publicFetch.post(`authenticate`, {
+        email,
+        password,
+      });
+      auth.setAuthState(data);
+      return data;
+    } catch (error) {
+      throw new Error(error.response.data);
+    }
+  };
+
+  const setUserRole = async (role) => {
     try {
       const { data } = await protectedFetch.patch('user-role', {
         role,
       });
       auth.setUserInfo((old) => ({ ...old, role }));
-      onSuccess(data);
-    } catch (err) {
-      onError(err.response.data);
+      return data;
+    } catch (error) {
+      throw new Error(error.response.data);
     }
   };
 
   return {
     user,
+    registerMutation,
     authenticate,
-    register,
     setUserRole,
   };
 };

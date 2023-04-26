@@ -16,8 +16,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 import styles from './Signup.styles';
-import useUser from '../../hooks/useUser';
-import { useMutation } from 'react-query';
+import useUser from './../../hooks/useUser';
 
 const SignupSchema = Yup.object().shape({
   firstName: Yup.string().required('First name is required'),
@@ -27,29 +26,26 @@ const SignupSchema = Yup.object().shape({
 });
 
 const Signup = () => {
-  const { register } = useUser();
   const [signupSuccess, setSignupSuccess] = useState();
   const [signupError, setSignupError] = useState();
   const [redirectOnLogin, setRedirectOnLogin] = useState(false);
   const [loginLoading, setLoginLoading] = useState(false);
-
-  const registerMutation = useMutation((credentials) => register(credentials));
+  const { registerMutation } = useUser();
 
   const submitCredentials = async (credentials) => {
-    setLoginLoading(loginLoading);
     try {
-      setLoginLoading((prevState) => !prevState);
+      setLoginLoading(!loginLoading);
       await registerMutation.mutateAsync(credentials);
       setSignupSuccess('Registration successful!');
       setSignupError(null);
       setTimeout(() => {
-        setRedirectOnLogin(true);
+        setRedirectOnLogin(!loginLoading);
       }, 700);
     } catch (error) {
       setSignupError(error.message);
       setSignupSuccess(null);
     } finally {
-      setLoginLoading((prevState) => !prevState);
+      setLoginLoading(loginLoading);
     }
   };
 

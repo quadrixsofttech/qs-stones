@@ -16,19 +16,19 @@ const queryClient = new QueryClient();
 
 function App() {
   return (
-    <Router>
-      <ChakraProvider theme={theme}>
-        <Suspense fallback={<Loading />}>
-          <AuthProvider>
-            <FetchProvider>
-              <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
+      <Router>
+        <ChakraProvider theme={theme}>
+          <Suspense fallback={<Loading />}>
+            <AuthProvider>
+              <FetchProvider>
                 <AppRoutes />
-              </QueryClientProvider>
-            </FetchProvider>
-          </AuthProvider>
-        </Suspense>
-      </ChakraProvider>
-    </Router>
+              </FetchProvider>
+            </AuthProvider>
+          </Suspense>
+        </ChakraProvider>
+      </Router>
+    </QueryClientProvider>
   );
 }
 
