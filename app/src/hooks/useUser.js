@@ -9,30 +9,20 @@ const useUser = () => {
   const auth = useContext(AuthContext);
   const user = auth ? auth.authState.userInfo : { role: '' };
 
-  const authenticate = ({ email, password }, onSuccess, onError) => {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const { data } = await publicFetch.post(`authenticate`, {
-          email,
-          password,
-        });
-        auth.setAuthState(data);
-        onSuccess && onSuccess(data);
-        resolve(data);
-      } catch (error) {
-        onError && onError(error.message);
-        reject(error);
-      }
+  const authenticateCallback = async ({ email, password }) => {
+    const { data } = await publicFetch.post('authenticate', {
+      email,
+      password,
     });
+    return data;
   };
-  const authenticateMutation = useMutation(authenticate);
 
-  const {
-    isLoading: isAuthenticating,
-    isError: authenticationError,
-    data: authenticationData,
-    mutate: authenticationMutate,
-  } = authenticateMutation;
+  const authenticate = useMutation(authenticateCallback, {
+    onSuccess: (data) => auth.setAuthState(data),
+    onError: (error) => {
+      return error.response?.data || 'An unknown error occurred';
+    },
+  });
 
   const register = async (
     { firstName, lastName, email, password },
@@ -67,13 +57,10 @@ const useUser = () => {
 
   return {
     user,
-    authenticate,
     register,
+    authenticate,
+    authenticationLoading: authenticate.isLoading,
     setUserRole,
-    isAuthenticating,
-    authenticationError,
-    authenticationData,
-    authenticationMutate,
   };
 };
 
