@@ -2,24 +2,27 @@ import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { FetchContext } from '../context/FetchContext';
 import { publicFetch } from '../util/fetch';
+import { useMutation } from '@tanstack/react-query';
 
 const useUser = () => {
   const { protectedFetch } = useContext(FetchContext);
   const auth = useContext(AuthContext);
   const user = auth ? auth.authState.userInfo : { role: '' };
 
-  const authenticate = async ({ email, password }, onSuccess, onError) => {
-    try {
-      const { data } = await publicFetch.post(`authenticate`, {
-        email,
-        password,
-      });
-      auth.setAuthState(data);
-      onSuccess(data);
-    } catch (error) {
-      onError(error.response);
-    }
+  const authenticateCallback = async ({ email, password }) => {
+    const { data } = await publicFetch.post('authenticate', {
+      email,
+      password,
+    });
+    return data;
   };
+
+  const authenticate = useMutation(authenticateCallback, {
+    onSuccess: (data) => auth.setAuthState(data),
+    onError: (error) => {
+      return error.response?.data || 'An unknown error occurred';
+    },
+  });
 
   const register = async (
     { firstName, lastName, email, password },
@@ -54,8 +57,9 @@ const useUser = () => {
 
   return {
     user,
-    authenticate,
     register,
+    authenticate,
+    authenticationLoading: authenticate.isLoading,
     setUserRole,
   };
 };
