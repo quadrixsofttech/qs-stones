@@ -14,7 +14,6 @@ import {
   AlertIcon,
   FormErrorMessage,
 } from '@chakra-ui/react';
-//import { useMutation } from '@tanstack/react-query';
 
 import styles from './Login.styles';
 import SignupLayout from '../../layout/SignupLayout/SignupLayout';
