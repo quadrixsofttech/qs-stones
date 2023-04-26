@@ -14,6 +14,7 @@ import {
   AlertIcon,
   FormErrorMessage,
 } from '@chakra-ui/react';
+import { useMutation } from '@tanstack/react-query';
 
 import styles from './Login.styles';
 import SignupLayout from '../../layout/SignupLayout/SignupLayout';
@@ -29,13 +30,12 @@ const Login = () => {
   const [loginSuccess, setLoginSuccess] = useState();
   const [loginError, setLoginError] = useState();
   const [redirectOnLogin, setRedirectOnLogin] = useState(false);
-  const [loginLoading, setLoginLoading] = useState(false);
+
+  const { mutate, isLoading } = useMutation(authenticate);
 
   const submitCredentials = async (credentials) => {
-    setLoginLoading(!loginLoading);
     try {
-      setLoginLoading((prevState) => !prevState);
-      await authenticate.mutateAsync(credentials);
+      await mutate(credentials);
       setLoginSuccess('Login successful!');
       setLoginError(null);
       setTimeout(() => {
@@ -44,8 +44,6 @@ const Login = () => {
     } catch (error) {
       setLoginError(error.message);
       setLoginSuccess(null);
-    } finally {
-      setLoginLoading((prevState) => !prevState);
     }
   };
 
@@ -119,7 +117,7 @@ const Login = () => {
                   <Button
                     {...styles.button}
                     type="submit"
-                    isLoading={loginLoading}
+                    isLoading={isLoading}
                   >
                     Sign In
                   </Button>

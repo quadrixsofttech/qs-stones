@@ -2,24 +2,28 @@ import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { FetchContext } from '../context/FetchContext';
 import { publicFetch } from '../util/fetch';
-import { useMutation } from '@tanstack/react-query';
 
 const useUser = () => {
   const { protectedFetch } = useContext(FetchContext);
   const auth = useContext(AuthContext);
   const user = auth ? auth.authState.userInfo : { role: '' };
 
-  const authenticate = useMutation({
-    mutationFn: async ({ email, password }) => {
-      const { data } = await publicFetch.post(`authenticate`, {
-        email,
-        password,
-      });
-      return data;
-    },
-    onSuccess: (data) => auth.setAuthState(data),
-    onError: (error) => console.error(error),
-  });
+  const authenticate = ({ email, password }, onSuccess, onError) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const { data } = await publicFetch.post(`authenticate`, {
+          email,
+          password,
+        });
+        auth.setAuthState(data);
+        onSuccess && onSuccess(data);
+        resolve(data);
+      } catch (error) {
+        onError && onError(error.message);
+        reject(error);
+      }
+    });
+  };
 
   const register = async (
     { firstName, lastName, email, password },
