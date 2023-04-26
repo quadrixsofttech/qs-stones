@@ -16,7 +16,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 import styles from './Signup.styles';
-import useUser from './../../hooks/useUser';
+import useRegisterMutation from './../../hooks/useUser';
 
 const SignupSchema = Yup.object().shape({
   firstName: Yup.string().required('First name is required'),
@@ -30,11 +30,10 @@ const Signup = () => {
   const [signupError, setSignupError] = useState();
   const [redirectOnLogin, setRedirectOnLogin] = useState(false);
   const [loginLoading, setLoginLoading] = useState(false);
-  const { registerMutation } = useUser();
+  const { registerMutation,isLoading  } = useRegisterMutation();
 
   const submitCredentials = async (credentials) => {
     try {
-      setLoginLoading(!loginLoading);
       await registerMutation.mutateAsync(credentials);
       setSignupSuccess('Registration successful!');
       setSignupError(null);
@@ -146,7 +145,7 @@ const Signup = () => {
                   <Button
                     {...styles.button}
                     type="submit"
-                    isLoading={registerMutation.isLoading}
+                    isLoading={isLoading}
                   >
                     Sign Up
                   </Button>
