@@ -14,7 +14,7 @@ import {
   AlertIcon,
   FormErrorMessage,
 } from '@chakra-ui/react';
-import { useMutation } from '@tanstack/react-query';
+//import { useMutation } from '@tanstack/react-query';
 
 import styles from './Login.styles';
 import SignupLayout from '../../layout/SignupLayout/SignupLayout';
@@ -26,16 +26,14 @@ const LoginSchema = Yup.object().shape({
 });
 
 const Login = () => {
-  const { authenticate } = useUser();
+  const { authenticationMutate, isAuthenticating } = useUser();
   const [loginSuccess, setLoginSuccess] = useState();
   const [loginError, setLoginError] = useState();
   const [redirectOnLogin, setRedirectOnLogin] = useState(false);
 
-  const { mutate, isLoading } = useMutation(authenticate);
-
   const submitCredentials = async (credentials) => {
     try {
-      await mutate(credentials);
+      await authenticationMutate(credentials);
       setLoginSuccess('Login successful!');
       setLoginError(null);
       setTimeout(() => {
@@ -117,7 +115,7 @@ const Login = () => {
                   <Button
                     {...styles.button}
                     type="submit"
-                    isLoading={isLoading}
+                    isLoading={isAuthenticating}
                   >
                     Sign In
                   </Button>

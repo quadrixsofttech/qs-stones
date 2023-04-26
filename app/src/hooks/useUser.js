@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { FetchContext } from '../context/FetchContext';
 import { publicFetch } from '../util/fetch';
+import { useMutation } from '@tanstack/react-query';
 
 const useUser = () => {
   const { protectedFetch } = useContext(FetchContext);
@@ -24,6 +25,14 @@ const useUser = () => {
       }
     });
   };
+  const authenticateMutation = useMutation(authenticate);
+
+  const {
+    isLoading: isAuthenticating,
+    isError: authenticationError,
+    data: authenticationData,
+    mutate: authenticationMutate,
+  } = authenticateMutation;
 
   const register = async (
     { firstName, lastName, email, password },
@@ -61,6 +70,10 @@ const useUser = () => {
     authenticate,
     register,
     setUserRole,
+    isAuthenticating,
+    authenticationError,
+    authenticationData,
+    authenticationMutate,
   };
 };
 
