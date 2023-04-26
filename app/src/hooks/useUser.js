@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { FetchContext } from '../context/FetchContext';
 import { publicFetch } from '../util/fetch';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation } from 'react-query';
 
 const useUser = () => {
   const { protectedFetch } = useContext(FetchContext);
@@ -17,31 +17,29 @@ const useUser = () => {
     return data;
   };
 
+  const registerCallback = async ({ firstName, lastName, email, password }) => {
+    const { data } = await publicFetch.post(`signup`, {
+      firstName,
+      lastName,
+      email,
+      password,
+    });
+    return data;
+    
   const authenticate = useMutation(authenticateCallback, {
     onSuccess: (data) => auth.setAuthState(data),
     onError: (error) => {
       return error.response?.data || 'An unknown error occurred';
     },
   });
-
-  const register = async (
-    { firstName, lastName, email, password },
-    onSuccess,
-    onError
-  ) => {
-    try {
-      const { data } = await publicFetch.post(`signup`, {
-        firstName,
-        lastName,
-        email,
-        password,
-      });
-      auth.setAuthState(data);
-      onSuccess(data);
-    } catch (error) {
-      onError(error.response);
-    }
   };
+
+  const register = useMutation(registerCallback, {
+    onSuccess: (data) => auth.setAuthState(data),
+    onError: (error) => {
+      return error.response?.data || 'An unknown error occurred';
+    },
+  });
 
   const setUserRole = async (role, onSuccess, onError) => {
     try {
@@ -58,6 +56,7 @@ const useUser = () => {
   return {
     user,
     register,
+    registerIsLoading: register.isLoading,
     authenticate,
     authenticationLoading: authenticate.isLoading,
     setUserRole,

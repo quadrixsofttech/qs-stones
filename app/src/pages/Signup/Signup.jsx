@@ -16,7 +16,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 import styles from './Signup.styles';
-import useUser from '../../hooks/useUser';
+import useUser from './../../hooks/useUser';
 
 const SignupSchema = Yup.object().shape({
   firstName: Yup.string().required('First name is required'),
@@ -26,29 +26,25 @@ const SignupSchema = Yup.object().shape({
 });
 
 const Signup = () => {
-  const { register } = useUser();
-  const [signupSuccess, setSignupSuccess] = useState();
-  const [signupError, setSignupError] = useState();
   const [redirectOnLogin, setRedirectOnLogin] = useState(false);
-  const [loginLoading, setLoginLoading] = useState(false);
+  const { register, registerIsLoading } = useUser();
+  const [signupSuccess, setSignupSuccess] = useState(false);
+  const [signupError, setSignupError] = useState(false);
 
   const submitCredentials = async (credentials) => {
-    setLoginLoading(true);
-    register(
-      credentials,
-      ({ message }) => {
-        setSignupSuccess(message);
-        setSignupError(null);
-        setTimeout(() => {
-          setRedirectOnLogin(true);
-        }, 700);
-      },
-      ({ message }) => {
-        setLoginLoading(false);
-        setSignupError(message);
-        setSignupSuccess(null);
-      }
-    );
+    try {
+      await register.mutateAsync(credentials);
+      setSignupSuccess('Registration successful!');
+      setSignupError(null);
+      setTimeout(() => {
+        setRedirectOnLogin(!redirectOnLogin);
+      }, 700);
+    } catch (error) {
+      setSignupError(
+        error.response?.data?.message || 'An unknown error occurred'
+      );
+      setSignupSuccess(null);
+    }
   };
 
   return (
@@ -148,7 +144,7 @@ const Signup = () => {
                   <Button
                     {...styles.button}
                     type="submit"
-                    isLoading={loginLoading}
+                    isLoading={registerIsLoading}
                   >
                     Sign Up
                   </Button>
