@@ -1,9 +1,8 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { FetchContext } from '../context/FetchContext';
 import { publicFetch } from '../util/fetch';
 import { useMutation } from 'react-query';
-
 
 const useUser = () => {
   const { protectedFetch } = useContext(FetchContext);
@@ -24,21 +23,21 @@ const useUser = () => {
   };
 
   const registerCallback = async ({ firstName, lastName, email, password }) => {
-    try {
-      const { data } = await publicFetch.post(`signup`, {
-        firstName,
-        lastName,
-        email,
-        password,
-      });
-      auth.setAuthState(data);
-      return data;
-    } catch (error) {
-      throw new Error(error.response.data);
-    }
+    const { data } = await publicFetch.post(`signup`, {
+      firstName,
+      lastName,
+      email,
+      password,
+    });
+    return data;
   };
 
-  const register = useMutation(registerCallback);
+  const register = useMutation(registerCallback, {
+    onSuccess: (data) => auth.setAuthState(data),
+    onError: (error) => {
+      return error.response?.data || 'An unknown error occurred';
+    },
+  });
 
   const setUserRole = async (role) => {
     try {
@@ -54,7 +53,7 @@ const useUser = () => {
 
   return {
     user,
-    register: register.mutateAsync,
+    register,
     registerIsLoading: register.isLoading,
     authenticate,
     setUserRole,

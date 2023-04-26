@@ -26,25 +26,24 @@ const SignupSchema = Yup.object().shape({
 });
 
 const Signup = () => {
-  const [signupSuccess, setSignupSuccess] = useState();
-  const [signupError, setSignupError] = useState();
   const [redirectOnLogin, setRedirectOnLogin] = useState(false);
-  const [loginLoading, setLoginLoading] = useState(false);
-  const { register,registerIsLoading  } = useUser();
+  const { register, registerIsLoading } = useUser();
+  const [signupSuccess, setSignupSuccess] = useState(false);
+  const [signupError, setSignupError] = useState(false);
 
   const submitCredentials = async (credentials) => {
     try {
-      await register(credentials);
+      await register.mutateAsync(credentials);
       setSignupSuccess('Registration successful!');
       setSignupError(null);
       setTimeout(() => {
-        setRedirectOnLogin(!loginLoading);
+        setRedirectOnLogin(!redirectOnLogin);
       }, 700);
     } catch (error) {
-      setSignupError(error.message);
+      setSignupError(
+        error.response?.data?.message || 'An unknown error occurred'
+      );
       setSignupSuccess(null);
-    } finally {
-      setLoginLoading(loginLoading);
     }
   };
 
