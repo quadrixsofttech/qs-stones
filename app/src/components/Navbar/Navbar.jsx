@@ -4,6 +4,7 @@ import styles from './Navbar.styles';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { FaReact } from 'react-icons/fa';
+import { QuadrixSoftLogoSmall } from '../QuadrixSoftLogo';
 
 const Navbar = () => {
   const auth = useContext(AuthContext);
@@ -11,8 +12,7 @@ const Navbar = () => {
     <Box>
       <Flex {...styles.wrapper}>
         <Flex {...styles.logo} as={Link} to={'/'}>
-          <Icon as={FaReact}></Icon>
-          <Text {...styles.logoText}>Starter</Text>
+          <QuadrixSoftLogoSmall />
         </Flex>
 
         <Stack {...styles.buttonWrapper}>

@@ -31,8 +31,8 @@ const Users = () => {
 
   return (
     <DashboardLayout>
-      <Heading>Users</Heading>
-      <TableContainer {...styles.wrapper}>
+      <Heading margin={10}>Users</Heading>
+      <TableContainer {...styles.wrapper} margin={10}>
         <Table variant="simple">
           <Thead>
             <Tr>
