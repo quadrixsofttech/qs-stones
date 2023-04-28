@@ -1,22 +1,20 @@
 import React from 'react';
 import { DashboardNavbar } from '../../components/Navbar';
-import { Grid, GridItem } from '@chakra-ui/react';
+import { Box, Flex, Grid, GridItem } from '@chakra-ui/react';
 import DashboardSidebar from '../../components/Sidebar/DashboardSidebar';
 import styles from './DashboardLayout.styles';
 
 const DashboardLayout = ({ children }) => {
   return (
-    <Grid {...styles.gridTemplate}>
-      <GridItem area={'header'}>
-        <DashboardNavbar />
-      </GridItem>
-      <GridItem bg="pink.300" area={'nav'}>
+    <Flex flexDirection={'column'}>
+      <DashboardNavbar />
+      <Flex>
         <DashboardSidebar />
-      </GridItem>
-      <GridItem bg="green.300" area={'main'}>
-        {children}
-      </GridItem>
-    </Grid>
+        <Box p={4} flex={1}>
+          {children}
+        </Box>
+      </Flex>
+    </Flex>
   );
 };
 
