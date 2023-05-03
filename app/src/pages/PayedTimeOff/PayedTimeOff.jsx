@@ -1,22 +1,15 @@
 import { Button, Heading, Flex, Spacer } from '@chakra-ui/react';
 import DashboardLayout from '../../layout/DashboardLayout/DashboardLayout';
-import { FaRegCalendarPlus } from 'react-icons/fa';
-
+import styles from './PayedTimeOff.styles.js'
 const PayedTimeOff = () => {
   return (
     <>
       <DashboardLayout>
         <Flex>
-          <Heading size='lg'>Paid Time Off</Heading>
+          <Heading {...styles.heading}>Paid Time Off</Heading>
           <Spacer/>
           <Button
-            leftIcon={<FaRegCalendarPlus />}
-            colorScheme="purple"
-            variant="solid"
-            size='md'
-            lineHeight={28}
-            fontWeight={600}
-            fontFamily={'Inter'}
+          {...styles.button}
           >
             Request PTO
           </Button>
