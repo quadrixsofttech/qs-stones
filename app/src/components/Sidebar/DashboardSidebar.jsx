@@ -5,7 +5,7 @@ import { BiSwim, BiMicrophone, BiDish } from 'react-icons/bi';
 
 import styles from './DashboardSidebar.styles';
 
-export default function DashboardSidebar() {
+const DashboardSidebar = () => {
   return (
     <Flex>
       <Box as="aside" {...styles.sideBar}>
@@ -16,7 +16,7 @@ export default function DashboardSidebar() {
           _activeLink={{ ...styles.sideBarButtonActive }}
         >
           <BiSwim size={20} />
-          <Text fontSize={'16px'}>PTO</Text>
+          <Text>PTO</Text>
         </Flex>
         <Flex
           {...styles.sideBarButton}
@@ -39,4 +39,6 @@ export default function DashboardSidebar() {
       </Box>
     </Flex>
   );
-}
+};
+
+export default DashboardSidebar;
