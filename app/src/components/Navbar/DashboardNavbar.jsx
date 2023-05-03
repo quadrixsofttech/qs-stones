@@ -47,7 +47,7 @@ const DashboardNavbar = () => {
                   minW={0}
                   ml={'10px'}
                 >
-                  <Flex alignItems={'center'} gap={'10px'}>
+                  <Flex alignItems={'center'} gap={'4px'}>
                     <Avatar
                       size={'sm'}
                       src={
@@ -60,7 +60,9 @@ const DashboardNavbar = () => {
                       display={{ base: 'none', md: 'flex' }}
                       gap={'4px'}
                     >
-                      <Text fontSize="sm">{firstName + ' ' + lastName}</Text>
+                      <Text fontSize="sm" color="gray.700">
+                        {firstName + ' ' + lastName}
+                      </Text>
                       <Text fontSize="xs" color="gray.600">
                         {role}
                       </Text>
