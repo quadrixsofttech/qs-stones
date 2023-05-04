@@ -24,7 +24,7 @@ const RequestPTO = () => {
     setIsAccordionOpen(!isAccordionOpen);
   };
 
-  const isRequestApproved = true;
+  const isRequestApproved = false;
 
   return (
     <Box {...styles.box}>
@@ -52,7 +52,7 @@ const RequestPTO = () => {
               </AccordionButton>
             </h2>
             {isRequestApproved ? (
-              <AccordionPanel width={'475px'}>
+              <AccordionPanel width={'20vw'}>
                 <Text color={'gray.500'}>23/3/2022</Text>
                 <Text fontWeight={'bold'}>
                   Milos Stosic(ADMIN) approved
@@ -60,15 +60,15 @@ const RequestPTO = () => {
                 </Text>
               </AccordionPanel>
             ) : (
-              <AccordionPanel width={'475px'}>
+              <AccordionPanel width={'20vw'}>
                 <Text color={'gray.500'}>23/3/2022</Text>
                 <Text fontWeight={'bold'}>
                   Milos Stosic(ADMIN) rejected
                   <Text fontWeight={'normal'}>your Request PTO/Remote</Text>
-                  <Textarea mt={2} placeholder="Explanation" />
-                  <Button {...styles.button}>
-                    Send Request Again
-                  </Button>
+                  <Flex flexDirection={'column'}>
+                    <Textarea mt={2} placeholder="Explanation" width={200} />
+                    <Button {...styles.button}>Send Request Again</Button>
+                  </Flex>
                 </Text>
               </AccordionPanel>
             )}

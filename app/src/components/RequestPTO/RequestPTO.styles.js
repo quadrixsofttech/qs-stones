@@ -16,7 +16,8 @@ const main_text = {
 const button = {
   colorScheme : 'purple',
   variant : 'outline',
-  mt : '3'
+  mt : '3',
+  width: '200px'
 };
 
 const styles = {

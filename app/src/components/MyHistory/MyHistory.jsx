@@ -2,7 +2,6 @@ import {
   Container,
   Flex,
   Select,
-  StatGroup,
   Tab,
   TabIndicator,
   TabList,
@@ -14,9 +13,12 @@ import {
 import styles from './MyHistory.styles';
 import RequestPTO from '../RequestPTO/RequestPTO';
 import { useState } from 'react';
+import { Calendar, DateObject } from 'react-multi-date-picker';
+import './CustomCalendar.css';
 
 const MyHistory = () => {
   const [activeTab, setActiveTab] = useState(0);
+  const [values, setValues] = useState([new DateObject()]);
 
   return (
     <Container {...styles.container}>
@@ -47,7 +49,14 @@ const MyHistory = () => {
               <option value="Remote">Remote</option>
               <option value="Vacation">Vacation</option>
             </Select>
-            <StatGroup></StatGroup>
+            <Flex justifyContent={'center'} alignItems={'center'} flex={1} flexDirection={'column'}>
+              <Calendar
+                headerOrder={['MONTH_YEAR', 'LEFT_BUTTON', 'RIGHT_BUTTON']}
+                className="custom-calendar"
+                value={values}
+                values={setValues}
+              />
+            </Flex>
           </TabPanel>
           <TabPanel>
             <RequestPTO />

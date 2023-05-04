@@ -1,6 +1,5 @@
 const container = {
-  height: '645',
-  width: '292',
+  width:'25%',
   borderWidth: '1px',
   borderRadius: '6px',
   p: '0px',
@@ -17,7 +16,7 @@ const tabindicator = {
 const flex = {
   bg: 'blackAlpha.50',
   w: '100%',
-  h: '10%',
+  h: '60px',
   color: 'black',
   p: '2',
   alignItems: 'center',
