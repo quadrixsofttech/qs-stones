@@ -18,7 +18,7 @@ const sideBarButton = {
   color: 'gray.400',
   justifyContent: 'flex-start',
   alignItems: 'center',
-  gap: '4',
+  gap: '8px',
   p: '16px',
 };
 
@@ -29,6 +29,8 @@ const sideBarButtonActive = {
   color: 'purple.700',
   borderRadius: '6px',
   p: '16px',
+  fontWeight: 'semibold',
+  gap: '8px',
 };
 
 const styles = {
