@@ -12,7 +12,7 @@ export const MyVacationInfo = () => {
       </Box>
       <Flex {...styles.infoBox}>
         <Flex {...styles.box}>
-          <Text fontSize={'sm'}>
+          <Text fontSize={'sm'} fontWeight={'medium'}>
             User Vacation Days
             <br />
             to date
@@ -27,7 +27,7 @@ export const MyVacationInfo = () => {
         </Flex>
 
         <Flex {...styles.box}>
-          <Text fontSize={'sm'}>
+          <Text fontSize={'sm'} fontWeight={'medium'}>
             New Vacation Days
             <br />
             from this year
@@ -41,7 +41,7 @@ export const MyVacationInfo = () => {
           <Divider orientation="vertical" />
         </Flex>
         <Flex {...styles.box}>
-          <Text fontSize={'sm'}>
+          <Text fontSize={'sm'} fontWeight={'medium'}>
             Unused Vacation Days
             <br />
             from last year
@@ -55,7 +55,7 @@ export const MyVacationInfo = () => {
           <Divider orientation="vertical" />
         </Flex>
         <Flex {...styles.box}>
-          <Text fontSize={'sm'}>
+          <Text fontSize={'sm'} fontWeight={'medium'}>
             Total Vacation
             <br />
             Days
