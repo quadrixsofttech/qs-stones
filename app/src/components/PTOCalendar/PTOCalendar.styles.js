@@ -1,52 +1,68 @@
 const calendarGridStyles = {
   display: 'grid',
   gridTemplateColumns: 'repeat(5, 1fr)',
-  gridGap: '10px',
 };
 const sixColumnGridStyles = {
   display: 'grid',
   gridTemplateColumns: 'repeat(6, 1fr)',
-  gap: '1rem',
   justifyContent: 'center',
   alignItems: 'center',
 };
 
 const calendarContainerStyles = {
-  maxWidth: '800px',
-  margin: '0 auto',
-  padding: '20px',
+  width: '742px',
+  marginBottom: '20px',
   backgroundColor: '#fff',
   borderRadius: '10px',
   boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.25)',
 };
 
-const calendarHeaderStyles = {
-  justifyContent: 'space-between',
+const prevNextBox = {
+  justifyContent: 'center',
   alignItems: 'center',
+  gap: '15px',
+  width: '200px',
 };
 
 const calendarDayStyles = {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  height: '60px',
-  borderRadius: '10px',
+  padding: '8px',
   fontSize: 'xs',
-  fontWeight: 'bold',
+  fontWeight: 'normal',
   color: '#333',
+  border: '1px solid',
+  borderColor: 'gray.200',
 };
 
 const emptyStyles = {
   visibility: 'hidden',
 };
 
+const header = {
+  backgroundColor: 'blackAlpha.50',
+  borderRadius: '10px 10px 0 0',
+  color: 'gray.700',
+  alignItems: 'center',
+};
+
+const selectButton = {
+  size: 'sm',
+  width: '200px',
+  backgroundColor: 'white',
+  borderRadius: '6px',
+};
+
 const styles = {
   calendarGridStyles,
   sixColumnGridStyles,
   calendarContainerStyles,
-  calendarHeaderStyles,
+  prevNextBox,
   calendarDayStyles,
   emptyStyles,
+  header,
+  selectButton,
 };
 
 export default styles;
