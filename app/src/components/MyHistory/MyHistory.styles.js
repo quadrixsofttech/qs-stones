@@ -4,6 +4,8 @@ const container = {
   borderRadius: '6px',
   p: '0px',
   border: '1px solid #E2E8F0',
+  maxHeight:'70vh',
+  overflowY: 'auto' ,
 };
 
 const tabindicator = {
@@ -28,9 +30,15 @@ const tabs = {
   mt: '2',
 };
 
-const tabpanel = {
-  maxHeight:'60vh',
-  overflowY: 'auto' 
+// const tabpanel = {
+//   maxHeight:'60vh',
+//   overflowY: 'auto' 
+// }
+
+const statgroup_flex = {
+  justifyContent: 'center',
+  alignItems: 'center',
+  flexDirection: 'column',
 }
 
 const styles = {
@@ -38,7 +46,8 @@ const styles = {
   tabindicator,
   flex,
   tabs,
-  tabpanel
+  // tabpanel,
+  statgroup_flex
 };
 
 export default styles;

@@ -22,7 +22,13 @@ const button = {
 };
 
 const accordionpanel = {
-  width: '20vw'
+  width: '20vw',
+  border:0,
+}
+
+const accordion = {
+  borderTop : '1px #fff',
+  borderBottom :'1px #fff',
 }
 
 const styles = {
@@ -30,7 +36,8 @@ const styles = {
   gray_text,
   main_text,
   button,
-  accordionpanel
+  accordionpanel,
+  accordion
 };
 
 export default styles;

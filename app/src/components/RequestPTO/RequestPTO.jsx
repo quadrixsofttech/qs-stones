@@ -47,7 +47,7 @@ const RequestPTO = ({ isRequestApproved = status.pending }) => {
       </Box>
       <Flex alignItems={'center'}>
         <Spacer />
-        <Accordion defaultIndex={[1]} allowToggle>
+        <Accordion defaultIndex={[1]} allowToggle {...styles.accordion}>
           <AccordionItem pt={2}>
             <h2>
               <AccordionButton onClick={toggleAccordion}>

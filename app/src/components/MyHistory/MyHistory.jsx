@@ -2,6 +2,12 @@ import {
   Container,
   Flex,
   Select,
+  Stat,
+  StatArrow,
+  StatGroup,
+  StatHelpText,
+  StatLabel,
+  StatNumber,
   Tab,
   TabIndicator,
   TabList,
@@ -49,26 +55,43 @@ const MyHistory = () => {
               <option value="Remote">Remote</option>
               <option value="Vacation">Vacation</option>
             </Select>
-            <Flex
-              justifyContent={'center'}
-              alignItems={'center'}
-              flex={1}
-              flexDirection={'column'}
-            >
-              <Calendar
-                headerOrder={['MONTH_YEAR', 'LEFT_BUTTON', 'RIGHT_BUTTON']}
-                className="custom-calendar"
-                value={values}
-                values={setValues}
-                range
-                rangeHover
-              />
-            </Flex>
+            <Calendar
+              headerOrder={['MONTH_YEAR', 'LEFT_BUTTON', 'RIGHT_BUTTON']}
+              className="custom-calendar"
+              value={values}
+              values={setValues}
+            />
+            <StatGroup>
+              <Flex {...styles.statgroup_flex}>
+                <Stat>
+                  <StatLabel>
+                    Total number of employees working today
+                  </StatLabel>
+                  <StatNumber>16</StatNumber>
+                  <StatHelpText>
+                    <StatArrow type="increase" />
+                    10% more than yesterday
+                  </StatHelpText>
+                </Stat>
+
+                <Stat>
+                  <StatLabel>
+                    The total number of employees working remotly today or on
+                    vacation
+                  </StatLabel>
+                  <StatNumber>8</StatNumber>
+                  <StatHelpText>
+                    <StatArrow type="decrease" />
+                    5% less than yesterday
+                  </StatHelpText>
+                </Stat>
+              </Flex>
+            </StatGroup>
           </TabPanel>
           <TabPanel {...styles.tabpanel}>
             <RequestPTO isRequestApproved={0} />
             <RequestPTO isRequestApproved={1} />
-            <RequestPTO isRequestApproved={2}/>
+            <RequestPTO isRequestApproved={2} />
           </TabPanel>
         </TabPanels>
       </Tabs>
