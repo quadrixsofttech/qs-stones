@@ -29,7 +29,7 @@ const Calendar = () => {
 
   const blanks = [];
   for (let i = 0; i < firstDayOfMonth - 1; i++) {
-    blanks.push(<Box key={`blank-${i}`} />);
+    blanks.push(<Box backgroundColor={'blackAlpha.50'} key={`blank-${i}`} />);
   }
 
   const days = [];

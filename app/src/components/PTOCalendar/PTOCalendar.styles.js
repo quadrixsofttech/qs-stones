@@ -1,9 +1,11 @@
 const calendarGridStyles = {
+  backgroundColor: 'blackAlpha.50',
   display: 'grid',
   gridTemplateColumns: 'repeat(5, 1fr)',
 };
 const sixColumnGridStyles = {
   display: 'grid',
+  backgroundColor: 'blackAlpha.50',
   gridTemplateColumns: 'repeat(6, 1fr)',
   justifyContent: 'center',
   alignItems: 'center',
@@ -12,9 +14,9 @@ const sixColumnGridStyles = {
 const calendarContainerStyles = {
   width: '742px',
   marginBottom: '20px',
-  backgroundColor: '#fff',
-  borderRadius: '10px',
-  boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.25)',
+  borderRadius: '6px',
+  border: '1px solid #E2E8F0',
+  overflow: 'hidden',
 };
 
 const prevNextBox = {
@@ -34,6 +36,7 @@ const calendarDayStyles = {
   color: '#333',
   border: '1px solid',
   borderColor: 'gray.200',
+  backgroundColor: 'white',
 };
 
 const emptyStyles = {
@@ -42,7 +45,7 @@ const emptyStyles = {
 
 const header = {
   backgroundColor: 'blackAlpha.50',
-  borderRadius: '10px 10px 0 0',
+  borderRadius: '6px 6px 0 0',
   color: 'gray.700',
   alignItems: 'center',
 };

@@ -1,11 +1,11 @@
 const mainBox = {
-  borderRadius: '10px',
+  borderRadius: '6px',
   border: '1px solid #E2E8F0',
 };
 
 const header = {
   backgroundColor: 'blackAlpha.50',
-  borderRadius: '10px 10px 0 0',
+  borderRadius: '6px 6px 0 0',
   color: 'gray.700',
 };
 const box = {

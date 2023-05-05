@@ -7,6 +7,7 @@ const CalendarBox = ({ day, children, onMouseOver }) => (
     borderColor={'gray.200'}
     onMouseOver={onMouseOver}
     padding={'8px'}
+    backgroundColor={'white'}
   >
     <Flex flexDirection={'column'}>
       <Box textColor={'gray.700'} fontWeight={'semibold'} marginBottom={'8px'}>
