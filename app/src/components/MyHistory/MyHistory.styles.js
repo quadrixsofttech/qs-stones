@@ -28,11 +28,17 @@ const tabs = {
   mt: '2',
 };
 
+const tabpanel = {
+  maxHeight:'60vh',
+  overflowY: 'auto' 
+}
+
 const styles = {
   container,
   tabindicator,
   flex,
   tabs,
+  tabpanel
 };
 
 export default styles;

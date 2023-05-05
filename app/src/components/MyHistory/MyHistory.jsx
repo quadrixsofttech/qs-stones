@@ -49,7 +49,12 @@ const MyHistory = () => {
               <option value="Remote">Remote</option>
               <option value="Vacation">Vacation</option>
             </Select>
-            <Flex justifyContent={'center'} alignItems={'center'} flex={1} flexDirection={'column'}>
+            <Flex
+              justifyContent={'center'}
+              alignItems={'center'}
+              flex={1}
+              flexDirection={'column'}
+            >
               <Calendar
                 headerOrder={['MONTH_YEAR', 'LEFT_BUTTON', 'RIGHT_BUTTON']}
                 className="custom-calendar"
@@ -58,8 +63,10 @@ const MyHistory = () => {
               />
             </Flex>
           </TabPanel>
-          <TabPanel>
-            <RequestPTO />
+          <TabPanel {...styles.tabpanel}>
+            <RequestPTO isRequestApproved={0} />
+            <RequestPTO isRequestApproved={1} />
+            <RequestPTO isRequestApproved={2}/>
           </TabPanel>
         </TabPanels>
       </Tabs>

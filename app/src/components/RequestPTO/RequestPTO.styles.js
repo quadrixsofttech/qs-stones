@@ -1,5 +1,6 @@
 const box = {
   fontFamily: "'Inter', sans-serif",
+  padding: '0.5rem 0.5rem',
 };
 
 const gray_text = {
@@ -20,11 +21,16 @@ const button = {
   width: '200px'
 };
 
+const accordionpanel = {
+  width: '20vw'
+}
+
 const styles = {
   box,
   gray_text,
   main_text,
-  button
+  button,
+  accordionpanel
 };
 
 export default styles;
