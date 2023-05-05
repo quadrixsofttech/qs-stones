@@ -14,11 +14,13 @@
 
 .rmdp-range {
   background-color: black;
-  border-radius: 30%;
+  border-radius: 50%;
 }
 
+
 .rmdp-range-hover{
-  background-color: black;
+  background-color: #EDF2F7;
+  color:#000;
 }
 
 .rmdp-day.rmdp-today span {

@@ -60,6 +60,8 @@ const MyHistory = () => {
                 className="custom-calendar"
                 value={values}
                 values={setValues}
+                range
+                rangeHover
               />
             </Flex>
           </TabPanel>
