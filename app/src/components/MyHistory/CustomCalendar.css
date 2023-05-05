@@ -17,6 +17,10 @@
   border-radius: 30%;
 }
 
+.rmdp-range-hover{
+  background-color: black;
+}
+
 .rmdp-day.rmdp-today span {
   background-color: black;
   color: #fff;
