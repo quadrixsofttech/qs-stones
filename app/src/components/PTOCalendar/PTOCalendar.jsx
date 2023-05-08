@@ -67,12 +67,6 @@ const Calendar = () => {
             //alert(createKey());
           }}
         >
-          {/* <Avatar p={'1px'} size={'xs'} src={avatar} />
-          <Avatar
-            p={'1px'}
-            size={'xs'}
-            src="https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
-          /> */}
           <AvatarGroup gap={'2'} size={'sm'} max={2}>
             <Avatar name="Ryan Florence" src="https://bit.ly/ryan-florence" />
             <Avatar name="Segun Adebayo" src="https://bit.ly/sage-adebayo" />
