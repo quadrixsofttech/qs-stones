@@ -2,6 +2,10 @@
   color: black;
 }
 
+.custom-calendar {
+  border-bottom: 1px solid #E2E8F0;
+}
+
 .rmdp-arrow {
   border: solid black;
   border-width: 0 2px 2px 0;

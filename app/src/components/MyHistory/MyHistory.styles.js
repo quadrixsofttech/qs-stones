@@ -1,9 +1,9 @@
 const container = {
   width:'25%',
-  borderWidth: '1px',
+  borderWidth: 'px',
   borderRadius: '6px',
-  p: '0px',
-  border: '1px solid #E2E8F0',
+  p: '0',
+  border: 'px solid #E2E8F0',
   maxHeight:'70vh',
   overflowY: 'auto' ,
 };

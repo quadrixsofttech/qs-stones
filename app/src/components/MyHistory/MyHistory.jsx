@@ -50,7 +50,7 @@ const MyHistory = () => {
         </TabList>
         <TabIndicator {...styles.tabindicator} />
         <TabPanels p={0}>
-          <TabPanel>
+          <TabPanel >
             <Select size="sm" mb={2}>
               <option value="Remote">Remote</option>
               <option value="Vacation">Vacation</option>
@@ -61,11 +61,11 @@ const MyHistory = () => {
               value={values}
               values={setValues}
             />
-            <StatGroup>
+            <StatGroup> 
               <Flex {...styles.statgroup_flex}>
-                <Stat>
-                  <StatLabel>
-                    Total number of employees working today
+                <Stat width={'100%'}>
+                  <StatLabel pt={2}>
+                    The total number of employees working today
                   </StatLabel>
                   <StatNumber>16</StatNumber>
                   <StatHelpText>
@@ -74,8 +74,8 @@ const MyHistory = () => {
                   </StatHelpText>
                 </Stat>
 
-                <Stat>
-                  <StatLabel>
+                <Stat width={'100%'}>
+                  <StatLabel pt={2}>
                     The total number of employees working remotly today or on
                     vacation
                   </StatLabel>

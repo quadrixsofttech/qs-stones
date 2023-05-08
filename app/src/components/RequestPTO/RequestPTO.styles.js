@@ -6,19 +6,19 @@ const box = {
 const gray_text = {
   fontWeigth: 400,
   color: 'gray.500',
-  paddingBottom: '4px',
+  paddingBottom: '1',
 };
 
 const main_text = {
   fontWeigth: 700,
-  paddingBottom: '4px',
+  paddingBottom: '1',
 };
 
 const button = {
   colorScheme : 'purple',
   variant : 'outline',
   mt : '3',
-  width: '200px'
+  width: '48'
 };
 
 const accordionpanel = {
@@ -27,8 +27,8 @@ const accordionpanel = {
 }
 
 const accordion = {
-  borderTop : '1px #fff',
-  borderBottom :'1px #fff',
+  borderTop : 'px #fff',
+  borderBottom :'px #fff',
 }
 
 const styles = {
