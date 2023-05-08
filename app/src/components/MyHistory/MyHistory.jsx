@@ -63,7 +63,7 @@ const MyHistory = () => {
             />
             <StatGroup> 
               <Flex {...styles.statgroup_flex}>
-                <Stat width={'100%'}>
+                <Stat {...styles.stat}>
                   <StatLabel pt={2}>
                     The total number of employees working today
                   </StatLabel>
