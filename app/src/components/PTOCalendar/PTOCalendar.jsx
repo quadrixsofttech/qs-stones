@@ -1,9 +1,16 @@
 import { useState } from 'react';
-import { Box, Flex, Button, Text, Select, Avatar } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  Button,
+  Text,
+  Select,
+  Avatar,
+  AvatarGroup,
+} from '@chakra-ui/react';
 import styles from './PTOCalendar.styles';
 import CalendarBox from './CalendarBox';
 import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
-import avatar from '../../images/avatar.jpg';
 
 const Calendar = () => {
   const [date, setDate] = useState(new Date());
@@ -60,18 +67,66 @@ const Calendar = () => {
             //alert(createKey());
           }}
         >
-          <Avatar p={'1px'} size={'xs'} src={avatar} />
+          {/* <Avatar p={'1px'} size={'xs'} src={avatar} />
           <Avatar
             p={'1px'}
             size={'xs'}
             src="https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
-          />
+          /> */}
+          <AvatarGroup gap={'2'} size={'sm'} max={2}>
+            <Avatar name="Ryan Florence" src="https://bit.ly/ryan-florence" />
+            <Avatar name="Segun Adebayo" src="https://bit.ly/sage-adebayo" />
+            <Avatar name="Kent Dodds" src="https://bit.ly/kent-c-dodds" />
+            <Avatar
+              name="Prosper Otemuyiwa"
+              src="https://bit.ly/prosper-baba"
+            />
+            <Avatar name="Christian Nwamba" src="https://bit.ly/code-beast" />
+          </AvatarGroup>
         </CalendarBox>
       );
     }
   }
 
+  const handleDateChange = (e) => {
+    const { name, value } = e.target;
+    const newDate =
+      name === 'month'
+        ? new Date(date.getFullYear(), value, 1)
+        : new Date(value, date.getMonth(), 1);
+
+    setDate(newDate);
+  };
+
   const totalDays = [...blanks, ...days]; //OVde map za novi key = 'date tacan'
+
+  const months = [
+    { key: 'January', value: 0 },
+    { key: 'February', value: 1 },
+    { key: 'March', value: 2 },
+    { key: 'April', value: 3 },
+    { key: 'May', value: 4 },
+    { key: 'June', value: 5 },
+    { key: 'July', value: 6 },
+    { key: 'August', value: 7 },
+    { key: 'September', value: 8 },
+    { key: 'October', value: 9 },
+    { key: 'November', value: 10 },
+    { key: 'December', value: 11 },
+  ];
+
+  // ];
+  const years = [
+    '2018',
+    '2019',
+    '2020',
+    '2021',
+    '2022',
+    '2023',
+    '2024',
+    '2025',
+    '2026',
+  ];
 
   return (
     <Box {...styles.calendarContainerStyles}>
@@ -89,12 +144,36 @@ const Calendar = () => {
         </Select>
       </Flex>
       <Flex justifyContent={'space-around'} alignItems={'center'} p={'10px'}>
-        <Text width={'200px'} fontSize="sm" fontWeight={'semibold'}>
-          {date.toLocaleDateString('en-US', {
-            month: 'long',
-            year: 'numeric',
-          })}
-        </Text>
+        <Flex width={'200px'} gap={'10px'}>
+          <Select
+            {...styles.selectButton}
+            onChange={(e) => handleDateChange(e)}
+            name="year"
+            value={date.getFullYear()}
+          >
+            {years.map((year) => {
+              return (
+                <option key={`godina-${year}`} value={year}>
+                  {year}
+                </option>
+              );
+            })}
+          </Select>
+          <Select
+            {...styles.selectButton}
+            onChange={(e) => handleDateChange(e)}
+            name="month"
+            value={date.getMonth()}
+          >
+            {months.map((month) => {
+              return (
+                <option key={`mesec-${month.key}`} value={month.value}>
+                  {month.key}
+                </option>
+              );
+            })}
+          </Select>
+        </Flex>
         <Flex {...styles.prevNextBox}>
           <Button
             size={'xs'}
@@ -109,9 +188,9 @@ const Calendar = () => {
           <Button
             size={'xs'}
             backgroundColor={'blackAlpha.50'}
-            onClick={() =>
-              setDate(new Date(date.getFullYear(), date.getMonth() + 1, 1))
-            }
+            onClick={() => {
+              setDate(new Date(date.getFullYear(), date.getMonth() + 1, 1));
+            }}
           >
             <BiChevronRight />
           </Button>
