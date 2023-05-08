@@ -5,8 +5,15 @@ import {
   Button,
   Text,
   Select,
-  Avatar,
   AvatarGroup,
+  Avatar,
+  PopoverContent,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverHeader,
+  PopoverBody,
+  Popover,
+  PopoverTrigger,
 } from '@chakra-ui/react';
 import styles from './PTOCalendar.styles';
 import CalendarBox from './CalendarBox';
@@ -16,6 +23,8 @@ const Calendar = () => {
   const [date, setDate] = useState(new Date());
   const [showSaturday, setShowSaturday] = useState(false);
   const [isRemote, setRemote] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
+  const onClose = () => setIsOpen(false);
 
   const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
   if (showSaturday) {
@@ -38,14 +47,21 @@ const Calendar = () => {
   for (let i = 0; i < firstDayOfMonth - 1; i++) {
     blanks.push(<Box backgroundColor={'blackAlpha.50'} key={`blank-${i}`} />);
   }
-
+  const getTodaysDate = () => {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const formattedDate = `${year}-${month}-${day}`;
+    return formattedDate;
+  };
   const days = [];
   for (let i = 1; i <= daysInMonth; i++) {
     const dayOfWeek = new Date(date.getFullYear(), date.getMonth(), i).getDay();
     const getDayDate = () => {
       return i < 10 ? '0' + i : i.toString();
     };
-    const createKey = () => {
+    const createDate = () => {
       return (
         date.getFullYear() +
         '-' +
@@ -61,11 +77,9 @@ const Calendar = () => {
     ) {
       days.push(
         <CalendarBox
-          key={createKey()}
+          key={createDate()}
           day={getDayDate()}
-          onMouseOver={() => {
-            //alert(createKey());
-          }}
+          isToday={getTodaysDate() === createDate()}
         >
           <AvatarGroup gap={'2'} size={'sm'} max={2}>
             <Avatar name="Ryan Florence" src="https://bit.ly/ryan-florence" />
@@ -92,7 +106,7 @@ const Calendar = () => {
     setDate(newDate);
   };
 
-  const totalDays = [...blanks, ...days]; //OVde map za novi key = 'date tacan'
+  const totalDays = [...blanks, ...days];
 
   const months = [
     { key: 'January', value: 0 },
@@ -109,7 +123,6 @@ const Calendar = () => {
     { key: 'December', value: 11 },
   ];
 
-  // ];
   const years = [
     '2018',
     '2019',
@@ -138,7 +151,7 @@ const Calendar = () => {
         </Select>
       </Flex>
       <Flex justifyContent={'space-around'} alignItems={'center'} p={'10px'}>
-        <Flex width={'200px'} gap={'10px'}>
+        <Flex width={'48'} gap={'10px'}>
           <Select
             {...styles.selectButton}
             onChange={(e) => handleDateChange(e)}

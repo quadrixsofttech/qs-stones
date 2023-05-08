@@ -7,9 +7,10 @@ const DashboardLayout = ({ children }) => {
   return (
     <Flex flexDirection={'column'}>
       <DashboardNavbar />
-      <Flex>
+
+      <Flex marginTop={'60px'}>
         <DashboardSidebar />
-        <Box p={4} flex={1}>
+        <Box p={4} flex={1} marginLeft={'200px'}>
           {children}
         </Box>
       </Flex>

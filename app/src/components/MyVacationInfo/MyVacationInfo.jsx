@@ -22,7 +22,7 @@ export const MyVacationInfo = () => {
           </Text>
           <Text fontSize={'xs'}>17 left</Text>
         </Flex>
-        <Flex height={'100px'}>
+        <Flex height={'24'}>
           <Divider orientation="vertical" />
         </Flex>
 
@@ -37,7 +37,7 @@ export const MyVacationInfo = () => {
           </Text>
           <Text fontSize={'xs'}>Usable until June next year</Text>
         </Flex>
-        <Flex height={'100px'}>
+        <Flex height={'24'}>
           <Divider orientation="vertical" />
         </Flex>
         <Flex {...styles.box}>
@@ -51,7 +51,7 @@ export const MyVacationInfo = () => {
           </Text>
           <Text fontSize={'xs'}>Usable until June this year</Text>
         </Flex>
-        <Flex height={'100px'}>
+        <Flex height={'24'}>
           <Divider orientation="vertical" />
         </Flex>
         <Flex {...styles.box}>

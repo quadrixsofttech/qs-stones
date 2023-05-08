@@ -23,7 +23,7 @@ const prevNextBox = {
   justifyContent: 'center',
   alignItems: 'center',
   gap: '15px',
-  width: '200px',
+  width: '48',
 };
 
 const calendarDayStyles = {
@@ -52,9 +52,17 @@ const header = {
 
 const selectButton = {
   size: 'sm',
-  width: '200px',
+  width: '48',
   backgroundColor: 'white',
   borderRadius: '6px',
+};
+
+const onHoverBox = {
+  backgroundColor: 'gray.200',
+};
+
+const onClickBox = {
+  borderColor: 'purple.400',
 };
 
 const styles = {
@@ -66,6 +74,8 @@ const styles = {
   emptyStyles,
   header,
   selectButton,
+  onHoverBox,
+  onClickBox,
 };
 
 export default styles;

@@ -9,7 +9,10 @@ const wrapper = {
   borderColor: 'gray.200',
   align: 'center',
   zIndex: 2,
-  position: 'relative',
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  right: 0,
   justifyContent: 'space-between',
 };
 
@@ -20,7 +23,7 @@ const logo = {
   fontSize: '3xl',
   lineHeight: '1',
   alignItems: 'center',
-  width: '200px',
+  width: '48',
   justifyContent: 'center',
 };
 

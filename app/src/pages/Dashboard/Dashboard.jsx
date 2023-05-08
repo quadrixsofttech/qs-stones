@@ -6,7 +6,7 @@ import { Flex } from '@chakra-ui/react';
 const Dashboard = () => {
   return (
     <DashboardLayout>
-      <Flex flexDirection={'column'} width={'742px'}>
+      <Flex flexDirection={'column'}>
         <PTOCalendar />
         <MyVacationInfo />
       </Flex>
