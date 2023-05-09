@@ -7,13 +7,6 @@ import {
   Select,
   AvatarGroup,
   Avatar,
-  PopoverContent,
-  PopoverArrow,
-  PopoverCloseButton,
-  PopoverHeader,
-  PopoverBody,
-  Popover,
-  PopoverTrigger,
 } from '@chakra-ui/react';
 import styles from './PTOCalendar.styles';
 import CalendarBox from './CalendarBox';
@@ -23,8 +16,6 @@ const Calendar = () => {
   const [date, setDate] = useState(new Date());
   const [showSaturday, setShowSaturday] = useState(false);
   const [isRemote, setRemote] = useState(true);
-  const [isOpen, setIsOpen] = useState(false);
-  const onClose = () => setIsOpen(false);
 
   const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
   if (showSaturday) {
@@ -47,14 +38,7 @@ const Calendar = () => {
   for (let i = 0; i < firstDayOfMonth - 1; i++) {
     blanks.push(<Box backgroundColor={'blackAlpha.50'} key={`blank-${i}`} />);
   }
-  const getTodaysDate = () => {
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const formattedDate = `${year}-${month}-${day}`;
-    return formattedDate;
-  };
+
   const days = [];
   for (let i = 1; i <= daysInMonth; i++) {
     const dayOfWeek = new Date(date.getFullYear(), date.getMonth(), i).getDay();
@@ -79,8 +63,10 @@ const Calendar = () => {
         <CalendarBox
           key={createDate()}
           day={getDayDate()}
-          isToday={getTodaysDate() === createDate()}
+          boxFullDate={createDate()}
         >
+          {/*Ovde dole mozda mozes da ubacis ove avatare i te info, preko props-a, posto i u CalendarBox compoennt moras da imas te informacije zbog popovera
+           ili mozes preko childrena da pristupis,mada ima mnogo propertyja posle, proveri sa Milsoem*/}
           <AvatarGroup gap={'2'} size={'sm'} max={2}>
             <Avatar name="Ryan Florence" src="https://bit.ly/ryan-florence" />
             <Avatar name="Segun Adebayo" src="https://bit.ly/sage-adebayo" />
