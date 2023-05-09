@@ -37,7 +37,9 @@ const CalendarBox = ({ boxFullDate, day, children }) => {
           border={'1px'}
           borderColor={isOpen ? 'purple.500' : 'gray.200'}
           padding={'8px'}
-          backgroundColor={isToday() ? 'purple.50' : 'white'}
+          backgroundColor={
+            isOpen ? 'gray.200' : isToday() ? 'purple.50' : 'white'
+          }
           _hover={{ ...styles.onHoverBox }}
         >
           <Flex flexDirection={'column'}>
