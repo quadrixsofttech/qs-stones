@@ -54,7 +54,7 @@ const CalendarBox = ({ boxFullDate, day, children }) => {
           </Flex>
         </Flex>
       </PopoverTrigger>
-      <PopoverContent>
+      <PopoverContent boxShadow={'md'}>
         <PopoverArrow />
         <PopoverCloseButton />
         <PopoverHeader fontSize={'lg'} fontWeight={'bold'} color={'gray.700'}>
