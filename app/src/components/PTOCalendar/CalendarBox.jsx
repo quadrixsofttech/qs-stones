@@ -61,7 +61,7 @@ const CalendarBox = ({ boxFullDate, day, children }) => {
           Remote : {boxFullDate}{' '}
           {/* Ovde dinamicka dodela, da li je remote u pitanju ili PTO */}
         </PopoverHeader>
-        <PopoverBody>
+        <PopoverBody maxH="300px" overflowY="scroll">
           <Flex flexDirection={'column'} gap={'15px'} paddingTop={'10px'}>
             <Flex alignItems={'center'} gap={'10px'}>
               <Avatar name="Ryan Florence" src="https://bit.ly/ryan-florence" />

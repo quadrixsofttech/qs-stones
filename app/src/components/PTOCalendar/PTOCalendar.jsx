@@ -15,7 +15,7 @@ import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
 const Calendar = () => {
   const [date, setDate] = useState(new Date());
   const [showSaturday, setShowSaturday] = useState(false);
-  const [isRemote, setRemote] = useState(true);
+  const [isPTO, setPTO] = useState(true);
 
   const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
   if (showSaturday) {
@@ -71,6 +71,7 @@ const Calendar = () => {
             <Avatar name="Ryan Florence" src="https://bit.ly/ryan-florence" />
             <Avatar name="Segun Adebayo" src="https://bit.ly/sage-adebayo" />
             <Avatar name="Kent Dodds" src="https://bit.ly/kent-c-dodds" />
+
             <Avatar
               name="Prosper Otemuyiwa"
               src="https://bit.ly/prosper-baba"
@@ -129,11 +130,11 @@ const Calendar = () => {
         </Text>
         <Select
           {...styles.selectButton}
-          onChange={(e) => setRemote(e.target.value === 'Remote')}
-          value={isRemote ? 'Remote' : 'Pay Time Off'}
+          onChange={(e) => setPTO(e.target.value === 'Pay Time Off')}
+          value={isPTO ? 'Pay Time Off' : 'Remote'}
         >
-          <option value="Remote">Remote</option>
           <option value="Pay Time Off">Pay Time Off</option>
+          <option value="Remote">Remote</option>
         </Select>
       </Flex>
       <Flex justifyContent={'space-around'} alignItems={'center'} p={'10px'}>
