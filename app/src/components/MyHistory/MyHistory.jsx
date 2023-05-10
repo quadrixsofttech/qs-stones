@@ -20,7 +20,7 @@ import styles from './MyHistory.styles';
 import RequestPTO from '../RequestPTO/RequestPTO';
 import { useState } from 'react';
 import { Calendar, DateObject } from 'react-multi-date-picker';
-import './CustomCalendar.css';
+import '../CustomCalendar/CustomCalendar.css';
 
 const MyHistory = () => {
   const [activeTab, setActiveTab] = useState(0);
