@@ -1,7 +1,7 @@
 import { Box, Flex, Heading, Icon, Stack, Text } from '@chakra-ui/react';
 import styles from './SignupLayout.styles';
-import { FaReact } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { QuadrixSoftLogoSmall } from '../../components/QuadrixSoftLogo';
 
 const SignupLayout = ({ title, subtitle, children }) => {
   return (
@@ -9,7 +9,7 @@ const SignupLayout = ({ title, subtitle, children }) => {
       <Stack {...styles.contentWrapper}>
         <Stack align={'center'}>
           <Link to="/">
-            <Icon as={FaReact} {...styles.logo}></Icon>
+            <Icon as={QuadrixSoftLogoSmall} {...styles.logo}></Icon>
           </Link>
           <Heading fontSize={'4xl'}>{title}</Heading>
           <Text fontSize={'lg'} color={'gray.600'}>

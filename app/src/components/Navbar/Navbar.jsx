@@ -1,9 +1,9 @@
-import { Box, Flex, Button, Stack, Icon, Text } from '@chakra-ui/react';
+import { Box, Flex, Button, Stack } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import styles from './Navbar.styles';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
-import { FaReact } from 'react-icons/fa';
+import QuadrixSoftLogo from '../QuadrixSoftLogo';
 
 const Navbar = () => {
   const auth = useContext(AuthContext);
@@ -11,8 +11,7 @@ const Navbar = () => {
     <Box>
       <Flex {...styles.wrapper}>
         <Flex {...styles.logo} as={Link} to={'/'}>
-          <Icon as={FaReact}></Icon>
-          <Text {...styles.logoText}>Starter</Text>
+          <QuadrixSoftLogo />
         </Flex>
 
         <Stack {...styles.buttonWrapper}>
