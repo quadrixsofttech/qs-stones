@@ -14,31 +14,33 @@ import { Info } from '@material-ui/icons';
 import styles from './CalendarModal.styles';
 import { useCalendar } from '../../hooks/useCalendar';
 import { Calendar } from 'react-multi-date-picker';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import moment from 'moment';
+import CalendarContext from './../../context/CalendarContext';
 
 export const CalendarModal = (props) => {
   const [remoteValues, setRemoteValues] = useState([]);
-  const { handleRemoveTag} = useCalendar();
+  const { handleRemoveTag } = useCalendar();
   const [tagArray, setTagArray] = useState([]);
+  const { startDate, endDate, handleSetDates } = useContext(CalendarContext);
 
   const handleOnChange = (value) => {
-    setRemoteValues(value);
-
-    const startDate = moment(value[0]).format('YYYY-MM-DD');
-    const endDate = moment(value[value.length - 1]).format('YYYY-MM-DD');
-    const tagLabel = `${startDate} - ${endDate}`;
-    console.log(tagLabel);
-    const tagColor = 'gray';
-    const newTag = {
-      label: tagLabel,
-      color: tagColor,
-      startDate: value[0],
-      endDate: value[value.length - 1],
-    };
-
-    setTagArray((prevTagArray) => [...prevTagArray, newTag]);
-    console.log(tagLabel);
+    console.log(`startdate enddate`,startDate,endDate);
+    if (Array.isArray(value)) {
+      const startDate = value[value.length - 1]?.start;
+      const endDate = value[value.length - 1]?.end;
+      if (startDate && endDate) {
+        const range = Array.from(
+          { length: endDate.diff(startDate, 'days').toObject().days + 1 },
+          (_, i) => startDate.clone().add(i, 'days')
+        );
+        setRemoteValues(range);
+        handleSetDates(startDate, endDate);
+      }
+      console.log(startDate, endDate);
+    } else {
+      setRemoteValues([]);
+    }
   };
 
   return (
@@ -81,28 +83,23 @@ export const CalendarModal = (props) => {
           </Text>
 
           <Flex>
-            {remoteValues.map((item) => (
-              <Tag
-                key={item}
-                size={'sm'}
-                fontSize={'12px'}
-                borderRadius="full"
-                variant="subtle"
-                colorScheme="gray"
-              >
-                <Tooltip label={item.label} placement="bottom" hasArrow>
-                  <TagLabel>{moment(item.label).format('YYYY-MM-DD')}</TagLabel>
-                </Tooltip>
-                <TagCloseButton
-                  onClick={() => {
-                    const index = tagArray.findIndex(
-                      (tag) => tag.label === item.label
-                    );
-                    handleRemoveTag(index);
-                  }}
-                />
-              </Tag>
-            ))}
+          {startDate && endDate ? (
+              <Flex>
+                <Tag
+                  size={"sm"}
+                  fontSize={"12px"}
+                  borderRadius="full"
+                  variant="subtle"
+                  colorScheme="green"
+                >
+                  <TagLabel>
+                    {startDate.format("MMM D, YYYY")} -{" "}
+                    {endDate.format("MMM D, YYYY")}
+                  </TagLabel>
+                  <TagCloseButton onClick={() => handleSetDates(null, null)} />
+                </Tag>
+              </Flex>
+            ) : null}
           </Flex>
           <Divider />
         </>

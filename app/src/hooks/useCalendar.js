@@ -1,5 +1,5 @@
 import { useDisclosure, useToast } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useState} from 'react';
 import moment from 'moment';
 
 export const useCalendar = () => {
@@ -12,6 +12,7 @@ export const useCalendar = () => {
     const tagLabel = `${moment(start).format('YYYY-MM-DD')} - ${moment(
       end
     ).format('YYYY-MM-DD')}`;
+    console.log(tagLabel);
     const tagColor = 'gray';
     const newTag = {
       label: tagLabel,
