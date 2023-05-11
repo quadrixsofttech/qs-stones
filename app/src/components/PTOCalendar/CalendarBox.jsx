@@ -56,7 +56,11 @@ const CalendarBox = ({ boxFullDate, day, employeesToday, isPTO }) => {
           </Flex>
         </Flex>
       </PopoverTrigger>
-      <CalendarPopoverContent employeesToday={employeesToday} isPTO={isPTO} />
+      <CalendarPopoverContent
+        boxFullDate={boxFullDate}
+        employeesToday={employeesToday}
+        isPTO={isPTO}
+      />
     </Popover>
   );
 };
