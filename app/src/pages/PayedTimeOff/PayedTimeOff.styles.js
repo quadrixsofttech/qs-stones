@@ -1,20 +1,14 @@
-import { FaRegCalendarPlus } from 'react-icons/fa';
-
 const button = {
-    leftIcon: <FaRegCalendarPlus style={{ fontSize: '12'}}  />,
     colorScheme: 'purple',
-    lineHeight: '28',
-    fontSize:'18',
     size : 'lg',
-    fontFamily: "'Inter', sans-serif",
-    fontWeight: 500,
     paddingLeft: 6,
     paddingRight: 6,
-    overflow: 'hidden'
+    overflow: 'hidden',
+    textAlign:'center'
 };
 
 const heading = {
-    size: 'xl',
+    size: 'lg',
     fontFamily: "'Inter',sans-serif",
     fontWeight: 700
 }
