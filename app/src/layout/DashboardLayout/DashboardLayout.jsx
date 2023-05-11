@@ -4,7 +4,7 @@ import { Box, Flex } from '@chakra-ui/react';
 
 const DashboardLayout = ({ children }) => {
   return (
-    <Flex bg={'gray.100'} flexDir="column" minH="100vh">
+    <Flex flexDir="column" minH="100vh">
       <DashboardNavbar />
       <Box p={4} flex={1}>
         {children}
