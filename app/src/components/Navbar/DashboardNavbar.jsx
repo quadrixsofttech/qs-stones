@@ -67,7 +67,7 @@ const DashboardNavbar = () => {
                         {role}
                       </Text>
                     </Flex>
-                    <BiChevronDown />
+                    <BiChevronDown width={'12px'} height={'7px'} />
                   </Flex>
                 </MenuButton>
               </Flex>

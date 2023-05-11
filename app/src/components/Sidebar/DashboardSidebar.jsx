@@ -13,7 +13,7 @@ const DashboardSidebar = () => {
           {...styles.sideBarButton}
           as={NavLink}
           to="/dashboard"
-          _activeLink={{ ...styles.sideBarButtonActive }}
+          //_activeLink={{ ...styles.sideBarButtonActive }}
         >
           <BiSwim size={20} />
           <Text>PTO</Text>
@@ -22,7 +22,7 @@ const DashboardSidebar = () => {
           {...styles.sideBarButton}
           as={NavLink}
           to="/users"
-          _activeLink={{ ...styles.sideBarButtonActive }}
+          //_activeLink={{ ...styles.sideBarButtonActive }}
         >
           <BiMicrophone size={20} />
           <Text>Conference</Text>
@@ -31,7 +31,7 @@ const DashboardSidebar = () => {
           {...styles.sideBarButton}
           as={NavLink}
           to="/account"
-          _activeLink={{ ...styles.sideBarButtonActive }}
+          //_activeLink={{ ...styles.sideBarButtonActive }}
         >
           <BiDish size={20} />
           <Text>Kitchen</Text>
