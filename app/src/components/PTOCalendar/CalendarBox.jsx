@@ -1,20 +1,16 @@
 import {
   Avatar,
+  AvatarGroup,
   Box,
   Flex,
   Popover,
-  PopoverArrow,
-  PopoverBody,
-  PopoverCloseButton,
-  PopoverContent,
-  PopoverHeader,
   PopoverTrigger,
-  Text,
 } from '@chakra-ui/react';
 import styles from './PTOCalendar.styles';
 import { useState } from 'react';
+import CalendarPopoverContent from './CalendarPopoverContent';
 
-const CalendarBox = ({ boxFullDate, day, children }) => {
+const CalendarBox = ({ boxFullDate, day, employeesToday, isPTO }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const isToday = () => {
@@ -50,45 +46,17 @@ const CalendarBox = ({ boxFullDate, day, children }) => {
             >
               {day}
             </Box>
-            <Box>{children}</Box>
+            <Box height={'32px'}>
+              <AvatarGroup gap={'2'} size={'sm'} max={2}>
+                {employeesToday.map((x) => {
+                  return <Avatar key={x.id} name={x.firstName} src={x.src} />;
+                })}
+              </AvatarGroup>
+            </Box>
           </Flex>
         </Flex>
       </PopoverTrigger>
-      <PopoverContent boxShadow={'md'}>
-        <PopoverArrow />
-        <PopoverCloseButton />
-        <PopoverHeader fontSize={'lg'} fontWeight={'bold'} color={'gray.700'}>
-          Remote : {boxFullDate}{' '}
-          {/* Ovde dinamicka dodela, da li je remote u pitanju ili PTO */}
-        </PopoverHeader>
-        <PopoverBody maxH="300px" overflowY="scroll">
-          <Flex flexDirection={'column'} gap={'15px'} paddingTop={'10px'}>
-            <Flex alignItems={'center'} gap={'10px'}>
-              <Avatar name="Ryan Florence" src="https://bit.ly/ryan-florence" />
-              <Text>Ryan Florence</Text>
-            </Flex>
-            <Flex alignItems={'center'} gap={'10px'}>
-              <Avatar name="Segun Adebayo" src="https://bit.ly/sage-adebayo" />
-              <Text>Segun Adebayo</Text>
-            </Flex>
-            <Flex alignItems={'center'} gap={'10px'}>
-              <Avatar name="Kent Dodds" src="https://bit.ly/kent-c-dodds" />
-              <Text>Kent Dodds</Text>
-            </Flex>
-            <Flex alignItems={'center'} gap={'10px'}>
-              <Avatar
-                name="Prosper Otemuyiwa"
-                src="https://bit.ly/prosper-baba"
-              />
-              <Text>Prosper Otemuyiwa</Text>
-            </Flex>
-            <Flex alignItems={'center'} gap={'10px'}>
-              <Avatar name="Christian Nwamba" src="https://bit.ly/code-beast" />
-              <Text>Christian Nwamba</Text>
-            </Flex>
-          </Flex>
-        </PopoverBody>
-      </PopoverContent>
+      <CalendarPopoverContent employeesToday={employeesToday} isPTO={isPTO} />
     </Popover>
   );
 };

@@ -1,21 +1,26 @@
 import { useState } from 'react';
-import {
-  Box,
-  Flex,
-  Button,
-  Text,
-  Select,
-  AvatarGroup,
-  Avatar,
-} from '@chakra-ui/react';
+import { Box, Flex, Button, Text, Select } from '@chakra-ui/react';
 import styles from './PTOCalendar.styles';
 import CalendarBox from './CalendarBox';
 import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
+import useEmployees from '../../hooks/useEmployees';
+import { useQuery } from 'react-query';
 
 const Calendar = () => {
   const [date, setDate] = useState(new Date());
   const [showSaturday, setShowSaturday] = useState(false);
   const [isPTO, setPTO] = useState(true);
+  const { employees } = useEmployees();
+
+  const { data: employeesList } = useQuery('employees', employees);
+
+  if (!employeesList) {
+    return <div>Loading...</div>;
+  }
+
+  const employeesFiltered = isPTO
+    ? employeesList.filter((x) => x.off === 'Pay time off')
+    : employeesList.filter((x) => x.off === 'Remote');
 
   const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
   if (showSaturday) {
@@ -54,6 +59,9 @@ const Calendar = () => {
         getDayDate()
       );
     };
+    const employeesToday = employeesFiltered.filter(
+      (x) => x.date === createDate()
+    );
     if (
       showSaturday
         ? dayOfWeek >= 1 && dayOfWeek <= 6
@@ -64,21 +72,9 @@ const Calendar = () => {
           key={createDate()}
           day={getDayDate()}
           boxFullDate={createDate()}
-        >
-          {/*Ovde dole mozda mozes da ubacis ove avatare i te info, preko props-a, posto i u CalendarBox compoennt moras da imas te informacije zbog popovera
-           ili mozes preko childrena da pristupis,mada ima mnogo propertyja posle, proveri sa Milsoem*/}
-          <AvatarGroup gap={'2'} size={'sm'} max={2}>
-            <Avatar name="Ryan Florence" src="https://bit.ly/ryan-florence" />
-            <Avatar name="Segun Adebayo" src="https://bit.ly/sage-adebayo" />
-            <Avatar name="Kent Dodds" src="https://bit.ly/kent-c-dodds" />
-
-            <Avatar
-              name="Prosper Otemuyiwa"
-              src="https://bit.ly/prosper-baba"
-            />
-            <Avatar name="Christian Nwamba" src="https://bit.ly/code-beast" />
-          </AvatarGroup>
-        </CalendarBox>
+          employeesToday={employeesToday}
+          isPTO={isPTO}
+        ></CalendarBox>
       );
     }
   }
