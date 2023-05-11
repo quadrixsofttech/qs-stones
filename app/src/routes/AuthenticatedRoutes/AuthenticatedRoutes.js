@@ -1,6 +1,6 @@
 import { lazy } from 'react';
 import { Route } from 'react-router-dom';
-import PayedTimeOff from './../../pages/PayedTimeOff/PayedTimeOff';
+import PayedTimeOff from './../../pages/PayedTimeOff';
 
 const Account = lazy(() => import('../../pages/Account'));
 
