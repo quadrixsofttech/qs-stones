@@ -1,32 +1,11 @@
 import { useDisclosure, useToast } from '@chakra-ui/react';
-import { useState} from 'react';
-import moment from 'moment';
+import { useState } from 'react';
 
 export const useCalendar = () => {
-  const [tagArray, setTagArray] = useState([]);
+  const [listOfRanges, setListOfRanges] = useState([]);
   const { onClose } = useDisclosure();
 
   const toast = useToast();
-
-  const handleTag = (start, end) => {
-    const tagLabel = `${moment(start).format('YYYY-MM-DD')} - ${moment(
-      end
-    ).format('YYYY-MM-DD')}`;
-    console.log(tagLabel);
-    const tagColor = 'gray';
-    const newTag = {
-      label: tagLabel,
-      color: tagColor,
-      startDate: start,
-      endDate: end,
-    };
-    setTagArray((prevTagArray) => [...prevTagArray, newTag]);
-  };
-  const handleRemoveTag = (tagIndex) => {
-    const updatedTagArray = [...tagArray];
-    updatedTagArray.splice(tagIndex, 1);
-    setTagArray(updatedTagArray);
-  };
 
   const handleSubmit = () => {
     onClose();
@@ -42,11 +21,9 @@ export const useCalendar = () => {
     });
   };
 
-  return {
-    tagArray,
-    handleRemoveTag,
+  return [
+    listOfRanges,
+    setListOfRanges,
     handleSubmit,
-    setTagArray,
-    handleTag,
-  };
+  ];
 };

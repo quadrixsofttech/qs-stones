@@ -14,33 +14,45 @@ import { Info } from '@material-ui/icons';
 import styles from './CalendarModal.styles';
 import { useCalendar } from '../../hooks/useCalendar';
 import { Calendar } from 'react-multi-date-picker';
-import { useState, useContext } from 'react';
-import moment from 'moment';
-import CalendarContext from './../../context/CalendarContext';
+import { useState } from 'react';
 
 export const CalendarModal = (props) => {
   const [remoteValues, setRemoteValues] = useState([]);
-  const { handleRemoveTag } = useCalendar();
-  const [tagArray, setTagArray] = useState([]);
-  const { startDate, endDate, handleSetDates } = useContext(CalendarContext);
+  const [listOfRanges, setListOfRanges] = useCalendar();
+  const [listOfVacationRanges, setListOfVacationRanges] = useCalendar();
 
-  const handleOnChange = (value) => {
-    console.log(`startdate enddate`,startDate,endDate);
-    if (Array.isArray(value)) {
-      const startDate = value[value.length - 1]?.start;
-      const endDate = value[value.length - 1]?.end;
-      if (startDate && endDate) {
-        const range = Array.from(
-          { length: endDate.diff(startDate, 'days').toObject().days + 1 },
-          (_, i) => startDate.clone().add(i, 'days')
-        );
-        setRemoteValues(range);
-        handleSetDates(startDate, endDate);
-      }
-      console.log(startDate, endDate);
-    } else {
-      setRemoteValues([]);
+
+  const renderRangeTag = (range) => {
+    if (range.length !== 2) {
+      return;
     }
+    const startDate = range[0];
+    const endDate = range[1];
+    return (
+      <Tag
+        size={'sm'}
+        fontSize={'12px'}
+        borderRadius="full"
+        variant="subtle"
+        colorScheme="gray"
+      >
+        <TagLabel>
+          {startDate.format()} - {endDate.format()}
+        </TagLabel>
+        <TagCloseButton />
+      </Tag>
+    );
+  };
+
+  const handleOnChange = (listOfRanges) => {
+    setListOfRanges(listOfRanges);
+  };
+
+  const renderListOfRanges = (listOfRanges) => {
+    if (!Array.isArray(listOfRanges)) {
+      return;
+    }
+    return listOfRanges.map(renderRangeTag);
   };
 
   return (
@@ -76,34 +88,17 @@ export const CalendarModal = (props) => {
           onChange={handleOnChange}
         />
       </Flex>
-      {props.isClicked ?? (
         <>
           <Text {...styles.textRequestDates}>
             Requested dates for Vacation:
           </Text>
-
+          {renderListOfRanges(listOfRanges)}
+          {/* {renderListOfRanges(listOfVacationRanges)} */}
           <Flex>
-          {startDate && endDate ? (
-              <Flex>
-                <Tag
-                  size={"sm"}
-                  fontSize={"12px"}
-                  borderRadius="full"
-                  variant="subtle"
-                  colorScheme="green"
-                >
-                  <TagLabel>
-                    {startDate.format("MMM D, YYYY")} -{" "}
-                    {endDate.format("MMM D, YYYY")}
-                  </TagLabel>
-                  <TagCloseButton onClick={() => handleSetDates(null, null)} />
-                </Tag>
-              </Flex>
-            ) : null}
+            <Flex></Flex>
           </Flex>
           <Divider />
         </>
-      )}
       <Divider />
       <Text {...styles.textRequestDates}>Requested dates for Remote:</Text>
       <Flex {...styles.flexTag}>

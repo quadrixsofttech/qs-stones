@@ -50,7 +50,7 @@ const MyHistory = () => {
         </TabList>
         <TabIndicator {...styles.tabindicator} />
         <TabPanels p={0}>
-          <TabPanel >
+          <TabPanel>
             <Select size="sm" mb={2}>
               <option value="Remote">Remote</option>
               <option value="Vacation">Vacation</option>
@@ -61,7 +61,7 @@ const MyHistory = () => {
               value={values}
               values={setValues}
             />
-            <StatGroup> 
+            <StatGroup>
               <Flex {...styles.statgroup_flex}>
                 <Stat {...styles.stat}>
                   <StatLabel pt={2}>
