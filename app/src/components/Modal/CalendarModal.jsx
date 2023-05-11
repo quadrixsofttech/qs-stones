@@ -15,13 +15,30 @@ import styles from './CalendarModal.styles';
 import { useCalendar } from '../../hooks/useCalendar';
 import { Calendar } from 'react-multi-date-picker';
 import { useState } from 'react';
+import moment from 'moment';
 
 export const CalendarModal = (props) => {
   const [remoteValues, setRemoteValues] = useState([]);
-  const { tagArray, handleRemoveTag } = useCalendar();
+  const { handleRemoveTag} = useCalendar();
+  const [tagArray, setTagArray] = useState([]);
 
   const handleOnChange = (value) => {
     setRemoteValues(value);
+
+    const startDate = moment(value[0]).format('YYYY-MM-DD');
+    const endDate = moment(value[value.length - 1]).format('YYYY-MM-DD');
+    const tagLabel = `${startDate} - ${endDate}`;
+    console.log(tagLabel);
+    const tagColor = 'gray';
+    const newTag = {
+      label: tagLabel,
+      color: tagColor,
+      startDate: value[0],
+      endDate: value[value.length - 1],
+    };
+
+    setTagArray((prevTagArray) => [...prevTagArray, newTag]);
+    console.log(tagLabel);
   };
 
   return (
@@ -64,19 +81,26 @@ export const CalendarModal = (props) => {
           </Text>
 
           <Flex>
-            {tagArray.map((tag, index) => (
+            {remoteValues.map((item) => (
               <Tag
-                key={index}
+                key={item}
                 size={'sm'}
                 fontSize={'12px'}
                 borderRadius="full"
                 variant="subtle"
-                colorScheme={tag.color}
+                colorScheme="gray"
               >
-                <Tooltip label={tag.label} placement="bottom" hasArrow>
-                  <TagLabel>{tag.label}</TagLabel>
+                <Tooltip label={item.label} placement="bottom" hasArrow>
+                  <TagLabel>{moment(item.label).format('YYYY-MM-DD')}</TagLabel>
                 </Tooltip>
-                <TagCloseButton onClick={() => handleRemoveTag(index)} />
+                <TagCloseButton
+                  onClick={() => {
+                    const index = tagArray.findIndex(
+                      (tag) => tag.label === item.label
+                    );
+                    handleRemoveTag(index);
+                  }}
+                />
               </Tag>
             ))}
           </Flex>

@@ -9,17 +9,17 @@ export const useCalendar = () => {
   const toast = useToast();
 
   const handleTag = (start, end) => {
-    const tagLabel = `${moment(start).format('YYYY-MM-DD')} - ${moment(end).format('YYYY-MM-DD')}`;
+    const tagLabel = `${moment(start).format('YYYY-MM-DD')} - ${moment(
+      end
+    ).format('YYYY-MM-DD')}`;
     const tagColor = 'gray';
     const newTag = {
       label: tagLabel,
       color: tagColor,
-      startDate: moment(start).toDate(),
-      endDate: moment(end).toDate(),
+      startDate: start,
+      endDate: end,
     };
-  
     setTagArray((prevTagArray) => [...prevTagArray, newTag]);
-    console.log(tagArray);
   };
   const handleRemoveTag = (tagIndex) => {
     const updatedTagArray = [...tagArray];
@@ -46,6 +46,6 @@ export const useCalendar = () => {
     handleRemoveTag,
     handleSubmit,
     setTagArray,
-    handleTag
+    handleTag,
   };
 };
