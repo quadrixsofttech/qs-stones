@@ -30,19 +30,9 @@ const sideBarButton = {
   },
 };
 
-// const sideBarButtonActive = {
-//   width: '168px',
-//   height: '56px',
-//   backgroundColor: 'purple.50',
-//   color: 'purple.700',
-//   borderRadius: '6px',
-//   p: '16px',
-// };
-
 const styles = {
   sideBar,
   sideBarButton,
-  //sideBarButtonActive,
 };
 
 export default styles;
