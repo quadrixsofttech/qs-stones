@@ -1,12 +1,7 @@
-import { MyVacationInfo } from '../../components/MyVacationInfo/MyVacationInfo';
 import DashboardLayout from '../../layout/DashboardLayout';
 
 const Dashboard = () => {
-  return (
-    <DashboardLayout>
-      <MyVacationInfo></MyVacationInfo>
-    </DashboardLayout>
-  );
+  return <DashboardLayout></DashboardLayout>;
 };
 
 export default Dashboard;
