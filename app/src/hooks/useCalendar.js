@@ -1,29 +1,23 @@
-import { useDisclosure, useToast } from '@chakra-ui/react';
 import { useState } from 'react';
 
 export const useCalendar = () => {
   const [listOfRanges, setListOfRanges] = useState([]);
-  const { onClose } = useDisclosure();
+  const [listOfRangesVacation,setListOfRangesVacation] = useState([]);
 
-  const toast = useToast();
-
-  const handleSubmit = () => {
-    onClose();
-    return toast({
-      title: 'Success',
-      description:
-        'Success You have submitted a request to the Admin for scheduling vacation and remote work',
-      position: 'top',
-      status: 'success',
-      isClosable: false,
-      colorScheme: 'green',
-      variant: 'subtle',
-    });
-  };
+  const handleClose = (range) => {
+    const index = listOfRanges.findIndex(r => r === range);
+    if (index !== -1) {
+      const newListOfRanges = [...listOfRanges];
+      newListOfRanges.splice(index, 1);
+      setListOfRanges(newListOfRanges);
+    }
+  }
 
   return [
     listOfRanges,
     setListOfRanges,
-    handleSubmit,
+    listOfRangesVacation,
+    setListOfRangesVacation,
+    handleClose,
   ];
 };

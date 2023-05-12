@@ -20,13 +20,27 @@ import MyHistory from '../../components/MyHistory/MyHistory';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import { BiUserPin } from 'react-icons/bi';
 import { useState } from 'react';
-import { useCalendar } from '../../hooks/useCalendar';
 import { CalendarModal } from './../../components/Modal/CalendarModal';
+import { useToast } from '@chakra-ui/react';
 
 const PayedTimeOff = () => {
-  const { handleSubmit } = useCalendar();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [isClicked, setIsClicked] = useState(false);
+  const [isCurrentPageRemote, setIsCurrectPageRemote] = useState(true);
+  const toast = useToast();
+
+  const handleSubmit = () => {
+    onClose();
+    return toast({
+      title: 'Success',
+      description:
+        'You have submitted a request to the Admin for scheduling vacation and remote work',
+      position: 'top',
+      status: 'success',
+      isClosable: false,
+      colorScheme: 'green',
+      variant: 'subtle',
+    });
+  };
 
   return (
     <>
@@ -50,21 +64,29 @@ const PayedTimeOff = () => {
             <Divider />
             <ModalCloseButton />
             <ModalBody maxH="600px" overflowY={'auto'}>
-              {!isClicked ? (
-                <CalendarModal name="Remote" value={45} isClicked={isClicked} />
+              {isCurrentPageRemote ? (
+                <CalendarModal
+                  name="Remote"
+                  value={45}
+                  isCurrentPageRemote={isCurrentPageRemote}
+                />
               ) : (
-                <CalendarModal name="Vacation" value={95} />
+                <CalendarModal
+                  name="Vacation"
+                  value={95}
+                  isCurrentPageRemote={isCurrentPageRemote}
+                />
               )}
             </ModalBody>
             <ModalFooter display={'flex'}>
-              {!isClicked ? (
+              {isCurrentPageRemote ? (
                 <>
                   <Button onClick={onClose} width={'6rem'}>
                     Close
                   </Button>
                   <Button
                     {...styles.buttonNext}
-                    onClick={() => setIsClicked(!isClicked)}
+                    onClick={() => setIsCurrectPageRemote(!isCurrentPageRemote)}
                   >
                     Next
                     <Box ml={2}>
@@ -75,7 +97,7 @@ const PayedTimeOff = () => {
               ) : (
                 <>
                   <Button
-                    onClick={() => setIsClicked(!isClicked)}
+                    onClick={() => setIsCurrectPageRemote(!isCurrentPageRemote)}
                     width={'6rem'}
                     leftIcon={<FaArrowLeft />}
                   >

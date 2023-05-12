@@ -14,15 +14,38 @@ import { Info } from '@material-ui/icons';
 import styles from './CalendarModal.styles';
 import { useCalendar } from '../../hooks/useCalendar';
 import { Calendar } from 'react-multi-date-picker';
-import { useState } from 'react';
 
 export const CalendarModal = (props) => {
-  const [remoteValues, setRemoteValues] = useState([]);
-  const [listOfRanges, setListOfRanges] = useCalendar();
+  const [listOfRanges, setListOfRanges, handleClose] = useCalendar();
   const [listOfVacationRanges, setListOfVacationRanges] = useCalendar();
 
-
   const renderRangeTag = (range) => {
+    if (range.length !== 2) {
+      return;
+    }
+    const startDate = range[0];
+    const endDate = range[1];
+    return (
+      <Tag
+        size={'sm'}
+        fontSize={'12px'}
+        borderRadius="full"
+        variant={props.isCurrentPageRemote ? 'subtle' : 'outline'}
+        colorScheme="gray"
+      >
+        <TagLabel>
+          {startDate.format()} - {endDate.format()}
+        </TagLabel>
+        {props.isCurrentPageRemote ? (
+          <TagCloseButton onClick={() => handleClose(range)} />
+        ) : (
+          ''
+        )}
+      </Tag>
+    );
+  };
+
+  const renderRangeTagVacation = (range) => {
     if (range.length !== 2) {
       return;
     }
@@ -39,20 +62,30 @@ export const CalendarModal = (props) => {
         <TagLabel>
           {startDate.format()} - {endDate.format()}
         </TagLabel>
-        <TagCloseButton />
+        <TagCloseButton onClick={() => handleClose(range)} />
       </Tag>
     );
   };
-
-  const handleOnChange = (listOfRanges) => {
+  const handleOnChangeRemote = (listOfRanges) => {
     setListOfRanges(listOfRanges);
+  };
+
+  const handleOnChangeVacation = (listOfRangesVacation) => {
+    setListOfVacationRanges(listOfRangesVacation);
   };
 
   const renderListOfRanges = (listOfRanges) => {
     if (!Array.isArray(listOfRanges)) {
       return;
     }
-    return listOfRanges.map(renderRangeTag);
+    return listOfRanges.map((range) => renderRangeTag(range));
+  };
+
+  const renderListOfRangesVacation = (listOfRanges) => {
+    if (!Array.isArray(listOfRanges)) {
+      return;
+    }
+    return listOfRanges.slice(1).map((range) => renderRangeTagVacation(range));
   };
 
   return (
@@ -78,54 +111,41 @@ export const CalendarModal = (props) => {
         <option value="option1">Milos Stosic(ADMIN)</option>
         <option value="option2">Igor Stosic(ADMIN)</option>
       </Select>
-      <Flex alignItems={'center'} justifyContent={'center'}>
-        <Calendar
-          range
-          rangeHover
-          multiple
-          numberOfMonths={2}
-          value={remoteValues}
-          onChange={handleOnChange}
-        />
-      </Flex>
+      {props.isCurrentPageRemote ? (
         <>
+          <Flex alignItems={'center'} justifyContent={'center'}>
+            <Calendar
+              range
+              rangeHover
+              multiple
+              numberOfMonths={2}
+              onChange={handleOnChangeRemote}
+            />
+          </Flex>
+          <Text {...styles.textRequestDates}>Requested dates for Remote:</Text>
+          {renderListOfRanges(listOfRanges)}
+          <Divider />
+        </>
+      ) : (
+        <>
+          <Flex alignItems={'center'} justifyContent={'center'}>
+            <Calendar
+              range
+              rangeHover
+              multiple
+              numberOfMonths={2}
+              onChange={handleOnChangeVacation}
+            />
+          </Flex>
           <Text {...styles.textRequestDates}>
             Requested dates for Vacation:
           </Text>
+          {renderListOfRangesVacation(listOfVacationRanges)}
+          <Text {...styles.textRequestDates}>Requested dates for Remote:</Text>
           {renderListOfRanges(listOfRanges)}
-          {/* {renderListOfRanges(listOfVacationRanges)} */}
-          <Flex>
-            <Flex></Flex>
-          </Flex>
           <Divider />
         </>
-      <Divider />
-      <Text {...styles.textRequestDates}>Requested dates for Remote:</Text>
-      <Flex {...styles.flexTag}>
-        {/* {console.log('dadad')} */}
-        {/* {tagArray.map((tag, index) => {
-          console.log('daddadaddadaddadaer554ada');
-          return (
-            <Tag
-              key={index}
-              size={'sm'}
-              fontSize={'12px'}
-              borderRadius="full"
-              variant="subtle"
-              colorScheme={tag.color}
-            >
-              <Tooltip label={tag.label} placement="bottom" hasArrow>
-                <TagLabel>
-                  {tag.startDate.toLocaleDateString()} -{' '}
-                  {tag.endDate.toLocaleDateString()}
-                </TagLabel>
-              </Tooltip>
-              <TagCloseButton onClick={() => handleRemoveTag(index)} />
-            </Tag>
-          );
-        })} */}
-      </Flex>
-      <Divider />
+      )}
     </>
   );
 };
