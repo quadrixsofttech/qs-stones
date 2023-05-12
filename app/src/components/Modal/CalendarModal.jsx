@@ -16,9 +16,22 @@ import { useCalendar } from '../../hooks/useCalendar';
 import { Calendar } from 'react-multi-date-picker';
 
 export const CalendarModal = (props) => {
-  const [listOfRanges, setListOfRanges, handleClose] = useCalendar();
-  const [listOfVacationRanges, setListOfVacationRanges] = useCalendar();
+  const [
+    listOfRanges,
+    setListOfRanges,
+    listOfRangesVacation,
+    setListOfRangesVacation,
+  ] = useCalendar();
 
+  const handleClose = (range) => {
+    const index = listOfRanges.findIndex((r) => r === range);
+    if (index !== -1) {
+      const newListOfRanges = [...listOfRanges];
+      console.log(newListOfRanges);
+      newListOfRanges.splice(index, 1);
+      setListOfRanges(newListOfRanges);
+    }
+  };
   const renderRangeTag = (range) => {
     if (range.length !== 2) {
       return;
@@ -71,7 +84,7 @@ export const CalendarModal = (props) => {
   };
 
   const handleOnChangeVacation = (listOfRangesVacation) => {
-    setListOfVacationRanges(listOfRangesVacation);
+    setListOfRangesVacation(listOfRangesVacation);
   };
 
   const renderListOfRanges = (listOfRanges) => {
@@ -140,7 +153,7 @@ export const CalendarModal = (props) => {
           <Text {...styles.textRequestDates}>
             Requested dates for Vacation:
           </Text>
-          {renderListOfRangesVacation(listOfVacationRanges)}
+          {renderListOfRangesVacation(listOfRangesVacation)}
           <Text {...styles.textRequestDates}>Requested dates for Remote:</Text>
           {renderListOfRanges(listOfRanges)}
           <Divider />
