@@ -1,11 +1,12 @@
 import { lazy } from 'react';
 import { Route } from 'react-router-dom';
 
-const PTO = lazy(() => import('../../pages/PTO'));
+
+const PayedTimeOff = lazy(() => import('./../../pages/PayedTimeOff'));
 const Account = lazy(() => import('../../pages/Account'));
 
 const AuthenticatedRoutes = [
-  <Route key="dashboard" path="/dashboard" element={<PTO />} />,
+  <Route key="dashboard" path="/dashboard" element={<PayedTimeOff />} />,
   <Route key="account" path="/account" element={<Account />} />,
 ];
 
