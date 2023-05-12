@@ -28,12 +28,12 @@
 }
 
 .rmdp-day.rmdp-today span {
-  background-color: black;
-  color: #fff;
+  background-color: #E9D8FD;
+  color: #000;
 }
 
 .rmdp-day:not(.rmdp-disabled):not(.rmdp-day-hidden) span:hover{
-    background-color: black ;
+    background-color: #805AD5 ;
     color:#fff;
 }
 
@@ -63,7 +63,7 @@
 }
 
 .rmdp-day.rmdp-selected span:not(.highlight){
-  background-color: black;
+  background-color: #805AD5;
 }
 
 .rmdp-arrow-container {

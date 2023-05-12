@@ -1,5 +1,5 @@
 const container = {
-  width: '25%',
+  width: '30%',
   borderWidth: 'px',
   borderRadius: '6px',
   p: '0',
@@ -15,7 +15,7 @@ const tabindicator = {
   borderRadius: '1px',
 };
 
-const flex = {
+const header = {
   bg: 'blackAlpha.50',
   w: '100%',
   h: '60px',
@@ -45,7 +45,7 @@ const statgroup_flex = {
 const styles = {
   container,
   tabindicator,
-  flex,
+  header,
   stat,
   tabs,
   statgroup_flex,
