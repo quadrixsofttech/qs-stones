@@ -1,8 +1,9 @@
-import { Button, Heading, Flex, Spacer, Box } from '@chakra-ui/react';
+import { Button, Heading, Flex, Spacer } from '@chakra-ui/react';
 import DashboardLayout from '../../layout/DashboardLayout/DashboardLayout';
 import styles from './PayedTimeOff.styles.js';
 import { FaRegCalendarPlus } from 'react-icons/fa';
 import { MyVacationInfo } from '../../components/MyVacationInfo/MyVacationInfo';
+import { MyVacationInfoProvider } from '../../context/MyVacationInfoContext';
 const PayedTimeOff = () => {
   return (
     <>
@@ -18,7 +19,9 @@ const PayedTimeOff = () => {
           </Button>
         </Flex>
         <Flex flexDir={'column'}>
-          <MyVacationInfo></MyVacationInfo>
+          <MyVacationInfoProvider>
+            <MyVacationInfo></MyVacationInfo>
+          </MyVacationInfoProvider>
         </Flex>
       </DashboardLayout>
     </>

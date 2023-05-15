@@ -1,9 +1,16 @@
 import React from 'react';
 import styles from './MyVacationInfo.styles';
-import { Box, Divider, Flex, Heading } from '@chakra-ui/react';
+import { Box, Divider, Flex, Heading, Text } from '@chakra-ui/react';
 import MyVacationInfoBox from './MyVacationInfoBox';
+import useVacation from '../../hooks/useVacation';
 
 export const MyVacationInfo = () => {
+  const { vacationInfo, isLoading } = useVacation();
+
+  if (isLoading) {
+    return <Text>Loading...</Text>;
+  }
+
   return (
     <Flex {...styles.mainBox} flexDirection={'column'} width={'742px'}>
       <Box {...styles.header}>
@@ -14,15 +21,15 @@ export const MyVacationInfo = () => {
       <Flex {...styles.infoBox}>
         <MyVacationInfoBox
           heading={'User Vacation Days to date'}
-          numberInfo={'9'}
-          footer={'17 days left'}
+          numberInfo={vacationInfo.VacationDaysToDate}
+          footer={`${vacationInfo.VacationDaysLeft} days left`}
         />
         <Flex height={'100px'}>
           <Divider orientation="vertical" />
         </Flex>
         <MyVacationInfoBox
-          heading={'User Vacation Days to date'}
-          numberInfo={'21'}
+          heading={'New Vacation Days from this year'}
+          numberInfo={vacationInfo.NewVacationDaysFromThisYear}
           footer={'Usable until June next year'}
         />
         <Flex height={'100px'}>
@@ -30,7 +37,7 @@ export const MyVacationInfo = () => {
         </Flex>
         <MyVacationInfoBox
           heading={'Unused Vacation Days from last year'}
-          numberInfo={'5'}
+          numberInfo={vacationInfo.UnusedVacationDaysFromLastYear}
           footer={'Usable until June this year'}
         />
         <Flex height={'100px'}>
@@ -42,7 +49,7 @@ export const MyVacationInfo = () => {
               Total Vacation <br /> Days
             </>
           }
-          numberInfo={'26'}
+          numberInfo={vacationInfo.TotalVacationDays}
           footer={'New and unused days'}
         />
       </Flex>
