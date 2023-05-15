@@ -14,32 +14,29 @@ import { Info } from '@material-ui/icons';
 import styles from './CalendarModal.styles';
 import { useCalendar } from '../../hooks/useCalendar';
 import { Calendar } from 'react-multi-date-picker';
+import generateRadnomIndex from '../../util/generateRandomIndex';
 
 export const CalendarModal = (props) => {
+
   const [
     listOfRanges,
     setListOfRanges,
     listOfRangesVacation,
     setListOfRangesVacation,
+    handleClose,
+    handleCloseVacation,
   ] = useCalendar();
 
-  const handleClose = (range) => {
-    const index = listOfRanges.findIndex((r) => r === range);
-    if (index !== -1) {
-      const newListOfRanges = [...listOfRanges];
-      console.log(newListOfRanges);
-      newListOfRanges.splice(index, 1);
-      setListOfRanges(newListOfRanges);
-    }
-  };
-  const renderRangeTag = (range) => {
+  const renderRangeTag = (range, key) => {
     if (range.length !== 2) {
       return;
     }
+
     const startDate = range[0];
     const endDate = range[1];
     return (
       <Tag
+        key={key}
         size={'sm'}
         fontSize={'12px'}
         borderRadius="full"
@@ -75,10 +72,11 @@ export const CalendarModal = (props) => {
         <TagLabel>
           {startDate.format()} - {endDate.format()}
         </TagLabel>
-        <TagCloseButton onClick={() => handleClose(range)} />
+        <TagCloseButton onClick={() => handleCloseVacation(range)} />
       </Tag>
     );
   };
+
   const handleOnChangeRemote = (listOfRanges) => {
     setListOfRanges(listOfRanges);
   };
@@ -91,14 +89,18 @@ export const CalendarModal = (props) => {
     if (!Array.isArray(listOfRanges)) {
       return;
     }
-    return listOfRanges.map((range) => renderRangeTag(range));
+    return listOfRanges.map((range) =>
+      renderRangeTag(range, generateRadnomIndex())
+    );
   };
 
-  const renderListOfRangesVacation = (listOfRanges) => {
-    if (!Array.isArray(listOfRanges)) {
+  const renderListOfRangesVacation = (listOfRangesVacation) => {
+    if (!Array.isArray(listOfRangesVacation)) {
       return;
     }
-    return listOfRanges.slice(1).map((range) => renderRangeTagVacation(range));
+    return listOfRangesVacation
+      .slice(1)
+      .map((range) => renderRangeTagVacation(range, generateRadnomIndex()));
   };
 
   return (
@@ -154,6 +156,7 @@ export const CalendarModal = (props) => {
             Requested dates for Vacation:
           </Text>
           {renderListOfRangesVacation(listOfRangesVacation)}
+          <Divider />
           <Text {...styles.textRequestDates}>Requested dates for Remote:</Text>
           {renderListOfRanges(listOfRanges)}
           <Divider />

@@ -13,11 +13,21 @@ export const useCalendar = () => {
     }
   }
 
+  const handleCloseVacation = (range) => {
+    const index = listOfRangesVacation.findIndex(r => r === range);
+    if (index !== -1) {
+      const newListOfRanges = [...listOfRangesVacation];
+      newListOfRanges.splice(index, 1);
+      setListOfRangesVacation(newListOfRanges);
+    }
+  }
+
   return [
     listOfRanges,
     setListOfRanges,
     listOfRangesVacation,
     setListOfRangesVacation,
     handleClose,
+    handleCloseVacation
   ];
 };

@@ -31,10 +31,10 @@ const RequestPTO = ({ isRequestApproved = status.pending }) => {
       <Text {...styles.gray_text}>{getCurrentDateTime()}</Text>
       <Text {...styles.main_text}>
         You sent Request PTO/Remote to
-        <Text fontWeight={'bold'}>Milos Stosic(ADMIN)</Text>
+        <Text fontWeight={'bold'} as="span">Milos Stosic(ADMIN)</Text>
       </Text>
       <Text display={'inline'} {...styles.gray_text}>
-        Requested Dates: <Text display={'inline'}>23/4/2022</Text>
+        Requested Dates: <Text display={'inline'} as="span">23/4/2022</Text>
       </Text>
       <Box pt={2}>
         {isRequestApproved === status.pending ? (

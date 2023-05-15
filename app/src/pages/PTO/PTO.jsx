@@ -26,6 +26,7 @@ import { useToast } from '@chakra-ui/react';
 const PayedTimeOff = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isCurrentPageRemote, setIsCurrectPageRemote] = useState(true);
+  const [isVacationPage, setIsVacationPage] = useState(false);
   const toast = useToast();
 
   const handleSubmit = () => {
@@ -86,7 +87,11 @@ const PayedTimeOff = () => {
                   </Button>
                   <Button
                     {...styles.buttonNext}
-                    onClick={() => setIsCurrectPageRemote(!isCurrentPageRemote)}
+                    onClick={() => {
+                      setIsVacationPage(true);
+                      setIsCurrectPageRemote(false);
+                      console.log(isVacationPage)
+                    }}
                   >
                     Next
                     <Box ml={2}>
@@ -97,7 +102,11 @@ const PayedTimeOff = () => {
               ) : (
                 <>
                   <Button
-                    onClick={() => setIsCurrectPageRemote(!isCurrentPageRemote)}
+                    onClick={() => {
+                      setIsVacationPage(false);
+                      setIsCurrectPageRemote(true);
+                      console.log(isVacationPage)
+                    }}
                     width={'6rem'}
                     leftIcon={<FaArrowLeft />}
                   >

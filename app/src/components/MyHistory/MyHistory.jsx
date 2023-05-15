@@ -58,8 +58,8 @@ const MyHistory = () => {
             <Calendar
               headerOrder={['MONTH_YEAR', 'LEFT_BUTTON', 'RIGHT_BUTTON']}
               className="custom-calendar"
-              value={values}
-              values={setValues}
+              values={values}
+              onChange={setValues}
             />
             <StatGroup>
               <Flex {...styles.statgroup_flex}>
