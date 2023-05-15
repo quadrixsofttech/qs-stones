@@ -5,6 +5,7 @@ const employees = {
   percentIncrease: 15.38,
   percentDecrease: 7.88,
   request:{
+    id:6,
     status:[1,0,2,0,1,2,1,1,0,2]
   },
   admin:['Milos Stosic','Igor Stosic','Marija Stosic','Tamara Stosic'],

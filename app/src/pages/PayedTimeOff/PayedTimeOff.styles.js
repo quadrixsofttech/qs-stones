@@ -13,15 +13,12 @@ const heading = {
     fontWeight: 700
 }
 
-const mainContainer = {
-    
-}
+
 
 
 const styles = {
     button,
     heading,
-    mainContainer
 }
 
 export default styles;

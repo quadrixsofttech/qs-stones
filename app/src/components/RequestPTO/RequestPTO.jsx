@@ -32,10 +32,10 @@ const RequestPTO = ({ isRequestApproved = status.pending }) => {
       <Text {...styles.gray_text}>{moment().format('HH:mm:ss')}</Text>
       <Text {...styles.main_text}>
         You sent Request PTO/Remote to
-        <Text fontWeight={'bold'}>{employees.admin[Math.floor(Math.random() * employees.admin.length)]}(ADMIN)</Text>
+        <Text {...styles.admin_text} as="span">{employees.admin[Math.floor(Math.random() * employees.admin.length)]}(ADMIN)</Text>
       </Text>
       <Text display={'inline'} {...styles.gray_text}>
-        Requested Dates: <Text display={'inline'}>{employees.requestDate}</Text>
+        Requested Dates: <Text display={'inline'} as="span">{employees.requestDate}</Text>
       </Text>
       <Box pt={2}>
         {isRequestApproved === status.pending ? (

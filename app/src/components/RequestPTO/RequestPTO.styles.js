@@ -4,13 +4,13 @@ const box = {
 };
 
 const gray_text = {
-  fontWeigth: 400,
+  fontWeight: 400,
   color: 'gray.500',
   paddingBottom: '1',
 };
 
 const main_text = {
-  fontWeigth: 700,
+  fontWeight: 700,
   paddingBottom: '1',
 };
 
@@ -30,6 +30,7 @@ const accordion = {
   borderTop : 'px #fff',
   borderBottom :'px #fff',
 }
+
 
 const styles = {
   box,

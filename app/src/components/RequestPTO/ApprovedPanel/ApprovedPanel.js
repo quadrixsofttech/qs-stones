@@ -8,7 +8,7 @@ export const ApprovedPanel = () => {
       <Text color={'gray.500'}>{employees.requestDate}</Text>
       <Text fontWeight={'bold'}>
         {employees.admin[Math.floor(Math.random() * employees.admin.length)]}(ADMIN) approved
-        <Text fontWeight={'normal'}>your Request PTO/Remote</Text>
+        <Text fontWeight={'normal'} as="span">your Request PTO/Remote</Text>
       </Text>
     </>
   );

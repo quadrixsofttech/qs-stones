@@ -8,12 +8,14 @@ export const RejectedPanel = () => {
       <Text color={'gray.500'}>23/3/2022</Text>
       <Text fontWeight={'bold'}>
         Milos Stosic(ADMIN) rejected
-        <Text fontWeight={'normal'}>your Request PTO/Remote</Text>
-        <Flex flexDirection={'column'}>
-          <Textarea mt={2} placeholder="Explanation" width={200} />
-          <Button {...styles.button}>Send Request Again</Button>
-        </Flex>
+        <Text fontWeight={'normal'} as="span">
+          your Request PTO/Remote
+        </Text>
       </Text>
+      <Flex flexDirection={'column'}>
+        <Textarea mt={2} placeholder="Explanation" width={200} />
+        <Button {...styles.button}>Send Request Again</Button>
+      </Flex>
     </>
   );
 };

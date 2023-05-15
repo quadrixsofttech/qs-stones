@@ -94,9 +94,10 @@ const MyHistory = () => {
             </StatGroup>
           </TabPanel>
           <TabPanel {...styles.tabpanel}>
-            {employees.request.status.map((value)=> {
-              return <RequestPTO isRequestApproved={value} />
-            })}
+            {Array.isArray(employees.request.status) &&
+              employees.request.status.map((value, id) => {
+                return <RequestPTO key={id} isRequestApproved={value} />;
+              })}
           </TabPanel>
         </TabPanels>
       </Tabs>
