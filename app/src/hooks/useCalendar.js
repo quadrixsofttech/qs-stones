@@ -2,25 +2,17 @@ import { useState } from 'react';
 
 export const useCalendar = () => {
   const [listOfRanges, setListOfRanges] = useState([]);
-  const [listOfRangesVacation,setListOfRangesVacation] = useState([]);
+  const [listOfRangesVacation, setListOfRangesVacation] = useState([]);
 
-  const handleClose = (range) => {
-    const index = listOfRanges.findIndex(r => r === range);
-    if (index !== -1) {
-      const newListOfRanges = [...listOfRanges];
-      newListOfRanges.splice(index, 1);
-      setListOfRanges(newListOfRanges);
+  const handleClose = (range, isVacation = false) => {
+    if (isVacation) {
+      setListOfRangesVacation((prevList) =>
+        prevList.filter((r) => r !== range)
+      );
+    } else {
+      setListOfRanges((prevList) => prevList.filter((r) => r !== range));
     }
-  }
-
-  const handleCloseVacation = (range) => {
-    const index = listOfRangesVacation.findIndex(r => r === range);
-    if (index !== -1) {
-      const newListOfRanges = [...listOfRangesVacation];
-      newListOfRanges.splice(index, 1);
-      setListOfRangesVacation(newListOfRanges);
-    }
-  }
+  };
 
   return [
     listOfRanges,
@@ -28,6 +20,5 @@ export const useCalendar = () => {
     listOfRangesVacation,
     setListOfRangesVacation,
     handleClose,
-    handleCloseVacation
   ];
 };
