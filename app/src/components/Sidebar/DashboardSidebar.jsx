@@ -4,11 +4,15 @@ import { NavLink } from 'react-router-dom';
 import { BiSwim, BiMicrophone, BiDish } from 'react-icons/bi';
 
 import styles from './DashboardSidebar.styles';
+import QuadrixSoftLogo from '../QuadrixSoftLogo/QuadrixSoftLogo';
 
 const DashboardSidebar = () => {
   return (
     <Flex>
       <Box as="aside" {...styles.sideBar}>
+        <Box marginBottom={'4'}>
+          <QuadrixSoftLogo />
+        </Box>
         <Flex {...styles.sideBarButton} as={NavLink} to="/dashboard">
           <BiSwim size={20} />
           <Text>PTO</Text>

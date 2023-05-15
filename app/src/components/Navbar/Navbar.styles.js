@@ -8,12 +8,7 @@ const wrapper = {
   borderStyle: 'solid',
   borderColor: 'gray.200',
   align: 'center',
-  zIndex: 2,
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  right: 0,
-  justifyContent: 'space-between',
+  justifyContent: 'flex-end',
 };
 
 const logo = {

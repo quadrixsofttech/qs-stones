@@ -9,7 +9,6 @@ const sideBar = {
   justifyContent: 'flex-start',
   alignItems: 'center',
   padding: '16px',
-  position: 'fixed',
 };
 
 const sideBarButton = {

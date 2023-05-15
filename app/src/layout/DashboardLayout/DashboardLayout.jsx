@@ -5,12 +5,12 @@ import DashboardSidebar from '../../components/Sidebar/DashboardSidebar';
 
 const DashboardLayout = ({ children }) => {
   return (
-    <Flex flexDir="column" minH="100vh">
-      <DashboardNavbar />
+    <Flex maxHeight={'100vh'} overflow={'hidden'}>
+      <DashboardSidebar />
 
-      <Flex marginTop={'60px'}>
-        <DashboardSidebar />
-        <Box p={4} flex={1} marginLeft={'200px'}>
+      <Flex flexDir="column" flexGrow={1}>
+        <DashboardNavbar />
+        <Box p={4} flex={1} maxHeight={'100vh'} overflow={'auto'}>
           {children}
         </Box>
       </Flex>
