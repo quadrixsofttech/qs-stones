@@ -11,6 +11,7 @@ import {
   MenuDivider,
   Text,
   IconButton,
+  Icon,
 } from '@chakra-ui/react';
 import styles from './Navbar.styles';
 import React, { useContext } from 'react';
@@ -47,7 +48,7 @@ const DashboardNavbar = () => {
                   minW={0}
                   ml={'10px'}
                 >
-                  <Flex alignItems={'center'} gap={'4px'}>
+                  <Flex alignItems={'center'} gap={'8px'}>
                     <Avatar
                       size={'sm'}
                       marginRight={'4px'}
@@ -64,11 +65,15 @@ const DashboardNavbar = () => {
                       <Text fontSize="sm" color="gray.700">
                         {firstName + ' ' + lastName}
                       </Text>
-                      <Text fontSize="xs" color="gray.600">
+                      <Text
+                        fontSize="xs"
+                        color="gray.600"
+                        fontWeight={'normal'}
+                      >
                         {role}
                       </Text>
                     </Flex>
-                    <BiChevronDown />
+                    <Icon as={BiChevronDown} color={'gray.600'} />
                   </Flex>
                 </MenuButton>
               </Flex>

@@ -9,30 +9,15 @@ const DashboardSidebar = () => {
   return (
     <Flex>
       <Box as="aside" {...styles.sideBar}>
-        <Flex
-          {...styles.sideBarButton}
-          as={NavLink}
-          to="/dashboard"
-          _activeLink={{ ...styles.sideBarButtonActive }}
-        >
+        <Flex {...styles.sideBarButton} as={NavLink} to="/dashboard">
           <BiSwim size={20} />
           <Text>PTO</Text>
         </Flex>
-        <Flex
-          {...styles.sideBarButton}
-          as={NavLink}
-          to="/users"
-          _activeLink={{ ...styles.sideBarButtonActive }}
-        >
+        <Flex {...styles.sideBarButton} as={NavLink} to="/users">
           <BiMicrophone size={20} />
           <Text>Conference</Text>
         </Flex>
-        <Flex
-          {...styles.sideBarButton}
-          as={NavLink}
-          to="/account"
-          _activeLink={{ ...styles.sideBarButtonActive }}
-        >
+        <Flex {...styles.sideBarButton} as={NavLink} to="/account">
           <BiDish size={20} />
           <Text>Kitchen</Text>
         </Flex>

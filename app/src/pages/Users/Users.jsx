@@ -32,7 +32,7 @@ const Users = () => {
   return (
     <DashboardLayout>
       <Heading margin={10}>Users</Heading>
-      <TableContainer {...styles.wrapper} margin={10}>
+      <TableContainer {...styles.wrapper}>
         <Table variant="simple">
           <Thead>
             <Tr>

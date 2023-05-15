@@ -21,23 +21,19 @@ const sideBarButton = {
   alignItems: 'center',
   gap: '8px',
   p: '16px',
-};
-
-const sideBarButtonActive = {
-  width: '168px',
-  height: '56px',
-  backgroundColor: 'purple.50',
-  color: 'purple.700',
-  borderRadius: '6px',
-  p: '16px',
-  fontWeight: 'semibold',
-  gap: '8px',
+  _activeLink: {
+    width: '168px',
+    height: '56px',
+    backgroundColor: 'purple.50',
+    color: 'purple.700',
+    borderRadius: '6px',
+    p: '16px',
+  },
 };
 
 const styles = {
   sideBar,
   sideBarButton,
-  sideBarButtonActive,
 };
 
 export default styles;
