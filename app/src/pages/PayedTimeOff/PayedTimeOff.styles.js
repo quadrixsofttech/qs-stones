@@ -8,8 +8,9 @@ const button = {
 };
 
 const heading = {
-  size: 'lg',
-  fontWeight: 700,
+  size: 'md',
+  fontSize: '24px',
+  fontWeight: 'bold',
   color: 'gray.700',
 };
 

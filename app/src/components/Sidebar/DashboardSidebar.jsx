@@ -10,7 +10,7 @@ const DashboardSidebar = () => {
   return (
     <Flex>
       <Box as="aside" {...styles.sideBar}>
-        <Box marginBottom={'4'}>
+        <Box marginBottom={'6'}>
           <QuadrixSoftLogo />
         </Box>
         <Flex {...styles.sideBarButton} as={NavLink} to="/dashboard">

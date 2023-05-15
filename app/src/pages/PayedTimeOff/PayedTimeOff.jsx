@@ -8,7 +8,7 @@ const PayedTimeOff = () => {
   return (
     <>
       <DashboardLayout>
-        <Flex>
+        <Flex mt={2} mb={4} alignItems={'center'}>
           <Heading {...styles.heading}>Paid Time Off</Heading>
           <Spacer />
           <Button
