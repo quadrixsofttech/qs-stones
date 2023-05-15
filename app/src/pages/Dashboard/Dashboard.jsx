@@ -1,17 +1,7 @@
-import { MyVacationInfo } from '../../components/MyVacationInfo/MyVacationInfo';
-import DashboardLayout from '../../layout/DashboardLayout';
-import PTOCalendar from '../../components/PTOCalendar/PTOCalendar';
-import { Flex } from '@chakra-ui/react';
+import DashboardLayout from '../../layout/DashboardLayout/DashboardLayout';
 
 const Dashboard = () => {
-  return (
-    <DashboardLayout>
-      <Flex flexDirection={'column'}>
-        <PTOCalendar />
-        <MyVacationInfo />
-      </Flex>
-    </DashboardLayout>
-  );
+  return <DashboardLayout></DashboardLayout>;
 };
 
 export default Dashboard;
