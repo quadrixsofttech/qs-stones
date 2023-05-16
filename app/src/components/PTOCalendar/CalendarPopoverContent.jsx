@@ -19,7 +19,7 @@ const CalendarPopoverContent = ({ boxFullDate, employeesToday, isPTO }) => {
       <PopoverHeader {...styles.popoverHeader}>
         {isPTO ? 'Pay time off' : 'Remote'} : {boxFullDate}
       </PopoverHeader>
-      <PopoverBody maxH="300px" overflowY="scroll">
+      <PopoverBody maxH="300px" overflowY="auto">
         <Flex {...styles.popoverBox}>
           {employeesToday.map((x) => {
             return (
