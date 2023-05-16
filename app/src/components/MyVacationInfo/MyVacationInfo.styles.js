@@ -1,22 +1,24 @@
 const mainBox = {
-  borderRadius: '10px',
+  rounded: 'md',
   border: '1px solid #E2E8F0',
+  flexDirection: 'column',
+  width: ' 740px',
 };
 
 const header = {
   backgroundColor: 'blackAlpha.50',
-  borderRadius: '10px 10px 0 0',
+  borderRadius: '6px 6px 0 0px',
   color: 'gray.700',
 };
 const box = {
-  padding: '16px 0 16px 0',
+  py: '4',
   flexDirection: 'column',
   justifyContent: 'space-between',
   color: 'gray.700',
   width: '100%',
 };
 const mainHeading = {
-  p: '16px',
+  p: '4',
   fontSize: 'md',
   fontWeight: '700',
 };
@@ -24,7 +26,7 @@ const mainHeading = {
 const infoBox = {
   paddingLeft: '24px',
   width: '100%',
-  gap: '16px',
+  gap: 4,
   alignItems: 'center',
 };
 

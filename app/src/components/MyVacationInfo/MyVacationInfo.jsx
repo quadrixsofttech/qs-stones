@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './MyVacationInfo.styles';
 import { Box, Divider, Flex, Heading, Text } from '@chakra-ui/react';
 import MyVacationInfoBox from './MyVacationInfoBox';
@@ -12,7 +11,7 @@ export const MyVacationInfo = () => {
   }
 
   return (
-    <Flex {...styles.mainBox} flexDirection={'column'} width={'742px'}>
+    <Flex {...styles.mainBox}>
       <Box {...styles.header}>
         <Heading {...styles.mainHeading} as="h2">
           My Vacation Info
@@ -24,25 +23,19 @@ export const MyVacationInfo = () => {
           numberInfo={vacationInfo.VacationDaysToDate}
           footer={`${vacationInfo.VacationDaysLeft} days left`}
         />
-        <Flex height={'100px'}>
-          <Divider orientation="vertical" />
-        </Flex>
+        <Divider orientation="vertical" height={'100px'} />
         <MyVacationInfoBox
           heading={'New Vacation Days from this year'}
           numberInfo={vacationInfo.NewVacationDaysFromThisYear}
           footer={'Usable until June next year'}
         />
-        <Flex height={'100px'}>
-          <Divider orientation="vertical" />
-        </Flex>
+        <Divider orientation="vertical" height={'100px'} />
         <MyVacationInfoBox
           heading={'Unused Vacation Days from last year'}
           numberInfo={vacationInfo.UnusedVacationDaysFromLastYear}
           footer={'Usable until June this year'}
         />
-        <Flex height={'100px'}>
-          <Divider orientation="vertical" />
-        </Flex>
+        <Divider orientation="vertical" height={'100px'} />
         <MyVacationInfoBox
           heading={
             <>
