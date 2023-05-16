@@ -15,6 +15,7 @@ import styles from './CalendarModal.styles';
 import { useCalendar } from '../../hooks/useCalendar';
 import { Calendar } from 'react-multi-date-picker';
 import generateRadnomIndex from '../../util/generateRandomIndex';
+import users from './user';
 
 export const CalendarModal = (props) => {
   const [
@@ -88,9 +89,14 @@ export const CalendarModal = (props) => {
           </Tooltip>
         </Flex>
       </Box>
-      <Select mt={2}>
-        <option value="option1">Milos Stosic(ADMIN)</option>
-        <option value="option2">Igor Stosic(ADMIN)</option>
+      <Select mt={2} mb={2}>
+        {users.map((user) => {
+          return (
+            <option value="option" key={user.id}>
+              {user.name} {user.role}
+            </option>
+          );
+        })}
       </Select>
       {props.isCurrentPageRemote ? (
         <>
