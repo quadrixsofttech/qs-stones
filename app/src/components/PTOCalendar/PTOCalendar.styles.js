@@ -13,8 +13,8 @@ const sixColumnGridStyles = {
 
 const calendarContainerStyles = {
   width: '742px',
-  marginBottom: '20px',
-  borderRadius: '6px',
+  marginBottom: '5',
+  rounded: '3',
   border: '1px solid #E2E8F0',
   overflow: 'hidden',
 };
@@ -22,7 +22,7 @@ const calendarContainerStyles = {
 const prevNextBox = {
   justifyContent: 'center',
   alignItems: 'center',
-  gap: '15px',
+  gap: '4',
   width: '48',
 };
 
@@ -30,7 +30,7 @@ const calendarDayStyles = {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  padding: '8px',
+  padding: '2',
   fontSize: 'xs',
   fontWeight: 'normal',
   color: '#333',
@@ -54,7 +54,7 @@ const selectButton = {
   size: 'sm',
   width: '48',
   backgroundColor: 'white',
-  borderRadius: '6px',
+  rounded: '3',
 };
 
 const onClickBox = {
@@ -63,10 +63,10 @@ const onClickBox = {
 const selectionBox = {
   justifyContent: 'space-around',
   alignItems: 'center',
-  p: '10px',
+  p: '2.5',
 };
 const headingTitle = {
-  p: '16px',
+  p: '4',
   size: 'sm',
   fontWeight: 'bold',
 };
@@ -78,12 +78,12 @@ const popoverHeader = {
 
 const popoverBox = {
   flexDirection: 'column',
-  gap: '15px',
-  paddingTop: '10px',
+  gap: '4',
+  paddingTop: '2.5',
 };
 const calendarBox = {
   border: '1px',
-  padding: '8px',
+  padding: '2',
   _hover: {
     backgroundColor: 'gray.200',
   },
