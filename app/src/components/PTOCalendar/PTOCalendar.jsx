@@ -1,26 +1,23 @@
 import { useState } from 'react';
-import { Box, Flex, Button, Text, Select } from '@chakra-ui/react';
+import { Box, Flex, Button, Select, Heading } from '@chakra-ui/react';
 import styles from './PTOCalendar.styles';
 import CalendarBox from './CalendarBox';
 import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
 import useEmployees from '../../hooks/useEmployees';
-import { useQuery } from 'react-query';
 
 const Calendar = () => {
   const [date, setDate] = useState(new Date());
   const [showSaturday, setShowSaturday] = useState(false);
   const [isPTO, setPTO] = useState(true);
-  const { employees } = useEmployees();
+  const { employees, employeesLoading } = useEmployees();
 
-  const { data: employeesList } = useQuery('employees', employees);
-
-  if (!employeesList) {
+  if (employeesLoading) {
     return <div>Loading...</div>;
   }
 
   const employeesFiltered = isPTO
-    ? employeesList.filter((x) => x.off === 'Pay time off')
-    : employeesList.filter((x) => x.off === 'Remote');
+    ? employees.filter((x) => x.off === 'Pay time off')
+    : employees.filter((x) => x.off === 'Remote');
 
   const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
   if (showSaturday) {
@@ -121,9 +118,9 @@ const Calendar = () => {
   return (
     <Box {...styles.calendarContainerStyles}>
       <Flex {...styles.header}>
-        <Text p="16px" size={'md'} fontWeight={'bold'}>
+        <Heading {...styles.headingTitle} as={'h2'}>
           PTO Category
-        </Text>
+        </Heading>
         <Select
           {...styles.selectButton}
           onChange={(e) => setPTO(e.target.value === 'Pay Time Off')}
@@ -133,7 +130,7 @@ const Calendar = () => {
           <option value="Remote">Remote</option>
         </Select>
       </Flex>
-      <Flex justifyContent={'space-around'} alignItems={'center'} p={'10px'}>
+      <Flex {...styles.selectionBox}>
         <Flex width={'48'} gap={'10px'}>
           <Select
             {...styles.selectButton}

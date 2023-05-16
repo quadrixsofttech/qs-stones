@@ -30,24 +30,16 @@ const CalendarBox = ({ boxFullDate, day, employeesToday, isPTO }) => {
     >
       <PopoverTrigger>
         <Flex
-          border={'1px'}
+          {...styles.calendarBox}
           borderColor={isOpen ? 'purple.500' : 'gray.200'}
-          padding={'8px'}
           backgroundColor={
             isOpen ? 'gray.200' : isToday() ? 'purple.50' : 'white'
           }
-          _hover={{ ...styles.onHoverBox }}
         >
           <Flex flexDirection={'column'}>
-            <Box
-              textColor={'gray.700'}
-              fontWeight={'semibold'}
-              marginBottom={'8px'}
-            >
-              {day}
-            </Box>
+            <Box {...styles.calendarDateBox}>{day}</Box>
             <Box height={'32px'}>
-              <AvatarGroup gap={'2'} size={'sm'} max={2}>
+              <AvatarGroup {...styles.avatarGroup}>
                 {employeesToday.map((x) => {
                   return <Avatar key={x.id} name={x.firstName} src={x.src} />;
                 })}

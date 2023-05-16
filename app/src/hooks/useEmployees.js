@@ -13,9 +13,7 @@ const useEmployees = () => {
     data: employees,
     isLoading: employeesLoading,
     error: employeesError,
-  } = useQuery('employees', getEmployees, {
-    onSuccess: (data) => data,
-  });
+  } = useQuery('employees', getEmployees);
 
   return {
     employees,

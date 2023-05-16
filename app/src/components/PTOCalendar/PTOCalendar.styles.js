@@ -57,12 +57,46 @@ const selectButton = {
   borderRadius: '6px',
 };
 
-const onHoverBox = {
-  backgroundColor: 'gray.200',
-};
-
 const onClickBox = {
   borderColor: 'purple.400',
+};
+const selectionBox = {
+  justifyContent: 'space-around',
+  alignItems: 'center',
+  p: '10px',
+};
+const headingTitle = {
+  p: '16px',
+  size: 'sm',
+  fontWeight: 'bold',
+};
+const popoverHeader = {
+  fontSize: 'lg',
+  fontWeight: 'bold',
+  color: 'gray.700',
+};
+
+const popoverBox = {
+  flexDirection: 'column',
+  gap: '15px',
+  paddingTop: '10px',
+};
+const calendarBox = {
+  border: '1px',
+  padding: '8px',
+  _hover: {
+    backgroundColor: 'gray.200',
+  },
+};
+const calendarDateBox = {
+  textColor: 'gray.700',
+  fontWeight: 'semibold',
+  marginBottom: '8px',
+};
+const avatarGroup = {
+  gap: '2',
+  size: 'sm',
+  max: '2',
 };
 
 const styles = {
@@ -74,8 +108,14 @@ const styles = {
   emptyStyles,
   header,
   selectButton,
-  onHoverBox,
   onClickBox,
+  selectionBox,
+  headingTitle,
+  popoverHeader,
+  popoverBox,
+  calendarBox,
+  calendarDateBox,
+  avatarGroup,
 };
 
 export default styles;
