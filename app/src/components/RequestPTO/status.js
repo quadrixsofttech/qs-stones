@@ -1,8 +1,8 @@
 const status = {
     id:5,
-    pending: 0,
-    approved: 1,
-    rejected: 2
+    pending: 'pending',
+    approved: 'approved',
+    rejected: 'rejected'
 };
 
 export default status;

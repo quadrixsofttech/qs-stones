@@ -1,15 +1,21 @@
-import { Text } from '@chakra-ui/react';
+import { Box, Text } from '@chakra-ui/react';
 import React from 'react';
-import employees from '../../MyHistory/information';
 
-export const ApprovedPanel = () => {
+export const ApprovedPanel = ({ request }) => {
   return (
     <>
-      <Text color={'gray.500'}>{employees.requestDate}</Text>
-      <Text fontWeight={'bold'}>
-        {employees.admin[Math.floor(Math.random() * employees.admin.length)]}(ADMIN) approved
-        <Text fontWeight={'normal'} as="span">your Request PTO/Remote</Text>
-      </Text>
+      <Box as="span">
+        <Text color={'gray.500'}>{request.requestedDates}</Text>
+        <Text fontWeight={'bold'}>
+          {request.user.name}
+          {' ('}
+          {request.user.role}
+          {') '}
+          <Text fontWeight={'normal'} as="span">
+            approved your Request PTO/Remote
+          </Text>
+        </Text>
+      </Box>
     </>
   );
 };

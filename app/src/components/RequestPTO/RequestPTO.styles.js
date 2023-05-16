@@ -10,9 +10,13 @@ const gray_text = {
 };
 
 const main_text = {
-  fontWeight: 700,
+  fontWeight: 500,
   paddingBottom: '1',
 };
+
+const admin_text = {
+  fontWeight: 700,
+}
 
 const button = {
   colorScheme : 'purple',
@@ -36,6 +40,7 @@ const styles = {
   box,
   gray_text,
   main_text,
+  admin_text,
   button,
   accordionpanel,
   accordion

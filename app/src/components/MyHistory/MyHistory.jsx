@@ -2,12 +2,7 @@ import {
   Container,
   Flex,
   Select,
-  Stat,
-  StatArrow,
   StatGroup,
-  StatHelpText,
-  StatLabel,
-  StatNumber,
   Tab,
   TabIndicator,
   TabList,
@@ -22,6 +17,7 @@ import { useState } from 'react';
 import { Calendar } from 'react-multi-date-picker';
 import './CustomCalendar.css';
 import employees from './information';
+import { StatComponentMyHistory } from './../StatComponentMyHistory/StatComponentMyHistory';
 
 const MyHistory = () => {
   const [selectedOption, setSelectedOption] = useState('Remote');
@@ -68,35 +64,34 @@ const MyHistory = () => {
 
             <StatGroup>
               <Flex {...styles.statgroup_flex}>
-                <Stat {...styles.stat}>
-                  <StatLabel pt={2}>
-                    The total number of employees working today
-                  </StatLabel>
-                  <StatNumber>{employees.workingToday}</StatNumber>
-                  <StatHelpText>
-                    <StatArrow type="increase" />
-                    {employees.percentIncrease}% more than yesterday
-                  </StatHelpText>
-                </Stat>
-
-                <Stat width={'100%'}>
-                  <StatLabel pt={2}>
-                    The total number of employees working remotly today or on
-                    vacation
-                  </StatLabel>
-                  <StatNumber>{employees.awayOrRemote}</StatNumber>
-                  <StatHelpText>
-                    <StatArrow type="decrease" />
-                    {employees.percentDecrease}% less than yesterday
-                  </StatHelpText>
-                </Stat>
+                <StatComponentMyHistory
+                  label="The total number of employees working today"
+                  help_text="% more than yesterday"
+                  working={employees.workingToday}
+                  percent={employees.percentIncrease}
+                  arrow={"increase"}
+                />
+                <StatComponentMyHistory
+                  label="The total number of employees working remotly today or on
+                  vacation"
+                  help_text="% less than yesterday"
+                  working={employees.awayOrRemote}
+                  percentIncrease={employees.percentDecrease}
+                  arrow={"decrease"}
+                />
               </Flex>
             </StatGroup>
           </TabPanel>
           <TabPanel {...styles.tabpanel}>
-            {Array.isArray(employees.request.status) &&
-              employees.request.status.map((value, id) => {
-                return <RequestPTO key={id} isRequestApproved={value} />;
+            {Array.isArray(employees.requests) &&
+              employees.requests.map((request, id) => {
+                return (
+                  <RequestPTO
+                    key={id}
+                    requestStatus={request.status}
+                    request={request}
+                  />
+                );
               })}
           </TabPanel>
         </TabPanels>

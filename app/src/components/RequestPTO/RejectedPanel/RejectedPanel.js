@@ -2,20 +2,30 @@ import { Button, Flex, Text, Textarea } from '@chakra-ui/react';
 import React from 'react';
 import styles from '../RequestPTO.styles';
 
-export const RejectedPanel = () => {
+export const RejectedPanel = ({ request }) => {
   return (
     <>
-      <Text color={'gray.500'}>23/3/2022</Text>
+      <Text color={'gray.500'}>{request.requestedDates}</Text>
       <Text fontWeight={'bold'}>
-        Milos Stosic(ADMIN) rejected
+        {request.user.name}
+        {' ('}
+        {request.user.role}
+        {') '}
         <Text fontWeight={'normal'} as="span">
-          your Request PTO/Remote
+          rejected your Request PTO/Remote
         </Text>
       </Text>
-      <Flex flexDirection={'column'}>
-        <Textarea mt={2} placeholder="Explanation" width={200} />
-        <Button {...styles.button}>Send Request Again</Button>
-      </Flex>
+      <>
+        <Flex flexDirection={'column'}>
+          <Textarea
+            mt={2}
+            placeholder={request.response}
+            width={200}
+            height={200}
+          />
+          <Button {...styles.button}>Send Request Again</Button>
+        </Flex>
+      </>
     </>
   );
 };

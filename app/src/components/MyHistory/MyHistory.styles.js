@@ -9,8 +9,8 @@ const container = {
 };
 
 const tabindicator = {
-  mt: '-1.5px',
-  height: '2px',
+  mt: '-0.5',
+  height: '0.5',
   bg: 'purple.500',
   borderRadius: '1px',
 };
@@ -18,7 +18,7 @@ const tabindicator = {
 const header = {
   bg: 'blackAlpha.50',
   w: '100%',
-  h: '60px',
+  h: '16',
   color: 'black',
   p: '2',
   alignItems: 'center',
