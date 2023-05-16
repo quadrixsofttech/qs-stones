@@ -38,7 +38,7 @@ const CalendarBox = ({ boxFullDate, day, employeesToday, isPTO }) => {
         >
           <Flex flexDirection={'column'}>
             <Box {...styles.calendarDateBox}>{day}</Box>
-            <Box height={'32px'}>
+            <Box height={'8'}>
               <AvatarGroup {...styles.avatarGroup}>
                 {employeesToday.map((x) => {
                   return <Avatar key={x.id} name={x.firstName} src={x.src} />;
