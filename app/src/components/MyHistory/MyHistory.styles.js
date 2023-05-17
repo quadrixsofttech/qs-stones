@@ -4,8 +4,6 @@ const container = {
   borderRadius: '6px',
   p: '0',
   border: '1px solid #E2E8F0',
-  maxHeight: '70vh',
-  overflowY: 'auto',
 };
 
 const tabindicator = {
@@ -27,7 +25,9 @@ const flex = {
 const tabs = {
   position: 'relative',
   variant: 'unstyled',
-  mt: '2',
+  pt:2,
+  maxHeight: '70vh',
+  overflowY: 'auto',
 };
 
 const stat = {
