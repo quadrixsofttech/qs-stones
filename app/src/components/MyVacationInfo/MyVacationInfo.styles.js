@@ -24,7 +24,7 @@ const mainHeading = {
 };
 
 const infoBox = {
-  paddingLeft: '24px',
+  paddingLeft: '6',
   width: '100%',
   gap: 4,
   alignItems: 'center',
