@@ -19,7 +19,7 @@ const sideBarButton = {
   color: 'gray.400',
   justifyContent: 'flex-start',
   alignItems: 'center',
-  gap: '8px',
+  gap: '2',
   p: '16px',
   _activeLink: {
     width: '168px',
