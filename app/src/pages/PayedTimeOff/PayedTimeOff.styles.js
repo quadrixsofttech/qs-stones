@@ -13,9 +13,6 @@ const heading = {
     fontWeight: 700
 }
 
-
-
-
 const styles = {
     button,
     heading,

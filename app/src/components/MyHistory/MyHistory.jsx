@@ -69,7 +69,7 @@ const MyHistory = () => {
                   help_text="% more than yesterday"
                   working={employees.workingToday}
                   percent={employees.percentIncrease}
-                  arrow={"increase"}
+                  arrow={'increase'}
                 />
                 <StatComponentMyHistory
                   label="The total number of employees working remotly today or on
@@ -77,7 +77,7 @@ const MyHistory = () => {
                   help_text="% less than yesterday"
                   working={employees.awayOrRemote}
                   percentIncrease={employees.percentDecrease}
-                  arrow={"decrease"}
+                  arrow={'decrease'}
                 />
               </Flex>
             </StatGroup>
@@ -89,7 +89,12 @@ const MyHistory = () => {
                   <RequestPTO
                     key={id}
                     requestStatus={request.status}
-                    request={request}
+                    type={request.type}
+                    time={request.time}
+                    user={request.user}
+                    requestedDates={request.requestedDates}
+                    status={request.status}
+                    response={request.response}
                   />
                 );
               })}

@@ -1,6 +1,6 @@
 const box = {
   fontFamily: "'Inter', sans-serif",
-  padding: '0.5rem 0.5rem',
+  p: '2',
 };
 
 const gray_text = {

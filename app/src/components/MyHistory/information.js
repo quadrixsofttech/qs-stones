@@ -43,8 +43,7 @@ const employees = {
       },
       requestedDates: ['2023-04-04', '2023-04-04'],
       status: 'approved',
-      response:
-        'Ne moze',
+      response: 'Ne moze',
     },
   ],
 };
