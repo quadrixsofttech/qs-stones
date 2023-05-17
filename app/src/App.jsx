@@ -9,6 +9,7 @@ import Loading from './components/Loading';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { MyVacationInfoProvider } from './context/MyVacationInfoContext';
 
 import theme from './theme';
 
@@ -20,11 +21,13 @@ function App() {
       <Router>
         <ChakraProvider theme={theme}>
           <Suspense fallback={<Loading />}>
-            <AuthProvider>
-              <FetchProvider>
-                <AppRoutes />
-              </FetchProvider>
-            </AuthProvider>
+            <MyVacationInfoProvider>
+              <AuthProvider>
+                <FetchProvider>
+                  <AppRoutes />
+                </FetchProvider>
+              </AuthProvider>
+            </MyVacationInfoProvider>
           </Suspense>
         </ChakraProvider>
       </Router>
