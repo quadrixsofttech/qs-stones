@@ -11,7 +11,6 @@ const sideBar = {
   padding: '16px',
   position: 'fixed',
   backgroundColor: 'white',
-  zIndex: '999',
 };
 
 const sideBarButton = {

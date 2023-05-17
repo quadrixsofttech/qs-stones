@@ -23,7 +23,6 @@ const PayedTimeOff = () => {
             <PTOCalendar />
             <MyVacationInfo />
           </Flex>
-          <MyVacationInfo />
         </Flex>
       </DashboardLayout>
     </>
