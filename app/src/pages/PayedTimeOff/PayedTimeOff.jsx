@@ -3,6 +3,7 @@ import DashboardLayout from '../../layout/DashboardLayout/DashboardLayout';
 import styles from './PayedTimeOff.styles.js';
 import { FaRegCalendarPlus } from 'react-icons/fa';
 import { MyVacationInfo } from '../../components/MyVacationInfo/MyVacationInfo';
+import PTOCalendar from '../../components/PTOCalendar/PTOCalendar';
 const PayedTimeOff = () => {
   return (
     <>
@@ -18,6 +19,7 @@ const PayedTimeOff = () => {
           </Button>
         </Flex>
         <Flex flexDir={'column'}>
+          <PTOCalendar />
           <MyVacationInfo></MyVacationInfo>
         </Flex>
       </DashboardLayout>
