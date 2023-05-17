@@ -18,9 +18,12 @@ const PayedTimeOff = () => {
             Request PTO
           </Button>
         </Flex>
-        <Flex flexDir={'column'}>
-          <PTOCalendar />
-          <MyVacationInfo></MyVacationInfo>
+        <Flex>
+          <Flex flexDir={'column'}>
+            <PTOCalendar />
+            <MyVacationInfo />
+          </Flex>
+          <MyVacationInfo />
         </Flex>
       </DashboardLayout>
     </>
