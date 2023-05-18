@@ -11,13 +11,13 @@ import {
 import React from 'react';
 import styles from './PTOCalendar.styles';
 
-const CalendarPopoverContent = ({ boxFullDate, employeesToday, isPTO }) => {
+const CalendarPopoverContent = ({ date, employeesToday, type }) => {
   return (
     <PopoverContent boxShadow={'md'}>
       <PopoverArrow />
       <PopoverCloseButton />
       <PopoverHeader {...styles.popoverHeader}>
-        {isPTO ? 'Pay time off' : 'Remote'} : {boxFullDate}
+        {type} : {date}
       </PopoverHeader>
       <PopoverBody maxH="300px" overflowY="auto">
         <Flex {...styles.popoverBox}>
