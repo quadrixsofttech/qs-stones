@@ -8,13 +8,9 @@ const sideBar = {
   flexDirection: 'column',
   justifyContent: 'flex-start',
   alignItems: 'center',
-<<<<<<< HEAD
-  padding: '16px',
-=======
   padding: '4',
   position: 'fixed',
   backgroundColor: 'white',
->>>>>>> IVAN_BR_PTO_CALENDAR
 };
 
 const sideBarButton = {
