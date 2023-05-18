@@ -9,17 +9,18 @@ import {
   Text,
 } from '@chakra-ui/react';
 import React from 'react';
+import styles from './PTOCalendar.styles';
 
-const CalendarPopoverContent = ({ boxFullDate, employeesToday, isPTO }) => {
+const CalendarPopoverContent = ({ date, employeesToday, type }) => {
   return (
     <PopoverContent boxShadow={'md'}>
       <PopoverArrow />
       <PopoverCloseButton />
-      <PopoverHeader fontSize={'lg'} fontWeight={'bold'} color={'gray.700'}>
-        {isPTO ? 'Pay time off' : 'Remote'} : {boxFullDate}
+      <PopoverHeader {...styles.popoverHeader}>
+        {type} : {date}
       </PopoverHeader>
-      <PopoverBody maxH="300px" overflowY="scroll">
-        <Flex flexDirection={'column'} gap={'15px'} paddingTop={'10px'}>
+      <PopoverBody maxH="300px" overflowY="auto">
+        <Flex {...styles.popoverBox}>
           {employeesToday.map((x) => {
             return (
               <Flex key={x.id} alignItems={'center'} gap={'10px'}>

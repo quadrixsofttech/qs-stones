@@ -1,70 +1,50 @@
-import React from 'react';
-import styles from './MyVactionInfo.styles';
-import { Box, Divider, Flex, Text } from '@chakra-ui/react';
+import styles from './MyVacationInfo.styles';
+import { Box, Divider, Flex, Heading, Text } from '@chakra-ui/react';
+import MyVacationInfoBox from './MyVacationInfoBox';
+import useVacation from '../../hooks/useVacation';
 
 export const MyVacationInfo = () => {
+  const { vacationInfo, isLoading } = useVacation();
+
+  if (isLoading) {
+    return <Text>Loading...</Text>;
+  }
+
   return (
-    <Flex {...styles.mainBox} flexDirection={'column'} width={'742px'}>
+    <Flex {...styles.mainBox}>
       <Box {...styles.header}>
-        <Text p="16px" size={'md'} fontWeight={'bold'}>
+        <Heading {...styles.mainHeading} as="h2">
           My Vacation Info
-        </Text>
+        </Heading>
       </Box>
       <Flex {...styles.infoBox}>
-        <Flex {...styles.box}>
-          <Text fontSize={'sm'} fontWeight={'medium'}>
-            User Vacation Days
-            <br />
-            to date
-          </Text>
-          <Text fontWeight={'semibold'} fontSize={'2xl'}>
-            9
-          </Text>
-          <Text fontSize={'xs'}>17 left</Text>
-        </Flex>
-        <Flex height={'24'}>
-          <Divider orientation="vertical" />
-        </Flex>
-
-        <Flex {...styles.box}>
-          <Text fontSize={'sm'} fontWeight={'medium'}>
-            New Vacation Days
-            <br />
-            from this year
-          </Text>
-          <Text fontWeight={'semibold'} fontSize={'2xl'}>
-            21
-          </Text>
-          <Text fontSize={'xs'}>Usable until June next year</Text>
-        </Flex>
-        <Flex height={'24'}>
-          <Divider orientation="vertical" />
-        </Flex>
-        <Flex {...styles.box}>
-          <Text fontSize={'sm'} fontWeight={'medium'}>
-            Unused Vacation Days
-            <br />
-            from last year
-          </Text>
-          <Text fontWeight={'semibold'} fontSize={'2xl'}>
-            5
-          </Text>
-          <Text fontSize={'xs'}>Usable until June this year</Text>
-        </Flex>
-        <Flex height={'24'}>
-          <Divider orientation="vertical" />
-        </Flex>
-        <Flex {...styles.box}>
-          <Text fontSize={'sm'} fontWeight={'medium'}>
-            Total Vacation
-            <br />
-            Days
-          </Text>
-          <Text fontWeight={'semibold'} fontSize={'2xl'}>
-            26
-          </Text>
-          <Text fontSize={'xs'}>New and unused days</Text>
-        </Flex>
+        <MyVacationInfoBox
+          heading={'User Vacation Days to date'}
+          numberInfo={vacationInfo.VacationDaysToDate}
+          footer={`${vacationInfo.VacationDaysLeft} days left`}
+        />
+        <Divider orientation="vertical" height={'100px'} />
+        <MyVacationInfoBox
+          heading={'New Vacation Days from this year'}
+          numberInfo={vacationInfo.NewVacationDaysFromThisYear}
+          footer={'Usable until June next year'}
+        />
+        <Divider orientation="vertical" height={'100px'} />
+        <MyVacationInfoBox
+          heading={'Unused Vacation Days from last year'}
+          numberInfo={vacationInfo.UnusedVacationDaysFromLastYear}
+          footer={'Usable until June this year'}
+        />
+        <Divider orientation="vertical" height={'100px'} />
+        <MyVacationInfoBox
+          heading={
+            <>
+              Total Vacation <br /> Days
+            </>
+          }
+          numberInfo={vacationInfo.TotalVacationDays}
+          footer={'New and unused days'}
+        />
       </Flex>
     </Flex>
   );

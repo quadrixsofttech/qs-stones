@@ -13,8 +13,8 @@ const sixColumnGridStyles = {
 
 const calendarContainerStyles = {
   width: '742px',
-  marginBottom: '20px',
-  borderRadius: '6px',
+  marginBottom: '5',
+  rounded: '3',
   border: '1px solid #E2E8F0',
   overflow: 'hidden',
 };
@@ -22,7 +22,7 @@ const calendarContainerStyles = {
 const prevNextBox = {
   justifyContent: 'center',
   alignItems: 'center',
-  gap: '15px',
+  gap: '4',
   width: '48',
 };
 
@@ -30,7 +30,7 @@ const calendarDayStyles = {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  padding: '8px',
+  padding: '2',
   fontSize: 'xs',
   fontWeight: 'normal',
   color: '#333',
@@ -54,15 +54,49 @@ const selectButton = {
   size: 'sm',
   width: '48',
   backgroundColor: 'white',
-  borderRadius: '6px',
-};
-
-const onHoverBox = {
-  backgroundColor: 'gray.200',
+  rounded: '3',
 };
 
 const onClickBox = {
   borderColor: 'purple.400',
+};
+const selectionBox = {
+  justifyContent: 'space-around',
+  alignItems: 'center',
+  p: '2.5',
+};
+const headingTitle = {
+  p: '4',
+  size: 'sm',
+  fontWeight: 'bold',
+};
+const popoverHeader = {
+  fontSize: 'lg',
+  fontWeight: 'bold',
+  color: 'gray.700',
+};
+
+const popoverBox = {
+  flexDirection: 'column',
+  gap: '4',
+  paddingTop: '2.5',
+};
+const calendarBox = {
+  border: '1px',
+  padding: '2',
+  _hover: {
+    backgroundColor: 'gray.200',
+  },
+};
+const calendarDateBox = {
+  textColor: 'gray.700',
+  fontWeight: 'semibold',
+  marginBottom: '8px',
+};
+const avatarGroup = {
+  gap: '2',
+  size: 'sm',
+  max: '2',
 };
 
 const styles = {
@@ -74,8 +108,14 @@ const styles = {
   emptyStyles,
   header,
   selectButton,
-  onHoverBox,
   onClickBox,
+  selectionBox,
+  headingTitle,
+  popoverHeader,
+  popoverBox,
+  calendarBox,
+  calendarDateBox,
+  avatarGroup,
 };
 
 export default styles;

@@ -9,18 +9,19 @@ import {
 import styles from './PTOCalendar.styles';
 import { useState } from 'react';
 import CalendarPopoverContent from './CalendarPopoverContent';
+import moment from 'moment';
 
-const CalendarBox = ({ boxFullDate, day, employeesToday, isPTO }) => {
+const CalendarBox = ({ date, employeesToday, type }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const isToday = () => {
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const formattedDate = `${year}-${month}-${day}`;
+    const currentDate = moment();
+    const formattedDate = currentDate.format('YYYY-MM-DD');
 
-    return boxFullDate === formattedDate;
+    return date === formattedDate;
+  };
+  const getDay = () => {
+    return moment(date).format('DD');
   };
   return (
     <Popover
@@ -30,24 +31,16 @@ const CalendarBox = ({ boxFullDate, day, employeesToday, isPTO }) => {
     >
       <PopoverTrigger>
         <Flex
-          border={'1px'}
+          {...styles.calendarBox}
           borderColor={isOpen ? 'purple.500' : 'gray.200'}
-          padding={'8px'}
           backgroundColor={
             isOpen ? 'gray.200' : isToday() ? 'purple.50' : 'white'
           }
-          _hover={{ ...styles.onHoverBox }}
         >
           <Flex flexDirection={'column'}>
-            <Box
-              textColor={'gray.700'}
-              fontWeight={'semibold'}
-              marginBottom={'8px'}
-            >
-              {day}
-            </Box>
-            <Box height={'32px'}>
-              <AvatarGroup gap={'2'} size={'sm'} max={2}>
+            <Box {...styles.calendarDateBox}>{getDay()}</Box>
+            <Box height={'8'}>
+              <AvatarGroup {...styles.avatarGroup}>
                 {employeesToday.map((x) => {
                   return <Avatar key={x.id} name={x.firstName} src={x.src} />;
                 })}
@@ -57,9 +50,9 @@ const CalendarBox = ({ boxFullDate, day, employeesToday, isPTO }) => {
         </Flex>
       </PopoverTrigger>
       <CalendarPopoverContent
-        boxFullDate={boxFullDate}
+        date={date}
         employeesToday={employeesToday}
-        isPTO={isPTO}
+        type={type}
       />
     </Popover>
   );

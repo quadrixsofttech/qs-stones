@@ -2,25 +2,41 @@ import { useQuery } from 'react-query';
 import axios from 'axios';
 
 const useEmployees = () => {
-  const getEmployees = async () => {
+  const getEmployeesPTO = async () => {
     const { data } = await axios.get(
       'https://645ca939250a246ae30a5bb8.mockapi.io/employees'
     );
-    return data;
+    const filteredData = data.filter((x) => x.off === 'Pay Time Off');
+    return filteredData;
+  };
+
+  const getEmployeesRemote = async () => {
+    const { data } = await axios.get(
+      'https://645ca939250a246ae30a5bb8.mockapi.io/employees'
+    );
+    const filteredData = data.filter((x) => x.off === 'Remote');
+    return filteredData;
   };
 
   const {
-    data: employees,
+    data: employeesPTO,
     isLoading: employeesLoading,
-    error: employeesError,
-  } = useQuery('employees', getEmployees, {
-    onSuccess: (data) => data,
-  });
+    error: employeesPTOError,
+  } = useQuery('employeesPTO', getEmployeesPTO);
+
+  const {
+    data: employeesRemote,
+    isLoading: employeesRemoteLoading,
+    error: employeesRemoteError,
+  } = useQuery('employeesRemote', getEmployeesRemote);
 
   return {
-    employees,
+    employeesPTO,
     employeesLoading,
-    employeesError,
+    employeesPTOError,
+    employeesRemote,
+    employeesRemoteLoading,
+    employeesRemoteError,
   };
 };
 

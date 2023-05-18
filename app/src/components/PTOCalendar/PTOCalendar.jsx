@@ -1,26 +1,31 @@
 import { useState } from 'react';
-import { Box, Flex, Button, Text, Select } from '@chakra-ui/react';
+import { Box, Flex, Button, Select, Heading } from '@chakra-ui/react';
 import styles from './PTOCalendar.styles';
 import CalendarBox from './CalendarBox';
 import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
 import useEmployees from '../../hooks/useEmployees';
-import { useQuery } from 'react-query';
+import moment from 'moment';
 
 const Calendar = () => {
   const [date, setDate] = useState(new Date());
   const [showSaturday, setShowSaturday] = useState(false);
-  const [isPTO, setPTO] = useState(true);
-  const { employees } = useEmployees();
 
-  const { data: employeesList } = useQuery('employees', employees);
+  const [type, setType] = useState('Pay Time Off');
+  const {
+    employeesPTO,
+    employeesRemote,
+    employeesPTOLoading,
+    employeesRemoteLoading,
+  } = useEmployees();
 
-  if (!employeesList) {
+  if (employeesPTOLoading) {
+    return <div>Loading...</div>;
+  }
+  if (employeesRemoteLoading) {
     return <div>Loading...</div>;
   }
 
-  const employeesFiltered = isPTO
-    ? employeesList.filter((x) => x.off === 'Pay time off')
-    : employeesList.filter((x) => x.off === 'Remote');
+  const employees = type === 'Pay Time Off' ? employeesPTO : employeesRemote;
 
   const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
   if (showSaturday) {
@@ -45,23 +50,20 @@ const Calendar = () => {
   }
 
   const days = [];
+  const currentDate = moment();
+
   for (let i = 1; i <= daysInMonth; i++) {
     const dayOfWeek = new Date(date.getFullYear(), date.getMonth(), i).getDay();
     const getDayDate = () => {
       return i < 10 ? '0' + i : i.toString();
     };
-    const createDate = () => {
-      return (
-        date.getFullYear() +
-        '-' +
-        ('0' + (date.getMonth() + 1)).slice(-2) +
-        '-' +
-        getDayDate()
-      );
+
+    const getDate = () => {
+      return currentDate.clone().date(i).format('YYYY-MM-DD');
     };
-    const employeesToday = employeesFiltered.filter(
-      (x) => x.date === createDate()
-    );
+
+    const employeesToday = employees.filter((x) => x.date === getDate());
+
     if (
       showSaturday
         ? dayOfWeek >= 1 && dayOfWeek <= 6
@@ -69,11 +71,11 @@ const Calendar = () => {
     ) {
       days.push(
         <CalendarBox
-          key={createDate()}
+          key={getDate()}
           day={getDayDate()}
-          boxFullDate={createDate()}
+          date={getDate()}
           employeesToday={employeesToday}
-          isPTO={isPTO}
+          type={type}
         ></CalendarBox>
       );
     }
@@ -121,20 +123,20 @@ const Calendar = () => {
   return (
     <Box {...styles.calendarContainerStyles}>
       <Flex {...styles.header}>
-        <Text p="16px" size={'md'} fontWeight={'bold'}>
+        <Heading {...styles.headingTitle} as={'h2'}>
           PTO Category
-        </Text>
+        </Heading>
         <Select
           {...styles.selectButton}
-          onChange={(e) => setPTO(e.target.value === 'Pay Time Off')}
-          value={isPTO ? 'Pay Time Off' : 'Remote'}
+          onChange={(e) => setType(e.target.value)}
+          value={type}
         >
           <option value="Pay Time Off">Pay Time Off</option>
           <option value="Remote">Remote</option>
         </Select>
       </Flex>
-      <Flex justifyContent={'space-around'} alignItems={'center'} p={'10px'}>
-        <Flex width={'48'} gap={'10px'}>
+      <Flex {...styles.selectionBox}>
+        <Flex width={'48'} gap={'2.5'}>
           <Select
             {...styles.selectButton}
             onChange={(e) => handleDateChange(e)}
