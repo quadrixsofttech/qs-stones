@@ -10,9 +10,8 @@ const button = {
 const heading = {
     size: 'lg',
     fontFamily: "'Inter',sans-serif",
-    fontWeight: 700
+    fontWeight: 700,
 }
-
 
 const styles = {
     button,
