@@ -35,7 +35,7 @@
 
 
 .rmdp-day.rmdp-today span:hover{
-  background-color: #D6BCFA !important;
+  background-color: #D6BCFA;
 }
 
 .rmdp-day.rmdp-range span:hover{
@@ -44,7 +44,7 @@
 }
 
 .rmdp-day:not(.rmdp-disabled):not(.rmdp-day-hidden) span:hover {
-  background-color: #edf2f7;
+  background-color: #FAF5FF;
   color: #000;
 }
 
@@ -100,6 +100,5 @@
 }
 
 .rmdp-arrow-container:hover {
-  background-color: #edf2f7;
-  color: #000 !important;
+  background-color: #6B46C1;
 }
