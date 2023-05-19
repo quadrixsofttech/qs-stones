@@ -60,7 +60,7 @@
 .rmdp-header > div {
   display: flex;
   align-items: flex-start;
-  gap:3em;
+  gap:2em;
 }
 
 .rmdp-day-picker{
@@ -84,7 +84,7 @@
 }
 
 .rmdp-day.rmdp-selected span:not(.highlight) {
-  background-color: black;
+  background-color: #6B46C1;
 }
 
 .rmdp-arrow-container {

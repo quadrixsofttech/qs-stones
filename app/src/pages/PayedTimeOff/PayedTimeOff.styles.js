@@ -1,21 +1,44 @@
+import { FaRegCalendarPlus } from 'react-icons/fa';
+
 const button = {
-    colorScheme: 'purple',
-    size : 'lg',
-    paddingLeft: 6,
-    paddingRight: 6,
-    overflow: 'hidden',
-    textAlign:'center'
+  leftIcon: <FaRegCalendarPlus style={{ fontSize: '12' }} />,
+  colorScheme: 'purple',
+  lineHeight: '28',
+  fontSize: '18',
+  size: 'lg',
+  fontFamily: "'Inter', sans-serif",
+  fontWeight: 500,
+  paddingLeft: 6,
+  paddingRight: 6,
+  overflow: 'hidden',
 };
 
 const heading = {
-    size: 'lg',
-    fontFamily: "'Inter',sans-serif",
-    fontWeight: 700,
-}
+  fontSize: '24',
+  fontFamily: "'Inter',sans-serif",
+  fontWeight: 700,
+  paddingTop: '2',
+  paddingLeft: '1',
+};
 
+const modalHeader = {
+  fontFamily: 'Inter',
+  fontWeight: '700',
+};
+
+const buttonNext = {
+  colorScheme: 'purple',
+  ml: 3,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: '6rem',
+};
 const styles = {
-    button,
-    heading,
-}
+  button,
+  heading,
+  modalHeader,
+  buttonNext,
+};
 
 export default styles;
