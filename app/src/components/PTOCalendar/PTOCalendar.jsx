@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Box, Flex, Button, Select, Heading } from '@chakra-ui/react';
 import styles from './PTOCalendar.styles';
 import CalendarBox from './CalendarBox';
@@ -11,21 +11,16 @@ const Calendar = () => {
   const [showSaturday, setShowSaturday] = useState(false);
 
   const [type, setType] = useState('Pay Time Off');
-  const {
-    employeesPTO,
-    employeesRemote,
-    employeesPTOLoading,
-    employeesRemoteLoading,
-  } = useEmployees();
+  const { data, ptoLoading, fetchPTO, remoteLoading, fetchRemote } =
+    useEmployees();
 
-  if (employeesPTOLoading) {
+  useEffect(() => {
+    type === 'Pay Time Off' ? fetchPTO() : fetchRemote();
+  }, [type, fetchPTO, fetchRemote]);
+
+  if (ptoLoading || remoteLoading) {
     return <div>Loading...</div>;
   }
-  if (employeesRemoteLoading) {
-    return <div>Loading...</div>;
-  }
-
-  const employees = type === 'Pay Time Off' ? employeesPTO : employeesRemote;
 
   const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
   if (showSaturday) {
@@ -54,15 +49,12 @@ const Calendar = () => {
 
   for (let i = 1; i <= daysInMonth; i++) {
     const dayOfWeek = new Date(date.getFullYear(), date.getMonth(), i).getDay();
-    const getDayDate = () => {
-      return i < 10 ? '0' + i : i.toString();
-    };
 
     const getDate = () => {
       return currentDate.clone().date(i).format('YYYY-MM-DD');
     };
 
-    const employeesToday = employees.filter((x) => x.date === getDate());
+    const employeesToday = data ? data.filter((x) => x.date === getDate()) : [];
 
     if (
       showSaturday
@@ -72,7 +64,6 @@ const Calendar = () => {
       days.push(
         <CalendarBox
           key={getDate()}
-          day={getDayDate()}
           date={getDate()}
           employeesToday={employeesToday}
           type={type}

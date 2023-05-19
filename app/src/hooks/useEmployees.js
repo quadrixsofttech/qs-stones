@@ -1,8 +1,11 @@
 import { useQuery } from 'react-query';
 import axios from 'axios';
+import { useState } from 'react';
 
 const useEmployees = () => {
-  const getEmployeesPTO = async () => {
+  const [data, setData] = useState();
+
+  const getPTO = async () => {
     const { data } = await axios.get(
       'https://645ca939250a246ae30a5bb8.mockapi.io/employees'
     );
@@ -10,7 +13,7 @@ const useEmployees = () => {
     return filteredData;
   };
 
-  const getEmployeesRemote = async () => {
+  const getRemote = async () => {
     const { data } = await axios.get(
       'https://645ca939250a246ae30a5bb8.mockapi.io/employees'
     );
@@ -19,24 +22,31 @@ const useEmployees = () => {
   };
 
   const {
-    data: employeesPTO,
-    isLoading: employeesLoading,
-    error: employeesPTOError,
-  } = useQuery('employeesPTO', getEmployeesPTO);
+    isLoading: ptoLoading,
+    error: ptoError,
+    refetch: fetchPTO,
+  } = useQuery('employeesPTO', getPTO, {
+    onSuccess: (data) => setData(data),
+    enabled: false,
+  });
 
   const {
-    data: employeesRemote,
-    isLoading: employeesRemoteLoading,
-    error: employeesRemoteError,
-  } = useQuery('employeesRemote', getEmployeesRemote);
+    isLoading: remoteLoading,
+    error: remoteError,
+    refetch: fetchRemote,
+  } = useQuery('employeesRemote', getRemote, {
+    onSuccess: (data) => setData(data),
+    enabled: false,
+  });
 
   return {
-    employeesPTO,
-    employeesLoading,
-    employeesPTOError,
-    employeesRemote,
-    employeesRemoteLoading,
-    employeesRemoteError,
+    data,
+    ptoLoading,
+    ptoError,
+    fetchPTO,
+    remoteLoading,
+    remoteError,
+    fetchRemote,
   };
 };
 
