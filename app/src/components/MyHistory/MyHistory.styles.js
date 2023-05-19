@@ -1,24 +1,25 @@
 const container = {
-  width: '25%',
+  width: '23vw',
   borderWidth: 'px',
   borderRadius: '6px',
   p: '0',
   border: '1px solid #E2E8F0',
-};
+  maxHeight: '75vh',
+  overflowY: 'auto',  
+}
 
 const tabindicator = {
-  mt: '-1.5px',
-  height: '2px',
+  mt: '-0.5',
+  height: '0.5',
   bg: 'purple.500',
   borderRadius: '1px',
 };
 
-const flex = {
+const header = {
   bg: 'blackAlpha.50',
   w: '100%',
-  h: '60px',
   color: 'black',
-  p: '2',
+  p: '4',
   alignItems: 'center',
 };
 
@@ -45,7 +46,7 @@ const statgroup_flex = {
 const styles = {
   container,
   tabindicator,
-  flex,
+  header,
   stat,
   tabs,
   statgroup_flex,

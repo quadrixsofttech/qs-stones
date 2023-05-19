@@ -3,23 +3,25 @@ import {
   AccordionButton,
   AccordionIcon,
   AccordionItem,
-  AccordionPanel,
   Box,
   Flex,
   Spacer,
   Text,
 } from '@chakra-ui/react';
 import styles from './RequestPTO.styles';
-import RequestApproved from '../RequestStatus/RequestApproved/RequestApproved';
-import RequestDenied from '../RequestStatus/RequestDenied/RequestDenied';
 import { useState } from 'react';
-import { getCurrentDateTime } from '../../util/getCurrentTime';
-import RequestPending from './../RequestStatus/RequestPending/RequestPending';
-import status from './status';
-import { ApprovedPanel } from './ApprovedPanel/ApprovedPanel';
-import { RejectedPanel } from './RejectedPanel/RejectedPanel';
+import RequestStatus from './RequestStatus/RequestStatus';
+import { MoreInformationPanel } from './MoreInformationPanel';
+import statusTypes from './status';
 
-const RequestPTO = ({ isRequestApproved = status.pending }) => {
+const RequestPTO = ({
+  status = statusTypes.pending,
+  type,
+  time,
+  user,
+  requestedDates,
+  response,
+}) => {
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
 
   const toggleAccordion = () => {
@@ -28,52 +30,46 @@ const RequestPTO = ({ isRequestApproved = status.pending }) => {
 
   return (
     <Box {...styles.box}>
-      <Text {...styles.gray_text}>{getCurrentDateTime()}</Text>
-      <Text {...styles.main_text}>
-        You sent Request PTO/Remote to
-        <Text fontWeight={'bold'} as="span">Milos Stosic(ADMIN)</Text>
-      </Text>
-      <Text display={'inline'} {...styles.gray_text}>
-        Requested Dates: <Text display={'inline'} as="span">23/4/2022</Text>
-      </Text>
-      <Box pt={2}>
-        {isRequestApproved === status.pending ? (
-          <RequestPending />
-        ) : isRequestApproved === status.approved ? (
-          <RequestApproved />
-        ) : (
-          <RequestDenied />
-        )}
+      <Box as="span">
+        <Text {...styles.gray_text}>{time}</Text>
+        <Text {...styles.main_text}>
+          You sent Request PTO/Remote to {' '}
+          <Text {...styles.admin_text} as="span">
+            {user.name}({user.role})
+          </Text>
+        </Text>
+        <Text display={'inline'} {...styles.gray_text}>
+          Requested Dates:
+          <Text display={'inline'} as="span">
+            {requestedDates.join('; ')}
+          </Text>
+        </Text>
+        <Box pt={2}>
+          <RequestStatus status={status} />
+        </Box>
+        <Flex alignItems={'center'}>
+          <Spacer />
+          <Accordion defaultIndex={[1]} allowToggle {...styles.accordion}>
+            <AccordionItem pt={2}>
+              <h2>
+                <AccordionButton onClick={toggleAccordion}>
+                  <Box color={'gray.500'}>
+                    {isAccordionOpen ? 'See less' : 'See more'}
+                  </Box>
+                  <AccordionIcon />
+                </AccordionButton>
+              </h2>
+              <MoreInformationPanel
+                user={user}
+                time={time}
+                requestedDates={requestedDates}
+                response={response}
+                status={status}
+              />
+            </AccordionItem>
+          </Accordion>
+        </Flex>
       </Box>
-      <Flex alignItems={'center'}>
-        <Spacer />
-        <Accordion defaultIndex={[1]} allowToggle {...styles.accordion}>
-          <AccordionItem pt={2}>
-            <h2>
-              <AccordionButton onClick={toggleAccordion}>
-                <Box color={'gray.500'}>
-                  {isAccordionOpen ? 'See less' : 'See more'}
-                </Box>
-                <AccordionIcon />
-              </AccordionButton>
-            </h2>
-            {isRequestApproved === status.pending ? 
-              <AccordionPanel {...styles.accordionpanel}>
-                <Text color={'gray.500'}>23/3/2022</Text>
-                <Text>Your Request is pending</Text>
-              </AccordionPanel> : 
-            isRequestApproved === status.approved ? (
-              <AccordionPanel {...styles.accordionpanel}>
-                <ApprovedPanel />
-              </AccordionPanel>
-            ) : (
-              <AccordionPanel {...styles.accordionpanel}>
-                <RejectedPanel />
-              </AccordionPanel>
-            )}
-          </AccordionItem>
-        </Accordion>
-      </Flex>
     </Box>
   );
 };

@@ -1,6 +1,6 @@
 const box = {
   fontFamily: "'Inter', sans-serif",
-  padding: '0.5rem 0.5rem',
+  p: '2',
 };
 
 const gray_text = {
@@ -10,9 +10,13 @@ const gray_text = {
 };
 
 const main_text = {
-  fontWeight: 700,
+  fontWeight: 500,
   paddingBottom: '1',
 };
+
+const admin_text = {
+  fontWeight: 700,
+}
 
 const button = {
   colorScheme : 'purple',
@@ -31,10 +35,12 @@ const accordion = {
   borderBottom :'px #fff',
 }
 
+
 const styles = {
   box,
   gray_text,
   main_text,
+  admin_text,
   button,
   accordionpanel,
   accordion
