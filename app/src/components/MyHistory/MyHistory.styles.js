@@ -1,12 +1,12 @@
 const container = {
-  width: '30%',
+  width: '23vw',
   borderWidth: 'px',
   borderRadius: '6px',
   p: '0',
   border: '1px solid #E2E8F0',
-  maxHeight: '80vh',
-  overflowY: 'auto',
-};
+  maxHeight: '75vh',
+  overflowY: 'auto',  
+}
 
 const tabindicator = {
   mt: '-0.5',
@@ -18,9 +18,8 @@ const tabindicator = {
 const header = {
   bg: 'blackAlpha.50',
   w: '100%',
-  h: '16',
   color: 'black',
-  p: '2',
+  p: '4',
   alignItems: 'center',
 };
 
