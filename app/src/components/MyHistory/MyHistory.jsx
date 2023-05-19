@@ -15,12 +15,13 @@ import styles from './MyHistory.styles';
 import RequestPTO from '../RequestPTO/RequestPTO';
 import { useState } from 'react';
 import { Calendar } from 'react-multi-date-picker';
-import './CustomCalendar.css';
+import './styles/CustomCalendar.css';
 import employees from './information';
 import { StatComponentMyHistory } from './../StatComponentMyHistory/StatComponentMyHistory';
+import { LeaveTypes, headerOrder } from './constants/constants';
 
 const MyHistory = () => {
-  const [selectedOption, setSelectedOption] = useState('Remote');
+  const [selectedOption, setSelectedOption] = useState(LeaveTypes.Remote);
 
   const handleSelectChange = (event) => {
     setSelectedOption(event.target.value);
@@ -46,20 +47,15 @@ const MyHistory = () => {
         <TabPanels p={0}>
           <TabPanel>
             <Select size="sm" mb={2} onChange={handleSelectChange}>
-              <option value="Remote">Remote</option>
-              <option value="Vacation">Vacation</option>
+              {Object.values(LeaveTypes).map((type) => (
+                <option value={type}>{type}</option>
+              ))}
             </Select>
-            {selectedOption === 'Remote' && (
-              <Calendar
-                headerOrder={['MONTH_YEAR', 'LEFT_BUTTON', 'RIGHT_BUTTON']}
-                className="custom-calendar"
-              />
+            {selectedOption === LeaveTypes.Remote && (
+              <Calendar headerOrder={headerOrder} className="custom-calendar" />
             )}
-            {selectedOption === 'Vacation' && (
-              <Calendar
-                headerOrder={['MONTH_YEAR', 'LEFT_BUTTON', 'RIGHT_BUTTON']}
-                className="custom-calendar"
-              />
+            {selectedOption === LeaveTypes.Vacation && (
+              <Calendar headerOrder={headerOrder} className="custom-calendar" />
             )}
 
             <StatGroup>

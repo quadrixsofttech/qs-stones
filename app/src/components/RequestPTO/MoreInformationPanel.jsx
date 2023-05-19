@@ -1,51 +1,38 @@
-import { Button, Flex, Text, Textarea, Box } from '@chakra-ui/react';
+import { Button, Flex, Text, Textarea, AccordionPanel } from '@chakra-ui/react';
 import React from 'react';
 import styles from '../RequestPTO/RequestPTO.styles';
 
 export const MoreInformationPanel = ({
   user,
   requestedDates,
-  requestStatus,
-  response
+  status,
+  response,
+  time,
 }) => {
-  return requestStatus === 'approved' ? (
-    <>
-      <Box as="span">
-        <Text color={'gray.500'}>{requestedDates}</Text>
-        <Text fontWeight={'bold'}>
-          {user.name}
-          {' ('}
-          {user.role}
-          {') '}
-          <Text fontWeight={'normal'} as="span">
-            approved your Request PTO/Remote
-          </Text>
-        </Text>
-      </Box>
-    </>
-  ) : (
-    <Box as="span">
-      <Text color={'gray.500'}>{requestedDates}</Text>
-      <Text fontWeight={'bold'}>
-        {user.name}
-        {' ('}
-        {user.role}
-        {') '}
-        <Text fontWeight={'normal'} as="span">
-          rejected your Request PTO/Remote
-        </Text>
+  const userText = (
+    <Text fontWeight="bold">
+      {user.name} ({user.role}){' '}
+      <Text fontWeight="normal" as="span">
+        {status === 'approved' ? 'approved' : 'rejected'} your Request
+        PTO/Remote
       </Text>
-      <>
-        <Flex flexDirection={'column'}>
-          <Textarea
-            mt={2}
-            placeholder={response}
-            width={200}
-            height={200}
-          />
+    </Text>
+  );
+
+  return (
+    <AccordionPanel {...styles.accordionpanel}>
+      <Text color="gray.500">{time}</Text>
+      {status === 'pending' ? (
+        <Text>Your Request is pending</Text>
+      ) : status !== 'approved' ? (
+        <Flex flexDirection="column">
+          {userText}
+          <Textarea mt={2} placeholder={response} width={200} height={200} />
           <Button {...styles.button}>Send Request Again</Button>
         </Flex>
-      </>
-    </Box>
+      ) : (
+        <Flex flexDirection="column">{userText}</Flex>
+      )}
+    </AccordionPanel>
   );
 };

@@ -1,8 +1,23 @@
 import { Box } from '@chakra-ui/react';
 import styles from './RequestStatus.styles';
+import StatusTypes from '../status';
 
-const RequestStatus = (props) => {
-  return <Box color={props.color} bg={props.bg} {...styles.label_status}>{props.name}</Box>;
+const RequestStatus = ({ name, color, bg }) => {
+  return (
+    <Box color={color} bg={bg} {...styles.label_status}>
+      {name}
+    </Box>
+  );
 };
 
-export default RequestStatus;
+const RequestStatusWrapper = ({ status }) => {
+  return (
+    <RequestStatus
+      name={StatusTypes[status].label}
+      color={StatusTypes[status].textColor}
+      bg={StatusTypes[status].backgroundColor}
+    />
+  );
+};
+
+export default RequestStatusWrapper;

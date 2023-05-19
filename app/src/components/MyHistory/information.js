@@ -41,9 +41,8 @@ const employees = {
         name: 'Milos Stosic',
         role: 'ADMIN',
       },
-      requestedDates: ['2023-04-04', '2023-04-04'],
+      requestedDates: ['2023-04-04', '2023-04-09'],
       status: 'approved',
-      response: 'Ne moze',
     },
   ],
 };
