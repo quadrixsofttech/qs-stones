@@ -33,7 +33,7 @@ const RequestPTO = ({
       <Box as="span">
         <Text {...styles.gray_text}>{time}</Text>
         <Text {...styles.main_text}>
-          You sent Request PTO/Remote to
+          You sent Request PTO/Remote to {' '}
           <Text {...styles.admin_text} as="span">
             {user.name}({user.role})
           </Text>
