@@ -27,8 +27,6 @@ const tabs = {
   position: 'relative',
   variant: 'unstyled',
   pt:2,
-  maxHeight: '70vh',
-  overflowY: 'auto',
 };
 
 const stat = {
