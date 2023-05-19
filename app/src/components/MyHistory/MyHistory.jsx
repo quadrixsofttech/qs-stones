@@ -17,7 +17,7 @@ import { useState } from 'react';
 import { Calendar } from 'react-multi-date-picker';
 import './styles/CustomCalendar.css';
 import employees from './information';
-import { StatComponentMyHistory } from './../StatComponentMyHistory/StatComponentMyHistory';
+import { MyHistoryStats } from './MyHistoryStats';
 import { LeaveTypes, headerOrder } from './constants/constants';
 
 const MyHistory = () => {
@@ -60,19 +60,19 @@ const MyHistory = () => {
 
             <StatGroup>
               <Flex {...styles.statgroup_flex}>
-                <StatComponentMyHistory
+                <MyHistoryStats
                   label="The total number of employees working today"
-                  help_text="% more than yesterday"
+                  helpText="% more than yesterday"
                   working={employees.workingToday}
                   percent={employees.percentIncrease}
                   arrow={'increase'}
                 />
-                <StatComponentMyHistory
+                <MyHistoryStats
                   label="The total number of employees working remotly today or on
                   vacation"
-                  help_text="% less than yesterday"
+                  helpText="% less than yesterday"
                   working={employees.awayOrRemote}
-                  percentIncrease={employees.percentDecrease}
+                  percent={employees.percentDecrease}
                   arrow={'decrease'}
                 />
               </Flex>
