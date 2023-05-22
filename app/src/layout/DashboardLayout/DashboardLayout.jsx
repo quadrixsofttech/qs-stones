@@ -10,7 +10,7 @@ const DashboardLayout = ({ children }) => {
 
       <Flex flexDir="column" flexGrow={1}>
         <DashboardNavbar />
-        <Box p={4} flex={1} maxHeight={'100vh'} overflow={'auto'}>
+        <Box p={'1rem'} flex={1} maxHeight={'100vh'} overflow={'auto'}>
           {children}
         </Box>
       </Flex>

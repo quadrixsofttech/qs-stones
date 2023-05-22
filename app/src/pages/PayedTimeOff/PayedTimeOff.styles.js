@@ -8,6 +8,7 @@ const button = {
 };
 
 const heading = {
+  color: 'gray.700',
   size: 'lg',
   fontFamily: "'Inter',sans-serif",
   fontWeight: 700,
