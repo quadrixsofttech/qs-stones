@@ -12,7 +12,7 @@ const sixColumnGridStyles = {
 };
 
 const calendarContainerStyles = {
-  width: '742px',
+  width: '57vw',
   marginBottom: '5',
   rounded: '3',
   border: '1px solid #E2E8F0',

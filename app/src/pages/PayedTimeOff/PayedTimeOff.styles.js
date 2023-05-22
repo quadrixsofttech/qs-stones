@@ -8,10 +8,9 @@ const button = {
 };
 
 const heading = {
-  size: 'md',
-  fontSize: '24px',
-  fontWeight: 'bold',
-  color: 'gray.700',
+  size: 'lg',
+  fontFamily: "'Inter',sans-serif",
+  fontWeight: 700,
 };
 
 const styles = {
