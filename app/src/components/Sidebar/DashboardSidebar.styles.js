@@ -14,8 +14,8 @@ const sideBar = {
 };
 
 const sideBarButton = {
-  width: '168px',
-  height: '56px',
+  width: '40',
+  height: '14',
   borderRadius: '6px',
   color: 'gray.400',
   justifyContent: 'flex-start',
@@ -23,8 +23,8 @@ const sideBarButton = {
   gap: '2',
   p: '4',
   _activeLink: {
-    width: '168px',
-    height: '56px',
+    width: '40',
+    height: '14',
     backgroundColor: 'purple.50',
     color: 'purple.700',
     borderRadius: '6px',
