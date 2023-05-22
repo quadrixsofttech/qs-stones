@@ -27,17 +27,9 @@ const Calendar = () => {
     daysOfWeek.push('Saturday');
   }
 
-  const daysInMonth = new Date(
-    date.getFullYear(),
-    date.getMonth() + 1,
-    0
-  ).getDate();
+  const daysInMonth = moment(date).daysInMonth();
 
-  const firstDayOfMonth = new Date(
-    date.getFullYear(),
-    date.getMonth(),
-    1
-  ).getDay();
+  const firstDayOfMonth = moment(date).startOf('month').day();
 
   const blanks = [];
   for (let i = 0; i < firstDayOfMonth - 1; i++) {
@@ -45,13 +37,12 @@ const Calendar = () => {
   }
 
   const days = [];
-  const currentDate = moment();
 
   for (let i = 1; i <= daysInMonth; i++) {
-    const dayOfWeek = new Date(date.getFullYear(), date.getMonth(), i).getDay();
+    const dayOfWeek = moment(date).date(i).day();
 
     const getDate = () => {
-      return currentDate.clone().date(i).format('YYYY-MM-DD');
+      return moment(date).date(i).format('YYYY-MM-DD');
     };
 
     const employeesToday = data ? data.filter((x) => x.date === getDate()) : [];
@@ -74,12 +65,15 @@ const Calendar = () => {
 
   const handleDateChange = (e) => {
     const { name, value } = e.target;
-    const newDate =
-      name === 'month'
-        ? new Date(date.getFullYear(), value, 1)
-        : new Date(value, date.getMonth(), 1);
+    let newDate;
 
-    setDate(newDate);
+    if (name === 'year') {
+      newDate = moment(date).year(parseInt(value));
+    } else if (name === 'month') {
+      newDate = moment(date).month(value);
+    }
+
+    setDate(newDate.format('YYYY-MM-DD'));
   };
 
   const totalDays = [...blanks, ...days];
@@ -132,7 +126,7 @@ const Calendar = () => {
             {...styles.selectButton}
             onChange={(e) => handleDateChange(e)}
             name="year"
-            value={date.getFullYear()}
+            value={moment(date).format('YYYY')}
           >
             {years.map((year) => {
               return (
@@ -146,7 +140,7 @@ const Calendar = () => {
             {...styles.selectButton}
             onChange={(e) => handleDateChange(e)}
             name="month"
-            value={date.getMonth()}
+            value={moment(date).month().toString()}
           >
             {months.map((month) => {
               return (
@@ -161,9 +155,10 @@ const Calendar = () => {
           <Button
             size={'xs'}
             backgroundColor={'blackAlpha.50'}
-            onClick={() =>
-              setDate(new Date(date.getFullYear(), date.getMonth() - 1, 1))
-            }
+            onClick={() => {
+              const newDate = moment(date).subtract(1, 'month');
+              setDate(newDate.format('YYYY-MM-DD'));
+            }}
           >
             <BiChevronLeft />
           </Button>
@@ -172,7 +167,8 @@ const Calendar = () => {
             size={'xs'}
             backgroundColor={'blackAlpha.50'}
             onClick={() => {
-              setDate(new Date(date.getFullYear(), date.getMonth() + 1, 1));
+              const newDate = moment(date).add(1, 'month');
+              setDate(newDate.format('YYYY-MM-DD'));
             }}
           >
             <BiChevronRight />
