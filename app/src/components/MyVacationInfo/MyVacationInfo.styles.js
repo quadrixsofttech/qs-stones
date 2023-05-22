@@ -2,7 +2,7 @@ const mainBox = {
   rounded: 'md',
   border: '1px solid #E2E8F0',
   flexDirection: 'column',
-  width: ' 57vw',
+  width: '57vw',
 };
 
 const header = {
