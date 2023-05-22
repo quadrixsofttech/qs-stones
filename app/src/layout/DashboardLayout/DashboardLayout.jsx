@@ -10,7 +10,7 @@ const DashboardLayout = ({ children }) => {
 
       <Flex marginTop={'60px'}>
         <DashboardSidebar />
-        <Box p={4} flex={1} marginLeft={'200px'}>
+        <Box p={6} flex={1} marginLeft={'200px'}>
           {children}
         </Box>
       </Flex>
