@@ -17,7 +17,6 @@ const CalendarBox = ({ date, employeesToday, type }) => {
   const isToday = () => {
     const currentDate = moment();
     const formattedDate = currentDate.format('YYYY-MM-DD');
-
     return date === formattedDate;
   };
   const getDay = () => {
