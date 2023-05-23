@@ -23,15 +23,15 @@ import { useState } from 'react';
 import { CalendarModal } from './../../components/Modal/CalendarModal';
 import { useToast } from '@chakra-ui/react';
 import { MyVacationInfo } from './../../components/MyVacationInfo/MyVacationInfo';
-import "../../components/CustomCalendar/CustomCalendar.css"
+import "../../styles/CustomCalendar.css";
 
 const PayedTimeOff = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [isCurrentPageRemote, setIsCurrectPageRemote] = useState(true);
+  const [isCurrentPageRemote, setIsCurrentPageRemote] = useState(false);
   const toast = useToast();
   const handleSubmit = () => {
     onClose();
-    setIsCurrectPageRemote(true);
+    setIsCurrentPageRemote(true);
     return toast({
       title: 'Success',
       description:
@@ -42,6 +42,14 @@ const PayedTimeOff = () => {
       colorScheme: 'green',
       variant: 'subtle',
     });
+  };
+
+  const handleNextPage = () => {
+    setIsCurrentPageRemote(false);
+  };
+
+  const handlePreviousPage = () => {
+    setIsCurrentPageRemote(true);
   };
   return (
     <>
@@ -90,7 +98,7 @@ const PayedTimeOff = () => {
                   <Button
                     {...styles.buttonNext}
                     onClick={() => {
-                      setIsCurrectPageRemote(false);
+                      setIsCurrentPageRemote(false);
                     }}
                   >
                     Next
@@ -103,7 +111,7 @@ const PayedTimeOff = () => {
                 <>
                   <Button
                     onClick={() => {
-                      setIsCurrectPageRemote(true);
+                      setIsCurrentPageRemote(true);
                     }}
                     width={'6rem'}
                     leftIcon={<FaArrowLeft />}
