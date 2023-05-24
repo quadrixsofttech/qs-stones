@@ -26,7 +26,7 @@ export const RenderRangeTags = ({
       <TagLabel>
         {startDate.format()} - {endDate.format()}
       </TagLabel>
-      {isCurrentPageRemote && (
+      {(isCurrentPageRemote || styleChange) && (
         <TagCloseButton onClick={() => handleClose(range, styleChange)} />
       )}
     </Tag>

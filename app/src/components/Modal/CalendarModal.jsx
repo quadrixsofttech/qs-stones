@@ -11,7 +11,6 @@ import { Info } from '@material-ui/icons';
 import styles from './CalendarModal.styles';
 import { useCalendar } from '../../hooks/useCalendar';
 import { Calendar } from 'react-multi-date-picker';
-import generateRadnomIndex from '../../util/generateRandomIndex';
 import users from './user';
 import { RenderRangeTags } from '../RenderRangeTags/RenderRangeTags';
 
@@ -36,7 +35,7 @@ export const CalendarModal = ({ isCurrentPageRemote, value, name }) => {
     return listOfRanges.map((range) => (
       <RenderRangeTags
         range={range}
-        key={generateRadnomIndex()}
+        key={Math.random()*150}
         styleChange={isCurrentPageRemote ? true : false}
         handleClose={ handleClose}
       />
@@ -49,7 +48,7 @@ export const CalendarModal = ({ isCurrentPageRemote, value, name }) => {
       .map((range) => (
         <RenderRangeTags
           range={range}
-          key={generateRadnomIndex()}
+          key={Math.random()*150}
           styleChange={isCurrentPageRemote ? false : true}
           handleClose={handleClose}
         />
