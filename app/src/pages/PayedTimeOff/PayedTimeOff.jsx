@@ -5,7 +5,7 @@ import { FaRegCalendarPlus } from 'react-icons/fa';
 import MyHistory from '../../components/MyHistory/MyHistory';
 
 import { MyVacationInfo } from '../../components/MyVacationInfo/MyVacationInfo';
-
+import PTOCalendar from '../../components/PTOCalendar/PTOCalendar';
 const PayedTimeOff = () => {
   return (
     <>
@@ -21,6 +21,7 @@ const PayedTimeOff = () => {
         </Flex>
         <Flex gap={4}>
           <Flex flexDir={'column'}>
+            <PTOCalendar />
             <MyVacationInfo />
           </Flex>
           <Flex flexDir={'column'}>
