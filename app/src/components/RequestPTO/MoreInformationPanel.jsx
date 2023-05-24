@@ -27,7 +27,7 @@ export const MoreInformationPanel = ({
       ) : status !== 'approved' ? (
         <Flex flexDirection="column">
           {userText}
-          <Textarea {...styles.text_area_panel} placeholder={response}/>
+          <Textarea {...styles.textAreaPanel} placeholder={response}/>
           <Button {...styles.button}>Send Request Again</Button>
         </Flex>
       ) : (

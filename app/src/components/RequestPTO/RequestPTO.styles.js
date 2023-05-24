@@ -3,20 +3,20 @@ const box = {
   p: '2',
 };
 
-const gray_text = {
+const grayText = {
   fontWeight: 400,
   color: 'gray.700',
   fontSize: 'sm',
   paddingBottom: '1',
 };
 
-const main_text = {
+const mainText = {
   fontWeight: 500,
   paddingBottom: '1',
   fontSize: 'md',
 };
 
-const admin_text = {
+const adminText = {
   fontWeight: 700,
   fontSize: 'md',
 };
@@ -38,22 +38,21 @@ const accordion = {
   borderBottom: 'px #fff',
 };
 
-const text_area_panel = {
+const textAreaPanel = {
   mt: '2',
-  width: '200',
-  height: '200',
+  width: '48',
   fontSize: '0.9rem',
 };
 
 const styles = {
   box,
-  gray_text,
-  main_text,
-  admin_text,
+  grayText,
+  mainText,
+  adminText,
   button,
   accordionpanel,
   accordion,
-  text_area_panel,
+  textAreaPanel,
 };
 
 export default styles;
