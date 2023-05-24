@@ -1,4 +1,4 @@
-const label_status = {
+const labelStatus = {
     width: '20',
     textAlign: 'center',
     fontWeight: 'bold',
@@ -7,7 +7,7 @@ const label_status = {
   };
   
   const styles = {
-    label_status,
+    labelStatus,
   };
   
   export default styles;
