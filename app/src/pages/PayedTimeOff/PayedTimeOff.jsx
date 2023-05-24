@@ -1,4 +1,4 @@
-import { Button, Heading, Flex, Spacer } from '@chakra-ui/react';
+import { Button, Heading, Flex } from '@chakra-ui/react';
 import DashboardLayout from '../../layout/DashboardLayout/DashboardLayout';
 import styles from './PayedTimeOff.styles.js';
 import { FaRegCalendarPlus } from 'react-icons/fa';
@@ -10,9 +10,8 @@ const PayedTimeOff = () => {
   return (
     <>
       <DashboardLayout>
-        <Flex mb={4}>
+        <Flex mb={4} justifyContent={'space-between'}>
           <Heading {...styles.heading}>Paid Time Off</Heading>
-          <Spacer />
           <Button
             leftIcon={<FaRegCalendarPlus size={'12'} />}
             {...styles.button}

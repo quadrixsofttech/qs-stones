@@ -12,7 +12,7 @@ export const MoreInformationPanel = ({
   const userText = (
     <Text fontWeight="bold">
       {user.name} ({user.role}){' '}
-      <Text fontWeight="normal" as="span">
+      <Text fontWeight="normal" as="span" fontSize={'0.9rem'}>
         {status === 'approved' ? 'approved' : 'rejected'} your Request
         PTO/Remote
       </Text>
@@ -21,13 +21,13 @@ export const MoreInformationPanel = ({
 
   return (
     <AccordionPanel {...styles.accordionpanel}>
-      <Text color="gray.500">{time}</Text>
+      <Text color="gray.700">{time}</Text>
       {status === 'pending' ? (
-        <Text>Your Request is pending</Text>
+        <Text fontSize={'0.9rem'}>Your Request is pending</Text>
       ) : status !== 'approved' ? (
         <Flex flexDirection="column">
           {userText}
-          <Textarea mt={2} placeholder={response} width={200} height={200} />
+          <Textarea {...styles.textAreaPanel} placeholder={response}/>
           <Button {...styles.button}>Send Request Again</Button>
         </Flex>
       ) : (
