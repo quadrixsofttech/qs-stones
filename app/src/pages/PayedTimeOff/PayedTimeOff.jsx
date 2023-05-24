@@ -1,4 +1,4 @@
-import { Button, Heading, Flex, Spacer } from '@chakra-ui/react';
+import { Button, Heading, Flex } from '@chakra-ui/react';
 import DashboardLayout from '../../layout/DashboardLayout/DashboardLayout';
 import styles from './PayedTimeOff.styles.js';
 import { FaRegCalendarPlus } from 'react-icons/fa';
