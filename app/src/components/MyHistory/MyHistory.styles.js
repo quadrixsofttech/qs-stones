@@ -4,8 +4,6 @@ const container = {
   borderRadius: '6px',
   p: '0',
   border: '1px solid #E2E8F0',
-  height: '90%',
-  overflowY: 'auto',  
 }
 
 const tabindicator = {
@@ -41,9 +39,15 @@ const statgroup_flex = {
   flexDirection: 'column',
 };
 
+const tabPanel = {
+  height :'80vh',
+  overflowY:'scroll',
+}
+
 const styles = {
   container,
   tabindicator,
+  tabPanel,
   header,
   stat,
   tabs,

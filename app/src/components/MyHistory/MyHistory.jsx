@@ -44,14 +44,14 @@ const MyHistory = () => {
         </TabList>
         <TabIndicator {...styles.tabindicator} />
         <TabPanels p={0}>
-          <TabPanel>
+          <TabPanel display={'flex'} alignItems={'center'} justifyContent={'center'} flexDir={'column'}>
             <Select size="sm" mb={2} onChange={handleSelectChange}>
               {Object.values(LeaveTypes).map((type) => (
                 <option value={type} key={LeaveTypes.id + '-' + type}>{type}</option>
               ))}
             </Select>
             {selectedOption === LeaveTypes.Remote && (
-              <Calendar headerOrder={headerOrder} className="custom-calendar" />
+              <Calendar headerOrder={headerOrder} className="custom-calendar"/>
             )}
             {selectedOption === LeaveTypes.Vacation && (
               <Calendar headerOrder={headerOrder} className="custom-calendar" />
@@ -77,7 +77,7 @@ const MyHistory = () => {
               </Flex>
             </StatGroup>
           </TabPanel>
-          <TabPanel {...styles.tabpanel}>
+          <TabPanel {...styles.tabPanel}>
             {Array.isArray(employees.requests) &&
               employees.requests.map((request, id) => {
                 return (
