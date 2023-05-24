@@ -4,9 +4,6 @@ import {
   Flex,
   Progress,
   Select,
-  Tag,
-  TagCloseButton,
-  TagLabel,
   Text,
   Tooltip,
 } from '@chakra-ui/react';
@@ -16,8 +13,9 @@ import { useCalendar } from '../../hooks/useCalendar';
 import { Calendar } from 'react-multi-date-picker';
 import generateRadnomIndex from '../../util/generateRandomIndex';
 import users from './user';
+import { RenderRangeTags } from '../RenderRangeTags/RenderRangeTags';
 
-export const CalendarModal = (props) => {
+export const CalendarModal = ({ isCurrentPageRemote, value, name }) => {
   const [
     listOfRanges,
     setListOfRanges,
@@ -25,30 +23,6 @@ export const CalendarModal = (props) => {
     setListOfRangesVacation,
     handleClose,
   ] = useCalendar();
-
-  const renderRangeTag = (range, key, isVacation = false) => {
-    if (range.length !== 2) {
-      return null;
-    }
-
-    const startDate = range[0];
-    const endDate = range[1];
-    return (
-      <Tag
-        key={key}
-        size="sm"
-        fontSize="12px"
-        borderRadius="full"
-        variant={isVacation || props.isCurrentPageRemote ? 'subtle' : 'outline'}
-        colorScheme="gray"
-      >
-        <TagLabel>
-          {startDate.format()} - {endDate.format()}
-        </TagLabel>
-        <TagCloseButton onClick={() => handleClose(range, isVacation)} />
-      </Tag>
-    );
-  };
 
   const handleOnChangeRemote = (listOfRanges) => {
     setListOfRanges(listOfRanges);
@@ -59,26 +33,38 @@ export const CalendarModal = (props) => {
   };
 
   const renderListOfRanges = (listOfRanges) => {
-    return listOfRanges.map((range) =>
-      renderRangeTag(range, generateRadnomIndex())
-    );
+    return listOfRanges.map((range) => (
+      <RenderRangeTags
+        range={range}
+        key={generateRadnomIndex()}
+        styleChange={isCurrentPageRemote ? true : false}
+        handleClose={ handleClose}
+      />
+    ));
   };
 
   const renderListOfRangesVacation = (listOfRangesVacation) => {
     return listOfRangesVacation
       .slice(1)
-      .map((range) => renderRangeTag(range, generateRadnomIndex(), true));
+      .map((range) => (
+        <RenderRangeTags
+          range={range}
+          key={generateRadnomIndex()}
+          styleChange={isCurrentPageRemote ? false : true}
+          handleClose={handleClose}
+        />
+      ));
   };
 
   return (
     <>
       <Flex {...styles.progress}>
         <Box>1/2</Box>
-        <Progress hasStripe value={props.value} flex={1} colorScheme="purple" />
+        <Progress hasStripe value={value} flex={1} colorScheme="purple" />
       </Flex>
       <Box position="relative">
         <Flex alignItems="center" mt={2} gap={2}>
-          <Text {...styles.textRemote}>{props.name}</Text>
+          <Text {...styles.textRemote}>{name}</Text>
           <Tooltip
             label="*Double-click to select a date on the calendar. 
                   *Single-click to select a range of dates on the calendar."
@@ -98,7 +84,7 @@ export const CalendarModal = (props) => {
           );
         })}
       </Select>
-      {props.isCurrentPageRemote ? (
+      {isCurrentPageRemote ? (
         <>
           <Flex alignItems="center" justifyContent="center">
             <Calendar
@@ -110,7 +96,7 @@ export const CalendarModal = (props) => {
             />
           </Flex>
           <Text {...styles.textRequestDates}>Requested dates for Remote:</Text>
-          {renderListOfRanges(listOfRanges, true)}
+          {renderListOfRanges(listOfRanges)}
           <Divider />
         </>
       ) : (
@@ -127,10 +113,10 @@ export const CalendarModal = (props) => {
           <Text {...styles.textRequestDates}>
             Requested dates for Vacation:
           </Text>
-          {renderListOfRangesVacation(listOfRangesVacation, false)}
+          {renderListOfRangesVacation(listOfRangesVacation)}
           <Divider />
           <Text {...styles.textRequestDates}>Requested dates for Remote:</Text>
-          {renderListOfRanges(listOfRanges, true)}
+          {renderListOfRanges(listOfRanges)}
           <Divider />
         </>
       )}

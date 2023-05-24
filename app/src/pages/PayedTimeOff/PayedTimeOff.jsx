@@ -12,18 +12,11 @@ import MyHistory from '../../components/MyHistory/MyHistory';
 import { MyVacationInfo } from './../../components/MyVacationInfo/MyVacationInfo';
 import '../../styles/CustomCalendar.css';
 import { RequestPTOModal } from '../../components/RequestPTOModal/RequestPTOModal';
-import { useState } from 'react';
 
 const PayedTimeOff = () => {
   const { onOpen, onClose,isOpen } = useDisclosure();
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-
   const toast = useToast();
-  const toggleModal = () => {
-    setIsModalOpen(!isModalOpen);
-  };
+
 
   const handleRequestSubmit = () => {
     return toast({
@@ -50,8 +43,8 @@ const PayedTimeOff = () => {
         </Flex>
         <RequestPTOModal
           isOpen={isOpen}
-          onClose={onClose}
           onRequestSubmit={handleRequestSubmit}
+          onClose={onClose}
         />
         <Flex gap={4}>
           <Flex flexDir={'column'}>

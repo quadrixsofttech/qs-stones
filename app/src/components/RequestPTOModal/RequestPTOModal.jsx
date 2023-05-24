@@ -1,7 +1,7 @@
 import {
-  Box,
   Button,
   Divider,
+  Icon,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -9,7 +9,6 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  useDisclosure,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { BiUserPin } from 'react-icons/bi';
@@ -17,19 +16,19 @@ import styles from '../../pages/PayedTimeOff/PayedTimeOff.styles';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import { CalendarModal } from '../Modal/CalendarModal';
 
-export const RequestPTOModal = ({ isOpen, onRequestSubmit }) => {
-  const [isCurrentPageRemote, setIsCurrentPageRemote] = useState(false);
-  const { onClose } = useDisclosure();
+export const RequestPTOModal = ({ isOpen, onRequestSubmit,onClose }) => {
+  const [isCurrentPageRemote, setIsCurrentPageRemote] = useState(true);
+   
   const handleSubmit = () => {
     onClose();
-    setIsCurrentPageRemote(true);
+    setIsCurrentPageRemote(false);
     onRequestSubmit();
   };
   return (
     <Modal
       isCentered
-      onClose={onClose}
       isOpen={isOpen}
+      onClose={onClose}
       motionPreset="slideInBottom"
     >
       <ModalOverlay />
@@ -39,64 +38,61 @@ export const RequestPTOModal = ({ isOpen, onRequestSubmit }) => {
         <ModalCloseButton />
         <ModalBody maxH="600px" overflowY={'auto'}>
           {isCurrentPageRemote ? (
-            <CalendarModal
-              name="Remote"
-              value={45}
-              className="custom-calendar"
-              isCurrentPageRemote={isCurrentPageRemote}
-            />
+            <>
+              <CalendarModal
+                name="Remote"
+                value={45}
+                className="custom-calendar"
+                isCurrentPageRemote={isCurrentPageRemote}
+              />
+              <ModalFooter display={'flex'}>
+                <Button onClick={onClose} width={'6rem'}>
+                  Close
+                </Button>
+                <Button
+                  {...styles.buttonNext}
+                  onClick={() => {
+                    setIsCurrentPageRemote(false);
+                  }}
+                >
+                  Next
+                  <Icon as={FaArrowRight} fontSize={12} ml={1} mt={1} />
+                </Button>
+              </ModalFooter>
+            </>
           ) : (
-            <CalendarModal
-              name="Vacation"
-              value={95}
-              className="custom-calendar"
-              isCurrentPageRemote={isCurrentPageRemote}
-            />
+            <>
+              <CalendarModal
+                name="Vacation"
+                value={95}
+                className="custom-calendar"
+                isCurrentPageRemote={isCurrentPageRemote}
+              />
+              <ModalFooter display={'flex'}>
+                <Button
+                  onClick={() => {
+                    setIsCurrentPageRemote(true);
+                  }}
+                  width={'6rem'}
+                  leftIcon={<FaArrowLeft />}
+                >
+                  Back
+                </Button>
+                <Button
+                  onClick={() => {
+                    handleSubmit();
+                    onClose();
+                  }}
+                  {...styles.buttonNext}
+                  width={'10rem'}
+                  leftIcon={<BiUserPin />}
+                >
+                  Submit Request
+                </Button>
+              </ModalFooter>
+            </>
           )}
         </ModalBody>
-        <ModalFooter display={'flex'}>
-          {isCurrentPageRemote ? (
-            <>
-              <Button onClick={onClose} width={'6rem'}>
-                Close
-              </Button>
-              <Button
-                {...styles.buttonNext}
-                onClick={() => {
-                  setIsCurrentPageRemote(false);
-                }}
-              >
-                Next
-                <Box ml={2}>
-                  <FaArrowRight fontSize={12} />
-                </Box>
-              </Button>
-            </>
-          ) : (
-            <>
-              <Button
-                onClick={() => {
-                  setIsCurrentPageRemote(true);
-                }}
-                width={'6rem'}
-                leftIcon={<FaArrowLeft />}
-              >
-                Back
-              </Button>
-              <Button
-                onClick={() => {
-                  handleSubmit();
-                  onClose();
-                }}
-                {...styles.buttonNext}
-                width={'10rem'}
-                leftIcon={<BiUserPin />}
-              >
-                Submit Request
-              </Button>
-            </>
-          )}
-        </ModalFooter>
       </ModalContent>
     </Modal>
   );
