@@ -11,8 +11,9 @@ import { Info } from '@material-ui/icons';
 import styles from './CalendarModal.styles';
 import { useCalendar } from '../../hooks/useCalendar';
 import { Calendar } from 'react-multi-date-picker';
-import users from './user';
 import { RenderRangeTags } from '../RenderRangeTags/RenderRangeTags';
+import { useContext, useEffect, useState } from 'react';
+import { FetchContext } from '../../context/FetchContext';
 
 export const CalendarModal = ({ isCurrentPageRemote, value, name }) => {
   const [
@@ -22,6 +23,20 @@ export const CalendarModal = ({ isCurrentPageRemote, value, name }) => {
     setListOfRangesVacation,
     handleClose,
   ] = useCalendar();
+  const { protectedFetch } = useContext(FetchContext);
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const getUsers = async () => {
+      try {
+        const { data } = await protectedFetch.get('users');
+        setUsers(data.users);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getUsers();
+  }, [protectedFetch]);
 
   const handleOnChangeRemote = (listOfRanges) => {
     setListOfRanges(listOfRanges);
