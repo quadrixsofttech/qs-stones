@@ -18,7 +18,6 @@ import React, { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { Link } from 'react-router-dom';
 import { BiBell, BiChevronDown } from 'react-icons/bi';
-import QuadrixSoftLogo from '../QuadrixSoftLogo/QuadrixSoftLogo';
 
 const DashboardNavbar = () => {
   const auth = useContext(AuthContext);
@@ -26,10 +25,6 @@ const DashboardNavbar = () => {
   return (
     <Box>
       <Flex {...styles.wrapper}>
-        <Flex {...styles.logo} as={Link} to={'/dashboard'}>
-          <QuadrixSoftLogo />
-        </Flex>
-
         <Stack {...styles.avatarWrapper}>
           <Flex alignItems={'center'}>
             <Menu>

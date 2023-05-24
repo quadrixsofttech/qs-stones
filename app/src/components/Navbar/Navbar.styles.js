@@ -3,17 +3,14 @@ const wrapper = {
   color: 'gray.600',
   minH: '60px',
   py: 2,
-  paddingRight: 4,
+  px: 4,
   borderBottom: 1,
   borderStyle: 'solid',
   borderColor: 'gray.200',
   align: 'center',
   zIndex: 2,
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  right: 0,
-  justifyContent: 'space-between',
+  position: 'relative',
+  justifyContent: 'flex-end',
 };
 
 const logo = {
