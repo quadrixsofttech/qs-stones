@@ -35,9 +35,9 @@ export const CalendarModal = ({ isCurrentPageRemote, value, name }) => {
     return listOfRanges.map((range) => (
       <RenderRangeTags
         range={range}
-        key={Math.random()*150}
+        key={Math.random() * 150}
         styleChange={isCurrentPageRemote ? true : false}
-        handleClose={ handleClose}
+        handleClose={handleClose}
       />
     ));
   };
@@ -48,7 +48,7 @@ export const CalendarModal = ({ isCurrentPageRemote, value, name }) => {
       .map((range) => (
         <RenderRangeTags
           range={range}
-          key={Math.random()*150}
+          key={Math.random() * 150}
           styleChange={isCurrentPageRemote ? false : true}
           handleClose={handleClose}
         />
