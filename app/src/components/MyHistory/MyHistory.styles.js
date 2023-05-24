@@ -18,7 +18,7 @@ const tabindicator = {
 const header = {
   bg: 'blackAlpha.50',
   w: '100%',
-  color: 'black',
+  color: 'gray.700',
   p: '4',
   alignItems: 'center',
 };

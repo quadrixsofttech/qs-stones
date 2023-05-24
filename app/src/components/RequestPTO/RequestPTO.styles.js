@@ -5,17 +5,20 @@ const box = {
 
 const gray_text = {
   fontWeight: 400,
-  color: 'gray.500',
+  color: 'gray.700',
+  fontSize:'sm',
   paddingBottom: '1',
 };
 
 const main_text = {
   fontWeight: 500,
   paddingBottom: '1',
+  fontSize:'md'
 };
 
 const admin_text = {
   fontWeight: 700,
+  fontSize:'md'
 }
 
 const button = {
@@ -26,7 +29,7 @@ const button = {
 };
 
 const accordionpanel = {
-  width: '20vw',
+  width: '18vw',
   border:0,
 }
 

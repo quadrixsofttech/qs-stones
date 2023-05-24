@@ -1,5 +1,4 @@
 import {
-  Container,
   Flex,
   Select,
   StatGroup,
@@ -28,7 +27,7 @@ const MyHistory = () => {
   };
 
   return (
-    <Container {...styles.container}>
+    <Flex {...styles.container} flexDirection={'column'}>
       <Flex {...styles.header}>
         <Heading as="h2" size="sm">
           My History
@@ -48,7 +47,7 @@ const MyHistory = () => {
           <TabPanel>
             <Select size="sm" mb={2} onChange={handleSelectChange}>
               {Object.values(LeaveTypes).map((type) => (
-                <option value={type}>{type}</option>
+                <option value={type} key={LeaveTypes.id + '-' + type}>{type}</option>
               ))}
             </Select>
             {selectedOption === LeaveTypes.Remote && (
@@ -97,7 +96,7 @@ const MyHistory = () => {
           </TabPanel>
         </TabPanels>
       </Tabs>
-    </Container>
+    </Flex>
   );
 };
 
