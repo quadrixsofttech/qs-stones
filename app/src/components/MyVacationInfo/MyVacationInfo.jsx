@@ -19,7 +19,13 @@ export const MyVacationInfo = () => {
       </Box>
       <Flex {...styles.infoBox}>
         <MyVacationInfoBox
-          heading={'User Vacation Days to date'}
+          heading={
+            <>
+              User Vacation Days
+              <br />
+              to date
+            </>
+          }
           numberInfo={vacationInfo.VacationDaysToDate}
           footer={`${vacationInfo.VacationDaysLeft} days left`}
         />
