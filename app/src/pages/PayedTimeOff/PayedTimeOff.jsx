@@ -15,9 +15,10 @@ import { RequestPTOModal } from '../../components/RequestPTOModal/RequestPTOModa
 import { useState } from 'react';
 
 const PayedTimeOff = () => {
-  const { onOpen, onClose } = useDisclosure();
+  const { onOpen, onClose,isOpen } = useDisclosure();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+
 
   const toast = useToast();
   const toggleModal = () => {
@@ -48,7 +49,7 @@ const PayedTimeOff = () => {
           </Button>
         </Flex>
         <RequestPTOModal
-          isOpen={isModalOpen}
+          isOpen={isOpen}
           onClose={onClose}
           onRequestSubmit={handleRequestSubmit}
         />
