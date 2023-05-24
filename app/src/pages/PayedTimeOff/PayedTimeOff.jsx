@@ -3,35 +3,28 @@ import {
   Heading,
   Flex,
   Spacer,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
   useDisclosure,
-  Box,
-  Divider,
+  useToast,
 } from '@chakra-ui/react';
 import DashboardLayout from '../../layout/DashboardLayout/DashboardLayout';
 import styles from './PayedTimeOff.styles';
 import MyHistory from '../../components/MyHistory/MyHistory';
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
-import { BiUserPin } from 'react-icons/bi';
-import { useState } from 'react';
-import { CalendarModal } from './../../components/Modal/CalendarModal';
-import { useToast } from '@chakra-ui/react';
 import { MyVacationInfo } from './../../components/MyVacationInfo/MyVacationInfo';
-import "../../styles/CustomCalendar.css";
+import '../../styles/CustomCalendar.css';
+import { RequestPTOModal } from '../../components/RequestPTOModal/RequestPTOModal';
+import { useState } from 'react';
 
 const PayedTimeOff = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [isCurrentPageRemote, setIsCurrentPageRemote] = useState(false);
+  const { onOpen, onClose } = useDisclosure();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const toast = useToast();
-  const handleSubmit = () => {
-    onClose();
-    setIsCurrentPageRemote(true);
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
+  const handleRequestSubmit = () => {
     return toast({
       title: 'Success',
       description:
@@ -44,13 +37,6 @@ const PayedTimeOff = () => {
     });
   };
 
-  const handleNextPage = () => {
-    setIsCurrentPageRemote(false);
-  };
-
-  const handlePreviousPage = () => {
-    setIsCurrentPageRemote(true);
-  };
   return (
     <>
       <DashboardLayout>
@@ -61,79 +47,11 @@ const PayedTimeOff = () => {
             Request PTO
           </Button>
         </Flex>
-        <Modal
-          isCentered
+        <RequestPTOModal
+          isOpen={isModalOpen}
           onClose={onClose}
-          isOpen={isOpen}
-          motionPreset="slideInBottom"
-        >
-          <ModalOverlay />
-          <ModalContent maxW="700px" maxH="600px">
-            <ModalHeader {...styles.modalHeader}>Paid Time Off</ModalHeader>
-            <Divider />
-            <ModalCloseButton />
-            <ModalBody maxH="600px" overflowY={'auto'}>
-              {isCurrentPageRemote ? (
-                <CalendarModal
-                  name="Remote"
-                  value={45}
-                  className="custom-calendar"
-                  isCurrentPageRemote={isCurrentPageRemote}
-                />
-              ) : (
-                <CalendarModal
-                  name="Vacation"
-                  value={95}
-                  className="custom-calendar"
-                  isCurrentPageRemote={isCurrentPageRemote}
-                />
-              )}
-            </ModalBody>
-            <ModalFooter display={'flex'}>
-              {isCurrentPageRemote ? (
-                <>
-                  <Button onClick={onClose} width={'6rem'}>
-                    Close
-                  </Button>
-                  <Button
-                    {...styles.buttonNext}
-                    onClick={() => {
-                      setIsCurrentPageRemote(false);
-                    }}
-                  >
-                    Next
-                    <Box ml={2}>
-                      <FaArrowRight fontSize={12} />
-                    </Box>
-                  </Button>
-                </>
-              ) : (
-                <>
-                  <Button
-                    onClick={() => {
-                      setIsCurrentPageRemote(true);
-                    }}
-                    width={'6rem'}
-                    leftIcon={<FaArrowLeft />}
-                  >
-                    Back
-                  </Button>
-                  <Button
-                    onClick={() => {
-                      handleSubmit();
-                      onClose();
-                    }}
-                    {...styles.buttonNext}
-                    width={'10rem'}
-                    leftIcon={<BiUserPin />}
-                  >
-                    Submit Request
-                  </Button>
-                </>
-              )}
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
+          onRequestSubmit={handleRequestSubmit}
+        />
         <Flex gap={4}>
           <Flex flexDir={'column'}>
             <MyVacationInfo />
