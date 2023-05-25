@@ -83,6 +83,7 @@ const popoverBox = {
   flexDirection: 'column',
   gap: '4',
   paddingTop: '2.5',
+  zIndex: '50',
 };
 const calendarBox = {
   padding: '2',
