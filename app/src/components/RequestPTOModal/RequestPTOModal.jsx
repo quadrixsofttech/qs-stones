@@ -16,9 +16,9 @@ import styles from '../../pages/PayedTimeOff/PayedTimeOff.styles';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import { CalendarModal } from '../Modal/CalendarModal';
 
-export const RequestPTOModal = ({ isOpen, onRequestSubmit,onClose }) => {
+export const RequestPTOModal = ({ isOpen, onRequestSubmit, onClose }) => {
   const [isCurrentPageRemote, setIsCurrentPageRemote] = useState(true);
-   
+
   const handleSubmit = () => {
     onClose();
     setIsCurrentPageRemote(false);
