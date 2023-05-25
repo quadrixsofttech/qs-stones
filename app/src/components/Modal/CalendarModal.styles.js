@@ -22,6 +22,23 @@ const progress = {
     gap: 3,
     mb: 2,
   };
+
+  const flexError ={
+    bg:'red.100',
+    height:'10',
+    alignItems:'center',
+    justifyContent:'center'
+  }
+
+  const textError = {
+    color:'red.800',
+    fontSize:'15'
+  }
+
+  const flexSpinner = {
+    alignItems:'center',
+    justifyContent:'center'
+  }
   
 
 
@@ -29,7 +46,10 @@ const styles = {
     progress,
     textRemote,
     textRequestDates,
-    flexTag
+    flexTag,
+    flexError,
+    textError,
+    flexSpinner
 }
 
 export default styles;

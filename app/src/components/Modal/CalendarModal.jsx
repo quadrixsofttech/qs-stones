@@ -6,14 +6,14 @@ import {
   Select,
   Text,
   Tooltip,
+  Icon,
+  Spinner,
 } from '@chakra-ui/react';
-import { Info } from '@material-ui/icons';
+import { MdInfo } from 'react-icons/md';
 import styles from './CalendarModal.styles';
 import { useCalendar } from '../../hooks/useCalendar';
 import { Calendar } from 'react-multi-date-picker';
 import { RenderRangeTags } from '../RenderRangeTags/RenderRangeTags';
-import { useContext, useEffect, useState } from 'react';
-import { FetchContext } from '../../context/FetchContext';
 
 export const CalendarModal = ({ isCurrentPageRemote, value, name }) => {
   const [
@@ -22,21 +22,30 @@ export const CalendarModal = ({ isCurrentPageRemote, value, name }) => {
     listOfRangesVacation,
     setListOfRangesVacation,
     handleClose,
+    data,
+    isLoading,
+    error,
   ] = useCalendar();
-  const { protectedFetch } = useContext(FetchContext);
-  const [users, setUsers] = useState([]);
 
-  useEffect(() => {
-    const getUsers = async () => {
-      try {
-        const { data } = await protectedFetch.get('users');
-        setUsers(data.users);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getUsers();
-  }, [protectedFetch]);
+  if (isLoading) {
+    return (
+      <>
+        <Flex {...styles.flexSpinner}>
+          <Spinner />
+        </Flex>
+      </>
+    );
+  }
+
+  if (error) {
+    return (
+      <>
+        <Flex {...styles.flexError}>
+          <Text {...styles.textError}>{error.message}</Text>
+        </Flex>
+      </>
+    );
+  }
 
   const handleOnChangeRemote = (listOfRanges) => {
     setListOfRanges(listOfRanges);
@@ -85,15 +94,15 @@ export const CalendarModal = ({ isCurrentPageRemote, value, name }) => {
             placement="right"
             hasArrow
           >
-            <Info fontSize={'small'} style={{ color: '#A0AEC0' }} />
+            <Icon as={MdInfo} fontSize={'large'} color={'gray.400'} />
           </Tooltip>
         </Flex>
       </Box>
       <Select mt={2} mb={2}>
-        {users.map((user) => {
+        {data.map((user) => {
           return (
             <option value="option" key={user.id}>
-              {user.name} {user.role}
+              {user.name}
             </option>
           );
         })}
