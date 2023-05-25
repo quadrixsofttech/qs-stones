@@ -4,7 +4,7 @@ import StatusTypes from '../status';
 
 const RequestStatus = ({ name, color, bg }) => {
   return (
-    <Box color={color} bg={bg} {...styles.label_status}>
+    <Box color={color} bg={bg} {...styles.labelStatus}>
       {name}
     </Box>
   );

@@ -31,14 +31,14 @@ const RequestPTO = ({
   return (
     <Box {...styles.box}>
       <Box as="span">
-        <Text {...styles.gray_text}>{time}</Text>
-        <Text {...styles.main_text}>
+        <Text {...styles.grayText}>{time}</Text>
+        <Text {...styles.mainText}>
           You sent Request PTO/Remote to {' '}
-          <Text {...styles.admin_text} as="span">
+          <Text {...styles.adminText} as="span">
             {user.name}({user.role})
           </Text>
         </Text>
-        <Text display={'inline'} {...styles.gray_text}>
+        <Text display={'inline'} {...styles.grayText}>
           Requested Dates:
           <Text display={'inline'} as="span">
             {requestedDates.join('; ')}

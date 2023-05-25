@@ -10,6 +10,18 @@
   z-index: 0;
 }
 
+.rmdp-calendar {
+  width: 100%;
+}
+
+.rmdp-day-picker > div {
+  width: 100%;
+}
+
+.rmdp-wrapper.rmdp-shadow.custom-calendar{
+  width: 90%;
+}
+
 .rmdp-arrow {
   border: solid black;
   border-width: 0 2px 2px 0;
