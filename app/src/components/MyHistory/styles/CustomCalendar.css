@@ -8,9 +8,6 @@
 
 .rmdp-calendar {
   z-index: 0;
-}
-
-.rmdp-calendar {
   width: 100%;
 }
 
@@ -18,7 +15,7 @@
   width: 100%;
 }
 
-.rmdp-wrapper.rmdp-shadow.custom-calendar{
+.rmdp-wrapper.rmdp-shadow.custom-calendar {
   width: 90%;
 }
 

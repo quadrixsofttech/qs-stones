@@ -4,7 +4,8 @@ const container = {
   borderRadius: '6px',
   p: '0',
   border: '1px solid #E2E8F0',
-}
+  zIndex: '-5',
+};
 
 const tabindicator = {
   mt: '-0.5',
@@ -40,9 +41,9 @@ const statgroup_flex = {
 };
 
 const tabPanel = {
-  height :'80vh',
-  overflowY:'scroll',
-}
+  height: '80vh',
+  overflowY: 'scroll',
+};
 
 const styles = {
   container,
