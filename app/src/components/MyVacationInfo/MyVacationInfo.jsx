@@ -1,5 +1,5 @@
 import styles from './MyVacationInfo.styles';
-import { Box, Divider, Flex, Heading, Text, Spinner } from '@chakra-ui/react';
+import { Box, Divider, Flex, Heading, Spinner } from '@chakra-ui/react';
 import MyVacationInfoBox from './MyVacationInfoBox';
 import useVacation from '../../hooks/useVacation';
 
