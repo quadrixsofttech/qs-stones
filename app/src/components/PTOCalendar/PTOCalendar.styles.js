@@ -1,7 +1,10 @@
 const calendarGridStyles = {
-  backgroundColor: 'blackAlpha.50',
   display: 'grid',
+  backgroundColor: 'blackAlpha.50',
   gridTemplateColumns: 'repeat(5, 1fr)',
+  justifyContent: 'center',
+  alignItems: 'center',
+  gap: '1px',
 };
 const sixColumnGridStyles = {
   display: 'grid',
@@ -9,6 +12,7 @@ const sixColumnGridStyles = {
   gridTemplateColumns: 'repeat(6, 1fr)',
   justifyContent: 'center',
   alignItems: 'center',
+  gap: '1px',
 };
 
 const calendarContainerStyles = {
@@ -27,6 +31,7 @@ const prevNextBox = {
 };
 
 const calendarDayStyles = {
+  marginTop: '1px',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
@@ -34,8 +39,6 @@ const calendarDayStyles = {
   fontSize: 'xs',
   fontWeight: 'normal',
   color: '#333',
-  border: '1px solid',
-  borderColor: 'gray.200',
   backgroundColor: 'white',
 };
 
@@ -82,11 +85,7 @@ const popoverBox = {
   paddingTop: '2.5',
 };
 const calendarBox = {
-  border: '1px',
   padding: '2',
-  _hover: {
-    backgroundColor: 'gray.200',
-  },
 };
 const calendarDateBox = {
   textColor: 'gray.700',

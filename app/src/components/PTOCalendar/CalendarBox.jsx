@@ -11,8 +11,13 @@ import { useState } from 'react';
 import CalendarPopoverContent from './CalendarPopoverContent';
 import moment from 'moment';
 
+import { useTheme } from '@chakra-ui/react';
+
 const CalendarBox = ({ date, employeesToday, type }) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const theme = useTheme();
+  const purple500 = theme.colors.purple[500];
 
   const isToday = () => {
     const currentDate = moment();
@@ -31,7 +36,8 @@ const CalendarBox = ({ date, employeesToday, type }) => {
       <PopoverTrigger>
         <Flex
           {...styles.calendarBox}
-          borderColor={isOpen ? 'purple.500' : 'gray.200'}
+          boxShadow={isOpen ? `inset 0px 0px 0px 1px ${purple500}` : ''}
+          _hover={isOpen ? '' : { backgroundColor: 'gray.50' }}
           backgroundColor={
             isOpen ? 'gray.200' : isToday() ? 'purple.50' : 'white'
           }
