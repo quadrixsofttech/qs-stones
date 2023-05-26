@@ -15,7 +15,7 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import { FaRegCalendarPlus } from 'react-icons/fa';
 import { RequestPTOModal } from './../../components/RequestPTOModal/RequestPTOModal';
 const PayedTimeOff = () => {
-  const { onClose, isOpen } = useDisclosure();
+  const { onClose, isOpen, onOpen } = useDisclosure();
   const toast = useToast();
 
   const handleRequestSubmit = () => {
@@ -23,7 +23,7 @@ const PayedTimeOff = () => {
       title: 'Success',
       description:
         'You have submitted a request to the Admin for scheduling vacation and remote work',
-      position: 'top',
+      position: 'top-right',
       status: 'success',
       isClosable: false,
       colorScheme: 'green',
@@ -39,6 +39,7 @@ const PayedTimeOff = () => {
           <Button
             leftIcon={<FaRegCalendarPlus size={'12'} />}
             {...styles.button}
+            onClick={onOpen}
           >
             Request PTO
           </Button>
