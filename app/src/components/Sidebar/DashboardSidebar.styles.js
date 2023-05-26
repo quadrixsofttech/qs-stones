@@ -1,5 +1,5 @@
 const sideBar = {
-  width: '14.625vw',
+  width: '52',
   height: '100vh',
   borderRight: 1,
   borderStyle: 'solid',
@@ -8,26 +8,27 @@ const sideBar = {
   flexDirection: 'column',
   justifyContent: 'flex-start',
   alignItems: 'center',
-  padding: '16px',
+  padding: '4',
+  backgroundColor: 'white',
+  zIndex: '999',
 };
 
 const sideBarButton = {
-  width: '168px',
-  height: '56px',
+  width: '40',
+  height: '14',
   borderRadius: '6px',
   color: 'gray.400',
   justifyContent: 'flex-start',
   alignItems: 'center',
   gap: '2',
-  p: '16px',
-
+  p: '4',
   _activeLink: {
-    width: '168px',
-    height: '56px',
+    width: '40',
+    height: '14',
     backgroundColor: 'purple.50',
     color: 'purple.700',
     borderRadius: '6px',
-    p: '16px',
+    p: '4',
   },
 };
 

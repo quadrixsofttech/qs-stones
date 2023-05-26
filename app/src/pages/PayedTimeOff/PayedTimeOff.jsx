@@ -2,20 +2,20 @@ import {
   Button,
   Heading,
   Flex,
-  Spacer,
   useDisclosure,
   useToast,
 } from '@chakra-ui/react';
 import DashboardLayout from '../../layout/DashboardLayout/DashboardLayout';
 import styles from './PayedTimeOff.styles';
 import MyHistory from '../../components/MyHistory/MyHistory';
-import { MyVacationInfo } from './../../components/MyVacationInfo/MyVacationInfo';
-import '../../styles/CustomCalendar.css';
-import { RequestPTOModal } from '../../components/RequestPTOModal/RequestPTOModal';
-import { Scrollbars } from 'react-custom-scrollbars-2';
 
+import { MyVacationInfo } from '../../components/MyVacationInfo/MyVacationInfo';
+import PTOCalendar from '../../components/PTOCalendar/PTOCalendar';
+import { Scrollbars } from 'react-custom-scrollbars';
+import { FaRegCalendarPlus } from 'react-icons/fa';
+import { RequestPTOModal } from './../../components/RequestPTOModal/RequestPTOModal';
 const PayedTimeOff = () => {
-  const { onOpen, onClose, isOpen } = useDisclosure();
+  const { onClose, isOpen } = useDisclosure();
   const toast = useToast();
 
   const handleRequestSubmit = () => {
@@ -32,12 +32,14 @@ const PayedTimeOff = () => {
   };
 
   return (
-    <Scrollbars style={{ width: "100%", height: "100vh"}}>
+    <Scrollbars style={{ width: '100%', height: '100vh' }}>
       <DashboardLayout>
-        <Flex mb={4}>
+        <Flex mb={4} justifyContent={'space-between'}>
           <Heading {...styles.heading}>Paid Time Off</Heading>
-          <Spacer />
-          <Button {...styles.button} onClick={onOpen}>
+          <Button
+            leftIcon={<FaRegCalendarPlus size={'12'} />}
+            {...styles.button}
+          >
             Request PTO
           </Button>
         </Flex>
@@ -48,6 +50,7 @@ const PayedTimeOff = () => {
         />
         <Flex gap={4}>
           <Flex flexDir={'column'}>
+            <PTOCalendar />
             <MyVacationInfo />
           </Flex>
           <Flex flexDir={'column'}>

@@ -2,16 +2,16 @@ import React from 'react';
 import { DashboardNavbar } from '../../components/Navbar';
 import { Box, Flex } from '@chakra-ui/react';
 import DashboardSidebar from '../../components/Sidebar/DashboardSidebar';
+import styles from './DashboardLayout.styles';
 
 const DashboardLayout = ({ children }) => {
   return (
-    <Flex flexDir="column" minH="100vh">
-      <DashboardNavbar />
-      <Flex>
-        <DashboardSidebar />
-        <Box p={4} flex={1}>
-          {children}
-        </Box>
+    <Flex maxHeight={'100vh'} overflow={'hidden'}>
+      <DashboardSidebar />
+
+      <Flex flexDir="column" flexGrow={1}>
+        <DashboardNavbar />
+        <Box {...styles.dashboardBox}>{children}</Box>
       </Flex>
     </Flex>
   );

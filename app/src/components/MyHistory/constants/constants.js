@@ -1,6 +1,6 @@
 export const LeaveTypes = {
-    Remote: 'Remote',
-    Vacation: 'Vacation',
+    Remote: 'Vacation',
+    Vacation: 'Remote',
   };
   
 export const headerOrder = ['MONTH_YEAR', 'LEFT_BUTTON', 'RIGHT_BUTTON'];
