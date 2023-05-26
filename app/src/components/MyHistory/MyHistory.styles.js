@@ -4,7 +4,7 @@ const container = {
   borderRadius: '6px',
   p: '0',
   border: '1px solid #E2E8F0',
-  zIndex: '-5',
+  zIndex: '1',
 };
 
 const tabindicator = {
