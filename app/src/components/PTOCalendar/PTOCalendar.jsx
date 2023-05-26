@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Box, Flex, Button, Select, Heading } from '@chakra-ui/react';
+import { Box, Flex, Button, Select, Heading, Spinner } from '@chakra-ui/react';
 import styles from './PTOCalendar.styles';
 import CalendarBox from './CalendarBox';
 import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
@@ -19,7 +19,7 @@ const Calendar = () => {
   }, [type, fetchPTO, fetchRemote]);
 
   if (ptoLoading || remoteLoading) {
-    return <div>Loading...</div>;
+    return <Spinner />;
   }
 
   const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
