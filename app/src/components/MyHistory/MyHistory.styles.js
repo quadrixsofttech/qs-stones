@@ -4,9 +4,10 @@ const container = {
   borderRadius: '6px',
   p: '0',
   border: '1px solid #E2E8F0',
-  maxHeight: '75vh',
+  maxHeight: '85vh',
   overflowY: 'auto',  
 }
+
 
 const tabindicator = {
   mt: '-0.5',

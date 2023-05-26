@@ -15,10 +15,11 @@ import styles from './MyHistory.styles';
 import RequestPTO from '../RequestPTO/RequestPTO';
 import { useState } from 'react';
 import { Calendar } from 'react-multi-date-picker';
-import "../../styles/CustomCalendar.css"
+import '../../styles/CustomCalendar.css';
 import employees from './information';
 import { MyHistoryStats } from './MyHistoryStats';
 import { LeaveTypes, headerOrder } from './constants/constants';
+import { Scrollbars } from 'react-custom-scrollbars';
 
 const MyHistory = () => {
   const [selectedOption, setSelectedOption] = useState(LeaveTypes.Remote);
@@ -78,23 +79,25 @@ const MyHistory = () => {
               </Flex>
             </StatGroup>
           </TabPanel>
-          <TabPanel {...styles.tabpanel}>
-            {Array.isArray(employees.requests) &&
-              employees.requests.map((request, id) => {
-                return (
-                  <RequestPTO
-                    key={id}
-                    requestStatus={request.status}
-                    type={request.type}
-                    time={request.time}
-                    user={request.user}
-                    requestedDates={request.requestedDates}
-                    status={request.status}
-                    response={request.response}
-                  />
-                );
-              })}
-          </TabPanel>
+          <Scrollbars style={{ height: '85vh' }}>
+            <TabPanel {...styles.tabpanel}>
+              {Array.isArray(employees.requests) &&
+                employees.requests.map((request, id) => {
+                  return (
+                    <RequestPTO
+                      key={id}
+                      requestStatus={request.status}
+                      type={request.type}
+                      time={request.time}
+                      user={request.user}
+                      requestedDates={request.requestedDates}
+                      status={request.status}
+                      response={request.response}
+                    />
+                  );
+                })}
+            </TabPanel>
+          </Scrollbars>
         </TabPanels>
       </Tabs>
     </Container>

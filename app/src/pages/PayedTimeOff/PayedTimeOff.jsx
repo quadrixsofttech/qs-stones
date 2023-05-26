@@ -12,11 +12,11 @@ import MyHistory from '../../components/MyHistory/MyHistory';
 import { MyVacationInfo } from './../../components/MyVacationInfo/MyVacationInfo';
 import '../../styles/CustomCalendar.css';
 import { RequestPTOModal } from '../../components/RequestPTOModal/RequestPTOModal';
+import { Scrollbars } from 'react-custom-scrollbars-2';
 
 const PayedTimeOff = () => {
-  const { onOpen, onClose,isOpen } = useDisclosure();
+  const { onOpen, onClose, isOpen } = useDisclosure();
   const toast = useToast();
-
 
   const handleRequestSubmit = () => {
     return toast({
@@ -32,7 +32,7 @@ const PayedTimeOff = () => {
   };
 
   return (
-    <>
+    <Scrollbars style={{ width: "100%", height: "100vh"}}>
       <DashboardLayout>
         <Flex mb={4}>
           <Heading {...styles.heading}>Paid Time Off</Heading>
@@ -55,7 +55,7 @@ const PayedTimeOff = () => {
           </Flex>
         </Flex>
       </DashboardLayout>
-    </>
+    </Scrollbars>
   );
 };
 export default PayedTimeOff;
