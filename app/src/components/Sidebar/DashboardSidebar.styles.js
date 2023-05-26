@@ -1,5 +1,5 @@
 const sideBar = {
-  width: '52',
+  width: '50',
   height: '100vh',
   borderRight: 1,
   borderStyle: 'solid',

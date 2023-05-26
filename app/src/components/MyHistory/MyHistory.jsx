@@ -86,7 +86,7 @@ const MyHistory = () => {
             </StatGroup>
           </TabPanel>
           <TabPanel {...styles.tabpanel}>
-            <Scrollbars style={{ height: '85vh' }}>
+            <Scrollbars style={{ height: '88.5vh' }}>
               {Array.isArray(employees.requests) &&
                 employees.requests.map((request, id) => {
                   return (

@@ -41,8 +41,8 @@ const statgroup_flex = {
 };
 
 const tabPanel = {
-  height :'80vh',
-  overflowY:'scroll',
+  // height :'80vh',
+  // overflowY:'scroll',
 }
 
 const styles = {

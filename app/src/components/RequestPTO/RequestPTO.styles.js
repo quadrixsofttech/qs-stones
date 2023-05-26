@@ -34,13 +34,14 @@ const accordionpanel = {
 };
 
 const accordion = {
-  borderTop: 'px #fff',
-  borderBottom: 'px #fff',
+  borderTop: '1px #fff',
+  borderBottom: '1px #fff',
 };
 
 const textAreaPanel = {
   mt: '2',
-  width: '48',
+  width: '50',
+  minHeight:'20vh',
   fontSize: '0.9rem',
 };
 
