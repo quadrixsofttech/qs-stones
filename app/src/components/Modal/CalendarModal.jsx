@@ -95,7 +95,7 @@ export const CalendarModal = ({ isCurrentPageRemote, value, name }) => {
             hasArrow
           >
             <Box>
-              <Icon as={MdInfo} fontSize={'lg'} color={'gray.400'} />
+              <Icon as={MdInfo} fontSize={'lg'} mt={2} color={'gray.400'} />
             </Box>
           </Tooltip>
         </Flex>
