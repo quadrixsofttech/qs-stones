@@ -45,14 +45,21 @@ const MyHistory = () => {
         </TabList>
         <TabIndicator {...styles.tabindicator} />
         <TabPanels p={0}>
-          <TabPanel display={'flex'} alignItems={'center'} justifyContent={'center'} flexDir={'column'}>
+          <TabPanel
+            display={'flex'}
+            alignItems={'center'}
+            justifyContent={'center'}
+            flexDir={'column'}
+          >
             <Select size="sm" mb={2} onChange={handleSelectChange}>
               {Object.values(LeaveTypes).map((type) => (
-                <option value={type} key={LeaveTypes.id + '-' + type}>{type}</option>
+                <option value={type} key={LeaveTypes.id + '-' + type}>
+                  {type}
+                </option>
               ))}
             </Select>
             {selectedOption === LeaveTypes.Remote && (
-              <Calendar headerOrder={headerOrder} className="custom-calendar"/>
+              <Calendar headerOrder={headerOrder} className="custom-calendar" />
             )}
             {selectedOption === LeaveTypes.Vacation && (
               <Calendar headerOrder={headerOrder} className="custom-calendar" />
@@ -78,8 +85,8 @@ const MyHistory = () => {
               </Flex>
             </StatGroup>
           </TabPanel>
-          <Scrollbars style={{ height: '85vh' }}>
-            <TabPanel {...styles.tabpanel}>
+          <TabPanel {...styles.tabpanel}>
+            <Scrollbars style={{ height: '85vh' }}>
               {Array.isArray(employees.requests) &&
                 employees.requests.map((request, id) => {
                   return (
@@ -95,8 +102,8 @@ const MyHistory = () => {
                     />
                   );
                 })}
-            </TabPanel>
-          </Scrollbars>
+            </Scrollbars>
+          </TabPanel>
         </TabPanels>
       </Tabs>
     </Flex>
