@@ -8,11 +8,11 @@ import {
 import DashboardLayout from '../../layout/DashboardLayout/DashboardLayout';
 import styles from './PayedTimeOff.styles';
 import MyHistory from '../../components/MyHistory/MyHistory';
-
-import { MyVacationInfo } from '../../components/MyVacationInfo/MyVacationInfo';
+import { MyVacationInfo } from './../../components/MyVacationInfo/MyVacationInfo';
+import { RequestPTOModal } from '../../components/RequestPTOModal/RequestPTOModal';
 import PTOCalendar from '../../components/PTOCalendar/PTOCalendar';
 import { FaRegCalendarPlus } from 'react-icons/fa';
-import { RequestPTOModal } from './../../components/RequestPTOModal/RequestPTOModal';
+
 const PayedTimeOff = () => {
   const { onClose, isOpen, onOpen } = useDisclosure();
   const toast = useToast();
@@ -31,32 +31,32 @@ const PayedTimeOff = () => {
   };
 
   return (
-      <DashboardLayout>
-        <Flex mb={4} justifyContent={'space-between'}>
-          <Heading {...styles.heading}>Paid Time Off</Heading>
-          <Button
-            leftIcon={<FaRegCalendarPlus size={'12'} />}
-            {...styles.button}
-            onClick={onOpen}
-          >
-            Request PTO
-          </Button>
+    <DashboardLayout>
+      <Flex mb={4} justifyContent={'space-between'}>
+        <Heading {...styles.heading}>Paid Time Off</Heading>
+        <Button
+          leftIcon={<FaRegCalendarPlus size={'12'} />}
+          {...styles.button}
+          onClick={onOpen}
+        >
+          Request PTO
+        </Button>
+      </Flex>
+      <RequestPTOModal
+        isOpen={isOpen}
+        onRequestSubmit={handleRequestSubmit}
+        onClose={onClose}
+      />
+      <Flex gap={4}>
+        <Flex flexDir={'column'}>
+          <PTOCalendar />
+          <MyVacationInfo />
         </Flex>
-        <RequestPTOModal
-          isOpen={isOpen}
-          onRequestSubmit={handleRequestSubmit}
-          onClose={onClose}
-        />
-        <Flex gap={4}>
-          <Flex flexDir={'column'}>
-            <PTOCalendar />
-            <MyVacationInfo />
-          </Flex>
-          <Flex flexDir={'column'}>
-            <MyHistory />
-          </Flex>
+        <Flex flexDir={'column'}>
+          <MyHistory />
         </Flex>
-      </DashboardLayout>
+      </Flex>
+    </DashboardLayout>
   );
 };
 export default PayedTimeOff;

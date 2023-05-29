@@ -1,14 +1,14 @@
-.rmdp-week-day {
+.custom-calendar .rmdp-week-day {
   color: black;
 }
 
 .custom-calendar {
-  border-bottom: 1px solid #e2e8f0;
+  border: 1px solid #fff;
   position: relative;
-  right:15px;
+  right: 5px;
 }
 
-.rmdp-arrow {
+.custom-calendar .rmdp-arrow {
   border: solid black;
   border-width: 0 2px 2px 0;
   display: inline-block;
@@ -18,38 +18,39 @@
   width: 3px;
 }
 
-.rmdp-range {
+
+.custom-calendar .rmdp-range {
   background-color: #805ad5;
   border-radius: 0%;
 }
 
-.rmdp-range-hover {
+.custom-calendar .rmdp-range-hover {
   background-color: #e8d6fa;
   color: #000;
 }
 
-.rmdp-day.rmdp-today span {
+.custom-calendar .rmdp-day.rmdp-today span {
   background-color: #e8d6fa;
   color: #000;
 }
 
-
-.rmdp-day.rmdp-today span:hover{
-  background-color: #D6BCFA;
+.custom-calendar .rmdp-day.rmdp-today span:hover {
+  background-color: #d6bcfa;
 }
 
-.rmdp-day.rmdp-range span:hover{
-  background-color: #6B46C1 !important;
-  color:#fff !important;
+.custom-calendar .rmdp-day.rmdp-range span:hover {
+  background-color: #6b46c1 !important;
+  color: #fff !important;
 }
 
-.rmdp-day:not(.rmdp-disabled):not(.rmdp-day-hidden) span:hover {
-  background-color: #FAF5FF;
+.custom-calendar
+  .rmdp-day:not(.rmdp-disabled):not(.rmdp-day-hidden)
+  span:hover {
+  background-color: #faf5ff;
   color: #000;
 }
 
-
-.rmdp-header {
+.custom-calendar .rmdp-header {
   font-size: 1.2rem;
   align-items: flex-start;
   display: flex;
@@ -57,37 +58,37 @@
   justify-content: center;
 }
 
-.rmdp-header > div {
+.custom-calendar .rmdp-header > div {
   display: flex;
   align-items: flex-start;
-  gap:2em;
+  gap: 2em;
 }
 
-.rmdp-day-picker{
-  gap:50px;
+.custom-calendar .rmdp-day-picker {
+  gap: 50px;
 }
 
-
-.rmdp-header-values {
+.custom-calendar .rmdp-header-values {
   color: #000;
   margin-right: auto;
   margin: 0.1px;
 }
-.rmdp-day-picker {
+
+.custom-calendar .rmdp-day-picker {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.rmdp-shadow {
+.custom-calendar.rmdp-shadow {
   box-shadow: 0 0 0px #fff;
 }
 
-.rmdp-day.rmdp-selected span:not(.highlight) {
-  background-color: #6B46C1;
+.custom-calendar .rmdp-day.rmdp-selected span:not(.highlight) {
+  background-color: #6b46c1;
 }
 
-.rmdp-arrow-container {
+.custom-calendar .rmdp-arrow-container {
   border-radius: 50%;
   cursor: pointer;
   display: flex;
@@ -99,6 +100,6 @@
   width: 25px;
 }
 
-.rmdp-arrow-container:hover {
-  background-color: #6B46C1;
+.custom-calendar .rmdp-arrow-container:hover {
+  background-color: #6b46c1;
 }
