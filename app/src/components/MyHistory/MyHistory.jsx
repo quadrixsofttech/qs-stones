@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 import styles from './MyHistory.styles';
 import RequestPTO from '../RequestPTO/RequestPTO';
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import { Calendar } from 'react-multi-date-picker';
 import '../../styles/CustomCalendar.css';
 import employees from './information';
@@ -29,11 +29,11 @@ const MyHistory = () => {
 
   return (
     <Flex {...styles.container}>
-        <Flex {...styles.header}>
-          <Heading as="h2" size="sm">
-            My History
-          </Heading>
-        </Flex>
+      <Flex {...styles.header}>
+        <Heading as="h2" size="sm">
+          My History
+        </Heading>
+      </Flex>
       <Scrollbars style={{ height: '100vh' }}>
         <Tabs {...styles.tabs}>
           <TabList paddingLeft={4} color={'black'}>
