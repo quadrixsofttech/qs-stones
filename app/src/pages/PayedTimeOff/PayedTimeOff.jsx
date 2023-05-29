@@ -52,7 +52,7 @@ const PayedTimeOff = () => {
           <PTOCalendar />
           <MyVacationInfo />
         </Flex>
-        <Flex flexDir={'column'}>
+        <Flex flexDir={'column'} width={'100%'}>
           <MyHistory />
         </Flex>
       </Flex>

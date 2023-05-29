@@ -2,6 +2,14 @@
   color: black;
 }
 
+.rmdp-wrapper.rmdp-shadow.custom-calendar{
+  width: 100%;
+}
+
+.rmdp-calendar{
+  width: 100%;
+}
+
 .custom-calendar {
   border: 1px solid #fff;
   position: relative;
