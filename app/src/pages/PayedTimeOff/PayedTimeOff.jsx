@@ -10,7 +10,6 @@ import DashboardLayout from '../../layout/DashboardLayout/DashboardLayout';
 import styles from './PayedTimeOff.styles';
 import MyHistory from '../../components/MyHistory/MyHistory';
 import { MyVacationInfo } from './../../components/MyVacationInfo/MyVacationInfo';
-import '../../styles/CustomCalendar.css';
 import { RequestPTOModal } from '../../components/RequestPTOModal/RequestPTOModal';
 
 const PayedTimeOff = () => {

@@ -114,6 +114,7 @@ export const CalendarModal = ({ isCurrentPageRemote, value, name }) => {
               multiple
               numberOfMonths={2}
               onChange={handleOnChangeRemote}
+              className='custom-calendar'
             />
           </Flex>
           <Text {...styles.textRequestDates}>Requested dates for Remote:</Text>
@@ -129,6 +130,7 @@ export const CalendarModal = ({ isCurrentPageRemote, value, name }) => {
               multiple
               numberOfMonths={2}
               onChange={handleOnChangeVacation}
+              className='custom-calendar'
             />
           </Flex>
           <Text {...styles.textRequestDates}>
