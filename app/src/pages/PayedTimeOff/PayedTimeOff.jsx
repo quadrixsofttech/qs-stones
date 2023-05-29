@@ -11,7 +11,6 @@ import MyHistory from '../../components/MyHistory/MyHistory';
 
 import { MyVacationInfo } from '../../components/MyVacationInfo/MyVacationInfo';
 import PTOCalendar from '../../components/PTOCalendar/PTOCalendar';
-import { Scrollbars } from 'react-custom-scrollbars';
 import { FaRegCalendarPlus } from 'react-icons/fa';
 import { RequestPTOModal } from './../../components/RequestPTOModal/RequestPTOModal';
 const PayedTimeOff = () => {
@@ -32,7 +31,6 @@ const PayedTimeOff = () => {
   };
 
   return (
-    <Scrollbars style={{ width: '100%', height: '100vh' }}>
       <DashboardLayout>
         <Flex mb={4} justifyContent={'space-between'}>
           <Heading {...styles.heading}>Paid Time Off</Heading>
@@ -59,7 +57,6 @@ const PayedTimeOff = () => {
           </Flex>
         </Flex>
       </DashboardLayout>
-    </Scrollbars>
   );
 };
 export default PayedTimeOff;

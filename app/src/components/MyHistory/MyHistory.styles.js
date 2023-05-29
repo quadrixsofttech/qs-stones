@@ -1,9 +1,13 @@
 const container = {
+  maxWidth:'23vw',
   width: '23vw',
   borderWidth: 'px',
   borderRadius: '6px',
   p: '0',
   border: '1px solid #E2E8F0',
+  flexDirection:'column',
+  alignItems:'center',
+  justifyContent:'center'
 }
 
 
@@ -40,15 +44,9 @@ const statgroup_flex = {
   flexDirection: 'column',
 };
 
-const tabPanel = {
-  // height :'80vh',
-  // overflowY:'scroll',
-}
-
 const styles = {
   container,
   tabindicator,
-  tabPanel,
   header,
   stat,
   tabs,
