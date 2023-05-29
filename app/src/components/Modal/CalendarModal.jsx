@@ -29,21 +29,17 @@ export const CalendarModal = ({ isCurrentPageRemote, value, name }) => {
 
   if (isLoading) {
     return (
-      <>
         <Flex {...styles.flexSpinner}>
           <Spinner />
         </Flex>
-      </>
     );
   }
 
   if (error) {
     return (
-      <>
         <Flex {...styles.flexError}>
           <Text {...styles.textError}>{error.message}</Text>
         </Flex>
-      </>
     );
   }
 
@@ -95,7 +91,7 @@ export const CalendarModal = ({ isCurrentPageRemote, value, name }) => {
             hasArrow
           >
             <Box>
-              <Icon as={MdInfo} fontSize={'lg'} mt={2} color={'gray.400'} />
+              <Icon as={MdInfo} {...styles.icon}/>
             </Box>
           </Tooltip>
         </Flex>
