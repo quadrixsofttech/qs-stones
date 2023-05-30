@@ -17,7 +17,7 @@ import { Calendar } from 'react-multi-date-picker';
 import employees from './information';
 import { MyHistoryStats } from './MyHistoryStats';
 import { LeaveTypes, headerOrder } from './constants/constants';
-import { Scrollbars } from 'react-custom-scrollbars';
+import Scrollbars from 'react-custom-scrollbars-2';
 
 const MyHistory = () => {
   const [selectedOption, setSelectedOption] = useState(LeaveTypes.Remote);
@@ -33,7 +33,6 @@ const MyHistory = () => {
           My History
         </Heading>
       </Flex>
-      <Scrollbars style={{ height: '100vh' }}>
         <Tabs {...styles.tabs}>
           <TabList paddingLeft={4} color={'black'}>
             <Tab _selected={{ color: 'purple.500' }} fontWeight={500}>
@@ -44,7 +43,7 @@ const MyHistory = () => {
             </Tab>
           </TabList>
           <TabIndicator {...styles.tabindicator} />
-          <TabPanels p={0}>
+          <TabPanels p={0} width={'100%'} height={'100%'}>
             <TabPanel
               display={'flex'}
               alignItems={'center'}
@@ -91,7 +90,15 @@ const MyHistory = () => {
                 </Flex>
               </StatGroup>
             </TabPanel>
-            <TabPanel {...styles.tabPanel}>
+            <TabPanel      
+            display={'flex'}
+              alignItems={'center'}
+              justifyContent={'center'}
+              flexDir={'column'}
+              width={'100%'}
+              height={'100%'}
+              >
+              <Scrollbars style={{height:'100%'}}>
               {Array.isArray(employees.requests) &&
                 employees.requests.map((request, id) => {
                   return (
@@ -107,10 +114,10 @@ const MyHistory = () => {
                     />
                   );
                 })}
+            </Scrollbars>
             </TabPanel>
           </TabPanels>
         </Tabs>
-      </Scrollbars>
     </Flex>
   );
 };

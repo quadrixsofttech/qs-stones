@@ -8,6 +8,7 @@ const container = {
   alignItems: 'center',
   justifyContent: 'center',
   width:'100%',
+  height:'100%'
 }
 
 
@@ -29,6 +30,8 @@ const header = {
 const tabs = {
   position: 'relative',
   variant: 'unstyled',
+  width:'100%',
+  height:'100%',
   pt:2,
 };
 
