@@ -64,7 +64,7 @@ const MyHistory = () => {
               <Calendar headerOrder={headerOrder} className="custom-calendar" />
             )}
 
-            <StatGroup>
+            <StatGroup width={'100%'} height={'100%'}>
               <Flex {...styles.statgroup_flex}>
                 <MyHistoryStats
                   label="The total number of employees working today"

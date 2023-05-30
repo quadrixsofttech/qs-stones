@@ -37,6 +37,7 @@ const tabs = {
 
 const stat = {
   width: '100%',
+  height:'100%',
   borderBottom: '1px solid #E2E8F0',
   pb: 2,
 };
@@ -45,6 +46,8 @@ const statgroup_flex = {
   justifyContent: 'center',
   alignItems: 'center',
   flexDirection: 'column',
+  width:'100%',
+  height:'100%'
 };
 
 const styles = {

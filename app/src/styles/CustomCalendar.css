@@ -6,9 +6,14 @@
   width: 100%;
 }
 
-.rmdp-calendar{
+ .rmdp-calendar{
   width: 100%;
 }
+
+.rmdp-day-picker > div {
+  width: 100%;
+}
+
 
 .custom-calendar {
   border: 1px solid #fff;
