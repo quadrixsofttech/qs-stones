@@ -33,72 +33,66 @@ const MyHistory = () => {
           My History
         </Heading>
       </Flex>
-        <Tabs {...styles.tabs}>
-          <TabList paddingLeft={4} color={'black'}>
-            <Tab _selected={{ color: 'purple.500' }} fontWeight={500}>
-              PTO
-            </Tab>
-            <Tab _selected={{ color: 'purple.500' }} fontWeight={500}>
-              Request History
-            </Tab>
-          </TabList>
-          <TabIndicator {...styles.tabindicator} />
-          <TabPanels p={0} width={'100%'} height={'100%'}>
-            <TabPanel
-              display={'flex'}
-              alignItems={'center'}
-              justifyContent={'center'}
-              flexDir={'column'}
-            >
-              <Select size="sm" mb={2} onChange={handleSelectChange}>
-                {Object.values(LeaveTypes).map((type) => (
-                  <option value={type} key={LeaveTypes.id + '-' + type}>
-                    {type}
-                  </option>
-                ))}
-              </Select>
-              {selectedOption === LeaveTypes.Remote && (
-                <Calendar
-                  headerOrder={headerOrder}
-                  className="custom-calendar"
-                />
-              )}
-              {selectedOption === LeaveTypes.Vacation && (
-                <Calendar
-                  headerOrder={headerOrder}
-                  className="custom-calendar"
-                />
-              )}
-
-              <StatGroup>
-                <Flex {...styles.statgroup_flex}>
-                  <MyHistoryStats
-                    label="The total number of employees working today"
-                    helpText="% more than yesterday"
-                    working={employees.workingToday}
-                    percent={employees.percentIncrease}
-                    arrow={'increase'}
-                  />
-                  <MyHistoryStats
-                    label="The total number of employees working remotly today or on
-                  vacation"
-                    helpText="% less than yesterday"
-                    working={employees.awayOrRemote}
-                    percent={employees.percentDecrease}
-                    arrow={'decrease'}
-                  />
-                </Flex>
-              </StatGroup>
-            </TabPanel>
-            <TabPanel      
+      <Tabs {...styles.tabs}>
+        <TabList paddingLeft={4} color={'black'}>
+          <Tab _selected={{ color: 'purple.500' }} fontWeight={500}>
+            PTO
+          </Tab>
+          <Tab _selected={{ color: 'purple.500' }} fontWeight={500}>
+            Request History
+          </Tab>
+        </TabList>
+        <TabIndicator {...styles.tabindicator} />
+        <TabPanels p={0} width={'100%'} height={'100%'}>
+          <TabPanel
             display={'flex'}
-              alignItems={'center'}
-              justifyContent={'center'}
-              flexDir={'column'}
-              width={'100%'}
-              height={'100%'}
-              >
-              <Scrollbars style={{height:'100%'}}>
+            alignItems={'center'}
+            justifyContent={'center'}
+            flexDir={'column'}
+          >
+            <Select size="sm" mb={2} onChange={handleSelectChange}>
+              {Object.values(LeaveTypes).map((type) => (
+                <option value={type} key={LeaveTypes.id + '-' + type}>
+                  {type}
+                </option>
+              ))}
+            </Select>
+            {selectedOption === LeaveTypes.Remote && (
+              <Calendar headerOrder={headerOrder} className="custom-calendar" />
+            )}
+            {selectedOption === LeaveTypes.Vacation && (
+              <Calendar headerOrder={headerOrder} className="custom-calendar" />
+            )}
+
+            <StatGroup>
+              <Flex {...styles.statgroup_flex}>
+                <MyHistoryStats
+                  label="The total number of employees working today"
+                  helpText="% more than yesterday"
+                  working={employees.workingToday}
+                  percent={employees.percentIncrease}
+                  arrow={'increase'}
+                />
+                <MyHistoryStats
+                  label="The total number of employees working remotly today or on
+                  vacation"
+                  helpText="% less than yesterday"
+                  working={employees.awayOrRemote}
+                  percent={employees.percentDecrease}
+                  arrow={'decrease'}
+                />
+              </Flex>
+            </StatGroup>
+          </TabPanel>
+          <TabPanel
+            display={'flex'}
+            alignItems={'center'}
+            justifyContent={'center'}
+            flexDir={'column'}
+            width={'100%'}
+            height={'100%'}
+          >
+            <Scrollbars style={{ height: '90%' }}>
               {Array.isArray(employees.requests) &&
                 employees.requests.map((request, id) => {
                   return (
@@ -115,9 +109,9 @@ const MyHistory = () => {
                   );
                 })}
             </Scrollbars>
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
     </Flex>
   );
 };

@@ -1,7 +1,7 @@
 const box = {
   fontFamily: "'Inter', sans-serif",
   p: '2',
-  width:'100%'
+  width: '100%'
 };
 
 const grayText = {
@@ -42,7 +42,7 @@ const accordion = {
 const textAreaPanel = {
   mt: '2',
   width: '50',
-  minHeight:'20vh',
+  minHeight: '20vh',
   fontSize: '0.9rem',
 };
 
