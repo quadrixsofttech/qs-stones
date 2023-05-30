@@ -1,0 +1,119 @@
+.custom-calendar-history .rmdp-week-day {
+    color: black;
+  }
+  
+  .rmdp-wrapper.rmdp-shadow.custom-calendar-history{
+    width: 100%;
+  }
+  
+   .rmdp-calendar{
+    width: 100%;
+  }
+  
+  .rmdp-day-picker > div {
+    width: 100%;
+  }
+  
+  
+  .custom-calendar-history {
+    border: 1px solid #fff;
+    position: relative;
+    right: 5px;
+  }
+  
+  .custom-calendar-history .rmdp-arrow {
+    border: solid black;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    height: 3px;
+    margin-top: 1px;
+    padding: 2px;
+    width: 3px;
+  }
+  
+  
+  .custom-calendar-history .rmdp-range {
+    background-color: #805ad5;
+    border-radius: 0%;
+  }
+  
+  .custom-calendar-history .rmdp-range-hover {
+    background-color: #e8d6fa;
+    color: #000;
+  }
+  
+  .custom-calendar-history .rmdp-day.rmdp-today span {
+    background-color: #e8d6fa;
+    color: #000;
+  }
+  
+  .custom-calendar-history .rmdp-day.rmdp-today span:hover {
+    background-color: #d6bcfa;
+  }
+  
+  .custom-calendar-history .rmdp-day.rmdp-range span:hover {
+    background-color: #6b46c1 !important;
+    color: #fff !important;
+  }
+  
+  .custom-calendar-history
+    .rmdp-day:not(.rmdp-disabled):not(.rmdp-day-hidden)
+    span:hover {
+    background-color: #faf5ff;
+    color: #000;
+  }
+  
+  .custom-calendar-history .rmdp-header {
+    font-size: 1.2rem;
+    align-items: flex-start;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .custom-calendar-history .rmdp-header > div {
+    display: flex;
+    align-items: flex-start;
+    gap: 2em;
+  }
+  
+  .custom-calendar-history .rmdp-day-picker {
+    gap: 50px;
+  }
+  
+  .custom-calendar-history .rmdp-header-values {
+    color: #000;
+    margin-right: auto;
+    margin: 0.1px;
+  }
+  
+  .custom-calendar-history .rmdp-day-picker {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .custom-calendar-history.rmdp-shadow {
+    box-shadow: 0 0 0px #fff;
+  }
+  
+  .custom-calendar-history .rmdp-day.rmdp-selected span:not(.highlight) {
+    background-color: #6b46c1;
+  }
+  
+  .custom-calendar-history .rmdp-arrow-container {
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 25px;
+    justify-content: center;
+    margin: 0 5px;
+    width: 25px;
+  }
+  
+  .custom-calendar-history .rmdp-arrow-container:hover {
+    background-color: #6b46c1;
+  }
+  

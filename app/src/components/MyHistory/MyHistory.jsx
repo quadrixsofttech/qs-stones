@@ -58,10 +58,10 @@ const MyHistory = () => {
               ))}
             </Select>
             {selectedOption === LeaveTypes.Remote && (
-              <Calendar headerOrder={headerOrder} className="custom-calendar" />
+              <Calendar headerOrder={headerOrder} className="custom-calendar-history" />
             )}
             {selectedOption === LeaveTypes.Vacation && (
-              <Calendar headerOrder={headerOrder} className="custom-calendar" />
+              <Calendar headerOrder={headerOrder} className="custom-calendar-history" />
             )}
 
             <StatGroup width={'100%'} height={'100%'}>
