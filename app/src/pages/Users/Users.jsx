@@ -13,6 +13,7 @@ import {
 import UserDetails from './UserDetails';
 import styles from './Users.styles';
 
+
 const Users = () => {
   const { protectedFetch } = useContext(FetchContext);
   const [users, setUsers] = useState([]);

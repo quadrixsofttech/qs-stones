@@ -14,7 +14,6 @@ import styles from './MyHistory.styles';
 import RequestPTO from '../RequestPTO/RequestPTO';
 import { useState } from 'react';
 import { Calendar } from 'react-multi-date-picker';
-import './styles/CustomCalendar.css';
 import employees from './information';
 import { MyHistoryStats } from './MyHistoryStats';
 import { LeaveTypes, headerOrder } from './constants/constants';

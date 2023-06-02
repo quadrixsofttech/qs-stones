@@ -25,7 +25,7 @@ const header = {
 const tabs = {
   position: 'relative',
   variant: 'unstyled',
-  mt: '2',
+  pt:2,
 };
 
 const stat = {
