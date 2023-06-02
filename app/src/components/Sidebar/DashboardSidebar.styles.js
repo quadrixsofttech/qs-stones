@@ -10,7 +10,7 @@ const sideBar = {
   alignItems: 'center',
   padding: '4',
   backgroundColor: 'white',
-  zIndex: '999',
+  zIndex: '1',
 };
 
 const sideBarButton = {
