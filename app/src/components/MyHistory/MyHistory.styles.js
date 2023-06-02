@@ -4,9 +4,8 @@ const container = {
   borderRadius: '6px',
   p: '0',
   border: '1px solid #E2E8F0',
-  maxHeight: '75vh',
-  overflowY: 'auto',  
-}
+  zIndex: '1',
+};
 
 const tabindicator = {
   mt: '-0.5',
@@ -18,7 +17,7 @@ const tabindicator = {
 const header = {
   bg: 'blackAlpha.50',
   w: '100%',
-  color: 'black',
+  color: 'gray.700',
   p: '4',
   alignItems: 'center',
 };
@@ -41,9 +40,15 @@ const statgroup_flex = {
   flexDirection: 'column',
 };
 
+const tabPanel = {
+  height: '80vh',
+  overflowY: 'scroll',
+};
+
 const styles = {
   container,
   tabindicator,
+  tabPanel,
   header,
   stat,
   tabs,

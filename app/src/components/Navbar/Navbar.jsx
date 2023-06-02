@@ -9,11 +9,10 @@ const Navbar = () => {
   const auth = useContext(AuthContext);
   return (
     <Box>
-      <Flex {...styles.wrapper}>
+      <Flex {...styles.wrapper} justifyContent={'space-between'}>
         <Flex {...styles.logo} as={Link} to={'/'}>
           <QuadrixSoftLogo />
         </Flex>
-
         <Stack {...styles.buttonWrapper}>
           {auth?.isAuthenticated() ? (
             <>

@@ -18,7 +18,6 @@ import React, { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { Link } from 'react-router-dom';
 import { BiBell, BiChevronDown } from 'react-icons/bi';
-import QuadrixSoftLogo from '../QuadrixSoftLogo/QuadrixSoftLogo';
 
 const DashboardNavbar = () => {
   const auth = useContext(AuthContext);
@@ -26,10 +25,6 @@ const DashboardNavbar = () => {
   return (
     <Box>
       <Flex {...styles.wrapper}>
-        <Flex {...styles.logo} as={Link} to={'/dashboard'}>
-          <QuadrixSoftLogo />
-        </Flex>
-
         <Stack {...styles.avatarWrapper}>
           <Flex alignItems={'center'}>
             <Menu>
@@ -46,11 +41,12 @@ const DashboardNavbar = () => {
                   variant={'link'}
                   cursor={'pointer'}
                   minW={0}
-                  ml={'10px'}
+                  ml={'2.5'}
                 >
                   <Flex alignItems={'center'} gap={'8px'}>
                     <Avatar
                       size={'sm'}
+                      marginRight={'1'}
                       src={
                         'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
                       }
@@ -59,7 +55,7 @@ const DashboardNavbar = () => {
                       alignItems={'flex-start'}
                       flexDirection={'column'}
                       display={{ base: 'none', md: 'flex' }}
-                      gap={'4px'}
+                      gap={'1'}
                     >
                       <Text fontSize="sm" color="gray.700">
                         {firstName + ' ' + lastName}

@@ -3,47 +3,56 @@ const box = {
   p: '2',
 };
 
-const gray_text = {
+const grayText = {
   fontWeight: 400,
-  color: 'gray.500',
+  color: 'gray.700',
+  fontSize: 'sm',
   paddingBottom: '1',
 };
 
-const main_text = {
+const mainText = {
   fontWeight: 500,
   paddingBottom: '1',
+  fontSize: 'md',
 };
 
-const admin_text = {
+const adminText = {
   fontWeight: 700,
-}
+  fontSize: 'md',
+};
 
 const button = {
-  colorScheme : 'purple',
-  variant : 'outline',
-  mt : '3',
-  width: '48'
+  colorScheme: 'purple',
+  variant: 'outline',
+  mt: '3',
+  width: '48',
 };
 
 const accordionpanel = {
-  width: '20vw',
-  border:0,
-}
+  width: '18vw',
+  border: 0,
+};
 
 const accordion = {
-  borderTop : 'px #fff',
-  borderBottom :'px #fff',
-}
+  borderTop: 'px #fff',
+  borderBottom: 'px #fff',
+};
 
+const textAreaPanel = {
+  mt: '2',
+  width: '48',
+  fontSize: '0.9rem',
+};
 
 const styles = {
   box,
-  gray_text,
-  main_text,
-  admin_text,
+  grayText,
+  mainText,
+  adminText,
   button,
   accordionpanel,
-  accordion
+  accordion,
+  textAreaPanel,
 };
 
 export default styles;

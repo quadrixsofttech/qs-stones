@@ -1,8 +1,9 @@
 const mainBox = {
   rounded: 'md',
-  border: '1px solid #E2E8F0',
+  border: '1px',
+  borderColor: 'gray.200',
   flexDirection: 'column',
-  width: '57vw',
+  width: '59vw',
 };
 
 const header = {
