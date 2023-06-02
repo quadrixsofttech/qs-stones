@@ -38,8 +38,9 @@ const tabs = {
 const stat = {
   width: '100%',
   height: '100%',
-  borderBottom: '1px solid #E2E8F0',
   pb: 2,
+  display:'flex',
+  alignItems:'center',
 };
 
 const statgroupFlex = {
@@ -70,6 +71,8 @@ const tabPanelPTO = {
   alignItems:'center',
   justifyContent:'center',
   flexDir:'column',
+  height:'100%',
+  width:'100%'
 }
 
 const styles = {

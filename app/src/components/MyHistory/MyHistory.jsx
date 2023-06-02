@@ -9,6 +9,7 @@ import {
   TabPanels,
   Tabs,
   Heading,
+  Divider
 } from '@chakra-ui/react';
 import styles from './MyHistory.styles';
 import RequestPTO from '../RequestPTO/RequestPTO';
@@ -64,7 +65,6 @@ const MyHistory = () => {
                 className="custom-calendar-history"
               />
             )}
-
             <StatGroup width={'100%'} height={'100%'}>
               <Flex {...styles.statgroupFlex}>
                 <MyHistoryStats
@@ -74,6 +74,7 @@ const MyHistory = () => {
                   percent={employees.percentIncrease}
                   arrow={'increase'}
                 />
+                <Divider />
                 <MyHistoryStats
                   label="The total number of employees working remotly today or on
                   vacation"
