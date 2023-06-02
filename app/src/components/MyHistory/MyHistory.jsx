@@ -43,13 +43,8 @@ const MyHistory = () => {
           </Tab>
         </TabList>
         <TabIndicator {...styles.tabindicator} />
-        <TabPanels p={0} width={'100%'} height={'100%'}>
-          <TabPanel
-            display={'flex'}
-            alignItems={'center'}
-            justifyContent={'center'}
-            flexDir={'column'}
-          >
+        <TabPanels {...styles.tabPanels}>
+          <TabPanel {...styles.tabPanelPTO}>
             <Select size="sm" mb={2} onChange={handleSelectChange}>
               {Object.values(LeaveTypes).map((type) => (
                 <option value={type} key={LeaveTypes.id + '-' + type}>
@@ -58,14 +53,20 @@ const MyHistory = () => {
               ))}
             </Select>
             {selectedOption === LeaveTypes.Remote && (
-              <Calendar headerOrder={headerOrder} className="custom-calendar-history" />
+              <Calendar
+                headerOrder={headerOrder}
+                className="custom-calendar-history"
+              />
             )}
             {selectedOption === LeaveTypes.Vacation && (
-              <Calendar headerOrder={headerOrder} className="custom-calendar-history" />
+              <Calendar
+                headerOrder={headerOrder}
+                className="custom-calendar-history"
+              />
             )}
 
             <StatGroup width={'100%'} height={'100%'}>
-              <Flex {...styles.statgroup_flex}>
+              <Flex {...styles.statgroupFlex}>
                 <MyHistoryStats
                   label="The total number of employees working today"
                   helpText="% more than yesterday"
@@ -84,29 +85,11 @@ const MyHistory = () => {
               </Flex>
             </StatGroup>
           </TabPanel>
-          <TabPanel
-            display={'flex'}
-            alignItems={'center'}
-            justifyContent={'center'}
-            flexDir={'column'}
-            width={'100%'}
-            height={'100%'}
-          >
+          <TabPanel {...styles.tabPanelRequestHistory}>
             <Scrollbars style={{ height: '90%' }}>
               {Array.isArray(employees.requests) &&
                 employees.requests.map((request, id) => {
-                  return (
-                    <RequestPTO
-                      key={id}
-                      requestStatus={request.status}
-                      type={request.type}
-                      time={request.time}
-                      user={request.user}
-                      requestedDates={request.requestedDates}
-                      status={request.status}
-                      response={request.response}
-                    />
-                  );
+                  return <RequestPTO key={id} {...request} />;
                 })}
             </Scrollbars>
           </TabPanel>

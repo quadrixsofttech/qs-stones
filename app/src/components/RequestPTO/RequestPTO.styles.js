@@ -30,7 +30,7 @@ const button = {
 };
 
 const accordionpanel = {
-  width: '18vw',
+  width: '90%',
   border: 0,
 };
 

@@ -7,12 +7,10 @@ const container = {
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-  width:'100%',
-  height:'100%',
+  width: '100%',
+  height: '100%',
   zIndex: '1',
-}
-
-
+};
 
 const tabindicator = {
   mt: '-0.5',
@@ -32,25 +30,47 @@ const header = {
 const tabs = {
   position: 'relative',
   variant: 'unstyled',
-  width:'100%',
-  height:'100%',
-  pt:2,
+  width: '100%',
+  height: '100%',
+  pt: 2,
 };
 
 const stat = {
   width: '100%',
-  height:'100%',
+  height: '100%',
   borderBottom: '1px solid #E2E8F0',
   pb: 2,
 };
 
-const statgroup_flex = {
+const statgroupFlex = {
   justifyContent: 'center',
   alignItems: 'center',
   flexDirection: 'column',
-  width:'100%',
-  height:'100%'
+  width: '100%',
+  height: '100%',
 };
+
+const tabPanelRequestHistory = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  flexDir: 'column',
+  width: '100%',
+  height: '100%',
+};
+
+const tabPanels = {
+  p: '0',
+  width: '100%',
+  height: '100%',
+};
+
+const tabPanelPTO = {
+  display:'flex',
+  alignItems:'center',
+  justifyContent:'center',
+  flexDir:'column',
+}
 
 const styles = {
   container,
@@ -58,7 +78,10 @@ const styles = {
   header,
   stat,
   tabs,
-  statgroup_flex,
+  statgroupFlex,
+  tabPanelRequestHistory,
+  tabPanels,
+  tabPanelPTO
 };
 
 export default styles;
