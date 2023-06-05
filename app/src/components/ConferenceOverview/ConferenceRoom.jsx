@@ -1,5 +1,7 @@
 import { Box, Flex, Heading, Image, Text } from '@chakra-ui/react';
 import styles from './ConferenceOverview.styles';
+import { BiWifi, BiTv, BiLaptop, BiChalkboard } from 'react-icons/bi';
+import { useTheme } from '@chakra-ui/react';
 
 const ConferenceRoom = ({
   conferenceRoomNumber,
@@ -8,9 +10,11 @@ const ConferenceRoom = ({
   img,
   equipment,
 }) => {
+  const theme = useTheme();
+  const gray400 = theme.colors.gray[400];
   return (
     <Flex {...styles.conferenceCard}>
-      <Box overflow={'hidden'} objectFit="cover">
+      <Box overflow={'hidden'}>
         <Image {...styles.conferenceRoomImage} src={img} />
       </Box>
       <Flex {...styles.conferenceRoomInfo}>
@@ -26,9 +30,19 @@ const ConferenceRoom = ({
             <span style={{ fontWeight: '600' }}>{capacity} people</span>
           </Text>
         </Flex>
-        <Flex gap={'1'}>
+        <Flex gap={'4'}>
           {equipment.map((x) => {
-            return <div key={x}>{x}</div>;
+            if (x === 'wifi') {
+              return <BiWifi size={24} color={gray400} />;
+            } else if (x === 'tv') {
+              return <BiTv size={24} color={gray400} />;
+            } else if (x === 'chalkboard') {
+              return <BiChalkboard size={24} color={gray400} />;
+            } else if (x === 'laptop') {
+              return <BiLaptop size={24} color={gray400} />;
+            } else {
+              return null;
+            }
           })}
         </Flex>
       </Flex>

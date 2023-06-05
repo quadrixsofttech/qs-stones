@@ -25,6 +25,9 @@ const conferenceCard = {
 
 const conferenceRoomImage = {
   transition: 'transform 1s',
+  width: '100%',
+  height: '100%',
+  objectFit: 'cover',
   _hover: {
     transform: 'scale(1.2)',
   },
@@ -36,6 +39,8 @@ const conferenceRoomInfo = {
   p: '4',
   pl: '6',
   gap: '4',
+  mt: '2',
+  mb: '2',
 };
 
 const capacityInfo = {
