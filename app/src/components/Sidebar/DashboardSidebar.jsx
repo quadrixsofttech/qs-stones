@@ -17,7 +17,7 @@ const DashboardSidebar = () => {
           <BiSwim size={20} />
           <Text>PTO</Text>
         </Flex>
-        <Flex {...styles.sideBarButton} as={NavLink} to="/users">
+        <Flex {...styles.sideBarButton} as={NavLink} to="/conference">
           <BiMicrophone size={20} />
           <Text>Conference</Text>
         </Flex>
