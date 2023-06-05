@@ -28,7 +28,7 @@ const ConferenceRoom = ({
         </Flex>
         <Flex gap={'1'}>
           {equipment.map((x) => {
-            return <div>{x}</div>;
+            return <div key={x}>{x}</div>;
           })}
         </Flex>
       </Flex>
