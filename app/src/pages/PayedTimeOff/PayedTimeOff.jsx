@@ -4,6 +4,7 @@ import {
   Flex,
   useDisclosure,
   useToast,
+  Box,
 } from '@chakra-ui/react';
 import DashboardLayout from '../../layout/DashboardLayout/DashboardLayout';
 import styles from './PayedTimeOff.styles';
@@ -33,30 +34,32 @@ const PayedTimeOff = () => {
   return (
     <>
       <DashboardLayout>
-        <Flex mb={4} justifyContent={'space-between'}>
-          <Heading {...styles.heading}>Paid Time Off</Heading>
-          <Button
-            leftIcon={<FaRegCalendarPlus size={'12'} />}
-            {...styles.button}
-            onClick={onOpen}
-          >
-            Request PTO
-          </Button>
-        </Flex>
-        <RequestPTOModal
-          isOpen={isOpen}
-          onRequestSubmit={handleRequestSubmit}
-          onClose={onClose}
-        />
-        <Flex gap={4}>
-          <Flex flexDir={'column'}>
-            <PTOCalendar />
-            <MyVacationInfo />
+        <Box p={4}>
+          <Flex mb={4} justifyContent={'space-between'}>
+            <Heading {...styles.heading}>Paid Time Off</Heading>
+            <Button
+              leftIcon={<FaRegCalendarPlus size={'12'} />}
+              {...styles.button}
+              onClick={onOpen}
+            >
+              Request PTO
+            </Button>
           </Flex>
-          <Flex flexDir={'column'}>
-            <MyHistory />
+          <RequestPTOModal
+            isOpen={isOpen}
+            onRequestSubmit={handleRequestSubmit}
+            onClose={onClose}
+          />
+          <Flex gap={4}>
+            <Flex flexDir={'column'}>
+              <PTOCalendar />
+              <MyVacationInfo />
+            </Flex>
+            <Flex flexDir={'column'}>
+              <MyHistory />
+            </Flex>
           </Flex>
-        </Flex>
+        </Box>
       </DashboardLayout>
     </>
   );
