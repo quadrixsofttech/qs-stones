@@ -30,17 +30,21 @@ const ConferenceRoom = ({
             <span style={{ fontWeight: '600' }}>{capacity} people</span>
           </Text>
         </Flex>
-        <Flex gap={'4'}>
+        <Flex className="see-availability" {...styles.seeAvailabilityBox}>
+          <Text {...styles.seeAvailabilityText}>See Availability</Text>
+        </Flex>
+
+        <Flex {...styles.iconBox} className="icon-box">
           {equipment.map((x) => {
-            switch (x) {
+            switch (x.type) {
               case 'wifi':
-                return <BiWifi size={24} color={gray400} />;
+                return <BiWifi key={x} size={24} color={gray400} />;
               case 'tv':
-                return <BiTv size={24} color={gray400} />;
+                return <BiTv key={x} size={24} color={gray400} />;
               case 'chalkboard':
-                return <BiChalkboard size={24} color={gray400} />;
+                return <BiChalkboard key={x} size={24} color={gray400} />;
               case 'laptop':
-                return <BiLaptop size={24} color={gray400} />;
+                return <BiLaptop key={x} size={24} color={gray400} />;
               default:
                 return null;
             }

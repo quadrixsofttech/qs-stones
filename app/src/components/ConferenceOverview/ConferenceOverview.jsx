@@ -9,7 +9,7 @@ const ConferenceOverview = () => {
 
   const { data, conferenceLoading } = useConference();
 
-  if (conferenceLoading) {
+  if (conferenceLoading || !data) {
     return <Spinner />;
   }
 
@@ -20,7 +20,6 @@ const ConferenceOverview = () => {
       return e.target.value;
     });
   };
-
   const conferenceRooms =
     floor === 'Upper Floor'
       ? data.filter((room) => room.floor === 'Upper Floor')
@@ -47,6 +46,7 @@ const ConferenceOverview = () => {
         {conferenceRooms.map((room) => {
           return (
             <ConferenceRoom
+              key={room.conferenceRoomNumber}
               conferenceRoomNumber={room.conferenceRoomNumber}
               conferenceRoomName={room.conferenceRoomName}
               capacity={room.capacity}
