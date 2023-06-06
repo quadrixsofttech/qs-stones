@@ -45,34 +45,33 @@ const ConferenceRoom = ({
         <Flex className="see-availability" {...styles.seeAvailabilityBox}>
           <Text {...styles.seeAvailabilityText}>See Availability</Text>
         </Flex>
-
         <Flex {...styles.iconBox} className="icon-box">
           {equipment.map((x, index) => {
             switch (x.type) {
               case 'wifi':
                 return (
-                  <Flex>
+                  <Flex key={`box-${index}`}>
                     <BiWifi key={index} size={24} color={gray400} />
                     <Text color={'black'}>{x.name}</Text>
                   </Flex>
                 );
               case 'tv':
                 return (
-                  <Flex>
+                  <Flex key={`box-${index}`}>
                     <BiTv key={index} size={24} color={gray400} />
                     <Text>{x.name}</Text>
                   </Flex>
                 );
               case 'chalkboard':
                 return (
-                  <Flex>
+                  <Flex key={`box-${index}`}>
                     <BiChalkboard key={index} size={24} color={gray400} />
                     <Text>{x.name}</Text>
                   </Flex>
                 );
               case 'laptop':
                 return (
-                  <Flex>
+                  <Flex key={`box-${index}`}>
                     <BiLaptop key={index} size={24} color={gray400} />
                     <Text>{x.name}</Text>
                   </Flex>

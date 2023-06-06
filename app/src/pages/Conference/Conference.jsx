@@ -1,15 +1,7 @@
 import styles from './Conference.styles';
 import DashboardLayout from '../../layout/DashboardLayout/DashboardLayout';
-import {
-  Flex,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
-} from '@chakra-ui/react';
+import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 import ConferenceOverview from '../../components/ConferenceOverview';
-import { useState } from 'react';
 
 const Conference = () => {
   return (
