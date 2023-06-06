@@ -21,16 +21,18 @@ const conferenceCard = {
   border: '1px',
   borderColor: 'gray.200',
   overflow: 'hidden',
+  _hover: {
+    '& img': {
+      transform: 'scale(1.2)',
+    },
+  },
 };
 
 const conferenceRoomImage = {
-  transition: 'transform 1s',
+  transition: 'transform 0.3s',
   width: '100%',
   height: '100%',
   objectFit: 'cover',
-  _hover: {
-    transform: 'scale(1.2)',
-  },
 };
 
 const conferenceRoomInfo = {

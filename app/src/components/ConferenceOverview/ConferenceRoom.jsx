@@ -32,16 +32,17 @@ const ConferenceRoom = ({
         </Flex>
         <Flex gap={'4'}>
           {equipment.map((x) => {
-            if (x === 'wifi') {
-              return <BiWifi size={24} color={gray400} />;
-            } else if (x === 'tv') {
-              return <BiTv size={24} color={gray400} />;
-            } else if (x === 'chalkboard') {
-              return <BiChalkboard size={24} color={gray400} />;
-            } else if (x === 'laptop') {
-              return <BiLaptop size={24} color={gray400} />;
-            } else {
-              return null;
+            switch (x) {
+              case 'wifi':
+                return <BiWifi size={24} color={gray400} />;
+              case 'tv':
+                return <BiTv size={24} color={gray400} />;
+              case 'chalkboard':
+                return <BiChalkboard size={24} color={gray400} />;
+              case 'laptop':
+                return <BiLaptop size={24} color={gray400} />;
+              default:
+                return null;
             }
           })}
         </Flex>
