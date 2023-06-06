@@ -14,9 +14,10 @@ const conferenceRooms = {
 };
 
 const conferenceCard = {
+  backgroundColor: 'white',
   flexDir: 'column',
   width: 'calc(50% - 16px)',
-  height: '38vh',
+  height: '37.5vh',
   borderRadius: '6px',
   border: '1px',
   borderColor: 'gray.200',
@@ -33,6 +34,18 @@ const conferenceCard = {
       visibility: 'hidden',
     },
   },
+};
+
+const conferenceBigCard = {
+  transition: 'transform 10s',
+  backgroundColor: 'white',
+  flexDir: 'column',
+  width: 'calc(50% - 16px)',
+  height: '37.5vh',
+  borderRadius: '6px',
+  border: '1px',
+  borderColor: 'gray.200',
+  overflow: 'hidden',
 };
 
 const conferenceRoomImage = {
@@ -89,6 +102,16 @@ const seeAvailabilityText = {
   fontWeight: 'semibold',
 };
 
+const bigCard = {
+  transition: 'height 0.3s ease-out, width 0.3s ease-out',
+  ml: '-4',
+  mt: '-50px',
+  zIndex: 14,
+  position: 'absolute',
+  height: '108%',
+  width: '101%',
+};
+
 const styles = {
   selectFloor,
   conferenceRooms,
@@ -100,6 +123,8 @@ const styles = {
   seeAvailabilityBox,
   iconBox,
   seeAvailabilityText,
+  bigCard,
+  conferenceBigCard,
 };
 
 export default styles;

@@ -20,13 +20,14 @@ const ConferenceOverview = () => {
       return e.target.value;
     });
   };
+
   const conferenceRooms =
     floor === 'Upper Floor'
       ? data.filter((room) => room.floor === 'Upper Floor')
       : data.filter((room) => room.floor === 'Lower Floor');
 
   return (
-    <Flex flexDir={'column'}>
+    <Flex flexDir={'column'} position={'relative'}>
       <Flex justifyContent={'flex-end'}>
         <Select
           {...styles.selectFloor}
@@ -42,7 +43,7 @@ const ConferenceOverview = () => {
           })}
         </Select>
       </Flex>
-      <Flex {...styles.conferenceRooms}>
+      <Flex {...styles.conferenceRooms} position={'relative'}>
         {conferenceRooms.map((room) => {
           return (
             <ConferenceRoom
