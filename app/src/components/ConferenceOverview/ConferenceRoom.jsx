@@ -35,16 +35,16 @@ const ConferenceRoom = ({
         </Flex>
 
         <Flex {...styles.iconBox} className="icon-box">
-          {equipment.map((x) => {
+          {equipment.map((x, index) => {
             switch (x.type) {
               case 'wifi':
-                return <BiWifi key={x} size={24} color={gray400} />;
+                return <BiWifi key={index} size={24} color={gray400} />;
               case 'tv':
-                return <BiTv key={x} size={24} color={gray400} />;
+                return <BiTv key={index} size={24} color={gray400} />;
               case 'chalkboard':
-                return <BiChalkboard key={x} size={24} color={gray400} />;
+                return <BiChalkboard key={index} size={24} color={gray400} />;
               case 'laptop':
-                return <BiLaptop key={x} size={24} color={gray400} />;
+                return <BiLaptop key={index} size={24} color={gray400} />;
               default:
                 return null;
             }
