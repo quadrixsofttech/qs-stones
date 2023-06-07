@@ -8,7 +8,7 @@ const ConferenceRoom = ({ roomNumber, name, capacity, img, equipment }) => {
   const gray400 = theme.colors.gray[400];
   return (
     <Flex {...styles.conferenceCard}>
-      <Box overflow={'hidden'}>
+      <Box overflow={'hidden'} sx={{ 'aspect-ratio': '16/6' }}>
         <Image {...styles.conferenceRoomImage} src={img} />
       </Box>
       <Flex {...styles.conferenceRoomInfo}>

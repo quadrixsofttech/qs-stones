@@ -6,17 +6,8 @@ const selectFloor = {
   mr: 4,
 };
 
-const conferenceRooms = {
-  mt: '4',
-  ml: '4',
-  flexWrap: 'wrap',
-  gap: 4,
-};
-
 const conferenceCard = {
   flexDir: 'column',
-  width: 'calc(50% - 16px)',
-  height: '38vh',
   borderRadius: '6px',
   border: '1px',
   borderColor: 'gray.200',
@@ -91,7 +82,7 @@ const seeAvailabilityText = {
 
 const styles = {
   selectFloor,
-  conferenceRooms,
+  //conferenceRooms,
   conferenceCard,
   conferenceRoomImage,
   conferenceRoomInfo,

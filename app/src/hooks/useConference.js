@@ -7,7 +7,7 @@ const useConference = () => {
 
   const getConferences = async () => {
     const { data } = await axios.get(
-      'https://testapi.io/api/ivansrejic/conference'
+      'https://64804076f061e6ec4d48e5ce.mockapi.io/conference'
     );
     return data;
   };
