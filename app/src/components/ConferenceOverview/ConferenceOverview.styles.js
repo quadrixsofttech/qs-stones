@@ -27,18 +27,6 @@ const conferenceCard = {
   },
 };
 
-const conferenceBigCard = {
-  transition: 'transform 10s',
-  backgroundColor: 'white',
-  flexDir: 'column',
-  width: 'calc(50% - 16px)',
-  height: '37.5vh',
-  borderRadius: '6px',
-  border: '1px',
-  borderColor: 'gray.200',
-  overflow: 'hidden',
-};
-
 const conferenceRoomImage = {
   transition: 'transform 0.3s',
   width: '100%',
@@ -96,16 +84,6 @@ const conferenceRoomGrid = {
   templateColumns: 'repeat(2, 1fr)',
   gap: 4,
   m: 4,
-};
-
-const bigCard = {
-  transition: 'height 0.3s ease-out, width 0.3s ease-out',
-  ml: '-4',
-  mt: '-50px',
-  zIndex: 14,
-  position: 'absolute',
-  height: '108%',
-  width: '101%',
 };
 
 const styles = {
