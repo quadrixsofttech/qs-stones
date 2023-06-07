@@ -42,7 +42,7 @@ const ConferenceOverview = () => {
           })}
         </Select>
       </Flex>
-      <Grid templateColumns="repeat(2, 1fr)" gap={4} m="4">
+      <Grid {...styles.conferenceRoomGrid}>
         {conferenceRooms.map((room) => {
           return (
             <GridItem>

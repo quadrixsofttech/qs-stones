@@ -79,10 +79,14 @@ const seeAvailabilityText = {
   color: 'purple.500',
   fontWeight: 'semibold',
 };
+const conferenceRoomGrid = {
+  templateColumns: 'repeat(2, 1fr)',
+  gap: 4,
+  m: 4,
+};
 
 const styles = {
   selectFloor,
-  //conferenceRooms,
   conferenceCard,
   conferenceRoomImage,
   conferenceRoomInfo,
@@ -91,6 +95,7 @@ const styles = {
   seeAvailabilityBox,
   iconBox,
   seeAvailabilityText,
+  conferenceRoomGrid,
 };
 
 export default styles;
