@@ -1,4 +1,4 @@
-import { Flex, Select, Spinner } from '@chakra-ui/react';
+import { Flex, Grid, GridItem, Select, Spinner } from '@chakra-ui/react';
 import { useState } from 'react';
 import styles from './ConferenceOverview.styles';
 import ConferenceRoom from './ConferenceRoom';
@@ -43,20 +43,22 @@ const ConferenceOverview = () => {
           })}
         </Select>
       </Flex>
-      <Flex {...styles.conferenceRooms} position={'relative'}>
+      <Grid {...styles.conferenceRoomGrid}>
         {conferenceRooms.map((room) => {
           return (
-            <ConferenceRoom
-              key={room.conferenceRoomNumber}
-              conferenceRoomNumber={room.conferenceRoomNumber}
-              conferenceRoomName={room.conferenceRoomName}
-              capacity={room.capacity}
-              img={room.img}
-              equipment={room.equipment}
-            />
+            <GridItem>
+              <ConferenceRoom
+                key={room.roomNumber}
+                roomNumber={room.roomNumber}
+                name={room.name}
+                capacity={room.capacity}
+                img={room.img}
+                equipment={room.equipment}
+              />
+            </GridItem>
           );
         })}
-      </Flex>
+      </Grid>
     </Flex>
   );
 };

@@ -6,18 +6,9 @@ const selectFloor = {
   mr: 4,
 };
 
-const conferenceRooms = {
-  mt: '4',
-  ml: '4',
-  flexWrap: 'wrap',
-  gap: 4,
-};
-
 const conferenceCard = {
   backgroundColor: 'white',
   flexDir: 'column',
-  width: 'calc(50% - 16px)',
-  height: '37.5vh',
   borderRadius: '6px',
   border: '1px',
   borderColor: 'gray.200',
@@ -101,6 +92,11 @@ const seeAvailabilityText = {
   color: 'purple.500',
   fontWeight: 'semibold',
 };
+const conferenceRoomGrid = {
+  templateColumns: 'repeat(2, 1fr)',
+  gap: 4,
+  m: 4,
+};
 
 const bigCard = {
   transition: 'height 0.3s ease-out, width 0.3s ease-out',
@@ -114,7 +110,6 @@ const bigCard = {
 
 const styles = {
   selectFloor,
-  conferenceRooms,
   conferenceCard,
   conferenceRoomImage,
   conferenceRoomInfo,
@@ -123,8 +118,7 @@ const styles = {
   seeAvailabilityBox,
   iconBox,
   seeAvailabilityText,
-  bigCard,
-  conferenceBigCard,
+  conferenceRoomGrid,
 };
 
 export default styles;
