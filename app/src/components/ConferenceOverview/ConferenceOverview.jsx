@@ -47,8 +47,8 @@ const ConferenceOverview = () => {
           return (
             <ConferenceRoom
               key={room.conferenceRoomNumber}
-              conferenceRoomNumber={room.conferenceRoomNumber}
-              conferenceRoomName={room.conferenceRoomName}
+              roomNumber={room.conferenceRoomNumber}
+              name={room.conferenceRoomName}
               capacity={room.capacity}
               img={room.img}
               equipment={room.equipment}

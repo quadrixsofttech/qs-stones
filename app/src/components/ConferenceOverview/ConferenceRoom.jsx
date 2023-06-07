@@ -3,13 +3,7 @@ import styles from './ConferenceOverview.styles';
 import { BiWifi, BiTv, BiLaptop, BiChalkboard } from 'react-icons/bi';
 import { useTheme } from '@chakra-ui/react';
 
-const ConferenceRoom = ({
-  conferenceRoomNumber,
-  conferenceRoomName,
-  capacity,
-  img,
-  equipment,
-}) => {
+const ConferenceRoom = ({ roomNumber, name, capacity, img, equipment }) => {
   const theme = useTheme();
   const gray400 = theme.colors.gray[400];
   return (
@@ -20,10 +14,8 @@ const ConferenceRoom = ({
       <Flex {...styles.conferenceRoomInfo}>
         <Flex flexDir={'column'} gap="1">
           <Heading {...styles.heading}>
-            <span style={{ textDecoration: 'underline' }}>
-              {conferenceRoomNumber}
-            </span>{' '}
-            {conferenceRoomName}
+            <span style={{ textDecoration: 'underline' }}>{roomNumber}</span>{' '}
+            {name}
           </Heading>
           <Text {...styles.capacityInfo}>
             Capacity:{' '}
