@@ -9,7 +9,7 @@ import {
   TabPanels,
   Tabs,
   Heading,
-  Divider
+  Divider,
 } from '@chakra-ui/react';
 import styles from './MyHistory.styles';
 import RequestPTO from '../RequestPTO/RequestPTO';
@@ -86,14 +86,14 @@ const MyHistory = () => {
               </Flex>
             </StatGroup>
           </TabPanel>
-          <TabPanel {...styles.tabPanelRequestHistory}>
-            <Scrollbars style={{ height: '90%' }}>
+          <Scrollbars style={{ height: '100%' }}>
+            <TabPanel {...styles.tabPanelRequestHistory}>
               {Array.isArray(employees.requests) &&
                 employees.requests.map((request, id) => {
                   return <RequestPTO key={id} {...request} />;
                 })}
-            </Scrollbars>
-          </TabPanel>
+            </TabPanel>
+          </Scrollbars>
         </TabPanels>
       </Tabs>
     </Flex>

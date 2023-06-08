@@ -1,7 +1,8 @@
+
 const box = {
   fontFamily: "'Inter', sans-serif",
   p: '2',
-  width: '100%'
+  width: '100%',
 };
 
 const grayText = {
