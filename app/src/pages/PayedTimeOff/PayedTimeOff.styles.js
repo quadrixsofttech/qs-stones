@@ -36,9 +36,9 @@ const buttonNext = {
 };
 
 const modalContent = {
-  maxW:'700px',
-  height:'600px',
-  maxH:'600px'
+  maxW:'700',
+  height:'600',
+  maxH:'600'
 }
 const styles = {
   button,
