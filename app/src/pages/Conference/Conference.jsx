@@ -1,28 +1,11 @@
-import styles from './Conference.styles';
 import DashboardLayout from '../../layout/DashboardLayout/DashboardLayout';
-import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
-import ConferenceOverview from '../../components/ConferenceOverview';
+import ConferenceNavbar from '../../components/ConferenceNavbar/ConferenceNavbar';
 
 const Conference = () => {
   return (
     <DashboardLayout>
-      <Tabs>
-        <TabList>
-          <Tab ml="8" {...styles.tab}>
-            Celandar
-          </Tab>
-          <Tab {...styles.tab}>Overview</Tab>
-        </TabList>
-
-        <TabPanels>
-          <TabPanel>
-            <h1>Calendar Page</h1>
-          </TabPanel>
-          <TabPanel>
-            <ConferenceOverview />
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
+      <ConferenceNavbar />
+      <h1>Calendar Page</h1>
     </DashboardLayout>
   );
 };

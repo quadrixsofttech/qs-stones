@@ -28,7 +28,7 @@ const ConferenceOverview = () => {
 
   return (
     <Flex flexDir={'column'} position={'relative'}>
-      <Flex justifyContent={'flex-end'}>
+      <Flex justifyContent={'flex-end'} mt="4">
         <Select
           {...styles.selectFloor}
           onChange={handleFloorChange}
@@ -46,7 +46,7 @@ const ConferenceOverview = () => {
       <Grid {...styles.conferenceRoomGrid}>
         {conferenceRooms.map((room) => {
           return (
-            <GridItem>
+            <GridItem key={room.roomNumber}>
               <ConferenceRoom
                 key={room.roomNumber}
                 roomNumber={room.roomNumber}

@@ -38,8 +38,7 @@ const conferenceRoomInfo = {
   position: 'relative',
   justifyContent: 'space-between',
   alignItems: 'center',
-  p: '6',
-  pb: '5',
+  p: '5',
   gap: '4',
 };
 
