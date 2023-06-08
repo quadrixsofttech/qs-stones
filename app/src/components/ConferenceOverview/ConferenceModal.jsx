@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   Flex,
   Grid,
@@ -37,9 +36,9 @@ const ConferenceModal = ({
           borderRadius={'6px'}
           overflow={'hidden'}
         >
-          <Box overflow="hidden" sx={{ aspectRatio: '16/6' }}>
+          <Flex overflow="hidden" sx={{ aspectRatio: '16/6' }}>
             <Image {...styles.conferenceRoomImage} src={img} />
-          </Box>
+          </Flex>
           <Flex flexDir={'column'} p="8" gap="8">
             <Flex justifyContent={'space-between'}>
               <Flex flexDir={'column'} pb="14">

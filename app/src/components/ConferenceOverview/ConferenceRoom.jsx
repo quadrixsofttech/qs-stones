@@ -24,7 +24,9 @@ const ConferenceRoom = ({ roomNumber, name, capacity, img, equipment }) => {
       <Flex {...styles.conferenceRoomInfo}>
         <Flex flexDir={'column'} gap="1">
           <Heading {...styles.heading}>
-            <span style={{ textDecoration: 'underline' }}>{roomNumber}</span>{' '}
+            <span style={{ textDecoration: 'underline', marginRight: '4px' }}>
+              {roomNumber}
+            </span>{' '}
             {name}
           </Heading>
           <Text {...styles.capacityInfo}>

@@ -38,23 +38,22 @@ const conferenceRoomInfo = {
   position: 'relative',
   justifyContent: 'space-between',
   alignItems: 'center',
-  p: '4',
-  pl: '6',
+  p: '6',
+  pb: '5',
   gap: '4',
-  mt: '2',
-  mb: '2',
 };
 
 const capacityInfo = {
   fontSize: 'sm',
   color: 'gray.500',
   fontWeight: '500',
+  lineHeight: '5',
 };
 
 const heading = {
-  fontSize: 'xl',
+  fontSize: 'lg',
   color: 'gray.700',
-  fontWeight: '700',
+  fontWeight: 'bold',
 };
 
 const seeAvailabilityBox = {
@@ -84,6 +83,7 @@ const conferenceRoomGrid = {
   templateColumns: 'repeat(2, 1fr)',
   gap: 4,
   m: 4,
+  mb: 0,
 };
 
 const styles = {
