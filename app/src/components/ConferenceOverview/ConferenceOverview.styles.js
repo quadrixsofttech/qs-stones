@@ -85,6 +85,55 @@ const conferenceRoomGrid = {
   mb: 0,
 };
 
+const modalBox = {
+  backgroundColor: 'white',
+  flexDir: 'column',
+  width: '68vw',
+  borderRadius: '6px',
+  overflow: 'hidden',
+};
+const modalInfoContent = {
+  flexDir: 'column',
+  p: '8',
+};
+const modalHeading = {
+  color: 'gray.700',
+  size: 'xl',
+};
+
+const capacityBold = {
+  fontSize: 'lg',
+  fontWeight: '600',
+  color: 'gray.500',
+};
+const iconGridItem = {
+  flexDir: 'column',
+  alignItems: 'center',
+  width: '24',
+};
+
+const textUnderIcon = {
+  color: 'gray.400',
+  fontSize: 'sm',
+  textAlign: 'center',
+};
+
+const capacityInfoBox = {
+  mt: '4',
+  ml: '20',
+  flexDir: 'column',
+};
+
+const seeAvailabilityBoxButton = {
+  backgroundColor: 'purple.500',
+  color: 'white',
+  width: '36',
+  height: '12',
+  _hover: {
+    backgroundColor: 'purple.700',
+  },
+};
+
 const styles = {
   selectFloor,
   conferenceCard,
@@ -96,6 +145,14 @@ const styles = {
   iconBox,
   seeAvailabilityText,
   conferenceRoomGrid,
+  modalBox,
+  modalInfoContent,
+  modalHeading,
+  capacityBold,
+  iconGridItem,
+  textUnderIcon,
+  capacityInfoBox,
+  seeAvailabilityBoxButton,
 };
 
 export default styles;
