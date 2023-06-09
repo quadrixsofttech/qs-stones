@@ -9,7 +9,7 @@ const Conference = () => {
       <Tabs>
         <TabList>
           <Tab ml="8" {...styles.tab}>
-            Celandar
+            Calendar
           </Tab>
           <Tab {...styles.tab}>Overview</Tab>
         </TabList>
