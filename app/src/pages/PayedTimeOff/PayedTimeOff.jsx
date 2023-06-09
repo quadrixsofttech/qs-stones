@@ -47,7 +47,7 @@ const PayedTimeOff = () => {
         onRequestSubmit={handleRequestSubmit}
         onClose={onClose}
       />
-      <Flex gap={4}>
+      <Flex gap={4} pb={4}>
         <Flex flexDir={'column'}>
           <PTOCalendar />
           <MyVacationInfo />
