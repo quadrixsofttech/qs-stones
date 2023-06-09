@@ -65,7 +65,7 @@ const ConferenceModal = ({
                       return (
                         <GridItem key={index}>
                           <Flex {...styles.iconGridItem}>
-                            <BiWifi size={24} color={gray400} />
+                            <BiWifi size={32} color={gray400} />
                             <Text {...styles.textUnderIcon}>{x.name}</Text>
                           </Flex>
                         </GridItem>
@@ -74,7 +74,7 @@ const ConferenceModal = ({
                       return (
                         <GridItem key={index}>
                           <Flex {...styles.iconGridItem}>
-                            <BiTv size={24} color={gray400} />
+                            <BiTv size={32} color={gray400} />
                             <Text {...styles.textUnderIcon}>{x.name}</Text>
                           </Flex>
                         </GridItem>
@@ -83,7 +83,7 @@ const ConferenceModal = ({
                       return (
                         <GridItem key={index}>
                           <Flex {...styles.iconGridItem}>
-                            <BiChalkboard size={24} color={gray400} />
+                            <BiChalkboard size={32} color={gray400} />
                             <Text {...styles.textUnderIcon}>{x.name}</Text>
                           </Flex>
                         </GridItem>
@@ -92,7 +92,7 @@ const ConferenceModal = ({
                       return (
                         <GridItem key={index}>
                           <Flex {...styles.iconGridItem}>
-                            <BiLaptop size={24} color={gray400} />
+                            <BiLaptop size={32} color={gray400} />
                             <Text {...styles.textUnderIcon}>{x.name}</Text>
                           </Flex>
                         </GridItem>
