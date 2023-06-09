@@ -1,5 +1,6 @@
 import {
   Button,
+  CloseButton,
   Flex,
   Grid,
   GridItem,
@@ -8,6 +9,7 @@ import {
   Modal,
   ModalContent,
   ModalOverlay,
+  Tag,
   Text,
 } from '@chakra-ui/react';
 import styles from './ConferenceOverview.styles';
@@ -23,6 +25,7 @@ const ConferenceModal = ({
   name,
   capacity,
   equipment,
+  tag,
 }) => {
   const theme = useTheme();
   const gray400 = theme.colors.gray[400];
@@ -31,8 +34,10 @@ const ConferenceModal = ({
       <ModalOverlay />
       <ModalContent alignItems={'center'}>
         <Flex {...styles.modalBox}>
-          <Flex overflow="hidden" sx={{ aspectRatio: '16/6' }}>
+          <Flex {...styles.modalImageBox}>
             <Image {...styles.conferenceRoomImage} src={img} />
+            <Tag {...styles.tag}>{tag}</Tag>
+            <CloseButton onClick={onClose} {...styles.closeButton} />
           </Flex>
           <Flex {...styles.modalInfoContent}>
             <Flex justifyContent={'space-between'}>

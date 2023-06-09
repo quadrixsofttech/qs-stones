@@ -11,7 +11,14 @@ import { BiWifi, BiTv, BiLaptop, BiChalkboard } from 'react-icons/bi';
 import { useTheme } from '@chakra-ui/react';
 import ConferenceModal from './ConferenceModal';
 
-const ConferenceRoom = ({ roomNumber, name, capacity, img, equipment }) => {
+const ConferenceRoom = ({
+  roomNumber,
+  name,
+  capacity,
+  img,
+  equipment,
+  floor,
+}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const theme = useTheme();
   const gray400 = theme.colors.gray[400];
@@ -63,6 +70,7 @@ const ConferenceRoom = ({ roomNumber, name, capacity, img, equipment }) => {
         name={name}
         capacity={capacity}
         equipment={equipment}
+        tag={floor}
       />
     </Flex>
   );

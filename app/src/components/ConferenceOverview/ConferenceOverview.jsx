@@ -54,6 +54,7 @@ const ConferenceOverview = () => {
                 capacity={room.capacity}
                 img={room.img}
                 equipment={room.equipment}
+                floor={room.floor}
               />
             </GridItem>
           );

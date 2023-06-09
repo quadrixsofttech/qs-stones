@@ -38,8 +38,10 @@ const conferenceRoomInfo = {
   position: 'relative',
   justifyContent: 'space-between',
   alignItems: 'center',
-  p: '5',
-  gap: '4',
+  m: '4',
+  ml: '6',
+  pt: '2',
+  pb: '1',
 };
 
 const capacityInfo = {
@@ -52,7 +54,6 @@ const capacityInfo = {
 const heading = {
   fontSize: 'lg',
   color: 'gray.700',
-  fontWeight: 'bold',
 };
 
 const seeAvailabilityBox = {
@@ -82,7 +83,6 @@ const conferenceRoomGrid = {
   templateColumns: 'repeat(2, 1fr)',
   gap: 4,
   m: 4,
-  mb: 0,
 };
 
 const modalBox = {
@@ -133,6 +133,29 @@ const seeAvailabilityBoxButton = {
     backgroundColor: 'purple.700',
   },
 };
+const tag = {
+  position: 'absolute',
+  ml: '4',
+  mt: '4',
+  backgroundColor: 'purple.100',
+  color: 'purple.800',
+};
+const closeButton = {
+  right: '0',
+  mr: '4',
+  mt: '4',
+  position: 'absolute',
+  backgroundColor: 'blackAlpha.500',
+  color: 'white',
+  _hover: {
+    backgroundColor: 'blackAlpha.700',
+  },
+};
+const modalImageBox = {
+  position: 'relative',
+  overflow: 'hidden',
+  sx: { aspectRatio: '16/6' },
+};
 
 const styles = {
   selectFloor,
@@ -153,6 +176,9 @@ const styles = {
   textUnderIcon,
   capacityInfoBox,
   seeAvailabilityBoxButton,
+  tag,
+  closeButton,
+  modalImageBox,
 };
 
 export default styles;
