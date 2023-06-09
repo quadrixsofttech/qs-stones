@@ -42,8 +42,8 @@ const ConferenceModal = ({
           <Flex {...styles.modalInfoContent}>
             <Flex justifyContent={'space-between'}>
               <Flex flexDir={'column'}>
-                <Flex gap="8">
-                  <Heading textDecor={'underline'} {...styles.modalHeading}>
+                <Flex gap="8" alignItems={'center'}>
+                  <Heading borderBottom={'4px'} {...styles.modalHeading}>
                     {roomNumber}
                   </Heading>
                   <Heading {...styles.modalHeading} size="2xl">
