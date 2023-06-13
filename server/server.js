@@ -2,15 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const jwt = require('express-jwt');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
-const dashboardData = require('./data/dashboard');
-const User = require('./data/User');
-const InventoryItem = require('./data/InventoryItem');
-
-const csrf = require('csurf');
-const csrfProtection = csrf({ cookie: true });
 
 const app = express();
 
@@ -43,162 +36,162 @@ app.use('/api/v1', publicRouter);
 
 // app.use(attachUser);
 
-const requireAuth = jwt({
-  secret: process.env.JWT_SECRET,
-  audience: 'api.orbit',
-  issuer: 'api.orbit',
-  getToken: (req) => req.cookies.token,
-});
+// const requireAuth = jwt({
+//   secret: process.env.JWT_SECRET,
+//   audience: 'api.orbit',
+//   issuer: 'api.orbit',
+//   getToken: (req) => req.cookies.token,
+// });
 
-app.use(csrfProtection);
+// app.use(csrfProtection);
 
-app.get('/api/v1/csrf-token', (req, res) => {
-  return res.json({ csrfToken: req.csrfToken(), token: req.cookies.token });
-});
+// app.get('/api/v1/csrf-token', (req, res) => {
+//   return res.json({ csrfToken: req.csrfToken(), token: req.cookies.token });
+// });
 
-const requireAdmin = (req, res, next) => {
-  const { role } = req.user;
-  if (role !== 'admin') {
-    return res.status(401).json({ message: 'Insufficient role' });
-  }
-  next();
-};
+// const requireAdmin = (req, res, next) => {
+//   const { role } = req.user;
+//   if (role !== 'admin') {
+//     return res.status(401).json({ message: 'Insufficient role' });
+//   }
+//   next();
+// };
 //
-app.get('/api/v1/dashboard-data', requireAuth, (req, res) =>
-  res.json(dashboardData)
-);
+// app.get('/api/v1/dashboard-data', requireAuth, (req, res) =>
+//   res.json(dashboardData)
+// );
 
-app.patch('/api/v1/user-role', async (req, res) => {
-  try {
-    const { role } = req.body;
-    const allowedRoles = ['user', 'admin'];
+// app.patch('/api/v1/user-role', async (req, res) => {
+//   try {
+//     const { role } = req.body;
+//     const allowedRoles = ['user', 'admin'];
 
-    if (!allowedRoles.includes(role)) {
-      return res.status(400).json({ message: 'Role not allowed' });
-    }
-    await User.findOneAndUpdate({ _id: req.user.sub }, { role });
-    res.json({
-      message: 'User role updated.',
-    });
-  } catch (err) {
-    return res.status(400).json({ error: err });
-  }
-});
+//     if (!allowedRoles.includes(role)) {
+//       return res.status(400).json({ message: 'Role not allowed' });
+//     }
+//     await User.findOneAndUpdate({ _id: req.user.sub }, { role });
+//     res.json({
+//       message: 'User role updated.',
+//     });
+//   } catch (err) {
+//     return res.status(400).json({ error: err });
+//   }
+// });
 
-app.get('/api/v1/inventory', requireAuth, requireAdmin, async (req, res) => {
-  try {
-    const user = req.user.sub;
-    const inventoryItems = await InventoryItem.find({
-      user,
-    });
-    res.json(inventoryItems);
-  } catch (err) {
-    return res.status(400).json({ error: err });
-  }
-});
+// app.get('/api/v1/inventory', requireAuth, requireAdmin, async (req, res) => {
+//   try {
+//     const user = req.user.sub;
+//     const inventoryItems = await InventoryItem.find({
+//       user,
+//     });
+//     res.json(inventoryItems);
+//   } catch (err) {
+//     return res.status(400).json({ error: err });
+//   }
+// });
 
-app.post('/api/v1/inventory', requireAuth, requireAdmin, async (req, res) => {
-  try {
-    const userId = req.user.sub;
-    const input = Object.assign({}, req.body, {
-      user: userId,
-    });
-    const inventoryItem = new InventoryItem(input);
-    await inventoryItem.save();
-    res.status(201).json({
-      message: 'Inventory item created!',
-      inventoryItem,
-    });
-  } catch (err) {
-    return res.status(400).json({
-      message: 'There was a problem creating the item',
-    });
-  }
-});
+// app.post('/api/v1/inventory', requireAuth, requireAdmin, async (req, res) => {
+//   try {
+//     const userId = req.user.sub;
+//     const input = Object.assign({}, req.body, {
+//       user: userId,
+//     });
+//     const inventoryItem = new InventoryItem(input);
+//     await inventoryItem.save();
+//     res.status(201).json({
+//       message: 'Inventory item created!',
+//       inventoryItem,
+//     });
+//   } catch (err) {
+//     return res.status(400).json({
+//       message: 'There was a problem creating the item',
+//     });
+//   }
+// });
 
-app.delete(
-  '/api/v1/inventory/:id',
-  requireAuth,
-  requireAdmin,
-  async (req, res) => {
-    try {
-      const deletedItem = await InventoryItem.findOneAndDelete({
-        _id: req.params.id,
-        user: req.user.sub,
-      });
-      res.status(201).json({
-        message: 'Inventory item deleted!',
-        deletedItem,
-      });
-    } catch (err) {
-      return res.status(400).json({
-        message: 'There was a problem deleting the item.',
-      });
-    }
-  }
-);
+// app.delete(
+//   '/api/v1/inventory/:id',
+//   requireAuth,
+//   requireAdmin,
+//   async (req, res) => {
+//     try {
+//       const deletedItem = await InventoryItem.findOneAndDelete({
+//         _id: req.params.id,
+//         user: req.user.sub,
+//       });
+//       res.status(201).json({
+//         message: 'Inventory item deleted!',
+//         deletedItem,
+//       });
+//     } catch (err) {
+//       return res.status(400).json({
+//         message: 'There was a problem deleting the item.',
+//       });
+//     }
+//   }
+// );
 
-app.get('/api/v1/users', requireAuth, async (req, res) => {
-  try {
-    const users = await User.find()
-      .lean()
-      .select('_id firstName lastName avatar email');
+// app.get('/api/v1/users', requireAuth, async (req, res) => {
+//   try {
+//     const users = await User.find()
+//       .lean()
+//       .select('_id firstName lastName avatar email');
 
-    res.json({
-      users,
-    });
-  } catch (err) {
-    return res.status(400).json({
-      message: 'There was a problem getting the users',
-    });
-  }
-});
+//     res.json({
+//       users,
+//     });
+//   } catch (err) {
+//     return res.status(400).json({
+//       message: 'There was a problem getting the users',
+//     });
+//   }
+// });
 
-app.get('/api/v1/bio', requireAuth, async (req, res) => {
-  try {
-    const { sub } = req.user;
-    const user = await User.findOne({
-      _id: sub,
-    })
-      .lean()
-      .select('bio');
+// app.get('/api/v1/bio', requireAuth, async (req, res) => {
+//   try {
+//     const { sub } = req.user;
+//     const user = await User.findOne({
+//       _id: sub,
+//     })
+//       .lean()
+//       .select('bio');
 
-    res.json({
-      bio: user.bio,
-    });
-  } catch (err) {
-    return res.status(400).json({
-      message: 'There was a problem updating your bio',
-    });
-  }
-});
+//     res.json({
+//       bio: user.bio,
+//     });
+//   } catch (err) {
+//     return res.status(400).json({
+//       message: 'There was a problem updating your bio',
+//     });
+//   }
+// });
 
-app.patch('/api/v1/bio', requireAuth, async (req, res) => {
-  try {
-    const { sub } = req.user;
-    const { bio } = req.body;
-    const updatedUser = await User.findOneAndUpdate(
-      {
-        _id: sub,
-      },
-      {
-        bio,
-      },
-      {
-        new: true,
-      }
-    );
+// app.patch('/api/v1/bio', requireAuth, async (req, res) => {
+//   try {
+//     const { sub } = req.user;
+//     const { bio } = req.body;
+//     const updatedUser = await User.findOneAndUpdate(
+//       {
+//         _id: sub,
+//       },
+//       {
+//         bio,
+//       },
+//       {
+//         new: true,
+//       }
+//     );
 
-    res.json({
-      message: 'Bio updated!',
-      bio: updatedUser.bio,
-    });
-  } catch (err) {
-    return res.status(400).json({
-      message: 'There was a problem updating your bio',
-    });
-  }
-});
+//     res.json({
+//       message: 'Bio updated!',
+//       bio: updatedUser.bio,
+//     });
+//   } catch (err) {
+//     return res.status(400).json({
+//       message: 'There was a problem updating your bio',
+//     });
+//   }
+// });
 
 async function connect() {
   try {
