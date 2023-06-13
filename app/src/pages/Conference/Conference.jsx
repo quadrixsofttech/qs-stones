@@ -2,7 +2,6 @@ import DashboardLayout from '../../layout/DashboardLayout/DashboardLayout';
 import ConferenceNavbar from '../../components/ConferenceNavbar/ConferenceNavbar';
 import React from 'react';
 import TimelineVertical from '../../components/TimelineVertical/TimelineVertical';
-import { Box } from '@chakra-ui/react';
 
 const Conference = () => {
   const Timeline = [
