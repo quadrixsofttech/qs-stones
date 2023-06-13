@@ -9,6 +9,7 @@ import {
   TabPanels,
   Tabs,
   Heading,
+  Divider,
 } from '@chakra-ui/react';
 import styles from './MyHistory.styles';
 import RequestPTO from '../RequestPTO/RequestPTO';
@@ -17,6 +18,7 @@ import { Calendar } from 'react-multi-date-picker';
 import employees from './information';
 import { MyHistoryStats } from './MyHistoryStats';
 import { LeaveTypes, headerOrder } from './constants/constants';
+import Scrollbars from 'react-custom-scrollbars-2';
 
 const MyHistory = () => {
   const [selectedOption, setSelectedOption] = useState(LeaveTypes.Remote);
@@ -26,7 +28,7 @@ const MyHistory = () => {
   };
 
   return (
-    <Flex {...styles.container} flexDirection={'column'}>
+    <Flex {...styles.container}>
       <Flex {...styles.header}>
         <Heading as="h2" size="sm">
           My History
@@ -42,22 +44,29 @@ const MyHistory = () => {
           </Tab>
         </TabList>
         <TabIndicator {...styles.tabindicator} />
-        <TabPanels p={0}>
-          <TabPanel display={'flex'} alignItems={'center'} justifyContent={'center'} flexDir={'column'}>
+        <TabPanels {...styles.tabPanels}>
+          <TabPanel {...styles.tabPanelPTO}>
             <Select size="sm" mb={2} onChange={handleSelectChange}>
               {Object.values(LeaveTypes).map((type) => (
-                <option value={type} key={LeaveTypes.id + '-' + type}>{type}</option>
+                <option value={type} key={LeaveTypes.id + '-' + type}>
+                  {type}
+                </option>
               ))}
             </Select>
             {selectedOption === LeaveTypes.Remote && (
-              <Calendar headerOrder={headerOrder} className="custom-calendar"/>
+              <Calendar
+                headerOrder={headerOrder}
+                className="custom-calendar-history"
+              />
             )}
             {selectedOption === LeaveTypes.Vacation && (
-              <Calendar headerOrder={headerOrder} className="custom-calendar" />
+              <Calendar
+                headerOrder={headerOrder}
+                className="custom-calendar-history"
+              />
             )}
-
-            <StatGroup>
-              <Flex {...styles.statgroup_flex}>
+            <StatGroup width={'100%'} height={'100%'}>
+              <Flex {...styles.statgroupFlex}>
                 <MyHistoryStats
                   label="The total number of employees working today"
                   helpText="% more than yesterday"
@@ -65,6 +74,7 @@ const MyHistory = () => {
                   percent={employees.percentIncrease}
                   arrow={'increase'}
                 />
+                <Divider />
                 <MyHistoryStats
                   label="The total number of employees working remotly today or on
                   vacation"
@@ -76,23 +86,14 @@ const MyHistory = () => {
               </Flex>
             </StatGroup>
           </TabPanel>
-          <TabPanel {...styles.tabPanel}>
-            {Array.isArray(employees.requests) &&
-              employees.requests.map((request, id) => {
-                return (
-                  <RequestPTO
-                    key={id}
-                    requestStatus={request.status}
-                    type={request.type}
-                    time={request.time}
-                    user={request.user}
-                    requestedDates={request.requestedDates}
-                    status={request.status}
-                    response={request.response}
-                  />
-                );
-              })}
-          </TabPanel>
+          <Scrollbars style={{ height: '100%' }}>
+            <TabPanel {...styles.tabPanelRequestHistory}>
+              {Array.isArray(employees.requests) &&
+                employees.requests.map((request, id) => {
+                  return <RequestPTO key={id} {...request} />;
+                })}
+            </TabPanel>
+          </Scrollbars>
         </TabPanels>
       </Tabs>
     </Flex>

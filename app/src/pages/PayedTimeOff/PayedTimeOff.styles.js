@@ -34,11 +34,18 @@ const buttonNext = {
   justifyContent: 'center',
   width: '6rem',
 };
+
+const modalContent = {
+  maxW:'700',
+  height:'600',
+  maxH:'600'
+}
 const styles = {
   button,
   heading,
   modalHeader,
   buttonNext,
+  modalContent
 };
 
 export default styles;

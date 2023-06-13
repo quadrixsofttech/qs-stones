@@ -1,10 +1,15 @@
 const container = {
-  width: '23vw',
-  borderWidth: 'px',
+  flex: '1',
+  borderWidth: '1px',
   borderRadius: '6px',
   p: '0',
   border: '1px solid #E2E8F0',
-  zIndex: '1',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: '100%',
+  height: '100%',
+  overflow:'hidden'
 };
 
 const tabindicator = {
@@ -25,34 +30,61 @@ const header = {
 const tabs = {
   position: 'relative',
   variant: 'unstyled',
-  pt:2,
+  width: '100%',
+  height: '100%',
+  pt: 2,
 };
 
 const stat = {
   width: '100%',
-  borderBottom: '1px solid #E2E8F0',
+  height: '100%',
   pb: 2,
+  display:'flex',
+  alignItems:'center',
 };
 
-const statgroup_flex = {
+const statgroupFlex = {
   justifyContent: 'center',
   alignItems: 'center',
   flexDirection: 'column',
+  width: '100%',
+  height: '100%',
 };
 
-const tabPanel = {
-  height: '80vh',
-  overflowY: 'scroll',
+const tabPanelRequestHistory = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  flexDir: 'column',
+  width: '100%',
+  height: '100%',
 };
+
+const tabPanels = {
+  p: '0',
+  width: '100%',
+  height: '100%',
+};
+
+const tabPanelPTO = {
+  display:'flex',
+  alignItems:'center',
+  justifyContent:'center',
+  flexDir:'column',
+  height:'100%',
+  width:'100%'
+}
 
 const styles = {
   container,
   tabindicator,
-  tabPanel,
   header,
   stat,
   tabs,
-  statgroup_flex,
+  statgroupFlex,
+  tabPanelRequestHistory,
+  tabPanels,
+  tabPanelPTO
 };
 
 export default styles;

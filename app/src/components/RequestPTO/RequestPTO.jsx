@@ -53,7 +53,7 @@ const RequestPTO = ({
             <AccordionItem pt={2}>
               <h2>
                 <AccordionButton onClick={toggleAccordion}>
-                  <Box color={'gray.500'}>
+                  <Box color={'gray.500'} >
                     {isAccordionOpen ? 'See less' : 'See more'}
                   </Box>
                   <AccordionIcon />
