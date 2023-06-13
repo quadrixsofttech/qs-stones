@@ -16,7 +16,7 @@ const Conference = () => {
       enabled: true,
       column: 'conference-room-1',
       start: '08:15',
-      end: '10:00',
+      end: '09:00',
       title: 'MAXP meeting',
       description: 'Sastanak sa partnerima, vezan za MAXP projekat',
       color: 'blue.400',
