@@ -44,6 +44,26 @@ const employees = {
       requestedDates: ['2023-04-04', '2023-04-09'],
       status: 'approved',
     },
+    {
+      type: 'remote',
+      time: '2023-04-03 11:58',
+      user: {
+        name: 'Milos Stosic',
+        role: 'ADMIN',
+      },
+      requestedDates: ['2023-04-04', '2023-04-09'],
+      status: 'approved',
+    },
+    {
+      type: 'remote',
+      time: '2023-04-03 11:58',
+      user: {
+        name: 'Milos Stosic',
+        role: 'ADMIN',
+      },
+      requestedDates: ['2023-04-04', '2023-04-09'],
+      status: 'approved',
+    }
   ],
 };
 
