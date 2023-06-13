@@ -2,6 +2,7 @@ import DashboardLayout from '../../layout/DashboardLayout/DashboardLayout';
 import ConferenceNavbar from '../../components/ConferenceNavbar/ConferenceNavbar';
 import React from 'react';
 import TimelineVertical from '../../components/TimelineVertical/TimelineVertical';
+import { Box } from '@chakra-ui/react';
 
 const Conference = () => {
   const Timeline = [
@@ -15,8 +16,8 @@ const Conference = () => {
       id: '123456',
       enabled: true,
       column: 'conference-room-1',
-      start: '08:15',
-      end: '09:00',
+      start: '08:00',
+      end: '09:30',
       title: 'MAXP meeting',
       description: 'Sastanak sa partnerima, vezan za MAXP projekat',
       color: 'blue.400',

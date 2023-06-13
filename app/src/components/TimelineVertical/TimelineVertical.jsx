@@ -1,4 +1,4 @@
-import { Flex, Grid, GridItem, Text } from '@chakra-ui/react';
+import { Flex, Grid, GridItem, Heading, Text } from '@chakra-ui/react';
 import styles from './TimelineVertical.styles';
 
 const TimelineVertical = ({ title, data }) => {
@@ -41,46 +41,47 @@ const TimelineVertical = ({ title, data }) => {
 
   const getRowIdentifier = (timeSlot) => {
     const index = timeSlots.indexOf(timeSlot);
-    return (index + 1) * 2;
+    return index + 1;
   }; // Preko ove funkcije dobijamo row start i row end za odredjeno vreme
 
   return (
     <Grid
       templateColumns={` 58px repeat(${title.length}, 1fr)`}
       {...styles.timelineGrid}
+      overflow={'auto'}
     >
-      <GridItem
-        p={2}
-        colSpan={`${title.length + 1}`}
-        {...styles.timelineTitleBox}
-      >
+      <GridItem colSpan={`${title.length + 1}`} {...styles.timelineTitleBox}>
         <Grid
-          templateColumns={` 58px repeat(${title.length}, 1fr)`}
+          templateColumns={`58px repeat(${title.length}, 1fr)`}
           {...styles.titleBox}
         >
           <GridItem colSpan={1}></GridItem>
           {title.map((headline) => {
             return (
-              <GridItem key={`headline-${headline.name}`} colSpan={1}>
-                <Text {...styles.label}>{headline.label}</Text>
+              <GridItem colSpan={1} key={`${headline.label}-headline`}>
+                <Heading {...styles.label}>{headline.label}</Heading>
               </GridItem>
             );
           })}
         </Grid>
       </GridItem>
 
-      <GridItem colSpan={1} rowSpan={74}>
+      <GridItem colSpan={1} rowSpan={36}>
         <Grid {...styles.timeIntervalBox}>
-          <GridItem backgroundColor={'white'} rowSpan={4}>
+          <GridItem backgroundColor={'white'} rowSpan={2}>
             <Flex alignContent={'center'} justifyContent={'center'}>
-              <Text {...styles.timeIntervalText}>08:00 </Text>
+              <Text {...styles.timeIntervalText}>08:00</Text>
             </Flex>
           </GridItem>
           {timeIntervals.map((timeIntervals) => {
             return (
-              <GridItem backgroundColor={'white'} rowSpan={4}>
+              <GridItem
+                backgroundColor={'white'}
+                rowSpan={2}
+                key={`${timeIntervals}`}
+              >
                 <Flex alignContent={'center'} justifyContent={'center'}>
-                  <Text {...styles.timeIntervalText} mt="-2">
+                  <Text {...styles.timeIntervalText} mt="-3">
                     {timeIntervals}
                   </Text>
                 </Flex>
@@ -91,13 +92,13 @@ const TimelineVertical = ({ title, data }) => {
       </GridItem>
       {title.map((x) => {
         return (
-          <GridItem key={x.name} colSpan={1} rowSpan={74}>
+          <GridItem colSpan={1} rowSpan={36} key={`${x.name}-column`}>
             <Grid {...styles.timelineColumn}>
               {timeSlots.map((timeSlot) => {
                 return (
                   <GridItem
                     {...styles.timelineGridBox}
-                    key={`${title.name}${x}`}
+                    key={`${timeSlot}timeSlot`}
                   >
                     {timeSlot}
                   </GridItem>
@@ -110,8 +111,9 @@ const TimelineVertical = ({ title, data }) => {
                   return (
                     <GridItem
                       {...styles.timelineCard}
-                      rowStart={getRowIdentifier(data.start) - 1}
-                      rowEnd={getRowIdentifier(data.end) - 1}
+                      key={`${data.id}`}
+                      rowStart={getRowIdentifier(data.start)}
+                      rowEnd={getRowIdentifier(data.end)}
                     ></GridItem>
                   );
                 } else {
