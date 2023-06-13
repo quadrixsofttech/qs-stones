@@ -13,7 +13,6 @@ const InventoryItem = require('./data/InventoryItem');
 const csrf = require('csurf');
 const csrfProtection = csrf({ cookie: true });
 
-const { createToken, hashPassword, verifyPassword } = require('./util');
 
 const app = express();
 
@@ -22,108 +21,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-app.post('/api/authenticate', async (req, res) => {
-  try {
-    const { email, password } = req.body;
+//routers
+const authRouter = require('./routes/auth.routes');
 
-    const user = await User.findOne({
-      email,
-    }).lean();
+app.use('/api/v1', authRouter);
 
-    if (!user) {
-      return res.status(403).json({
-        message: 'Wrong email or password.',
-      });
-    }
-
-    const passwordValid = await verifyPassword(password, user.password);
-
-    if (passwordValid) {
-      const { password, bio, ...rest } = user;
-      const userInfo = Object.assign({}, { ...rest });
-
-      const token = createToken(userInfo);
-
-      const decodedToken = jwtDecode(token);
-      const expiresAt = decodedToken.exp;
-
-      res.cookie('token', token, { httpOnly: true });
-
-      res.json({
-        message: 'Authentication successful!',
-        token,
-        userInfo,
-        expiresAt,
-      });
-    } else {
-      res.status(403).json({
-        message: 'Wrong email or password.',
-      });
-    }
-  } catch (err) {
-    console.log(err);
-    return res.status(400).json({ message: 'Something went wrong.' });
-  }
-});
-
-app.post('/api/signup', async (req, res) => {
-  try {
-    const { email, firstName, lastName } = req.body;
-
-    const hashedPassword = await hashPassword(req.body.password);
-
-    const userData = {
-      email: email.toLowerCase(),
-      firstName,
-      lastName,
-      password: hashedPassword,
-      role: 'admin',
-    };
-
-    const existingEmail = await User.findOne({
-      email: userData.email,
-    }).lean();
-
-    if (existingEmail) {
-      return res.status(400).json({ message: 'Email already exists' });
-    }
-
-    const newUser = new User(userData);
-    const savedUser = await newUser.save();
-
-    if (savedUser) {
-      const token = createToken(savedUser);
-      const decodedToken = jwtDecode(token);
-      const expiresAt = decodedToken.exp;
-
-      const { firstName, lastName, email, role } = savedUser;
-
-      const userInfo = {
-        firstName,
-        lastName,
-        email,
-        role,
-      };
-
-      res.cookie('token', token, { httpOnly: true });
-
-      return res.json({
-        message: 'User created!',
-        token,
-        userInfo,
-        expiresAt,
-      });
-    } else {
-      return res.status(400).json({
-        message: 'There was a problem creating your account',
-      });
-    }
-  } catch (err) {
-    return res.status(400).json({
-      message: 'There was a problem creating your account',
-    });
-  }
-});
 
 const attachUser = (req, res, next) => {
   const token = req.cookies.token;
@@ -153,7 +55,7 @@ const requireAuth = jwt({
 
 app.use(csrfProtection);
 
-app.get('/api/csrf-token', (req, res) => {
+app.get('/api/v1/csrf-token', (req, res) => {
   return res.json({ csrfToken: req.csrfToken(), token: req.cookies.token });
 });
 
@@ -165,11 +67,11 @@ const requireAdmin = (req, res, next) => {
   next();
 };
 
-app.get('/api/dashboard-data', requireAuth, (req, res) =>
+app.get('/api/v1/dashboard-data', requireAuth, (req, res) =>
   res.json(dashboardData)
 );
 
-app.patch('/api/user-role', async (req, res) => {
+app.patch('/api/v1/user-role', async (req, res) => {
   try {
     const { role } = req.body;
     const allowedRoles = ['user', 'admin'];
@@ -186,7 +88,7 @@ app.patch('/api/user-role', async (req, res) => {
   }
 });
 
-app.get('/api/inventory', requireAuth, requireAdmin, async (req, res) => {
+app.get('/api/v1/inventory', requireAuth, requireAdmin, async (req, res) => {
   try {
     const user = req.user.sub;
     const inventoryItems = await InventoryItem.find({
@@ -198,7 +100,7 @@ app.get('/api/inventory', requireAuth, requireAdmin, async (req, res) => {
   }
 });
 
-app.post('/api/inventory', requireAuth, requireAdmin, async (req, res) => {
+app.post('/api/v1/inventory', requireAuth, requireAdmin, async (req, res) => {
   try {
     const userId = req.user.sub;
     const input = Object.assign({}, req.body, {
@@ -218,7 +120,7 @@ app.post('/api/inventory', requireAuth, requireAdmin, async (req, res) => {
 });
 
 app.delete(
-  '/api/inventory/:id',
+  '/api/v1/inventory/:id',
   requireAuth,
   requireAdmin,
   async (req, res) => {
@@ -239,7 +141,7 @@ app.delete(
   }
 );
 
-app.get('/api/users', requireAuth, async (req, res) => {
+app.get('/api/v1/users', requireAuth, async (req, res) => {
   try {
     const users = await User.find()
       .lean()
@@ -255,7 +157,7 @@ app.get('/api/users', requireAuth, async (req, res) => {
   }
 });
 
-app.get('/api/bio', requireAuth, async (req, res) => {
+app.get('/api/v1/bio', requireAuth, async (req, res) => {
   try {
     const { sub } = req.user;
     const user = await User.findOne({
@@ -274,7 +176,7 @@ app.get('/api/bio', requireAuth, async (req, res) => {
   }
 });
 
-app.patch('/api/bio', requireAuth, async (req, res) => {
+app.patch('/api/v1/bio', requireAuth, async (req, res) => {
   try {
     const { sub } = req.user;
     const { bio } = req.body;
