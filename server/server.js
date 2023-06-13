@@ -3,7 +3,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const jwt = require('express-jwt');
-const jwtDecode = require('jwt-decode');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const dashboardData = require('./data/dashboard');
@@ -13,7 +12,6 @@ const InventoryItem = require('./data/InventoryItem');
 const csrf = require('csurf');
 const csrfProtection = csrf({ cookie: true });
 
-
 const app = express();
 
 app.use(cors());
@@ -22,29 +20,28 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 //routers
-const authRouter = require('./routes/auth.routes');
+const publicRouter = require('./routes/public.routes');
 
-app.use('/api/v1', authRouter);
+app.use('/api/v1', publicRouter);
 
+// const attachUser = (req, res, next) => {
+//   const token = req.cookies.token;
+//   if (!token) {
+//     return res.status(401).json({ message: 'Authentication invalid' });
+//   }
+//   const decodedToken = jwtDecode(token);
 
-const attachUser = (req, res, next) => {
-  const token = req.cookies.token;
-  if (!token) {
-    return res.status(401).json({ message: 'Authentication invalid' });
-  }
-  const decodedToken = jwtDecode(token);
+//   if (!decodedToken) {
+//     return res.status(401).json({
+//       message: 'There was a problem authorizing the request',
+//     });
+//   } else {
+//     req.user = decodedToken;
+//     next();
+//   }
+// };
 
-  if (!decodedToken) {
-    return res.status(401).json({
-      message: 'There was a problem authorizing the request',
-    });
-  } else {
-    req.user = decodedToken;
-    next();
-  }
-};
-
-app.use(attachUser);
+// app.use(attachUser);
 
 const requireAuth = jwt({
   secret: process.env.JWT_SECRET,
@@ -66,7 +63,7 @@ const requireAdmin = (req, res, next) => {
   }
   next();
 };
-
+//
 app.get('/api/v1/dashboard-data', requireAuth, (req, res) =>
   res.json(dashboardData)
 );
