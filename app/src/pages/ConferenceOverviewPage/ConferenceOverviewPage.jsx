@@ -4,7 +4,7 @@ import ConferenceOverview from '../../components/ConferenceOverview';
 
 const ConferenceOverviewPage = () => {
   return (
-    <DashboardLayout>
+    <DashboardLayout Padding="0">
       <ConferenceNavbar />
       <ConferenceOverview />
     </DashboardLayout>

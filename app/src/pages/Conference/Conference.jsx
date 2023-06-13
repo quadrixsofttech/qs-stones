@@ -84,7 +84,7 @@ const Conference = () => {
     },
   ];
   return (
-    <DashboardLayout>
+    <DashboardLayout Padding="0">
       <ConferenceNavbar />
       <TimelineVertical title={Timeline} data={data} />
     </DashboardLayout>
