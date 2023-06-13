@@ -3,7 +3,7 @@ const router = express.Router();
 
 const requireAdmin = require('../middleware/admin');
 const { requireAuth } = require('../middleware/user');
-const Inventory = require('../controllers/inventory-controller');
+const Inventory = require('../controllers/inventory.controller');
 
 router.get('/', requireAdmin, requireAuth, Inventory.getItem);
 
