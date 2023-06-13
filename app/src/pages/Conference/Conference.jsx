@@ -5,7 +5,7 @@ import ConferenceOverview from '../../components/ConferenceOverview';
 
 const Conference = () => {
   return (
-    <DashboardLayout>
+    <DashboardLayout Padding="0">
       <Tabs>
         <TabList>
           <Tab ml="8" {...styles.tab}>
