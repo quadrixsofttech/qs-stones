@@ -9,6 +9,7 @@ import {
   MenuItem,
   MenuList,
   Text,
+  Tooltip,
 } from '@chakra-ui/react';
 import styles from './TimelineCard.styles';
 import { BiDotsVerticalRounded, BiEditAlt, BiTrash } from 'react-icons/bi';
@@ -39,11 +40,13 @@ const TimelineCard = ({
         }
       >
         <Menu onClose={handleMenuClick}>
-          <MenuButton
-            {...styles.settingsButton}
-            as={IconButton}
-            icon={<BiDotsVerticalRounded />}
-          />
+          <Tooltip hasArrow label="Settings" placement="top">
+            <MenuButton
+              {...styles.settingsButton}
+              as={IconButton}
+              icon={<BiDotsVerticalRounded />}
+            />
+          </Tooltip>
           <MenuList minWidth="120px">
             <MenuItem>
               <BiEditAlt />

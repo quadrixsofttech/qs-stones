@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   Flex,
   Heading,
@@ -8,6 +9,7 @@ import {
   MenuItem,
   MenuList,
   Text,
+  Tooltip,
 } from '@chakra-ui/react';
 import styles from './TimelineCard.styles';
 import { BiDotsVerticalRounded, BiEditAlt, BiTrash } from 'react-icons/bi';
@@ -43,12 +45,17 @@ const TimelineSmallCard = ({
           activeSettings ? { visibility: 'visible' } : { visibility: 'hidden' }
         }
       >
+        <Tooltip hasArrow label={user.name} placement="top">
+          <Avatar size={'xs'} src={user.image} />
+        </Tooltip>
         <Menu onClose={handleMenuClick}>
-          <MenuButton
-            {...styles.settingsButton}
-            as={IconButton}
-            icon={<BiDotsVerticalRounded />}
-          />
+          <Tooltip hasArrow label="Settings" placement="top">
+            <MenuButton
+              {...styles.settingsButton}
+              as={IconButton}
+              icon={<BiDotsVerticalRounded />}
+            />
+          </Tooltip>
           <MenuList minWidth="120px">
             <MenuItem onClick={handleEdit}>
               <BiEditAlt />
