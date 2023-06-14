@@ -15,7 +15,6 @@ const label = {
   fontSize: 'md',
   fontWeight: '700',
   color: 'gray.700',
-  pt: '4',
 };
 const timeIntervalBox = {
   templateRows: 'repeat(37, 1fr)',
@@ -37,12 +36,12 @@ const timelineColumn = {
 const timelineGridBox = {
   backgroundColor: 'gray.50',
   rowSpan: 1,
-  p: 4,
+  p: 7,
 };
 const timelineCard = {
   position: 'absolute',
-  mt: '1px',
-  height: 'calc(100% - 2px)',
+  mt: '2px',
+  height: 'calc(100% - 4px)',
   width: 'calc(100% - 32px)',
   ml: '16px',
 };

@@ -46,7 +46,8 @@ const Conference = () => {
       start: '10:15',
       end: '11:00',
       title: 'mDrafty Daily',
-      description: 'Refaktorisanje koda',
+      description:
+        'Refaktorisanje koda Definisanje marketing strategije za jun mesec, diskusija oko kampanjaDefinisanje marketing strategije za jun mesec, diskusija oko kampanjaDefinisanje marketing strategije za jun mesec, diskusija oko kampanja',
       color: 'blue.400',
       user: {
         image: 'https://i.pravatar.cc/24',
@@ -75,7 +76,7 @@ const Conference = () => {
       end: '11:00',
       title: 'Marketing',
       description:
-        'Definisanje marketing strategije za jun mesec, diskusija oko kampanja, Dogovor oko dizajna...',
+        'Definisanje marketing strategije Definisanje marketing strategije za jun mesec, diskusija oko kampanjaDefinisanje marketing strategije za jun mesec, diskusija oko kampanjaDefinisanje marketing strategije za jun mesec, diskusija oko kampanjaza jun mesec, diskusija oko kampanja, Dogovor oko dizajna...',
       color: 'red.400',
       user: {
         image: 'https://i.pravatar.cc/24',

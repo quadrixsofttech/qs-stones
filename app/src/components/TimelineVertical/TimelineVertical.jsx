@@ -1,5 +1,7 @@
 import { Flex, Grid, GridItem, Heading, Text } from '@chakra-ui/react';
 import styles from './TimelineVertical.styles';
+import TimelineCard from './';
+import { TimelineSmallCard } from './';
 
 const TimelineVertical = ({ title, data }) => {
   const hoursArray = ['08', '09', '10', '11', '12', '13', '14', '15', '16'];
@@ -58,7 +60,7 @@ const TimelineVertical = ({ title, data }) => {
           <GridItem colSpan={1}></GridItem>
           {title.map((headline) => {
             return (
-              <GridItem colSpan={1} key={`${headline.label}-headline`}>
+              <GridItem pt="5" colSpan={1} key={`${headline.label}-headline`}>
                 <Heading {...styles.label}>{headline.label}</Heading>
               </GridItem>
             );
@@ -99,9 +101,7 @@ const TimelineVertical = ({ title, data }) => {
                   <GridItem
                     {...styles.timelineGridBox}
                     key={`${timeSlot}timeSlot`}
-                  >
-                    {timeSlot}
-                  </GridItem>
+                  ></GridItem>
                 );
               })}
 
@@ -118,25 +118,27 @@ const TimelineVertical = ({ title, data }) => {
                       rowEnd={getRowIdentifier(data.end)}
                     >
                       {difference > 2 ? (
-                        <Flex
-                          width={'100%'}
-                          height={'100%'}
-                          backgroundColor={'purple.500'}
-                          flexDir={'column'}
-                        >
-                          <Text>Naslov</Text>
-                          <Text>Nije naslov</Text>
-                        </Flex>
+                        <TimelineCard
+                          id={data.id}
+                          enabled={data.enabled}
+                          title={data.title}
+                          start={data.start}
+                          end={data.end}
+                          description={data.description}
+                          color={data.color}
+                          user={data.user}
+                        />
                       ) : (
-                        <Flex
-                          width={'100%'}
-                          height={'100%'}
-                          backgroundColor={'purple.500'}
-                          flexDir={'column'}
-                        >
-                          <Text>Mali naslov</Text>
-                          <Text>Traje 15 - 30 min</Text>
-                        </Flex>
+                        <TimelineSmallCard
+                          id={data.id}
+                          enabled={data.enabled}
+                          title={data.title}
+                          start={data.start}
+                          end={data.end}
+                          description={data.description}
+                          color={data.color}
+                          user={data.user}
+                        />
                       )}
                     </GridItem>
                   );
