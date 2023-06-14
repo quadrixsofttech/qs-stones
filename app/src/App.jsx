@@ -3,7 +3,8 @@ import React, { Suspense } from 'react';
 import { ChakraProvider } from '@chakra-ui/react';
 import { AuthProvider } from './context/AuthContext';
 import { FetchProvider } from './context/FetchContext';
-import "./styles/CustomCalendar.css"
+import "./styles/CustomCalendar.css";
+import "./styles/CustomCalendarHistory.css";
 
 import AppRoutes from './routes';
 import Loading from './components/Loading';
