@@ -1,3 +1,5 @@
+const { requireAuth } = require('./user');
+
 const requireAdmin = (req, res, next) => {
   const { role } = req.user;
   if (role !== 'admin') {
@@ -6,4 +8,4 @@ const requireAdmin = (req, res, next) => {
   next();
 };
 
-module.exports = requireAdmin;
+module.exports = [requireAdmin, requireAuth];
