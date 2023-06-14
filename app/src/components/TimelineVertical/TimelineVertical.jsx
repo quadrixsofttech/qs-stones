@@ -48,13 +48,21 @@ const TimelineVertical = ({ title, data }) => {
 
   return (
     <Grid
-      templateColumns={` 58px repeat(${title.length}, 1fr)`}
+      templateColumns={
+        title.length < 4
+          ? `58px repeat(${title.length}, 1fr)`
+          : `58px repeat(${title.length}, 350px)`
+      }
       {...styles.timelineGrid}
       overflow={'auto'}
     >
       <GridItem colSpan={`${title.length + 1}`} {...styles.timelineTitleBox}>
         <Grid
-          templateColumns={`58px repeat(${title.length}, 1fr)`}
+          templateColumns={
+            title.length < 4
+              ? `58px repeat(${title.length}, 1fr)`
+              : `58px repeat(${title.length}, 350px)`
+          }
           {...styles.titleBox}
         >
           <GridItem colSpan={1}></GridItem>
