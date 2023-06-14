@@ -1,4 +1,4 @@
-const InventoryItem = require('../data/InventoryItem');
+const InventoryItem = require('../services/inventory/models/InventoryItem');
 
 const getItem = async (req, res) => {
   try {
