@@ -45,7 +45,6 @@ const timelineCard = {
   height: 'calc(100% - 2px)',
   width: 'calc(100% - 32px)',
   ml: '16px',
-  backgroundColor: 'black',
 };
 const styles = {
   timelineGrid,

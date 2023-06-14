@@ -108,13 +108,37 @@ const TimelineVertical = ({ title, data }) => {
               {/* Ovde dole napravi uslovno renderovanje gde proverava dal je to ta kolona i mapiramo kroz data */}
               {data.map((data) => {
                 if (data.column === x.name) {
+                  const difference =
+                    getRowIdentifier(data.end) - getRowIdentifier(data.start);
                   return (
                     <GridItem
                       {...styles.timelineCard}
                       key={`${data.id}`}
                       rowStart={getRowIdentifier(data.start)}
                       rowEnd={getRowIdentifier(data.end)}
-                    ></GridItem>
+                    >
+                      {difference > 2 ? (
+                        <Flex
+                          width={'100%'}
+                          height={'100%'}
+                          backgroundColor={'purple.500'}
+                          flexDir={'column'}
+                        >
+                          <Text>Naslov</Text>
+                          <Text>Nije naslov</Text>
+                        </Flex>
+                      ) : (
+                        <Flex
+                          width={'100%'}
+                          height={'100%'}
+                          backgroundColor={'purple.500'}
+                          flexDir={'column'}
+                        >
+                          <Text>Mali naslov</Text>
+                          <Text>Traje 15 - 30 min</Text>
+                        </Flex>
+                      )}
+                    </GridItem>
                   );
                 } else {
                   return null;
