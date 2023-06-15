@@ -1,14 +1,9 @@
-const User = require('../services/user/models/User');
+const UserService = require('../services/user/user.service');
 
-const getUser = async (req, res) => {
+const getUsers = async (req, res) => {
   try {
-    const users = await User.find()
-      .lean()
-      .select('_id firstName lastName avatar email');
-
-    res.json({
-      users,
-    });
+    let users = await UserService.getAllUsers();
+    return res.send(users);
   } catch (err) {
     return res.status(400).json({
       message: 'There was a problem getting the users',
@@ -16,21 +11,16 @@ const getUser = async (req, res) => {
   }
 };
 
-const updateUserRole = async (req, res) => {
+const updateRole = async (req, res) => {
   try {
-    const { role } = req.body;
-    const allowedRoles = ['user', 'admin'];
-
-    if (!allowedRoles.includes(role)) {
-      return res.status(400).json({ message: 'Role not allowed' });
-    }
-    await User.findOneAndUpdate({ _id: req.user.sub }, { role });
-    res.json({
-      message: 'User role updated.',
-    });
+    const { role, userId } = req.body;
+    let userRole = await UserService.updateUserRole(role, userId);
+    return res.send(userRole);
   } catch (err) {
-    return res.status(400).json({ error: err });
+    return res.status(400).json({
+      message: 'There was a problem getting the users',
+    });
   }
 };
 
-module.exports = { getUser, updateUserRole };
+module.exports = { getUsers, updateRole };
