@@ -2,6 +2,8 @@ import { Box, Flex, Grid, GridItem, Heading, Text } from '@chakra-ui/react';
 import styles from './TimelineVertical.styles';
 import TimelineCard from './';
 import { TimelineSmallCard } from './';
+import CurrentTimeLine from '../CurrentTimeLine/CurrentTimeLine';
+import moment from 'moment';
 
 const TimelineVertical = ({ title, data }) => {
   const hoursArray = ['08', '09', '10', '11', '12', '13', '14', '15', '16'];
@@ -15,7 +17,7 @@ const TimelineVertical = ({ title, data }) => {
         timeSlots.push(`${hour}:${minute}`);
       });
     });
-    timeSlots.push('17:00');
+
     return timeSlots;
   };
   const timeIntervals = [
@@ -36,7 +38,6 @@ const TimelineVertical = ({ title, data }) => {
     '15:30',
     '16:00',
     '16:30',
-    '17:00',
   ];
 
   const timeSlots = generateTimeSlots();
@@ -80,9 +81,12 @@ const TimelineVertical = ({ title, data }) => {
 
         <GridItem colSpan={1} rowSpan={36}>
           <Grid {...styles.timeIntervalBox}>
+            <CurrentTimeLine />
             <GridItem backgroundColor={'white'} rowSpan={2}>
               <Flex alignContent={'center'} justifyContent={'center'}>
-                <Text {...styles.timeIntervalText}>08:00</Text>
+                {!(moment().format('HH:mm') === '08:00') && (
+                  <Text {...styles.timeIntervalText}>08:00</Text>
+                )}
               </Flex>
             </GridItem>
             {timeIntervals.map((timeIntervals) => {
@@ -93,9 +97,11 @@ const TimelineVertical = ({ title, data }) => {
                   key={`${timeIntervals}`}
                 >
                   <Flex alignContent={'center'} justifyContent={'center'}>
-                    <Text {...styles.timeIntervalText} mt="-3">
-                      {timeIntervals}
-                    </Text>
+                    {!(moment().format('HH:mm') === timeIntervals) && (
+                      <Text {...styles.timeIntervalText} mt="-3">
+                        {timeIntervals}
+                      </Text>
+                    )}
                   </Flex>
                 </GridItem>
               );

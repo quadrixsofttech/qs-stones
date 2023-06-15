@@ -1,7 +1,8 @@
 const timelineGrid = {
-  templateRows: 'repeat(37, 1fr)',
+  templateRows: 'repeat(36, 1fr)',
   backgroundColor: 'gray.200',
   gap: '1px',
+  position: 'relative',
 };
 const timelineTitleBox = {
   rowSpan: 1,
@@ -17,7 +18,7 @@ const label = {
   color: 'gray.700',
 };
 const timeIntervalBox = {
-  templateRows: 'repeat(37, 1fr)',
+  templateRows: 'repeat(36, 1fr)',
   templateColumns: 'repeat(1, 1fr)',
   h: '100%',
   backgroundColor: 'gray.200',
@@ -27,7 +28,7 @@ const timeIntervalText = {
   fontSize: 'sm',
 };
 const timelineColumn = {
-  templateRows: 'repeat(37, 1fr)',
+  templateRows: 'repeat(36, 60px)',
   templateColumns: 'repeat(1, 1fr)',
   gap: '1px',
   height: '100%',
@@ -40,6 +41,7 @@ const timelineGridBox = {
 };
 const timelineCard = {
   position: 'absolute',
+  zIndex: 10,
   mt: '2px',
   height: 'calc(100% - 4px)',
   width: 'calc(100% - 32px)',
