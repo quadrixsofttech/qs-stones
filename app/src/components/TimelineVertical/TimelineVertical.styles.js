@@ -25,7 +25,7 @@ const timeIntervalBox = {
 };
 const timeIntervalText = {
   color: 'gray.700',
-  fontSize: 'sm',
+  fontSize: 'xs',
 };
 const timelineColumn = {
   templateRows: 'repeat(36, 60px)',
