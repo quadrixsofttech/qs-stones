@@ -31,14 +31,16 @@ const ConferenceRoom = ({
       <Flex {...styles.conferenceRoomInfo}>
         <Flex flexDir={'column'} gap="1">
           <Heading {...styles.heading}>
-            <span style={{ textDecoration: 'underline', marginRight: '4px' }}>
+            <Text as="span" textDecor={'underline'} marginRight={'1'}>
               {roomNumber}
-            </span>{' '}
+            </Text>{' '}
             {name}
           </Heading>
           <Text {...styles.capacityInfo}>
             Capacity:{' '}
-            <span style={{ fontWeight: '600' }}>{capacity} people</span>
+            <Text as="span" fontWeight={'600'}>
+              {capacity} people
+            </Text>
           </Text>
         </Flex>
         <Flex className="see-availability" {...styles.seeAvailabilityBox}>
