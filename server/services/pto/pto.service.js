@@ -9,7 +9,14 @@ const getAllPTO = async () => {
   }
 };
 
-const createPTO = async (type, status, userId, reveiewerId, dates, comment) => {
+const createPTO = async ({
+  type,
+  status,
+  userId,
+  reveiewerId,
+  dates,
+  comment,
+}) => {
   try {
     const pto = new PayedTimeOff({
       type,
