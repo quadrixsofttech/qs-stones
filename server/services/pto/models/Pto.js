@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const PTODateRangeSchema = new Schema({
+  startDate: { type: Date, required: true },
+  endDate: { type: Date, required: true },
+});
+
 const PtoSchema = new Schema({
   type: {
     type: String,
@@ -20,7 +25,7 @@ const PtoSchema = new Schema({
     type: Schema.Types.ObjectId,
   },
   dates: {
-    type: [[String]],
+    type: [PTODateRangeSchema],
     required: true,
   },
   comment: {
@@ -28,11 +33,11 @@ const PtoSchema = new Schema({
   },
   createdAt: {
     type: Date,
-    default: Date.now,
+    default: Date.now(),
   },
   updatedAt: {
     type: Date,
-    default: Date.now,
+    default: Date.now(),
   },
 });
 
