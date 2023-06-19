@@ -7,6 +7,7 @@ const selectFloor = {
 };
 
 const conferenceCard = {
+  backgroundColor: 'white',
   flexDir: 'column',
   borderRadius: '6px',
   border: '1px',
@@ -37,23 +38,22 @@ const conferenceRoomInfo = {
   position: 'relative',
   justifyContent: 'space-between',
   alignItems: 'center',
-  p: '4',
-  pl: '6',
-  gap: '4',
-  mt: '2',
-  mb: '2',
+  m: '4',
+  ml: '6',
+  pt: '2',
+  pb: '1',
 };
 
 const capacityInfo = {
   fontSize: 'sm',
   color: 'gray.500',
   fontWeight: '500',
+  lineHeight: '5',
 };
 
 const heading = {
-  fontSize: 'xl',
+  fontSize: 'lg',
   color: 'gray.700',
-  fontWeight: '700',
 };
 
 const seeAvailabilityBox = {
@@ -85,6 +85,83 @@ const conferenceRoomGrid = {
   m: 4,
 };
 
+const modalBox = {
+  backgroundColor: 'white',
+  flexDir: 'column',
+  width: '68vw',
+  borderRadius: '6px',
+  overflow: 'hidden',
+};
+const modalInfoContent = {
+  flexDir: 'column',
+  p: '8',
+};
+const modalHeading = {
+  color: 'gray.700',
+  size: 'xl',
+};
+
+const capacityBold = {
+  fontSize: 'lg',
+  fontWeight: '600',
+  color: 'gray.500',
+};
+const iconGridItem = {
+  flexDir: 'column',
+  alignItems: 'center',
+  width: '24',
+};
+
+const textUnderIcon = {
+  color: 'gray.400',
+  fontSize: 'sm',
+  textAlign: 'center',
+};
+
+const capacityInfoBox = {
+  mt: '4',
+  ml: '20',
+  flexDir: 'column',
+};
+
+const seeAvailabilityBoxButton = {
+  backgroundColor: 'purple.500',
+  color: 'white',
+  width: '36',
+  height: '12',
+  _hover: {
+    backgroundColor: 'purple.700',
+  },
+};
+const tag = {
+  position: 'absolute',
+  ml: '4',
+  mt: '4',
+  backgroundColor: 'purple.100',
+  color: 'purple.800',
+};
+const closeButton = {
+  right: '0',
+  mr: '4',
+  mt: '4',
+  position: 'absolute',
+  backgroundColor: 'blackAlpha.500',
+  color: 'white',
+  _hover: {
+    backgroundColor: 'blackAlpha.700',
+  },
+};
+const modalImageBox = {
+  position: 'relative',
+  overflow: 'hidden',
+  sx: { aspectRatio: '16/6' },
+};
+const conferenceNumber = {
+  borderBottom: '2px',
+  borderColor: 'gray.700',
+  marginRight: '1',
+};
+
 const styles = {
   selectFloor,
   conferenceCard,
@@ -96,6 +173,18 @@ const styles = {
   iconBox,
   seeAvailabilityText,
   conferenceRoomGrid,
+  modalBox,
+  modalInfoContent,
+  modalHeading,
+  capacityBold,
+  iconGridItem,
+  textUnderIcon,
+  capacityInfoBox,
+  seeAvailabilityBoxButton,
+  tag,
+  closeButton,
+  modalImageBox,
+  conferenceNumber,
 };
 
 export default styles;
