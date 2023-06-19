@@ -60,46 +60,27 @@ const ConferenceModal = ({
               </Flex>
               <Grid templateColumns="repeat(2, 1fr)" gap={4}>
                 {equipment.map((x, index) => {
-                  switch (x.type) {
-                    case 'wifi':
-                      return (
-                        <GridItem key={index}>
-                          <Flex {...styles.iconGridItem}>
-                            <BiWifi size={32} color={gray400} />
-                            <Text {...styles.textUnderIcon}>{x.name}</Text>
-                          </Flex>
-                        </GridItem>
-                      );
-                    case 'tv':
-                      return (
-                        <GridItem key={index}>
-                          <Flex {...styles.iconGridItem}>
-                            <BiTv size={32} color={gray400} />
-                            <Text {...styles.textUnderIcon}>{x.name}</Text>
-                          </Flex>
-                        </GridItem>
-                      );
-                    case 'chalkboard':
-                      return (
-                        <GridItem key={index}>
-                          <Flex {...styles.iconGridItem}>
-                            <BiChalkboard size={32} color={gray400} />
-                            <Text {...styles.textUnderIcon}>{x.name}</Text>
-                          </Flex>
-                        </GridItem>
-                      );
-                    case 'laptop':
-                      return (
-                        <GridItem key={index}>
-                          <Flex {...styles.iconGridItem}>
-                            <BiLaptop size={32} color={gray400} />
-                            <Text {...styles.textUnderIcon}>{x.name}</Text>
-                          </Flex>
-                        </GridItem>
-                      );
-                    default:
-                      return null;
-                  }
+                  return (
+                    <GridItem key={index}>
+                      <Flex {...styles.iconGridItem}>
+                        {(() => {
+                          switch (x.type) {
+                            case 'wifi':
+                              return <BiWifi size={24} color={gray400} />;
+                            case 'tv':
+                              return <BiTv size={24} color={gray400} />;
+                            case 'chalkboard':
+                              return <BiChalkboard size={24} color={gray400} />;
+                            case 'laptop':
+                              return <BiLaptop size={24} color={gray400} />;
+                            default:
+                              return null;
+                          }
+                        })()}
+                        <Text {...styles.textUnderIcon}>{x.name}</Text>
+                      </Flex>
+                    </GridItem>
+                  );
                 })}
               </Grid>
             </Flex>

@@ -29,16 +29,18 @@ const ConferenceRoom = ({
         <Image {...styles.conferenceRoomImage} src={img} />
       </Box>
       <Flex {...styles.conferenceRoomInfo}>
-        <Flex flexDir={'column'} gap="1">
+        <Flex flexDir={'column'} gap="2">
           <Heading {...styles.heading}>
-            <span style={{ textDecoration: 'underline', marginRight: '4px' }}>
+            <Text as="span" {...styles.conferenceNumber}>
               {roomNumber}
-            </span>{' '}
+            </Text>{' '}
             {name}
           </Heading>
           <Text {...styles.capacityInfo}>
             Capacity:{' '}
-            <span style={{ fontWeight: '600' }}>{capacity} people</span>
+            <Text as="span" fontWeight={'600'}>
+              {capacity} people
+            </Text>
           </Text>
         </Flex>
         <Flex className="see-availability" {...styles.seeAvailabilityBox}>
