@@ -156,6 +156,11 @@ const modalImageBox = {
   overflow: 'hidden',
   sx: { aspectRatio: '16/6' },
 };
+const conferenceNumber = {
+  borderBottom: '2px',
+  borderColor: 'gray.700',
+  marginRight: '1',
+};
 
 const styles = {
   selectFloor,
@@ -179,6 +184,7 @@ const styles = {
   tag,
   closeButton,
   modalImageBox,
+  conferenceNumber,
 };
 
 export default styles;
