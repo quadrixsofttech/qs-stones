@@ -1,10 +1,10 @@
 import DashboardLayout from '../../layout/DashboardLayout/DashboardLayout';
 import ConferenceNavbar from '../../components/ConferenceNavbar/ConferenceNavbar';
 import React from 'react';
-import TimelineVertical from '../../components/TimelineVertical/TimelineVertical';
+import Timeline from '../../components/Timeline/Timeline';
 
 const Conference = () => {
-  const Timeline = [
+  const Label = [
     {
       name: 'conference-room-1',
       label: 'Conference Room 1',
@@ -91,7 +91,7 @@ const Conference = () => {
   return (
     <DashboardLayout Padding="0">
       <ConferenceNavbar />
-      <TimelineVertical title={Timeline} data={data} />
+      <Timeline type="horizontal" title={Label} data={data} />
     </DashboardLayout>
   );
 };
