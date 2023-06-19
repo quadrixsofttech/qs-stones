@@ -12,6 +12,8 @@ const Conference = () => {
     },
     { name: 'conference-room-2', label: 'Conference Room 2', number: '02' },
     { name: 'brainstorm-room', label: 'Brainstorm Room', number: '03' },
+    { name: 'brainstorm-room', label: 'Brainstorm Room', number: '03' },
+    { name: 'brainstorm-room', label: 'Brainstorm Room', number: '03' },
   ];
 
   const data = [
