@@ -1,5 +1,5 @@
-import TimelineHorizontal from '../TimelineHorizontal/TimelineHorizontal';
-import TimelineVertical from '../TimelineVertical/TimelineVertical';
+import TimelineHorizontal from './TimelineHorizontal/TimelineHorizontal';
+import TimelineVertical from './TimelineVertical/TimelineVertical';
 
 const Timeline = ({ type = 'vertical', data, title }) => {
   return type === 'horizontal' ? (

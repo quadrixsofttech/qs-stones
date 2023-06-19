@@ -2,8 +2,8 @@ import { Box, Flex, Grid, GridItem, Heading, Text } from '@chakra-ui/react';
 import styles from './TimelineVertical.styles';
 import TimelineCard from './';
 import { TimelineSmallCard } from './';
-import CurrentTimeLine from '../CurrentTimeLine/CurrentTimeLine';
 import moment from 'moment';
+import CurrentTimeLine from '../../CurrentTimeLine/CurrentTimeLine';
 
 const TimelineVertical = ({ title, data }) => {
   const hoursArray = ['08', '09', '10', '11', '12', '13', '14', '15', '16'];

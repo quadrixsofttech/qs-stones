@@ -11,7 +11,6 @@ const Conference = () => {
     },
     { name: 'conference-room-2', label: 'Conference Room 2' },
     { name: 'brainstorm-room', label: 'Brainstorm Room' },
-    { name: 'brainstorm-room', label: 'Brainstorm Room' },
   ];
 
   const data = [
@@ -91,7 +90,7 @@ const Conference = () => {
   return (
     <DashboardLayout Padding="0">
       <ConferenceNavbar />
-      <Timeline type="horizontal" title={Label} data={data} />
+      <Timeline type="vertical" title={Label} data={data} />
     </DashboardLayout>
   );
 };
