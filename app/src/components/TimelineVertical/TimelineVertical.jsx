@@ -72,7 +72,16 @@ const TimelineVertical = ({ title, data }) => {
             {title.map((headline) => {
               return (
                 <GridItem pt="5" colSpan={1} key={`${headline.label}-headline`}>
-                  <Heading {...styles.label}>{headline.label}</Heading>
+                  <Heading {...styles.label}>
+                    <Text
+                      as="span"
+                      borderBottom={'2px'}
+                      borderColor={'gray.700'}
+                    >
+                      {headline.number}
+                    </Text>{' '}
+                    {headline.label}
+                  </Heading>
                 </GridItem>
               );
             })}
