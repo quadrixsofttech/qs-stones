@@ -25,7 +25,11 @@ const PtoSchema = new Schema({
     type: Schema.Types.ObjectId,
   },
   dates: {
-    type: [PTODateRangeSchema],
+    type: [PTODateRangeSchema],//type:[[Date,Date]]
+    required: true,
+  },
+  days:{
+    type:String,
     required: true,
   },
   comment: {
