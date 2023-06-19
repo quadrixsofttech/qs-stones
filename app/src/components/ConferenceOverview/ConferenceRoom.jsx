@@ -29,9 +29,9 @@ const ConferenceRoom = ({
         <Image {...styles.conferenceRoomImage} src={img} />
       </Box>
       <Flex {...styles.conferenceRoomInfo}>
-        <Flex flexDir={'column'} gap="1">
+        <Flex flexDir={'column'} gap="2">
           <Heading {...styles.heading}>
-            <Text as="span" textDecor={'underline'} marginRight={'1'}>
+            <Text as="span" {...styles.conferenceNumber}>
               {roomNumber}
             </Text>{' '}
             {name}
