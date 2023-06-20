@@ -1,8 +1,8 @@
 import moment from 'moment';
 import { useState } from 'react';
 
-const useDates = () => {
-  const [currentDate, setCurrentDate] = useState(moment());
+const useDates = (initialDate) => {
+  const [currentDate, setCurrentDate] = useState(moment(initialDate));
 
   const handlePreviousDay = () => {
     setCurrentDate(moment(currentDate).subtract(1, 'day'));
@@ -16,10 +16,16 @@ const useDates = () => {
     return `${currentDate.format('MMMM DD')}, ${currentDate.format('dddd')}`;
   };
 
+  const handleDateChange = (value) => {
+    setCurrentDate(moment(value));
+  };
+
   return {
+    currentDate,
     handleNextDay,
     handlePreviousDay,
     getFormattedDate,
+    handleDateChange,
   };
 };
 
