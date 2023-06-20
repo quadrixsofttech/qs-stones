@@ -19,12 +19,12 @@ const ConferenceRoom = ({
   equipment,
   floor,
 }) => {
-  const { isOpen, onClose } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const theme = useTheme();
   const gray400 = theme.colors.gray[400];
 
   return (
-    <Flex {...styles.conferenceCard}>
+    <Flex {...styles.conferenceCard} onClick={onOpen}>
       <Box overflow={'hidden'} sx={{ aspectRatio: '16/6' }}>
         <Image {...styles.conferenceRoomImage} src={img} />
       </Box>
