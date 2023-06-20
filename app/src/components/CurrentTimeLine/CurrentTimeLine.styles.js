@@ -2,14 +2,14 @@ const currentTimeBox = {
   width: 'calc(100% - 58px)',
   right: '0',
   backgroundColor: 'purple.500',
-  height: '2px',
+  height: '0.5',
   alignItems: 'center',
   position: 'absolute',
   zIndex: 10,
 };
 const circle = {
-  height: '8px',
-  width: '8px',
+  height: '2',
+  width: '2',
   borderRadius: '50%',
   backgroundColor: 'purple.500',
   ml: '-1',

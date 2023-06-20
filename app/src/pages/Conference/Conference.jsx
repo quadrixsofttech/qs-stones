@@ -12,8 +12,6 @@ const Conference = () => {
     },
     { name: 'conference-room-2', label: 'Conference Room 2', number: '02' },
     { name: 'brainstorm-room', label: 'Brainstorm Room', number: '03' },
-    { name: 'brainstorm-room', label: 'Brainstorm Room', number: '03' },
-    { name: 'brainstorm-room', label: 'Brainstorm Room', number: '03' },
   ];
 
   const data = [
@@ -21,8 +19,8 @@ const Conference = () => {
       id: '123456',
       enabled: true,
       column: 'conference-room-1',
-      start: '08:00',
-      end: '08:30',
+      start: '08:15',
+      end: '08:45',
       title: 'MAXP meeting',
       description: 'Sastanak sa partnerima, vezan za MAXP projekat',
       color: 'blue.400',
@@ -47,7 +45,7 @@ const Conference = () => {
     },
     {
       id: '123458',
-      enabled: false,
+      enabled: true,
       column: 'conference-room-1',
       start: '10:15',
       end: '11:00',

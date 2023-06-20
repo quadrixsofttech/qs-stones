@@ -25,40 +25,51 @@ const TimelineCard = ({
   color,
   user,
 }) => {
-  const [activeSettings, setActiveSettings] = useState(false);
-  const handleMenuClick = () => {
-    setActiveSettings(!activeSettings);
-  };
+  const [cardHover, setCardHover] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
+
   return (
-    <Flex {...styles.timelineCard} borderColor={enabled ? color : 'gray'}>
-      <Box
-        {...styles.settingsButtonBox}
-        onClick={handleMenuClick}
-        className="settings"
-        sx={
-          activeSettings ? { visibility: 'visible' } : { visibility: 'hidden' }
+    <Flex
+      {...styles.timelineCard}
+      onMouseEnter={() => enabled && setCardHover(true)}
+      onMouseLeave={() => enabled && setCardHover(false)}
+      sx={
+        enabled && {
+          _hover: {
+            backgroundColor: 'gray.50',
+          },
         }
-      >
-        <Menu onClose={handleMenuClick}>
-          <Tooltip hasArrow label="Settings" placement="top">
-            <MenuButton
-              {...styles.settingsButton}
-              as={IconButton}
-              icon={<BiDotsVerticalRounded />}
-            />
-          </Tooltip>
-          <MenuList minWidth="120px">
-            <MenuItem>
-              <BiEditAlt />
-              Edit
-            </MenuItem>
-            <MenuItem>
-              <BiTrash />
-              Delete
-            </MenuItem>
-          </MenuList>
-        </Menu>
-      </Box>
+      }
+      borderColor={enabled ? color : 'gray'}
+    >
+      {(cardHover || settingsOpen) && (
+        <Box {...styles.settingsButtonBox} className="settings">
+          <Menu
+            onOpen={() => setSettingsOpen(true)}
+            onClose={() => setSettingsOpen(false)}
+            placement="bottom"
+          >
+            <Tooltip hasArrow label="Settings" placement="top">
+              <MenuButton
+                {...styles.settingsButton}
+                as={IconButton}
+                icon={<BiDotsVerticalRounded />}
+              />
+            </Tooltip>
+            <MenuList minWidth="120px">
+              <MenuItem>
+                <BiEditAlt />
+                Edit
+              </MenuItem>
+              <MenuItem>
+                <BiTrash />
+                Delete
+              </MenuItem>
+            </MenuList>
+          </Menu>
+        </Box>
+      )}
+
       <Flex flexDir={'column'} gap="2">
         <Heading {...styles.heading} as="h2">
           {title}

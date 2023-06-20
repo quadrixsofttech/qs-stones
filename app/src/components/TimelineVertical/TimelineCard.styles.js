@@ -1,4 +1,6 @@
 const timelineCard = {
+  position: 'relative',
+  zIndex: '10',
   width: '100%',
   height: '100%',
   backgroundColor: 'white',
@@ -8,12 +10,6 @@ const timelineCard = {
   p: '4',
   justifyContent: 'space-between',
   boxShadow: 'md',
-  _hover: {
-    backgroundColor: 'gray.50',
-    '.settings': {
-      visibility: 'visible',
-    },
-  },
 };
 const timelineSmallCard = {
   width: '100%',
@@ -25,12 +21,6 @@ const timelineSmallCard = {
   pl: '4',
   justifyContent: 'space-around',
   boxShadow: 'md',
-  _hover: {
-    backgroundColor: 'gray.50',
-    '.settings': {
-      visibility: 'visible',
-    },
-  },
 };
 const heading = {
   size: 'md',
@@ -44,7 +34,7 @@ const settingsButtonBox = {
 };
 const settingsButton = {
   size: 'xs',
-  ariaLabel: 'Options',
+  'aria-label': 'Options',
   borderRadius: '50px',
 };
 const styles = {

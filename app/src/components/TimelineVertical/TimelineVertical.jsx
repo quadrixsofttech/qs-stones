@@ -6,46 +6,49 @@ import CurrentTimeLine from '../CurrentTimeLine/CurrentTimeLine';
 import moment from 'moment';
 
 const TimelineVertical = ({ title, data }) => {
-  const hoursArray = ['08', '09', '10', '11', '12', '13', '14', '15', '16'];
-  const minutesArray = ['00', '15', '30', '45'];
+  const generateTimeSlots = (start, end) => {
+    const startTime = moment(start, 'HH:mm');
+    const endTime = moment(end, 'HH:mm');
 
-  const generateTimeSlots = () => {
     const timeSlots = [];
 
-    hoursArray.forEach((hour) => {
-      minutesArray.forEach((minute) => {
-        timeSlots.push(`${hour}:${minute}`);
-      });
-    });
+    while (startTime.isSameOrBefore(endTime)) {
+      timeSlots.push(startTime.format('HH:mm'));
+      startTime.add(15, 'minutes');
+    }
 
     return timeSlots;
   };
-  const timeIntervals = [
-    '08:30',
-    '09:00',
-    '09:30',
-    '10:00',
-    '10:30',
-    '11:00',
-    '11:30',
-    '12:00',
-    '12:30',
-    '13:00',
-    '13:30',
-    '14:00',
-    '14:30',
-    '15:00',
-    '15:30',
-    '16:00',
-    '16:30',
-  ];
 
-  const timeSlots = generateTimeSlots();
+  const generateTimeIntervals = (start, end) => {
+    const startTime = moment(start, 'HH:mm');
+    const endTime = moment(end, 'HH:mm');
+    const timeIntervals = [];
+
+    while (startTime.isSameOrBefore(endTime)) {
+      const formattedTime = startTime.format('HH:mm');
+      timeIntervals.push(formattedTime);
+      startTime.add(30, 'minutes');
+    }
+
+    return timeIntervals;
+  };
+
+  const timeIntervals = generateTimeIntervals('08:00', '16:30');
+
+  const timeSlots = generateTimeSlots('08:00', '16:45');
+
+  console.log(timeIntervals, timeSlots);
 
   const getRowIdentifier = (timeSlot) => {
-    const index = timeSlots.indexOf(timeSlot);
-    return index + 1;
-  }; // Preko ove funkcije dobijamo row start i row end za odredjeno vreme
+    const startTime = moment('08:00', 'HH:mm');
+    const timeSlotFormatted = moment(timeSlot, 'HH:mm');
+    const diffInMinutes = timeSlotFormatted.diff(startTime, 'minutes');
+
+    const diff = diffInMinutes / 15;
+
+    return diff + 1;
+  };
 
   return (
     <Box overflow={'auto'}>
@@ -91,14 +94,7 @@ const TimelineVertical = ({ title, data }) => {
         <GridItem colSpan={1} rowSpan={36}>
           <Grid {...styles.timeIntervalBox}>
             <CurrentTimeLine />
-            <GridItem backgroundColor={'white'} rowSpan={2}>
-              <Flex alignContent={'center'} justifyContent={'center'}>
-                {!(moment().format('HH:mm') === '08:00') && (
-                  <Text {...styles.timeIntervalText}>08:00</Text>
-                )}
-              </Flex>
-            </GridItem>
-            {timeIntervals.map((timeIntervals) => {
+            {timeIntervals.map((timeIntervals, index) => {
               return (
                 <GridItem
                   backgroundColor={'white'}
@@ -106,11 +102,12 @@ const TimelineVertical = ({ title, data }) => {
                   key={`${timeIntervals}`}
                 >
                   <Flex alignContent={'center'} justifyContent={'center'}>
-                    {!(moment().format('HH:mm') === timeIntervals) && (
-                      <Text {...styles.timeIntervalText} mt="-3">
-                        {timeIntervals}
-                      </Text>
-                    )}
+                    <Text
+                      {...styles.timeIntervalText}
+                      mt={!(index === 0) && '-3'}
+                    >
+                      {timeIntervals}
+                    </Text>
                   </Flex>
                 </GridItem>
               );
@@ -118,19 +115,20 @@ const TimelineVertical = ({ title, data }) => {
           </Grid>
         </GridItem>
         {title.map((x) => {
+          const gridItems = [];
+          for (let i = 0; i < 36; i++) {
+            gridItems.push(
+              <GridItem
+                {...styles.timelineGridBox}
+                key={`${i}timeSlot`}
+              ></GridItem>
+            );
+          }
           return (
             <GridItem colSpan={1} rowSpan={36} key={`${x.name}-column`}>
               <Grid {...styles.timelineColumn}>
-                {timeSlots.map((timeSlot) => {
-                  return (
-                    <GridItem
-                      {...styles.timelineGridBox}
-                      key={`${timeSlot}timeSlot`}
-                    ></GridItem>
-                  );
-                })}
+                {gridItems}
 
-                {/* Ovde dole napravi uslovno renderovanje gde proverava dal je to ta kolona i mapiramo kroz data */}
                 {data.map((data) => {
                   if (data.column === x.name) {
                     const difference =

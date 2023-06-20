@@ -36,7 +36,22 @@ const TimelineSmallCard = ({
     alert('Delete');
   };
   return (
-    <Flex {...styles.timelineSmallCard} borderColor={enabled ? color : 'gray'}>
+    <Flex
+      {...styles.timelineSmallCard}
+      sx={
+        enabled
+          ? {
+              _hover: {
+                backgroundColor: 'gray.50',
+                '.settings': {
+                  visibility: 'visible',
+                },
+              },
+            }
+          : {}
+      }
+      borderColor={enabled ? color : 'gray'}
+    >
       <Box
         {...styles.settingsButtonBox}
         onClick={handleMenuClick}
