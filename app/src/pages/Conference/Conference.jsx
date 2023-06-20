@@ -1,4 +1,3 @@
-import styles from './Conference.styles';
 import DashboardLayout from '../../layout/DashboardLayout/DashboardLayout';
 import {
   Divider,
@@ -10,6 +9,7 @@ import {
 } from '@chakra-ui/react';
 import ConferenceOverview from '../../components/ConferenceOverview';
 import ConferenceCalendarNavbar from '../../components/ConferenceNavbar/ConferenceCalendarNavbar';
+import styles from './Conference.styles';
 
 const Conference = () => {
   return (

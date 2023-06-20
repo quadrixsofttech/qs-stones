@@ -1,1 +1,1 @@
-export { default } from './ConferenceNavbar.jsx';
+export { default } from './ConferenceNavbar';
