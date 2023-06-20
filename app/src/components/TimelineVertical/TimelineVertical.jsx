@@ -17,6 +17,7 @@ const TimelineVertical = ({ title, data }) => {
       startTime.add(15, 'minutes');
     }
 
+    timeSlots.pop();
     return timeSlots;
   };
 
@@ -30,13 +31,14 @@ const TimelineVertical = ({ title, data }) => {
       timeIntervals.push(formattedTime);
       startTime.add(30, 'minutes');
     }
+    timeIntervals.pop();
 
     return timeIntervals;
   };
 
-  const timeIntervals = generateTimeIntervals('08:00', '16:30');
+  const timeIntervals = generateTimeIntervals('08:00', '17:00');
 
-  const timeSlots = generateTimeSlots('08:00', '16:45');
+  const timeSlots = generateTimeSlots('08:00', '17:00');
 
   console.log(timeIntervals, timeSlots);
 
@@ -143,6 +145,7 @@ const TimelineVertical = ({ title, data }) => {
                         {difference > 2 ? (
                           <TimelineCard
                             id={data.id}
+                            //type={difference > 2 ? 'big' : 'small'}
                             enabled={data.enabled}
                             title={data.title}
                             start={data.start}
