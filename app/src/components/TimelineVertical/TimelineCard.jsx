@@ -24,6 +24,7 @@ const TimelineCard = ({
   description,
   color,
   user,
+  type,
 }) => {
   const [cardHover, setCardHover] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -34,11 +35,14 @@ const TimelineCard = ({
       onMouseEnter={() => enabled && setCardHover(true)}
       onMouseLeave={() => enabled && setCardHover(false)}
       sx={
+        (type === 'small' && {
+          justifyContent: 'space-between',
+        },
         enabled && {
           _hover: {
             backgroundColor: 'gray.50',
           },
-        }
+        })
       }
       borderColor={enabled ? color : 'gray'}
     >
@@ -49,6 +53,11 @@ const TimelineCard = ({
             onClose={() => setSettingsOpen(false)}
             placement="bottom"
           >
+            {type === 'small' && (
+              <Tooltip hasArrow label={user.name} placement="top">
+                <Avatar size={'xs'} src={user.image} />
+              </Tooltip>
+            )}
             <Tooltip hasArrow label="Settings" placement="top">
               <MenuButton
                 {...styles.settingsButton}
@@ -69,24 +78,36 @@ const TimelineCard = ({
           </Menu>
         </Box>
       )}
-
-      <Flex flexDir={'column'} gap="2">
-        <Heading {...styles.heading} as="h2">
-          {title}
-        </Heading>
-        <Text fontSize={'xs'} color="gray.700">
-          {start} - {end}
-        </Text>
-        <Text noOfLines={'2'} fontSize={'xs'} color="gray.700">
-          {description}
-        </Text>
-      </Flex>
-      <Flex gap="1" alignItems={'center'}>
-        <Avatar size={'xs'} src={user.image} />
-        <Text fontSize={'xs'} color="gray.700">
-          {user.name}
-        </Text>
-      </Flex>
+      {type === 'big' ? (
+        <>
+          <Flex flexDir={'column'} gap="2">
+            <Heading {...styles.heading} as="h2">
+              {title}
+            </Heading>
+            <Text fontSize={'xs'} color="gray.700">
+              {start} - {end}
+            </Text>
+            <Text noOfLines={'2'} fontSize={'xs'} color="gray.700">
+              {description}
+            </Text>
+          </Flex>
+          <Flex gap="1" alignItems={'center'}>
+            <Avatar size={'xs'} src={user.image} />
+            <Text fontSize={'xs'} color="gray.700">
+              {user.name}
+            </Text>
+          </Flex>
+        </>
+      ) : (
+        <>
+          <Heading {...styles.heading} as="h2">
+            {title}
+          </Heading>
+          <Text fontSize={'xs'} color="gray.700">
+            {start} - {end}
+          </Text>
+        </>
+      )}
     </Flex>
   );
 };

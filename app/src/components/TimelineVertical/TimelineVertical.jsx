@@ -1,49 +1,46 @@
 import { Box, Flex, Grid, GridItem, Heading, Text } from '@chakra-ui/react';
 import styles from './TimelineVertical.styles';
 import TimelineCard from './';
-import { TimelineSmallCard } from './';
 import CurrentTimeLine from '../CurrentTimeLine/CurrentTimeLine';
 import moment from 'moment';
+import { useMemo } from 'react';
 
 const TimelineVertical = ({ title, data }) => {
-  const generateTimeSlots = (start, end) => {
-    const startTime = moment(start, 'HH:mm');
-    const endTime = moment(end, 'HH:mm');
+  var startHour = '08:00';
+  var endHour = '19:00';
 
-    const timeSlots = [];
-
-    while (startTime.isSameOrBefore(endTime)) {
-      timeSlots.push(startTime.format('HH:mm'));
-      startTime.add(15, 'minutes');
-    }
-
-    timeSlots.pop();
-    return timeSlots;
-  };
-
-  const generateTimeIntervals = (start, end) => {
-    const startTime = moment(start, 'HH:mm');
-    const endTime = moment(end, 'HH:mm');
-    const timeIntervals = [];
+  const timeIntervals = useMemo(() => {
+    const startTime = moment(startHour, 'HH:mm');
+    const endTime = moment(endHour, 'HH:mm');
+    const TimeIntervals = [];
 
     while (startTime.isSameOrBefore(endTime)) {
       const formattedTime = startTime.format('HH:mm');
-      timeIntervals.push(formattedTime);
+      TimeIntervals.push(formattedTime);
       startTime.add(30, 'minutes');
     }
-    timeIntervals.pop();
+    TimeIntervals.pop();
 
-    return timeIntervals;
-  };
+    return TimeIntervals;
+  }, [startHour, endHour]);
 
-  const timeIntervals = generateTimeIntervals('08:00', '17:00');
+  const timeSlots = useMemo(() => {
+    const startTime = moment(startHour, 'HH:mm');
+    const endTime = moment(endHour, 'HH:mm');
 
-  const timeSlots = generateTimeSlots('08:00', '17:00');
+    const TimeSlots = [];
 
-  console.log(timeIntervals, timeSlots);
+    while (startTime.isSameOrBefore(endTime)) {
+      TimeSlots.push(startTime.format('HH:mm'));
+      startTime.add(15, 'minutes');
+    }
+
+    TimeSlots.pop();
+    return TimeSlots;
+  }, [startHour, endHour]);
 
   const getRowIdentifier = (timeSlot) => {
-    const startTime = moment('08:00', 'HH:mm');
+    const startTime = moment(startHour, 'HH:mm');
     const timeSlotFormatted = moment(timeSlot, 'HH:mm');
     const diffInMinutes = timeSlotFormatted.diff(startTime, 'minutes');
 
@@ -61,6 +58,7 @@ const TimelineVertical = ({ title, data }) => {
             ? `58px repeat(${title.length}, 1fr)`
             : `58px repeat(${title.length}, 350px)`
         }
+        templateRows={`repeat(${timeSlots.length}, 1fr)`}
         {...styles.timelineGrid}
         overflow={'hidden'}
       >
@@ -93,9 +91,16 @@ const TimelineVertical = ({ title, data }) => {
           </Grid>
         </GridItem>
 
-        <GridItem colSpan={1} rowSpan={36}>
-          <Grid {...styles.timeIntervalBox}>
-            <CurrentTimeLine />
+        <GridItem colSpan={1} rowSpan={timeSlots.length}>
+          <Grid
+            {...styles.timeIntervalBox}
+            templateRows={`repeat(${timeSlots.length}, 1fr)`}
+          >
+            <CurrentTimeLine
+              startHour={startHour}
+              endHour={endHour}
+              slots={timeSlots.length}
+            />
             {timeIntervals.map((timeIntervals, index) => {
               return (
                 <GridItem
@@ -118,7 +123,7 @@ const TimelineVertical = ({ title, data }) => {
         </GridItem>
         {title.map((x) => {
           const gridItems = [];
-          for (let i = 0; i < 36; i++) {
+          for (let i = 0; i < timeSlots.length; i++) {
             gridItems.push(
               <GridItem
                 {...styles.timelineGridBox}
@@ -127,8 +132,15 @@ const TimelineVertical = ({ title, data }) => {
             );
           }
           return (
-            <GridItem colSpan={1} rowSpan={36} key={`${x.name}-column`}>
-              <Grid {...styles.timelineColumn}>
+            <GridItem
+              colSpan={1}
+              rowSpan={timeSlots.length}
+              key={`${x.name}-column`}
+            >
+              <Grid
+                {...styles.timelineColumn}
+                templateRows={`repeat(${timeSlots.length}, 1fr)`}
+              >
                 {gridItems}
 
                 {data.map((data) => {
@@ -142,30 +154,17 @@ const TimelineVertical = ({ title, data }) => {
                         rowStart={getRowIdentifier(data.start)}
                         rowEnd={getRowIdentifier(data.end)}
                       >
-                        {difference > 2 ? (
-                          <TimelineCard
-                            id={data.id}
-                            //type={difference > 2 ? 'big' : 'small'}
-                            enabled={data.enabled}
-                            title={data.title}
-                            start={data.start}
-                            end={data.end}
-                            description={data.description}
-                            color={data.color}
-                            user={data.user}
-                          />
-                        ) : (
-                          <TimelineSmallCard
-                            id={data.id}
-                            enabled={data.enabled}
-                            title={data.title}
-                            start={data.start}
-                            end={data.end}
-                            description={data.description}
-                            color={data.color}
-                            user={data.user}
-                          />
-                        )}
+                        <TimelineCard
+                          id={data.id}
+                          type={difference > 2 ? 'big' : 'small'}
+                          enabled={data.enabled}
+                          title={data.title}
+                          start={data.start}
+                          end={data.end}
+                          description={data.description}
+                          color={data.color}
+                          user={data.user}
+                        />
                       </GridItem>
                     );
                   } else {

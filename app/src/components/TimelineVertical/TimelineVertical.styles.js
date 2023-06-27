@@ -1,5 +1,4 @@
 const timelineGrid = {
-  templateRows: 'repeat(36, 1fr)',
   backgroundColor: 'gray.200',
   gap: '1px',
   position: 'relative',
@@ -18,7 +17,6 @@ const label = {
   color: 'gray.700',
 };
 const timeIntervalBox = {
-  templateRows: 'repeat(36, 1fr)',
   templateColumns: 'repeat(1, 1fr)',
   h: '100%',
   backgroundColor: 'gray.200',
@@ -28,7 +26,6 @@ const timeIntervalText = {
   fontSize: 'xs',
 };
 const timelineColumn = {
-  templateRows: 'repeat(36, 60px)',
   templateColumns: 'repeat(1, 1fr)',
   gap: '1px',
   height: '100%',

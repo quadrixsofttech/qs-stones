@@ -3,24 +3,22 @@ import { useEffect, useMemo, useState } from 'react';
 import moment from 'moment';
 import styles from './CurrentTimeLine.styles';
 
-const CurrentTimeLine = () => {
+const CurrentTimeLine = ({ startHour, endHour, slots }) => {
   const [currentTime, setCurrentTime] = useState(moment());
-
   useEffect(() => {
-    const timer = setInterval(() => {
+    setTimeout(() => {
       setCurrentTime(moment());
     }, 60000);
-
-    return () => clearInterval(timer);
   }, [currentTime]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const position = useMemo(() => {
     const now = currentTime.hours() * 60 + currentTime.minutes();
-    const start = 8 * 60;
-    const end = 17 * 60;
+    const start = moment(startHour, 'HH:mm').hours() * 60;
+    const end = moment(endHour, 'HH:mm').hours() * 60;
     const totalMinutes = end - start;
-    const height = 36 * 60 + 36;
+
+    const height = slots * 60 - slots;
 
     if (now < start || now > end) {
       return false;
@@ -30,7 +28,7 @@ const CurrentTimeLine = () => {
     const bottom = (end - now) / minutesPerPixel;
 
     return `${bottom}px`;
-  }, [currentTime]);
+  }, [currentTime, startHour, endHour, slots]);
 
   return (
     position && (
