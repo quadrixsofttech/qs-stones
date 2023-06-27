@@ -19,7 +19,7 @@ export default function VacationCalendar({
     return listOfRanges.map((range, index) => (
       <RenderRangeTags
         range={range}
-        key={Math.random() * 15}
+        key={index}
         styleChange={isCurrentPageRemote ? true : false}
         handleClose={() => handleClose(index, isCurrentPageRemote)}
       />
@@ -27,11 +27,10 @@ export default function VacationCalendar({
   };
 
   const renderListOfRangesVacation = (listOfRangesVacation) => {
-    console.log('listOfRangesVacation', listOfRangesVacation);
     return listOfRangesVacation.map((range, index) => (
       <RenderRangeTags
         range={range}
-        key={Math.random() * 150}
+        key={index}
         styleChange={isCurrentPageRemote ? false : true}
         handleClose={() => handleClose(index, isCurrentPageRemote)}
       />

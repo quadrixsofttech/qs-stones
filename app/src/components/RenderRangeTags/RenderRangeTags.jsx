@@ -4,7 +4,6 @@ import React from 'react';
 export const RenderRangeTags = ({
   isCurrentPageRemote,
   range,
-  key,
   styleChange = false,
   handleClose,
 }) => {
@@ -16,7 +15,6 @@ export const RenderRangeTags = ({
   const endDate = range[1];
   return (
     <Tag
-      key={key}
       size="sm"
       fontSize="12px"
       borderRadius="full"

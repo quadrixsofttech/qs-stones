@@ -14,14 +14,13 @@ export default function RemoteCalendar({
     return listOfRanges.map((range, index) => (
       <RenderRangeTags
         range={range}
-        key={Math.random() * 15}
+        key={index}
         styleChange={isCurrentPageRemote ? true : false}
         handleClose={() => handleClose(index, isCurrentPageRemote)}
       />
     ));
   };
   const handleOnChangeRemote = (listOfRanges) => {
-    console.log('change remote', listOfRanges);
     setListOfRanges(listOfRanges);
   };
   return (

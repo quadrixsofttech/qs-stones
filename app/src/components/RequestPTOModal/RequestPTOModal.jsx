@@ -24,8 +24,7 @@ export const RequestPTOModal = ({ isOpen, onRequestSubmit, onClose }) => {
     setIsCurrentPageRemote(true);
     onRequestSubmit();
   };
-  console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
-  console.log(isCurrentPageRemote);
+
 
   return (
     <Modal
