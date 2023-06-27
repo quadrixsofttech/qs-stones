@@ -1,4 +1,5 @@
 const InventoryItem = require('../data/InventoryItem');
+const { StatusCodes } = require('http-status-codes');
 
 const getItem = async (req, res) => {
   try {
@@ -8,7 +9,7 @@ const getItem = async (req, res) => {
     });
     res.json(inventoryItems);
   } catch (err) {
-    return res.status(400).json({ error: err });
+    return res.status(StatusCodes.BAD_REQUEST).json({ error: err });
   }
 };
 
@@ -20,12 +21,12 @@ const createItem = async (req, res) => {
     });
     const inventoryItem = new InventoryItem(input);
     await inventoryItem.save();
-    res.status(201).json({
+    res.status(StatusCodes.CREATED).json({
       message: 'Inventory item created!',
       inventoryItem,
     });
   } catch (err) {
-    return res.status(400).json({
+    return res.status(StatusCodes.BAD_REQUEST).json({
       message: 'There was a problem creating the item',
     });
   }
@@ -37,12 +38,12 @@ const deleteItem = async (req, res) => {
       _id: req.params.id,
       user: req.user.sub,
     });
-    res.status(201).json({
+    res.status(StatusCodes.CREATED).json({
       message: 'Inventory item deleted!',
       deletedItem,
     });
   } catch (err) {
-    return res.status(400).json({
+    return res.status(StatusCodes.BAD_REQUEST).json({
       message: 'There was a problem deleting the item.',
     });
   }
