@@ -19,6 +19,17 @@ const createPaidTimeOff = async (req, res) => {
   }
 };
 
+const getPaidTimeOffHistory = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const ptoHistory = await PtoService.getPtoHistory(userId);
+    res.send(ptoHistory);
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
 module.exports = {
   createPaidTimeOff,
+  getPaidTimeOffHistory,
 };

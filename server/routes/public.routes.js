@@ -7,6 +7,7 @@ const userRouter = require('./user.routes');
 const dashboardRouter = require('./dashboard.routes');
 const bioRouter = require('./bio.routes');
 const PtoRouter = require('./pto.routes');
+const HistoryRouter = require('./myhistory.routes');
 const { attachUser } = require('../middleware/user');
 
 const router = express.Router();
@@ -21,5 +22,6 @@ router.use('/', userRouter);
 router.use('/bio', bioRouter);
 router.use('/inventory', inventoryRouter);
 router.use('/paid-time-off', PtoRouter);
+router.use('/paid-time-off-history', HistoryRouter);
 
 module.exports = router;
