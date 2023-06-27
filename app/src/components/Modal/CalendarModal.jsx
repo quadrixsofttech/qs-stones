@@ -1,6 +1,5 @@
 import {
   Box,
-  Divider,
   Flex,
   Progress,
   Select,
@@ -12,8 +11,8 @@ import {
 import { MdInfo } from 'react-icons/md';
 import styles from './CalendarModal.styles';
 import { useCalendar } from '../../hooks/useCalendar';
-import { Calendar } from 'react-multi-date-picker';
-import { RenderRangeTags } from '../RenderRangeTags/RenderRangeTags';
+import VacationCalendar from './VacationCalendar';
+import RemoteCalendar from './RemoteCalendar';
 
 export const CalendarModal = ({ isCurrentPageRemote, value, name }) => {
   const [
@@ -22,9 +21,9 @@ export const CalendarModal = ({ isCurrentPageRemote, value, name }) => {
     listOfRangesVacation,
     setListOfRangesVacation,
     handleClose,
-    data,
     isLoading,
     error,
+    data,
   ] = useCalendar();
 
   if (isLoading) {
@@ -42,38 +41,6 @@ export const CalendarModal = ({ isCurrentPageRemote, value, name }) => {
       </Flex>
     );
   }
-
-  const handleOnChangeRemote = (listOfRanges) => {
-    console.log('change remote', listOfRanges);
-    setListOfRanges(listOfRanges);
-  };
-
-  const handleOnChangeVacation = (listOfRangesVacation) => {
-    setListOfRangesVacation(listOfRangesVacation);
-  };
-
-  const renderListOfRanges = (listOfRanges) => {
-    return listOfRanges.map((range, index) => (
-      <RenderRangeTags
-        range={range}
-        key={Math.random() * 15}
-        styleChange={isCurrentPageRemote ? true : false}
-        handleClose={() => handleClose(index, isCurrentPageRemote)}
-      />
-    ));
-  };
-
-  const renderListOfRangesVacation = (listOfRangesVacation) => {
-    console.log('listOfRangesVacation', listOfRangesVacation);
-    return listOfRangesVacation.map((range, index) => (
-      <RenderRangeTags
-        range={range}
-        key={Math.random() * 150}
-        styleChange={isCurrentPageRemote ? false : true}
-        handleClose={() => handleClose(index, isCurrentPageRemote)}
-      />
-    ));
-  };
 
   return (
     <>
@@ -107,44 +74,22 @@ export const CalendarModal = ({ isCurrentPageRemote, value, name }) => {
       </Select>
       {isCurrentPageRemote ? (
         <>
-          <Flex alignItems="center" justifyContent="center">
-            <Calendar
-              range
-              rangeHover
-              multiple
-              key="remoteCalendar"
-              numberOfMonths={2}
-              onChange={(selectedDates) => handleOnChangeRemote(selectedDates)}
-              className="custom-calendar"
-            />
-          </Flex>
-          <Text {...styles.textRequestDates}>Requested dates for Remote:</Text>
-          {renderListOfRanges(listOfRanges)}
-          <Divider />
+          <RemoteCalendar
+            listOfRanges={listOfRanges}
+            setListOfRanges={setListOfRanges}
+            handleClose={handleClose}
+            isCurrentPageRemote={isCurrentPageRemote}
+          />
         </>
       ) : (
         <>
-          <Flex alignItems="center" justifyContent="center">
-            <Calendar
-              range
-              key="vacationCalendar"
-              rangeHover
-              multiple
-              numberOfMonths={2}
-              onChange={(selectedDates) =>
-                handleOnChangeVacation(selectedDates)
-              }
-              className="custom-calendar"
-            />
-          </Flex>
-          <Text {...styles.textRequestDates}>
-            Requested dates for Vacation:
-          </Text>
-          {renderListOfRangesVacation(listOfRangesVacation)}
-          <Divider />
-          <Text {...styles.textRequestDates}>Requested dates for Remote:</Text>
-          {renderListOfRanges(listOfRanges)}
-          <Divider />
+          <VacationCalendar
+            listOfRanges={listOfRanges}
+            listOfRangesVacation={listOfRangesVacation}
+            setListOfRangesVacation={setListOfRangesVacation}
+            handleClose={handleClose}
+            isCurrentPageRemote={isCurrentPageRemote}
+          />
         </>
       )}
     </>
