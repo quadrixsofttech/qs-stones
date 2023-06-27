@@ -44,6 +44,7 @@ export const CalendarModal = ({ isCurrentPageRemote, value, name }) => {
   }
 
   const handleOnChangeRemote = (listOfRanges) => {
+    console.log('change remote', listOfRanges);
     setListOfRanges(listOfRanges);
   };
 
@@ -52,27 +53,26 @@ export const CalendarModal = ({ isCurrentPageRemote, value, name }) => {
   };
 
   const renderListOfRanges = (listOfRanges) => {
-    return listOfRanges.map((range) => (
+    return listOfRanges.map((range, index) => (
       <RenderRangeTags
         range={range}
-        key={Math.random() * 150}
+        key={Math.random() * 15}
         styleChange={isCurrentPageRemote ? true : false}
-        handleClose={handleClose}
+        handleClose={() => handleClose(index, isCurrentPageRemote)}
       />
     ));
   };
 
   const renderListOfRangesVacation = (listOfRangesVacation) => {
-    return listOfRangesVacation
-      .slice(1)
-      .map((range) => (
-        <RenderRangeTags
-          range={range}
-          key={Math.random() * 150}
-          styleChange={isCurrentPageRemote ? false : true}
-          handleClose={handleClose}
-        />
-      ));
+    console.log('listOfRangesVacation', listOfRangesVacation);
+    return listOfRangesVacation.map((range, index) => (
+      <RenderRangeTags
+        range={range}
+        key={Math.random() * 150}
+        styleChange={isCurrentPageRemote ? false : true}
+        handleClose={() => handleClose(index, isCurrentPageRemote)}
+      />
+    ));
   };
 
   return (
@@ -112,8 +112,9 @@ export const CalendarModal = ({ isCurrentPageRemote, value, name }) => {
               range
               rangeHover
               multiple
+              key="remoteCalendar"
               numberOfMonths={2}
-              onChange={handleOnChangeRemote}
+              onChange={(selectedDates) => handleOnChangeRemote(selectedDates)}
               className="custom-calendar"
             />
           </Flex>
@@ -126,10 +127,13 @@ export const CalendarModal = ({ isCurrentPageRemote, value, name }) => {
           <Flex alignItems="center" justifyContent="center">
             <Calendar
               range
+              key="vacationCalendar"
               rangeHover
               multiple
               numberOfMonths={2}
-              onChange={handleOnChangeVacation}
+              onChange={(selectedDates) =>
+                handleOnChangeVacation(selectedDates)
+              }
               className="custom-calendar"
             />
           </Flex>

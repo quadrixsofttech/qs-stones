@@ -6,13 +6,30 @@ export const useCalendar = () => {
   const [listOfRanges, setListOfRanges] = useState([]);
   const [listOfRangesVacation, setListOfRangesVacation] = useState([]);
 
-  const handleClose = (range, isVacation = false) => {
-    if (isVacation) {
-      setListOfRangesVacation((prevList) =>
-        prevList.filter((r) => r !== range)
-      );
+  // const handleClose = (range, isVacation = false) => {
+  //   if (isVacation) {
+  //     setListOfRangesVacation((prevList) =>
+  //       prevList.filter((r) => r !== range)
+  //     );
+  //   } else {
+  //     setListOfRanges((prevList) => prevList.filter((r) => r !== range));
+  //   }
+  // };
+  const handleClose = (index, isRemote) => {
+    console.log('react je super', index, isRemote);
+    if (isRemote) {
+      setListOfRanges((prevList) => {
+        const updatedList = [...prevList];
+        updatedList.splice(index, 1);
+        return updatedList;
+      });
     } else {
-      setListOfRanges((prevList) => prevList.filter((r) => r !== range));
+      setListOfRangesVacation((prevList) => {
+        const updatedList = [...prevList];
+        updatedList.splice(index, 1);
+        console.log(updatedList);
+        return updatedList;
+      });
     }
   };
 

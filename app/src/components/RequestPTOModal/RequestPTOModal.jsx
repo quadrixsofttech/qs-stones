@@ -21,10 +21,12 @@ export const RequestPTOModal = ({ isOpen, onRequestSubmit, onClose }) => {
   const [isCurrentPageRemote, setIsCurrentPageRemote] = useState(true);
 
   const handleSubmit = () => {
-    onClose();
     setIsCurrentPageRemote(true);
     onRequestSubmit();
   };
+  console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+  console.log(isCurrentPageRemote);
+
   return (
     <Modal
       isCentered
@@ -34,7 +36,7 @@ export const RequestPTOModal = ({ isOpen, onRequestSubmit, onClose }) => {
     >
       <ModalOverlay />
       <ModalContent {...styles.modalContent}>
-        <Scrollbars style={{ height: '100%'}}>
+        <Scrollbars style={{ height: '100%' }}>
           <ModalHeader {...styles.modalHeader}>Paid Time Off</ModalHeader>
           <Divider />
           <ModalCloseButton />
