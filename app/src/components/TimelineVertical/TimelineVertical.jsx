@@ -99,7 +99,7 @@ const TimelineVertical = ({ title, data }) => {
             <CurrentTimeLine
               startHour={startHour}
               endHour={endHour}
-              slots={timeSlots.length}
+              intervals={timeSlots.length}
             />
             {timeIntervals.map((timeIntervals, index) => {
               return (

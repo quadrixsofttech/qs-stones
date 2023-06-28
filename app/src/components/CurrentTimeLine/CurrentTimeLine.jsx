@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from 'react';
 import moment from 'moment';
 import styles from './CurrentTimeLine.styles';
 
-const CurrentTimeLine = ({ startHour, endHour, slots }) => {
+const CurrentTimeLine = ({ startHour, endHour, intervals }) => {
   const [currentTime, setCurrentTime] = useState(moment());
   useEffect(() => {
     setTimeout(() => {
@@ -18,7 +18,7 @@ const CurrentTimeLine = ({ startHour, endHour, slots }) => {
     const end = moment(endHour, 'HH:mm').hours() * 60;
     const totalMinutes = end - start;
 
-    const height = slots * 58 - slots;
+    const height = intervals * 58 - intervals;
 
     if (now < start || now > end) {
       return false;
@@ -28,7 +28,7 @@ const CurrentTimeLine = ({ startHour, endHour, slots }) => {
     const bottom = (end - now) / minutesPerPixel;
 
     return `${bottom}px`;
-  }, [currentTime, startHour, endHour, slots]);
+  }, [currentTime, startHour, endHour, intervals]);
 
   return (
     position && (
