@@ -74,7 +74,7 @@ const TimelineCard = ({
                 <MenuButton
                   {...styles.settingsButton}
                   as={IconButton}
-                  icon={<BiDotsVerticalRounded />}
+                  icon={<BiDotsVerticalRounded size="24" />}
                 />
               </Tooltip>
             </Flex>
