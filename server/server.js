@@ -28,7 +28,7 @@ async function connect() {
     console.log('Mongoose error', err);
   }
   app.listen(port);
-  console.log('API listening on localhost:3001');
+  console.log(`API listening on localhost:${port}`);
 }
 
 connect();
