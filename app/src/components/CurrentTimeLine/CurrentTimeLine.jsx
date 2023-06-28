@@ -18,7 +18,7 @@ const CurrentTimeLine = ({ startHour, endHour, slots }) => {
     const end = moment(endHour, 'HH:mm').hours() * 60;
     const totalMinutes = end - start;
 
-    const height = slots * 60 - slots;
+    const height = slots * 58 - slots;
 
     if (now < start || now > end) {
       return false;

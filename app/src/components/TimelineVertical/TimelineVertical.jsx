@@ -7,7 +7,7 @@ import { useMemo } from 'react';
 
 const TimelineVertical = ({ title, data }) => {
   var startHour = '08:00';
-  var endHour = '19:00';
+  var endHour = '17:00';
 
   const timeIntervals = useMemo(() => {
     const startTime = moment(startHour, 'HH:mm');

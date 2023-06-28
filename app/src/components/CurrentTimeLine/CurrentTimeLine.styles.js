@@ -15,9 +15,10 @@ const circle = {
   ml: '-1',
 };
 const time = {
-  ml: '-12',
+  ml: '-14',
   fontSize: 'xs',
   color: 'purple.500',
+  pl: '2',
 };
 const styles = {
   currentTimeBox,
