@@ -1,9 +1,8 @@
 import { useMemo } from 'react';
-import styles from './TimelineHorizontal.styles';
+// import styles from './TimelineHorizontal.styles';
 import { Box, Flex, Grid, GridItem, Heading, Text } from '@chakra-ui/react';
 import moment from 'moment';
 import TimelineCard from '../TimelineCard/TimelineCard';
-import { Scrollbars } from 'react-custom-scrollbars-2';
 
 const TimelineHorizontal = ({ title, data }) => {
   var startHour = '08:00';
