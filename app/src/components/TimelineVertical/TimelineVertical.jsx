@@ -14,12 +14,11 @@ const TimelineVertical = ({ title, data }) => {
     const endTime = moment(endHour, 'HH:mm');
     const TimeIntervals = [];
 
-    while (startTime.isSameOrBefore(endTime)) {
+    while (startTime.isBefore(endTime)) {
       const formattedTime = startTime.format('HH:mm');
       TimeIntervals.push(formattedTime);
       startTime.add(30, 'minutes');
     }
-    TimeIntervals.pop();
 
     return TimeIntervals;
   }, [startHour, endHour]);
@@ -30,12 +29,11 @@ const TimelineVertical = ({ title, data }) => {
 
     const TimeSlots = [];
 
-    while (startTime.isSameOrBefore(endTime)) {
+    while (startTime.isBefore(endTime)) {
       TimeSlots.push(startTime.format('HH:mm'));
       startTime.add(15, 'minutes');
     }
 
-    TimeSlots.pop();
     return TimeSlots;
   }, [startHour, endHour]);
 
