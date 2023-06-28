@@ -19,9 +19,11 @@ import employees from './information';
 import { MyHistoryStats } from './MyHistoryStats';
 import { LeaveTypes, headerOrder } from './constants/constants';
 import Scrollbars from 'react-custom-scrollbars-2';
+import usePTO from '../../hooks/usePTO';
 
 const MyHistory = () => {
   const [selectedOption, setSelectedOption] = useState(LeaveTypes.Remote);
+  const ptoHistory = usePTO();
 
   const handleSelectChange = (event) => {
     setSelectedOption(event.target.value);
