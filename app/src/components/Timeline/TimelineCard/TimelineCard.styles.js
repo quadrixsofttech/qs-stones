@@ -1,13 +1,12 @@
 const timelineCard = {
   position: 'relative',
+  overflow: 'hidden',
   zIndex: '10',
   width: '100%',
-  height: '100%',
   backgroundColor: 'white',
   flexDir: 'column',
   borderTop: '4px',
   borderRadius: ' 2px',
-  p: '4',
   justifyContent: 'space-between',
   boxShadow: 'md',
 };
@@ -20,7 +19,6 @@ const heading = {
 const settingsButtonBox = {
   position: 'absolute',
   right: '4',
-  top: '4',
 };
 const settingsButton = {
   size: 'xs',
