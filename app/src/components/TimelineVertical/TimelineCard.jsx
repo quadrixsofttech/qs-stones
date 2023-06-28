@@ -29,6 +29,13 @@ const TimelineCard = ({
   const [cardHover, setCardHover] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
 
+  const onEdit = () => {
+    alert('Edit');
+  };
+  const onDelete = () => {
+    alert('Delete');
+  };
+
   return (
     <Flex
       {...styles.timelineCard}
@@ -66,11 +73,11 @@ const TimelineCard = ({
               />
             </Tooltip>
             <MenuList minWidth="120px">
-              <MenuItem>
+              <MenuItem onClick={onEdit}>
                 <BiEditAlt />
                 Edit
               </MenuItem>
-              <MenuItem>
+              <MenuItem onClick={onDelete}>
                 <BiTrash />
                 Delete
               </MenuItem>
