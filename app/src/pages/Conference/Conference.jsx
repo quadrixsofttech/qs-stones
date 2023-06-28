@@ -2,6 +2,7 @@ import DashboardLayout from '../../layout/DashboardLayout/DashboardLayout';
 import ConferenceNavbar from '../../components/ConferenceNavbar/ConferenceNavbar';
 import React from 'react';
 import Timeline from '../../components/Timeline/Timeline';
+import { Flex } from '@chakra-ui/react';
 
 const Conference = () => {
   const Label = [
@@ -91,7 +92,7 @@ const Conference = () => {
   return (
     <DashboardLayout Padding="0">
       <ConferenceNavbar />
-      <Timeline type="vertical" title={Label} data={data} />
+      <Timeline type="horizontal" title={Label} data={data} />
     </DashboardLayout>
   );
 };

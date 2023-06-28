@@ -1,5 +1,4 @@
 const timelineCard = {
-  position: 'relative',
   overflow: 'hidden',
   zIndex: '10',
   width: '100%',
@@ -12,7 +11,7 @@ const timelineCard = {
 };
 
 const heading = {
-  size: 'md',
+  fontSize: 'md',
   fontWeight: '600',
   color: 'gray.700',
 };

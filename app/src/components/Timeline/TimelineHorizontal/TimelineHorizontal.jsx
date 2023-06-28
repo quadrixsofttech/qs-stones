@@ -3,6 +3,7 @@ import styles from './TimelineHorizontal.styles';
 import { Box, Flex, Grid, GridItem, Heading, Text } from '@chakra-ui/react';
 import moment from 'moment';
 import TimelineCard from '../TimelineCard/TimelineCard';
+import { Scrollbars } from 'react-custom-scrollbars-2';
 
 const TimelineHorizontal = ({ title, data }) => {
   var startHour = '08:00';
@@ -33,7 +34,12 @@ const TimelineHorizontal = ({ title, data }) => {
     return diff + 2;
   };
   return (
-    <Box overflow={'auto'} backgroundColor="gray.200" minH={'70vh'}>
+    <Box
+      overflow={'auto'}
+      backgroundColor="gray.200"
+      borderBottom="1px"
+      borderColor="gray.200"
+    >
       <Grid gap="1px">
         <Grid
           templateColumns={`250px repeat(${timeSlots.length},176px)`}
