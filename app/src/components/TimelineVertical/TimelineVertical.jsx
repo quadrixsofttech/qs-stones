@@ -9,6 +9,13 @@ const TimelineVertical = ({ title, data }) => {
   var startHour = '08:00';
   var endHour = '17:00';
 
+  const onEdit = () => {
+    alert('Edit');
+  };
+  const onDelete = () => {
+    alert('Delete');
+  };
+
   const timeIntervals = useMemo(() => {
     const startTime = moment(startHour, 'HH:mm');
     const endTime = moment(endHour, 'HH:mm');
@@ -162,6 +169,8 @@ const TimelineVertical = ({ title, data }) => {
                           description={data.description}
                           color={data.color}
                           user={data.user}
+                          onEdit={onEdit}
+                          onDelete={onDelete}
                         />
                       </GridItem>
                     );

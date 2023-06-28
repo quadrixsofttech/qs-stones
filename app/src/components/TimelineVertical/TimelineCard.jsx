@@ -25,16 +25,11 @@ const TimelineCard = ({
   color,
   user,
   type,
+  onEdit,
+  onDelete,
 }) => {
   const [cardHover, setCardHover] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
-
-  const onEdit = () => {
-    alert('Edit');
-  };
-  const onDelete = () => {
-    alert('Delete');
-  };
 
   return (
     <Flex
