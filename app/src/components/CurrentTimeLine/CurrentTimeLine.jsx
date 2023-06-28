@@ -1,41 +1,44 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import moment from 'moment';
 import styles from './CurrentTimeLine.styles';
 
-const CurrentTimeLine = () => {
+const CurrentTimeLine = ({ startHour, endHour, intervals }) => {
   const [currentTime, setCurrentTime] = useState(moment());
-
   useEffect(() => {
-    const timer = setInterval(() => {
+    setTimeout(() => {
       setCurrentTime(moment());
-    }, 60000);
-
-    return () => clearInterval(timer);
+    }, 30000);
   }, [currentTime]);
 
-  const getPosition = () => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const position = useMemo(() => {
     const now = currentTime.hours() * 60 + currentTime.minutes();
-    const start = 8 * 60;
-    const end = 17 * 60;
+    const start = moment(startHour, 'HH:mm').hours() * 60;
+    const end = moment(endHour, 'HH:mm').hours() * 60;
     const totalMinutes = end - start;
-    const height = 36 * 60 + 36; // 36px je gap
+
+    const height = intervals * 58 - intervals;
 
     if (now < start || now > end) {
-      return 'none';
+      return false;
     }
 
     const minutesPerPixel = totalMinutes / height;
     const bottom = (end - now) / minutesPerPixel;
 
     return `${bottom}px`;
-  };
-  console.log(currentTime);
+  }, [currentTime, startHour, endHour, intervals]);
+
   return (
-    <Flex {...styles.currentTimeBox} bottom={getPosition()}>
-      <Box {...styles.circle}></Box>
-      <Text {...styles.time}>{currentTime.format('HH:mm')}</Text>
-    </Flex>
+    position && (
+      <Flex {...styles.currentTimeBox} bottom={position}>
+        <Box {...styles.circle}></Box>
+        <Text {...styles.time} backgroundColor={'white'}>
+          {currentTime.format('HH:mm')}
+        </Text>
+      </Flex>
+    )
   );
 };
 export default CurrentTimeLine;

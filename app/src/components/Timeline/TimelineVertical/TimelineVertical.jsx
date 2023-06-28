@@ -1,68 +1,71 @@
 import { Box, Flex, Grid, GridItem, Heading, Text } from '@chakra-ui/react';
 import styles from './TimelineVertical.styles';
 import TimelineCard from './';
-import { TimelineSmallCard } from './';
+import CurrentTimeLine from '../CurrentTimeLine/CurrentTimeLine';
 import moment from 'moment';
-import CurrentTimeLine from '../../CurrentTimeLine/CurrentTimeLine';
+import { useMemo } from 'react';
 
 const TimelineVertical = ({ title, data }) => {
-  const hoursArray = ['08', '09', '10', '11', '12', '13', '14', '15', '16'];
-  const minutesArray = ['00', '15', '30', '45'];
+  var startHour = '08:00';
+  var endHour = '17:00';
 
-  const generateTimeSlots = () => {
-    const timeSlots = [];
+  const timeIntervals = useMemo(() => {
+    const startTime = moment(startHour, 'HH:mm');
+    const endTime = moment(endHour, 'HH:mm');
+    const TimeIntervals = [];
 
-    hoursArray.forEach((hour) => {
-      minutesArray.forEach((minute) => {
-        timeSlots.push(`${hour}:${minute}`);
-      });
-    });
+    while (startTime.isSameOrBefore(endTime)) {
+      const formattedTime = startTime.format('HH:mm');
+      TimeIntervals.push(formattedTime);
+      startTime.add(30, 'minutes');
+    }
+    TimeIntervals.pop();
 
-    return timeSlots;
-  };
-  const timeIntervals = [
-    '08:30',
-    '09:00',
-    '09:30',
-    '10:00',
-    '10:30',
-    '11:00',
-    '11:30',
-    '12:00',
-    '12:30',
-    '13:00',
-    '13:30',
-    '14:00',
-    '14:30',
-    '15:00',
-    '15:30',
-    '16:00',
-    '16:30',
-  ];
+    return TimeIntervals;
+  }, [startHour, endHour]);
 
-  const timeSlots = generateTimeSlots();
+  const timeSlots = useMemo(() => {
+    const startTime = moment(startHour, 'HH:mm');
+    const endTime = moment(endHour, 'HH:mm');
+
+    const TimeSlots = [];
+
+    while (startTime.isSameOrBefore(endTime)) {
+      TimeSlots.push(startTime.format('HH:mm'));
+      startTime.add(15, 'minutes');
+    }
+
+    TimeSlots.pop();
+    return TimeSlots;
+  }, [startHour, endHour]);
 
   const getRowIdentifier = (timeSlot) => {
-    const index = timeSlots.indexOf(timeSlot);
-    return index + 1;
-  }; // Preko ove funkcije dobijamo row start i row end za odredjeno vreme
+    const startTime = moment(startHour, 'HH:mm');
+    const timeSlotFormatted = moment(timeSlot, 'HH:mm');
+    const diffInMinutes = timeSlotFormatted.diff(startTime, 'minutes');
+
+    const diff = diffInMinutes / 15;
+
+    return diff + 1;
+  };
 
   return (
     <Box overflow={'auto'}>
       <Grid
-        width={title.length >= 4 ? `${58 + title.length * 350}px` : '100%'}
+        width={title.length > 4 ? `${58 + title.length * 350}px` : '100%'}
         templateColumns={
-          title.length < 4
+          title.length < 5
             ? `58px repeat(${title.length}, 1fr)`
             : `58px repeat(${title.length}, 350px)`
         }
+        templateRows={`repeat(${timeSlots.length}, 1fr)`}
         {...styles.timelineGrid}
         overflow={'hidden'}
       >
         <GridItem colSpan={`${title.length + 1}`} {...styles.timelineTitleBox}>
           <Grid
             templateColumns={
-              title.length < 4
+              title.length < 5
                 ? `58px repeat(${title.length}, 1fr)`
                 : `58px repeat(${title.length}, 350px)`
             }
@@ -88,17 +91,17 @@ const TimelineVertical = ({ title, data }) => {
           </Grid>
         </GridItem>
 
-        <GridItem colSpan={1} rowSpan={36}>
-          <Grid {...styles.timeIntervalBox}>
-            <CurrentTimeLine />
-            <GridItem backgroundColor={'white'} rowSpan={2}>
-              <Flex alignContent={'center'} justifyContent={'center'}>
-                {!(moment().format('HH:mm') === '08:00') && (
-                  <Text {...styles.timeIntervalText}>08:00</Text>
-                )}
-              </Flex>
-            </GridItem>
-            {timeIntervals.map((timeIntervals) => {
+        <GridItem colSpan={1} rowSpan={timeSlots.length}>
+          <Grid
+            {...styles.timeIntervalBox}
+            templateRows={`repeat(${timeSlots.length}, 1fr)`}
+          >
+            <CurrentTimeLine
+              startHour={startHour}
+              endHour={endHour}
+              intervals={timeSlots.length}
+            />
+            {timeIntervals.map((timeIntervals, index) => {
               return (
                 <GridItem
                   backgroundColor={'white'}
@@ -106,11 +109,12 @@ const TimelineVertical = ({ title, data }) => {
                   key={`${timeIntervals}`}
                 >
                   <Flex alignContent={'center'} justifyContent={'center'}>
-                    {!(moment().format('HH:mm') === timeIntervals) && (
-                      <Text {...styles.timeIntervalText} mt="-3">
-                        {timeIntervals}
-                      </Text>
-                    )}
+                    <Text
+                      {...styles.timeIntervalText}
+                      mt={!(index === 0) && '-3'}
+                    >
+                      {timeIntervals}
+                    </Text>
                   </Flex>
                 </GridItem>
               );
@@ -118,19 +122,27 @@ const TimelineVertical = ({ title, data }) => {
           </Grid>
         </GridItem>
         {title.map((x) => {
+          const gridItems = [];
+          for (let i = 0; i < timeSlots.length; i++) {
+            gridItems.push(
+              <GridItem
+                {...styles.timelineGridBox}
+                key={`${i}timeSlot`}
+              ></GridItem>
+            );
+          }
           return (
-            <GridItem colSpan={1} rowSpan={36} key={`${x.name}-column`}>
-              <Grid {...styles.timelineColumn}>
-                {timeSlots.map((timeSlot) => {
-                  return (
-                    <GridItem
-                      {...styles.timelineGridBox}
-                      key={`${timeSlot}timeSlot`}
-                    ></GridItem>
-                  );
-                })}
+            <GridItem
+              colSpan={1}
+              rowSpan={timeSlots.length}
+              key={`${x.name}-column`}
+            >
+              <Grid
+                {...styles.timelineColumn}
+                templateRows={`repeat(${timeSlots.length}, 1fr)`}
+              >
+                {gridItems}
 
-                {/* Ovde dole napravi uslovno renderovanje gde proverava dal je to ta kolona i mapiramo kroz data */}
                 {data.map((data) => {
                   if (data.column === x.name) {
                     const difference =
@@ -142,29 +154,17 @@ const TimelineVertical = ({ title, data }) => {
                         rowStart={getRowIdentifier(data.start)}
                         rowEnd={getRowIdentifier(data.end)}
                       >
-                        {difference > 2 ? (
-                          <TimelineCard
-                            id={data.id}
-                            enabled={data.enabled}
-                            title={data.title}
-                            start={data.start}
-                            end={data.end}
-                            description={data.description}
-                            color={data.color}
-                            user={data.user}
-                          />
-                        ) : (
-                          <TimelineSmallCard
-                            id={data.id}
-                            enabled={data.enabled}
-                            title={data.title}
-                            start={data.start}
-                            end={data.end}
-                            description={data.description}
-                            color={data.color}
-                            user={data.user}
-                          />
-                        )}
+                        <TimelineCard
+                          id={data.id}
+                          type={difference > 2 ? 'big' : 'small'}
+                          enabled={data.enabled}
+                          title={data.title}
+                          start={data.start}
+                          end={data.end}
+                          description={data.description}
+                          color={data.color}
+                          user={data.user}
+                        />
                       </GridItem>
                     );
                   } else {
