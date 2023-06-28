@@ -28,7 +28,8 @@ export default function ConferenceNavbar() {
     handlePreviousDay,
     setCurrentDate,
   } = useDates(moment());
-  const [active, setActive] = useState(false);
+  const [timelineFormat, settimelineFormat] = useState(false);
+  const [timelineOrientation, setTimelineOrientation] = useState('vertical');
 
   return (
     <Flex alignItems={'center'}>
@@ -59,12 +60,25 @@ export default function ConferenceNavbar() {
       <Flex alignItems={'center'} justifyContent={'flex-end'}>
         <NavbarButtons
           setCurrentDate={setCurrentDate}
-          active={active}
-          setActive={setActive}
+          timelineFormat={timelineFormat}
+          settimelineFormat={settimelineFormat}
         />
         <Divider orientation="vertical" h={8} />
-        <ChakraIcon as={BiGridVertical} {...styles.iconGridVertical} />
-        <ChakraIcon as={BiGridHorizontal} {...styles.iconGridHorizontal} />
+        <ChakraIcon
+          as={BiGridVertical}
+          {...styles.iconGridVertical}
+          onClick={() => {
+            setTimelineOrientation('vertical');
+          }}
+        />
+        <ChakraIcon
+          as={BiGridHorizontal}
+          {...styles.iconGridHorizontal}
+          onClick={() => {
+            setTimelineOrientation('horizontal');
+          }}
+        />
+
         <Select size="sm">
           {Object.values(FloorTypes).map((type) => (
             <option value={type} key={FloorTypes.id + '-' + type}>

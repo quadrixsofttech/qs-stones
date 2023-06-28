@@ -4,12 +4,15 @@ import { useState } from 'react';
 import styles from './NavbarButtons.styles';
 import moment from 'moment';
 
-export default function NavbarButtons({ setCurrentDate,active,setActive }) {
-
+export default function NavbarButtons({
+  setCurrentDate,
+  timelineFormat,
+  settimelineFormat,
+}) {
   const [activeToday, setActiveToday] = useState(false);
 
   const handleClick = (label) => {
-    setActive(label);
+    settimelineFormat(label);
   };
 
   const handleTodayButtonClick = () => {
@@ -35,8 +38,8 @@ export default function NavbarButtons({ setCurrentDate,active,setActive }) {
             {...styles.buttonStyles}
             key={type}
             onClick={() => handleClick(type)}
-            color={active === type ? 'purple.700' : 'black'}
-            bg={active === type ? 'purple.50' : 'white'}
+            color={timelineFormat === type ? 'purple.700' : 'black'}
+            bg={timelineFormat === type ? 'purple.50' : 'white'}
           >
             {type}
           </Box>
