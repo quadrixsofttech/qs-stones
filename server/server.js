@@ -31,7 +31,5 @@ async function connect() {
   console.log('API listening on localhost:3001');
 }
 
-const PTOService = require('./services/pto/pto.service');
-// PTOService.createPTO();
 
 connect();
