@@ -1,5 +1,5 @@
 const PayedTimeOff = require('./models/PTO');
-const { differenceInCalendarDays, addDays, format } = require('date-fns');
+const moment = require('moment');
 
 const getAllPTO = async () => {
   try {
@@ -14,17 +14,17 @@ const createPTO = async ({
   type,
   status,
   userId,
-  reveiewerId,
+  reviewerId,
   dates,
   comment,
 }) => {
   try {
     const days = dates.reduce((acc, date) => {
-      const start = new Date(date.startDate);
-      const end = new Date(date.endDate);
-      const totalDays = differenceInCalendarDays(end, start) + 1;
+      const start = moment(date.startDate);
+      const end = moment(date.endDate);
+      const totalDays = end.diff(start, 'days') + 1;
       const generatedDates = Array.from({ length: totalDays }, (_, index) =>
-        format(addDays(start, index), 'yyyy-MM-dd')
+        start.clone().add(index, 'days').format('yyyy-MM-dd')
       );
       return [...acc, ...generatedDates];
     }, []);
@@ -32,7 +32,7 @@ const createPTO = async ({
       type,
       status,
       userId,
-      reveiewerId,
+      reviewerId,
       days,
       dates,
       comment,
