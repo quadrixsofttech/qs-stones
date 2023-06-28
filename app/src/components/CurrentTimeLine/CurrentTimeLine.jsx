@@ -8,7 +8,7 @@ const CurrentTimeLine = ({ startHour, endHour, intervals }) => {
   useEffect(() => {
     setTimeout(() => {
       setCurrentTime(moment());
-    }, 60000);
+    }, 30000);
   }, [currentTime]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
