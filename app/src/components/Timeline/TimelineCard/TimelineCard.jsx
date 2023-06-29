@@ -63,7 +63,7 @@ const TimelineCard = ({
           <Menu
             onOpen={() => setSettingsOpen(true)}
             onClose={() => setSettingsOpen(false)}
-            placement="bottom"
+            placement="auto"
           >
             <Flex gap="0.5">
               {type === 'small' && (
