@@ -4,10 +4,15 @@ import { Box, Flex, Grid, GridItem, Heading, Text } from '@chakra-ui/react';
 import moment from 'moment';
 import TimelineCard from '../TimelineCard/TimelineCard';
 
-const TimelineHorizontal = ({ title, data }) => {
-  var startHour = '08:00';
-  var endHour = '17:00';
-
+const TimelineHorizontal = ({
+  title,
+  data,
+  startHour,
+  endHour,
+  onOpen,
+  onEdit,
+  onDelete,
+}) => {
   const timeSlots = useMemo(() => {
     const startTime = moment(startHour, 'HH:mm');
     const endTime = moment(endHour, 'HH:mm');
@@ -130,6 +135,9 @@ const TimelineHorizontal = ({ title, data }) => {
                         color={data.color}
                         user={data.user}
                         orientation="horizontal"
+                        onEdit={onEdit}
+                        onDelete={onDelete}
+                        onOpen={onOpen}
                       />
                     </GridItem>
                   );

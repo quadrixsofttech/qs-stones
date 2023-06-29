@@ -1,7 +1,7 @@
 import DashboardLayout from '../../layout/DashboardLayout/DashboardLayout';
 import ConferenceNavbar from '../../components/ConferenceNavbar/ConferenceNavbar';
 import React from 'react';
-import TimelineVertical from '../../components/Timeline/TimelineVertical/TimelineVertical';
+import Timeline from '../../components/Timeline/Timeline';
 
 const Conference = () => {
   const onEdit = (id) => {
@@ -13,7 +13,7 @@ const Conference = () => {
   const onOpen = (id) => {
     console.log('Open' + id);
   };
-  const Timeline = [
+  const Label = [
     {
       name: 'conference-room-1',
       number: '01',
@@ -100,8 +100,9 @@ const Conference = () => {
   return (
     <DashboardLayout Padding="0">
       <ConferenceNavbar />
-      <TimelineVertical
-        title={Timeline}
+      <Timeline
+        type="horizontal"
+        title={Label}
         data={data}
         startHour="08:00"
         endHour="17:00"
