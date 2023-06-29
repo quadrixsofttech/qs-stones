@@ -44,6 +44,11 @@ const timelineCard = {
   width: 'calc(100% - 32px)',
   ml: '4',
 };
+const underlineNumber = {
+  as: 'span',
+  borderBottom: '2px',
+  borderColor: 'gray.700',
+};
 const styles = {
   timelineGrid,
   timelineTitleBox,
@@ -54,6 +59,7 @@ const styles = {
   timelineColumn,
   timelineGridBox,
   timelineCard,
+  underlineNumber,
 };
 
 export default styles;

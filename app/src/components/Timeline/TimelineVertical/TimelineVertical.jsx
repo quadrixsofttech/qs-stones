@@ -5,38 +5,34 @@ import CurrentTimeLine from '../../CurrentTimeLine/CurrentTimeLine';
 import moment from 'moment';
 import { useMemo } from 'react';
 
-const TimelineVertical = ({ title, data }) => {
-  var startHour = '08:00';
-  var endHour = '17:00';
-
+const TimelineVertical = ({
+  title,
+  data,
+  startHour,
+  endHour,
+  onOpen,
+  onEdit,
+  onDelete,
+}) => {
   const timeIntervals = useMemo(() => {
     const startTime = moment(startHour, 'HH:mm');
     const endTime = moment(endHour, 'HH:mm');
     const TimeIntervals = [];
 
-    while (startTime.isSameOrBefore(endTime)) {
+    while (startTime.isBefore(endTime)) {
       const formattedTime = startTime.format('HH:mm');
       TimeIntervals.push(formattedTime);
       startTime.add(30, 'minutes');
     }
-    TimeIntervals.pop();
 
     return TimeIntervals;
   }, [startHour, endHour]);
 
-  const timeSlots = useMemo(() => {
+  const timeSlotCount = useMemo(() => {
     const startTime = moment(startHour, 'HH:mm');
     const endTime = moment(endHour, 'HH:mm');
 
-    const TimeSlots = [];
-
-    while (startTime.isSameOrBefore(endTime)) {
-      TimeSlots.push(startTime.format('HH:mm'));
-      startTime.add(15, 'minutes');
-    }
-
-    TimeSlots.pop();
-    return TimeSlots;
+    return endTime.diff(startTime, 'minutes') / 15;
   }, [startHour, endHour]);
 
   const getRowIdentifier = (timeSlot) => {
@@ -58,7 +54,7 @@ const TimelineVertical = ({ title, data }) => {
             ? `58px repeat(${title.length}, 1fr)`
             : `58px repeat(${title.length}, 350px)`
         }
-        templateRows={`repeat(${timeSlots.length}, 1fr)`}
+        templateRows={`repeat(${timeSlotCount}, 1fr)`}
         {...styles.timelineGrid}
         overflow={'hidden'}
       >
@@ -76,13 +72,7 @@ const TimelineVertical = ({ title, data }) => {
               return (
                 <GridItem pt="5" colSpan={1} key={`${headline.label}-headline`}>
                   <Heading {...styles.label}>
-                    <Text
-                      as="span"
-                      borderBottom={'2px'}
-                      borderColor={'gray.700'}
-                    >
-                      {headline.number}
-                    </Text>{' '}
+                    <Text {...styles.underlineNumber}>{headline.number}</Text>{' '}
                     {headline.label}
                   </Heading>
                 </GridItem>
@@ -91,15 +81,15 @@ const TimelineVertical = ({ title, data }) => {
           </Grid>
         </GridItem>
 
-        <GridItem colSpan={1} rowSpan={timeSlots.length}>
+        <GridItem colSpan={1} rowSpan={timeSlotCount}>
           <Grid
             {...styles.timeIntervalBox}
-            templateRows={`repeat(${timeSlots.length}, 1fr)`}
+            templateRows={`repeat(${timeSlotCount}, 1fr)`}
           >
             <CurrentTimeLine
               startHour={startHour}
               endHour={endHour}
-              intervals={timeSlots.length}
+              intervals={timeSlotCount}
             />
             {timeIntervals.map((timeIntervals, index) => {
               return (
@@ -123,7 +113,7 @@ const TimelineVertical = ({ title, data }) => {
         </GridItem>
         {title.map((x) => {
           const gridItems = [];
-          for (let i = 0; i < timeSlots.length; i++) {
+          for (let i = 0; i < timeSlotCount; i++) {
             gridItems.push(
               <GridItem
                 {...styles.timelineGridBox}
@@ -134,12 +124,12 @@ const TimelineVertical = ({ title, data }) => {
           return (
             <GridItem
               colSpan={1}
-              rowSpan={timeSlots.length}
+              rowSpan={timeSlotCount}
               key={`${x.name}-column`}
             >
               <Grid
                 {...styles.timelineColumn}
-                templateRows={`repeat(${timeSlots.length}, 1fr)`}
+                templateRows={`repeat(${timeSlotCount}, 1fr)`}
               >
                 {gridItems}
 
@@ -164,6 +154,9 @@ const TimelineVertical = ({ title, data }) => {
                           description={data.description}
                           color={data.color}
                           user={data.user}
+                          onEdit={onEdit}
+                          onDelete={onDelete}
+                          onOpen={onOpen}
                         />
                       </GridItem>
                     );

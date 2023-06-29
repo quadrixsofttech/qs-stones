@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Box,
   Flex,
   Heading,
   IconButton,
@@ -24,17 +25,13 @@ const TimelineCard = ({
   color,
   user,
   type,
-  orientation = 'vertical',
+  orientation,
+  onEdit,
+  onDelete,
+  onOpen,
 }) => {
   const [cardHover, setCardHover] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
-
-  const onEdit = () => {
-    alert('Edit');
-  };
-  const onDelete = () => {
-    alert('Delete');
-  };
 
   return (
     <Flex
@@ -45,6 +42,7 @@ const TimelineCard = ({
       padding={orientation === 'horizontal' ? 1 : 4}
       paddingLeft={4}
       height={orientation === 'horizontal' ? '96%' : '100%'}
+      onClick={() => onOpen(id)}
       sx={
         (type === 'small' && {
           justifyContent: 'space-between',
@@ -58,7 +56,13 @@ const TimelineCard = ({
       borderColor={enabled ? color : 'gray'}
     >
       {(cardHover || settingsOpen) && (
-        <Flex {...styles.settingsButtonBox} className="settings">
+        <Box
+          {...styles.settingsButtonBox}
+          className="settings"
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
           <Menu
             onOpen={() => setSettingsOpen(true)}
             onClose={() => setSettingsOpen(false)}
@@ -80,17 +84,17 @@ const TimelineCard = ({
             </Flex>
 
             <MenuList minWidth="120px">
-              <MenuItem onClick={onEdit}>
+              <MenuItem onClick={() => onEdit(id)}>
                 <BiEditAlt />
                 Edit
               </MenuItem>
-              <MenuItem onClick={onDelete}>
+              <MenuItem onClick={() => onDelete(id)}>
                 <BiTrash />
                 Delete
               </MenuItem>
             </MenuList>
           </Menu>
-        </Flex>
+        </Box>
       )}
       {type === 'big' ? (
         <>
