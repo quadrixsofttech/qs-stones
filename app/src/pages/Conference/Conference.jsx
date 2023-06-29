@@ -4,6 +4,15 @@ import React from 'react';
 import TimelineVertical from '../../components/TimelineVertical/TimelineVertical';
 
 const Conference = () => {
+  const onEdit = (id) => {
+    console.log('Edit' + id);
+  };
+  const onDelete = (id) => {
+    console.log('Delete' + id);
+  };
+  const onOpen = (id) => {
+    console.log('Open' + id);
+  };
   const Timeline = [
     {
       name: 'conference-room-1',
@@ -91,7 +100,15 @@ const Conference = () => {
   return (
     <DashboardLayout Padding="0">
       <ConferenceNavbar />
-      <TimelineVertical title={Timeline} data={data} />
+      <TimelineVertical
+        title={Timeline}
+        data={data}
+        startHour="08:00"
+        endHour="17:00"
+        onOpen={onOpen}
+        onEdit={onEdit}
+        onDelete={onDelete}
+      />
     </DashboardLayout>
   );
 };

@@ -27,6 +27,7 @@ const TimelineCard = ({
   type,
   onEdit,
   onDelete,
+  onOpen,
 }) => {
   const [cardHover, setCardHover] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -36,6 +37,7 @@ const TimelineCard = ({
       {...styles.timelineCard}
       onMouseEnter={() => enabled && setCardHover(true)}
       onMouseLeave={() => enabled && setCardHover(false)}
+      onClick={() => onOpen(id)}
       sx={
         (type === 'small' && {
           justifyContent: 'space-between',
@@ -49,7 +51,13 @@ const TimelineCard = ({
       borderColor={enabled ? color : 'gray'}
     >
       {(cardHover || settingsOpen) && (
-        <Box {...styles.settingsButtonBox} className="settings">
+        <Box
+          {...styles.settingsButtonBox}
+          className="settings"
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
           <Menu
             onOpen={() => setSettingsOpen(true)}
             onClose={() => setSettingsOpen(false)}
@@ -68,11 +76,11 @@ const TimelineCard = ({
               />
             </Tooltip>
             <MenuList minWidth="120px">
-              <MenuItem onClick={onEdit}>
+              <MenuItem onClick={() => onEdit(id)}>
                 <BiEditAlt />
                 Edit
               </MenuItem>
-              <MenuItem onClick={onDelete}>
+              <MenuItem onClick={() => onDelete(id)}>
                 <BiTrash />
                 Delete
               </MenuItem>
