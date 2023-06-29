@@ -1,8 +1,9 @@
 import { useMemo } from 'react';
-// import styles from './TimelineHorizontal.styles';
+import styles from './TimelineHorizontal.styles';
 import { Box, Flex, Grid, GridItem, Heading, Text } from '@chakra-ui/react';
 import moment from 'moment';
 import TimelineCard from '../TimelineCard/TimelineCard';
+import CurrentTimeLine from '../../CurrentTimeLine/CurrentTimeLine';
 
 const TimelineHorizontal = ({
   title,
@@ -38,12 +39,13 @@ const TimelineHorizontal = ({
     return diff + 2;
   };
   return (
-    <Box
-      overflow={'auto'}
-      backgroundColor="gray.200"
-      borderBottom="1px"
-      borderColor="gray.200"
-    >
+    <Box {...styles.TimelineHorizontal}>
+      <CurrentTimeLine
+        startHour={startHour}
+        endHour={endHour}
+        intervals={timeSlots.length}
+        orientation="vertical"
+      />
       <Grid gap="1px">
         <Grid
           templateColumns={`250px repeat(${timeSlots.length},176px)`}
@@ -51,23 +53,14 @@ const TimelineHorizontal = ({
         >
           <GridItem height={'44px'} backgroundColor={'white'}>
             <Flex p="3.5" pl="2">
-              <Heading color="gray.700" fontSize={'xs'} fontWeight={'normal'}>
-                Conference Rooms
-              </Heading>
+              <Heading {...styles.conferenceHeader}>Conference Rooms</Heading>
             </Flex>
           </GridItem>
           {timeSlots.map((timeSlot) => {
             return (
-              <GridItem
-                key={`key-${timeSlot}`}
-                height="44px"
-                width="176px"
-                backgroundColor={'white'}
-              >
+              <GridItem key={`key-${timeSlot}`} {...styles.timeSlotBox}>
                 <Flex p="2.5" pl="2">
-                  <Text color="gray.700" fontSize={'xs'} fontWeight={'normal'}>
-                    {timeSlot}
-                  </Text>
+                  <Text {...styles.timeSlot}>{timeSlot}</Text>
                 </Flex>
               </GridItem>
             );
@@ -83,19 +76,8 @@ const TimelineHorizontal = ({
             >
               <GridItem height={'52px'} backgroundColor={'white'}>
                 <Flex p="4" pl="2">
-                  <Heading
-                    color="gray.700"
-                    fontSize="sm"
-                    fontWeight={'semibold'}
-                  >
-                    <Heading
-                      as="span"
-                      borderBottom={'1px'}
-                      borderColor={'gray.700'}
-                      fontSize={'sm'}
-                      fontWeight={'semibold'}
-                      mr="1"
-                    >
+                  <Heading {...styles.headingConference}>
+                    <Heading {...styles.underlineHeading} as="span">
                       {title.number}
                     </Heading>
                     {title.label}
@@ -117,11 +99,9 @@ const TimelineHorizontal = ({
                 if (data.column === title.name) {
                   return (
                     <GridItem
-                      position="absolute"
+                      {...styles.horizontalCard}
                       gridColumnStart={getColumnIdentifier(data.start)}
                       gridColumnEnd={getColumnIdentifier(data.end)}
-                      width={'100%'}
-                      height={'52px'}
                       key={`key-${data.start}- ${index}index`}
                     >
                       <TimelineCard

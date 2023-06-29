@@ -24,11 +24,17 @@ const settingsButton = {
   'aria-label': 'Options',
   borderRadius: '50px',
 };
+const description = {
+  noOfLines: '2',
+  fontSize: 'xs',
+  color: 'gray.700',
+};
 const styles = {
   timelineCard,
   heading,
   settingsButtonBox,
   settingsButton,
+  description,
 };
 
 export default styles;
