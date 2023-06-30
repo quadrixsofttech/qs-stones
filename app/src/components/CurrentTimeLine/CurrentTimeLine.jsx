@@ -11,7 +11,6 @@ const CurrentTimeLine = ({ startHour, endHour, intervals }) => {
     }, 30000);
   }, [currentTime]);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const position = useMemo(() => {
     const now = currentTime.hours() * 60 + currentTime.minutes();
     const start = moment(startHour, 'HH:mm').hours() * 60;
