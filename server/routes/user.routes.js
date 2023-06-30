@@ -1,11 +1,11 @@
 const express = require('express');
 const { requireAuth } = require('../middleware/user');
-const { getUser, updateUserRole } = require('../controllers/user.controller');
+const UserController = require('../controllers/user.controller');
 
 const router = express.Router();
 
-router.get('/users', requireAuth, getUser);
+router.get('/users', requireAuth, UserController.getUsers);
 
-router.patch('/user-role', updateUserRole);
+router.patch('/user-role', UserController.updateRole);
 
 module.exports = router;
