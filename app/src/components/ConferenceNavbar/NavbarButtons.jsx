@@ -7,12 +7,12 @@ import moment from 'moment';
 export default function NavbarButtons({
   setCurrentDate,
   timelineFormat,
-  settimelineFormat,
+  setTimelineFormat,
 }) {
   const [activeToday, setActiveToday] = useState(false);
 
   const handleClick = (label) => {
-    settimelineFormat(label);
+    setTimelineFormat(label);
   };
 
   const handleTodayButtonClick = () => {

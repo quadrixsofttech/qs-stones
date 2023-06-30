@@ -28,7 +28,7 @@ export default function ConferenceNavbar() {
     handlePreviousDay,
     setCurrentDate,
   } = useDates(moment());
-  const [timelineFormat, settimelineFormat] = useState(false);
+  const [timelineFormat, setTimelineFormat] = useState(false);
   const [timelineOrientation, setTimelineOrientation] = useState('vertical');
 
   return (
@@ -61,7 +61,7 @@ export default function ConferenceNavbar() {
         <NavbarButtons
           setCurrentDate={setCurrentDate}
           timelineFormat={timelineFormat}
-          settimelineFormat={settimelineFormat}
+          setTimelineFormat={setTimelineFormat}
         />
         <Divider orientation="vertical" h={8} />
         <ChakraIcon
