@@ -22,9 +22,12 @@ const CurrentTimeLine = ({
     const end = moment(endHour, 'HH:mm').hours() * 60;
     const totalMinutes = end - start;
 
-    const height = intervals * 58 - intervals;
+    const heightBoxVertical = 58;
+    const widthBoxHorizontal = 176;
 
-    const width = intervals * 176 + intervals;
+    const height = intervals * heightBoxVertical - intervals;
+
+    const width = intervals * widthBoxHorizontal + intervals;
 
     if (now < start || now > end) {
       return false;
