@@ -34,9 +34,7 @@ const TimelineHorizontal = ({
     const timeSlotFormatted = moment(timeSlot, 'HH:mm');
     const diffInMinutes = timeSlotFormatted.diff(startTime, 'minutes');
 
-    const diff = diffInMinutes / 15;
-
-    return diff + 2;
+    return diffInMinutes / 15 + 2;
   };
   return (
     <Box {...styles.TimelineHorizontal}>
@@ -88,9 +86,7 @@ const TimelineHorizontal = ({
               {timeSlots.map((timeSlot) => {
                 return (
                   <GridItem
-                    height={'52px'}
-                    width="176px"
-                    backgroundColor={'gray.50'}
+                    {...styles.gridBox}
                     key={`key-${timeSlot}-box`}
                   ></GridItem>
                 );

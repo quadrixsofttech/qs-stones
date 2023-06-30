@@ -42,6 +42,11 @@ const horizontalCard = {
   position: 'absolute',
   zIndex: '11',
 };
+const gridBox = {
+  height: '52px',
+  width: '176px',
+  backgroundColor: 'gray.50',
+};
 const styles = {
   TimelineHorizontal,
   conferenceHeader,
@@ -50,5 +55,6 @@ const styles = {
   headingConference,
   underlineHeading,
   horizontalCard,
+  gridBox,
 };
 export default styles;
