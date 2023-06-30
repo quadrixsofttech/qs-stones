@@ -19,9 +19,9 @@ const createPTO = async ({
   comment,
 }) => {
   try {
-    const days = dates.reduce((acc, date) => {
-      const start = moment(date.startDate);
-      const end = moment(date.endDate);
+    const days = dates.reduce((acc, [startDate,endDate]) => {
+      const start = moment(startDate);
+      const end = moment(endDate);
       const totalDays = end.diff(start, 'days') + 1;
       const generatedDates = Array.from({ length: totalDays }, (_, index) =>
         start.clone().add(index, 'days').format('YYYY-MM-DD')
