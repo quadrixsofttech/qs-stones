@@ -40,9 +40,7 @@ const TimelineVertical = ({
     const timeSlotFormatted = moment(timeSlot, 'HH:mm');
     const diffInMinutes = timeSlotFormatted.diff(startTime, 'minutes');
 
-    const diff = diffInMinutes / 15;
-
-    return diff + 1;
+    return diffInMinutes / 15 + 1;
   };
 
   return (
