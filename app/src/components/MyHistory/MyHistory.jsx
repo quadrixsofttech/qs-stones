@@ -72,8 +72,8 @@ const MyHistory = () => {
                 <MyHistoryStats
                   label="The total number of employees working today"
                   helpText="% more than yesterday"
-                  working={employees.workingToday}
-                  percent={employees.percentIncrease}
+                  working={ptoHistory.workingToday}
+                  percent={ptoHistory.percentIncrease}
                   arrow={'increase'}
                 />
                 <Divider />
@@ -81,8 +81,8 @@ const MyHistory = () => {
                   label="The total number of employees working remotly today or on
                   vacation"
                   helpText="% less than yesterday"
-                  working={employees.awayOrRemote}
-                  percent={employees.percentDecrease}
+                  working={ptoHistory.awayOrRemote}
+                  percent={ptoHistory.percentDecrease}
                   arrow={'decrease'}
                 />
               </Flex>

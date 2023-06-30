@@ -1,4 +1,4 @@
-const User = require('../services/user/models/User');
+const User = require('../models/user.model');
 const jwtDecode = require('jwt-decode');
 
 const { createToken, hashPassword, verifyPassword } = require('../util');
