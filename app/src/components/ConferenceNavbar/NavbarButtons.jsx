@@ -26,7 +26,7 @@ export default function NavbarButtons({
       <Box
         {...styles.buttonStyles}
         onClick={handleTodayButtonClick}
-        color={activeToday ? 'purple.700' : 'black'}
+        color={activeToday ? 'purple.700' : 'gray.700'}
         bg={activeToday ? 'purple.50' : 'white'}
       >
         {TodayButtonType.TODAY}
@@ -38,7 +38,7 @@ export default function NavbarButtons({
             {...styles.buttonStyles}
             key={type}
             onClick={() => handleClick(type)}
-            color={timelineFormat === type ? 'purple.700' : 'black'}
+            color={timelineFormat === type ? 'purple.700' : 'gray.700'}
             bg={timelineFormat === type ? 'purple.50' : 'white'}
           >
             {type}
