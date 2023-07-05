@@ -10,12 +10,12 @@ const Calendar = () => {
   const [date, setDate] = useState(new Date());
   const [showSaturday, setShowSaturday] = useState(false);
 
-  const [type, setType] = useState('Pay Time Off');
+  const [type, setType] = useState('Vacation');
   const { data, ptoLoading, fetchPTO, remoteLoading, fetchRemote } =
     useEmployees();
 
   useEffect(() => {
-    type === 'Pay Time Off' ? fetchPTO() : fetchRemote();
+    type === 'Vacation' ? fetchPTO() : fetchRemote();
   }, [type, fetchPTO, fetchRemote]);
 
   if (ptoLoading || remoteLoading) {
@@ -116,7 +116,7 @@ const Calendar = () => {
           onChange={(e) => setType(e.target.value)}
           value={type}
         >
-          <option value="Pay Time Off">Pay Time Off</option>
+          <option value="Vacation">Vacation</option>
           <option value="Remote">Remote</option>
         </Select>
       </Flex>
