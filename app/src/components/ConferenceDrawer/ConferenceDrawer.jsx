@@ -63,6 +63,7 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
             <DatePicker className="custom-calendar" render={<InputIcon />} />
           </DrawerBody>
 
+          <Divider />
           <DrawerFooter>
             <Button variant="outline" mr={3} onClick={onClose}>
               Cancel
