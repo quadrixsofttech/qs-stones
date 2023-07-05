@@ -20,14 +20,15 @@ const ConferenceOverview = () => {
       return e.target.value;
     });
   };
+
   const conferenceRooms =
     floor === 'Upper Floor'
       ? data.filter((room) => room.floor === 'Upper Floor')
       : data.filter((room) => room.floor === 'Lower Floor');
 
   return (
-    <Flex flexDir={'column'}>
-      <Flex justifyContent={'flex-end'}>
+    <Flex flexDir={'column'} position={'relative'}>
+      <Flex justifyContent={'flex-end'} mt="4">
         <Select
           {...styles.selectFloor}
           onChange={handleFloorChange}
@@ -45,7 +46,7 @@ const ConferenceOverview = () => {
       <Grid {...styles.conferenceRoomGrid}>
         {conferenceRooms.map((room) => {
           return (
-            <GridItem>
+            <GridItem key={room.roomNumber}>
               <ConferenceRoom
                 key={room.roomNumber}
                 roomNumber={room.roomNumber}
@@ -53,6 +54,7 @@ const ConferenceOverview = () => {
                 capacity={room.capacity}
                 img={room.img}
                 equipment={room.equipment}
+                floor={room.floor}
               />
             </GridItem>
           );

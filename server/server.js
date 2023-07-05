@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 const publicRouter = require('./routes/public.routes');
 
 const app = express();
+const port = process.env.PORT || 3001;
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -26,8 +27,8 @@ async function connect() {
   } catch (err) {
     console.log('Mongoose error', err);
   }
-  app.listen(3001);
-  console.log('API listening on localhost:3001');
+  app.listen(port);
+  console.log(`API listening on localhost:${port}`);
 }
 
 connect();
