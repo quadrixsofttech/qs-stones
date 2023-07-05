@@ -29,6 +29,15 @@ const getAllPTO = async () => {
   }
 };
 
+const getPTO = async (type) => {
+  try {
+    const pto = await PayedTimeOff.find({ type: type }).lean();
+    return pto;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
 const createPTO = async ({
   type,
   status,
@@ -92,4 +101,4 @@ const deletePTO = async (id) => {
   }
 };
 
-module.exports = { getAllPTO, createPTO, updatePTO, deletePTO };
+module.exports = { getAllPTO, createPTO, updatePTO, deletePTO, getPTO };
