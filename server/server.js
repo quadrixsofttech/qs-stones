@@ -15,20 +15,6 @@ app.use(cookieParser());
 
 app.use('/api/v1', publicRouter);
 
-const bam = require('./services/pto/pto.service');
-
-const newPTO = {
-  type: 'vacation',
-  status: 'pending',
-  userId: '6446881210fe681e89d9d7c4',
-  reviewerId: '6446881210fe681e89d9d7c4',
-  dates: [
-    ['2023-07-01', '2023-07-05'],
-    ['2023-07-10', '2023-07-12'],
-  ],
-  comment: 'Taking a vacation',
-};
-
 async function connect() {
   try {
     mongoose.Promise = global.Promise;
@@ -37,7 +23,6 @@ async function connect() {
       useUnifiedTopology: true,
       useFindAndModify: false,
     });
-    await bam.createPTO(newPTO);
   } catch (err) {
     console.log('Mongoose error', err);
   }
