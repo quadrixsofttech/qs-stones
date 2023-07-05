@@ -16,11 +16,13 @@ import {
   Switch,
   Text,
   Input,
+  Textarea,
 } from '@chakra-ui/react';
 import FloorTypes from '../../constants/FloorTypes';
 import ConferenceRooms from '../../constants/ConferenceRooms';
-import GenerateDayOfTheWeek from './GenerateDayOfTheWeek';
+import GenerateDayOfTheWeek from './GenerateDayOfTheWeek/GenerateDayOfTheWeek';
 import RadioButtonGroup from './RadioButtonGroup';
+import GenerateMarkerColor from './GenerateMarkerColor/GenerateMarkerColor';
 
 export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
   return (
@@ -40,8 +42,8 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
             <Box p={6}>
               <Box mb={2}>Choose a floor</Box>
               <Select size="md">
-                {Object.values(FloorTypes).map((type) => (
-                  <option placeholder={type} key={FloorTypes.id + '-' + type}>
+                {Object.values(FloorTypes).map((type, index) => (
+                  <option placeholder={type} key={index}>
                     {type}
                   </option>
                 ))}
@@ -50,11 +52,8 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
                 Choose a conference room
               </Box>
               <Select size="md">
-                {Object.values(ConferenceRooms).map((type) => (
-                  <option
-                    placeholder={type}
-                    key={ConferenceRooms.id + '-' + type}
-                  >
+                {Object.values(ConferenceRooms).map((type, index) => (
+                  <option placeholder={type} key={index}>
                     {type}
                   </option>
                 ))}
@@ -96,6 +95,24 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
                 s_option="After"
                 t_option="On specific date"
               />
+            </Box>
+            <Divider />
+            <Box p={6}>
+              <Text fontSize="md" mb={1} fontWeight={'400'}>
+                Title
+              </Text>
+              <Input placeholder="Please enter a title..." />
+              <Text fontSize="md" mb={1} fontWeight={'400'} mt={3}>
+                Description
+              </Text>
+              <Textarea
+                placeholder={'Please enter a description...'}
+                h={'20'}
+              />
+              <Text mt={3} fontSize="md">
+                Choose marker color
+              </Text>
+              <GenerateMarkerColor />
             </Box>
           </DrawerBody>
 
