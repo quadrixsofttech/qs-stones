@@ -1,4 +1,5 @@
 const InventoryService = require('../services/inventory/inventory.service');
+const { StatusCodes } = require('http-status-codes');
 
 const createItem = async (req, res) => {
   try {
@@ -10,7 +11,7 @@ const createItem = async (req, res) => {
     );
     return res.send(createdItem);
   } catch (err) {
-    return res.status(400).json({
+    return res.status(StatusCodes.BAD_REQUEST).json({
       message: 'There was a problem creating the item',
     });
   }
@@ -22,7 +23,7 @@ const getItem = async (req, res) => {
     const item = await InventoryService.getItemForUser(userId);
     return res.send(item);
   } catch (err) {
-    return res.status(400).json({
+    return res.status(StatusCodes.BAD_REQUEST).json({
       message: 'There was a problem getting the item',
     });
   }
@@ -38,7 +39,7 @@ const deleteItem = async (req, res) => {
     );
     return res.send(deletedItem);
   } catch (err) {
-    return res.status(400).json({
+    return res.status(StatusCodes.BAD_REQUEST).json({
       message: 'There was a problem deleting the item',
     });
   }
