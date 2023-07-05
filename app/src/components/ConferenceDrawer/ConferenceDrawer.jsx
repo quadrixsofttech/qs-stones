@@ -78,7 +78,11 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
             <Divider />
             <Box p={6}>
               <FormControl display="flex" alignItems="center">
-                <Switch id="reservation" colorScheme="purple" />
+                <Switch
+                  htmlFor="reservation"
+                  colorScheme="purple"
+                  id="isChecked"
+                />
                 <FormLabel htmlFor="reservation" mb="0" ml={3}>
                   Repeat reservation
                 </FormLabel>
