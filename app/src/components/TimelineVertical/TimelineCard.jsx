@@ -27,7 +27,7 @@ const TimelineCard = ({
   type,
   onEdit,
   onDelete,
-  onOpen,
+  onOpenTimeline,
 }) => {
   const [cardHover, setCardHover] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -37,7 +37,7 @@ const TimelineCard = ({
       {...styles.timelineCard}
       onMouseEnter={() => enabled && setCardHover(true)}
       onMouseLeave={() => enabled && setCardHover(false)}
-      onClick={() => onOpen(id)}
+      onClick={() => onOpenTimeline(id)}
       sx={
         (type === 'small' && {
           justifyContent: 'space-between',

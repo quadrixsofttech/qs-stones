@@ -2,6 +2,9 @@ import DashboardLayout from '../../layout/DashboardLayout/DashboardLayout';
 import ConferenceNavbar from '../../components/ConferenceNavbar/ConferenceNavbar';
 import React from 'react';
 import TimelineVertical from '../../components/TimelineVertical/TimelineVertical';
+import { Flex, useDisclosure } from '@chakra-ui/react';
+import styles from './Conference.styles';
+import ConferenceDrawer from './../../components/ConferenceDrawer/ConferenceDrawer';
 
 const Conference = () => {
   const onEdit = (id) => {
@@ -10,7 +13,7 @@ const Conference = () => {
   const onDelete = (id) => {
     console.log('Delete' + id);
   };
-  const onOpen = (id) => {
+  const onOpenTimeline = (id) => {
     console.log('Open' + id);
   };
   const Timeline = [
@@ -97,6 +100,10 @@ const Conference = () => {
       },
     },
   ];
+
+  const btnRef = React.useRef();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <DashboardLayout Padding="0">
       <ConferenceNavbar />
@@ -105,10 +112,14 @@ const Conference = () => {
         data={data}
         startHour="08:00"
         endHour="17:00"
-        onOpen={onOpen}
+        onOpenTimeline={onOpenTimeline}
         onEdit={onEdit}
         onDelete={onDelete}
       />
+      <Flex {...styles.buttonModal} ref={btnRef} onClick={onOpen}>
+        <Flex mb={'1'}>+</Flex>
+        <ConferenceDrawer btnRef={btnRef} isOpen={isOpen} onClose={onClose} />
+      </Flex>
     </DashboardLayout>
   );
 };
