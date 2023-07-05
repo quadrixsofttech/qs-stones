@@ -1,4 +1,5 @@
 const User = require('../services/user/models/User');
+const { StatusCodes } = require('http-status-codes');
 
 const getBio = async (req, res) => {
   try {
@@ -13,7 +14,7 @@ const getBio = async (req, res) => {
       bio: user.bio,
     });
   } catch (err) {
-    return res.status(400).json({
+    return res.status(StatusCodes.BAD_REQUEST).json({
       message: 'There was a problem updating your bio',
     });
   }
@@ -40,7 +41,7 @@ const updateBio = async (req, res) => {
       bio: updatedUser.bio,
     });
   } catch (err) {
-    return res.status(400).json({
+    return res.status(StatusCodes.BAD_REQUEST).json({
       message: 'There was a problem updating your bio',
     });
   }

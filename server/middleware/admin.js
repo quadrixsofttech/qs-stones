@@ -1,9 +1,12 @@
 const { requireAuth } = require('./user');
+const { StatusCodes } = require('http-status-codes');
 
 const requireAdmin = (req, res, next) => {
   const { role } = req.user;
   if (role !== 'admin') {
-    return res.status(401).json({ message: 'Insufficient role' });
+    return res
+      .status(StatusCodes.UNAUTHORIZED)
+      .json({ message: 'Insufficient role' });
   }
   next();
 };
