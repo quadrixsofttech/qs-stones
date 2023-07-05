@@ -32,12 +32,12 @@ const newPTO = {
 async function connect() {
   try {
     mongoose.Promise = global.Promise;
-    await bam.createPTO(newPTO);
     await mongoose.connect(process.env.ATLAS_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useFindAndModify: false,
     });
+    await bam.createPTO(newPTO);
   } catch (err) {
     console.log('Mongoose error', err);
   }

@@ -1,6 +1,24 @@
 const PayedTimeOff = require('./models/PTO');
-const fs = require('fs');
 const moment = require('moment');
+
+const holidays = [
+  '2023-01-01',
+  '2023-01-02',
+  '2023-01-06',
+  '2023-02-15',
+  '2023-04-07',
+  '2023-04-14',
+  '2023-05-01',
+  '2023-05-02',
+  '2023-05-09',
+  '2023-05-25',
+  '2023-06-15',
+  '2023-06-24',
+  '2023-11-11',
+  '2023-12-25',
+  '2023-12-26',
+];
+const weekendDays = [6, 0];
 
 const getAllPTO = async () => {
   try {
@@ -20,9 +38,6 @@ const createPTO = async ({
   comment,
 }) => {
   try {
-    const holidaysData = fs.readFileSync('./holidays.json');
-    const { holidays, weekendDays } = JSON.parse(holidaysData);
-
     const days = dates.reduce((acc, [startDate, endDate]) => {
       const start = moment(startDate);
       const end = moment(endDate);
@@ -55,7 +70,7 @@ const createPTO = async ({
   }
 };
 
-const updatePTO = async (id) => {
+const updatePTO = async (id, updates) => {
   try {
     const pto = await PayedTimeOff.findByIdAndUpdate(
       id,
