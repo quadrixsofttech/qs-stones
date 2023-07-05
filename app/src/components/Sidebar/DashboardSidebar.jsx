@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Flex, Text } from '@chakra-ui/react';
 import { NavLink } from 'react-router-dom';
-import { BiSwim, BiMicrophone, BiDish } from 'react-icons/bi';
+import { BiSwim, BiDish, BiChalkboard } from 'react-icons/bi';
 
 import styles from './DashboardSidebar.styles';
 import QuadrixSoftLogo from '../QuadrixSoftLogo/QuadrixSoftLogo';
@@ -18,7 +18,7 @@ const DashboardSidebar = () => {
           <Text>PTO</Text>
         </Flex>
         <Flex {...styles.sideBarButton} as={NavLink} to="/conference">
-          <BiMicrophone size={20} />
+          <BiChalkboard size={20} />
           <Text>Conference</Text>
         </Flex>
         <Flex {...styles.sideBarButton} as={NavLink} to="/account">
