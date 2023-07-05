@@ -1,5 +1,5 @@
-const { StatusCodes } = require('http-status-codes');
 const InventoryService = require('../services/inventory/inventory.service');
+const { StatusCodes } = require('http-status-codes');
 
 const createItem = async (req, res) => {
   try {

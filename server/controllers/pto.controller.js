@@ -1,4 +1,5 @@
 const PtoService = require('../services/pto/pto.service');
+const { StatusCodes } = require('http-status-codes');
 
 const createPaidTimeOff = async (req, res) => {
   try {
@@ -15,7 +16,9 @@ const createPaidTimeOff = async (req, res) => {
 
     res.send(pto);
   } catch (err) {
-    res.status(500).json({ success: false, message: err.message });
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ success: false, message: err.message });
   }
 };
 
