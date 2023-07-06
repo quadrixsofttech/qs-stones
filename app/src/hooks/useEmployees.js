@@ -5,48 +5,29 @@ import { useState } from 'react';
 const useEmployees = () => {
   const [data, setData] = useState();
 
-  const getPTO = async () => {
-    const { data } = await axios.get(
-      'https://645ca939250a246ae30a5bb8.mockapi.io/employees'
-    );
-    const filteredData = data.filter((x) => x.off === 'Pay Time Off');
-    return filteredData;
+  const getPTO = async (type) => {
+    const { data } = await axios.get(`/api/v1/paid-time-off/${type}`);
+    //setData(data);
+    return data;
   };
 
-  const getRemote = async () => {
-    const { data } = await axios.get(
-      'https://645ca939250a246ae30a5bb8.mockapi.io/employees'
-    );
-    const filteredData = data.filter((x) => x.off === 'Remote');
-    return filteredData;
-  };
-
-  const {
-    isLoading: ptoLoading,
-    error: ptoError,
-    refetch: fetchPTO,
-  } = useQuery('employeesPTO', getPTO, {
-    onSuccess: (data) => setData(data),
-    enabled: false,
-  });
-
-  const {
-    isLoading: remoteLoading,
-    error: remoteError,
-    refetch: fetchRemote,
-  } = useQuery('employeesRemote', getRemote, {
-    onSuccess: (data) => setData(data),
-    enabled: false,
-  });
+  const { isLoading: ptoLoading, error: ptoError } = useQuery(
+    'employeesPTO',
+    getPTO,
+    {
+      onSuccess: (data) => {
+        setData(data);
+        console.log('On success');
+      },
+      enabled: true,
+    }
+  );
 
   return {
     data,
     ptoLoading,
     ptoError,
-    fetchPTO,
-    remoteLoading,
-    remoteError,
-    fetchRemote,
+    getPTO,
   };
 };
 

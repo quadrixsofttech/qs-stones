@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Flex, Button, Select, Heading, Spinner } from '@chakra-ui/react';
 import styles from './PTOCalendar.styles';
 import CalendarBox from './CalendarBox';
@@ -10,15 +10,14 @@ const Calendar = () => {
   const [date, setDate] = useState(new Date());
   const [showSaturday, setShowSaturday] = useState(false);
 
-  const [type, setType] = useState('Vacation');
-  const { data, ptoLoading, fetchPTO, remoteLoading, fetchRemote } =
-    useEmployees();
+  const [type, setType] = useState('vacation');
+  const { data, ptoLoading, getPTO } = useEmployees();
 
   useEffect(() => {
-    type === 'Vacation' ? fetchPTO() : fetchRemote();
-  }, [type, fetchPTO, fetchRemote]);
+    getPTO(type);
+  }, [type]);
 
-  if (ptoLoading || remoteLoading) {
+  if (ptoLoading) {
     return <Spinner />;
   }
 
@@ -45,7 +44,9 @@ const Calendar = () => {
       return moment(date).date(i).format('YYYY-MM-DD');
     };
 
-    const employeesToday = data ? data.filter((x) => x.date === getDate()) : [];
+    const employeesToday = data
+      ? data.pto.filter((x) => x.days.includes(getDate()))
+      : [];
 
     if (
       showSaturday
@@ -113,11 +114,14 @@ const Calendar = () => {
         </Heading>
         <Select
           {...styles.selectButton}
-          onChange={(e) => setType(e.target.value)}
+          onChange={(e) => {
+            console.log(typeof e.target.value);
+            setType(e.target.value);
+          }}
           value={type}
         >
-          <option value="Vacation">Vacation</option>
-          <option value="Remote">Remote</option>
+          <option value="vacation">Vacation</option>
+          <option value="remote">Remote</option>
         </Select>
       </Flex>
       <Flex {...styles.selectionBox}>
