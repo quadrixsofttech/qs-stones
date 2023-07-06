@@ -1,5 +1,7 @@
 const PayedTimeOff = require('./models/PTO');
+const UserModel = require('../user/models/User');
 const moment = require('moment');
+const mongoose = require('mongoose');
 
 const holidays = [
   '2023-01-01',
@@ -31,11 +33,26 @@ const getAllPTO = async () => {
 
 const getPTO = async (type) => {
   try {
-    const pto = await PayedTimeOff.find({
-      type: type,
-      status: 'approved',
-    }).lean();
-    return pto;
+    const pto = await PayedTimeOff.aggregate([
+      {
+        $match: {
+          type: type,
+          status: 'approved',
+        },
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'userId',
+          foreignField: '_id',
+          as: 'user',
+        },
+      },
+    ]);
+
+    return {
+      pto: pto,
+    };
   } catch (err) {
     throw new Error(err);
   }
