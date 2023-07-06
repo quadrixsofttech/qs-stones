@@ -43,8 +43,22 @@ const getPTO = async (type) => {
       {
         $lookup: {
           from: 'users',
-          localField: 'userId',
-          foreignField: '_id',
+          let: { userId: '$userId' },
+          pipeline: [
+            {
+              $match: {
+                $expr: { $eq: ['$_id', '$$userId'] },
+              },
+            },
+            {
+              $project: {
+                _id: 0,
+                firstName: 1,
+                lastName: 1,
+                src: 1,
+              },
+            },
+          ],
           as: 'user',
         },
       },
