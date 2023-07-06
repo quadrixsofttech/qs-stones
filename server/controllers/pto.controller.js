@@ -21,9 +21,9 @@ const createPaidTimeOff = async (req, res) => {
 
 const getPaidTimeOff = async (req, res) => {
   try {
-    const { type } = req.query;
+    const { type } = req.params;
     const pto = await PtoService.getPTO(type);
-    res.send(pto);
+    return res.send(pto);
   } catch (err) {
     res.status(400).json({ success: false, message: err.message });
   }

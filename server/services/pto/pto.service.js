@@ -31,7 +31,10 @@ const getAllPTO = async () => {
 
 const getPTO = async (type) => {
   try {
-    const pto = await PayedTimeOff.find({ type: type }).lean();
+    const pto = await PayedTimeOff.find({
+      type: type,
+      status: 'approved',
+    }).lean();
     return pto;
   } catch (err) {
     throw new Error(err);
