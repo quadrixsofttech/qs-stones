@@ -3,7 +3,8 @@ const formatedDate = {
   pr: '2',
   fontWeight: '700',
   whiteSpace: 'nowrap',
-  fontSize:'2xl'
+  fontSize: '2xl',
+  color: 'gray.700',
 };
 
 const iconGridHorizontal = {
