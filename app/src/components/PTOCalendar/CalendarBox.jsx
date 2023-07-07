@@ -49,7 +49,7 @@ const CalendarBox = ({ date, employeesToday, type }) => {
                 {employeesToday.map((x) => {
                   return (
                     <Avatar
-                      key={x.id}
+                      key={x.id + Math.random().toString()}
                       name={x.user[0].firstName}
                       src={x.user[0].src}
                     />

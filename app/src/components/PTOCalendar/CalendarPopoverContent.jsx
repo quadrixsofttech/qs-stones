@@ -23,7 +23,11 @@ const CalendarPopoverContent = ({ date, employeesToday, type }) => {
         <Flex {...styles.popoverBox}>
           {employeesToday.map((x) => {
             return (
-              <Flex key={x.id} alignItems={'center'} gap={'10px'}>
+              <Flex
+                key={x.id + Math.random().toString()}
+                alignItems={'center'}
+                gap={'10px'}
+              >
                 <Avatar name={x.user[0].firstName} src={x.src} />
                 <Text>{`${x.user[0].firstName}  ${x.user[0].lastName}`}</Text>
               </Flex>
