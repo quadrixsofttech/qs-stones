@@ -1,5 +1,24 @@
-const PayedTimeOff = require('../../models/pto.model');
-const { differenceInCalendarDays, addDays, format } = require('date-fns');
+const PayedTimeOff = require('./models/PTO');
+const moment = require('moment');
+
+const holidays = [
+  '2023-01-01',
+  '2023-01-02',
+  '2023-01-06',
+  '2023-02-15',
+  '2023-04-07',
+  '2023-04-14',
+  '2023-05-01',
+  '2023-05-02',
+  '2023-05-09',
+  '2023-05-25',
+  '2023-06-15',
+  '2023-06-24',
+  '2023-11-11',
+  '2023-12-25',
+  '2023-12-26',
+];
+const weekendDays = [6, 0];
 
 const getAllPTO = async () => {
   try {
@@ -14,25 +33,32 @@ const createPTO = async ({
   type,
   status,
   userId,
-  reveiewerId,
+  reviewerId,
   dates,
   comment,
 }) => {
   try {
-    const days = dates.reduce((acc, date) => {
-      const start = new Date(date.startDate);
-      const end = new Date(date.endDate);
-      const totalDays = differenceInCalendarDays(end, start) + 1;
+    const days = dates.reduce((acc, [startDate, endDate]) => {
+      const start = moment(startDate);
+      const end = moment(endDate);
+      const totalDays = end.diff(start, 'days') + 1;
       const generatedDates = Array.from({ length: totalDays }, (_, index) =>
-        format(addDays(start, index), 'YYYY-MM-DD')
+        start.clone().add(index, 'days').format('YYYY-MM-DD')
       );
-      return [...acc, ...generatedDates];
+
+      const filteredDates = generatedDates.filter((date) => {
+        const isHoliday = holidays.includes(date);
+        const isWeekend = weekendDays.includes(moment(date).day());
+        return !isHoliday && !isWeekend;
+      });
+
+      return [...acc, ...filteredDates];
     }, []);
     const pto = new PayedTimeOff({
       type,
       status,
       userId,
-      reveiewerId,
+      reviewerId,
       days,
       dates,
       comment,
@@ -44,7 +70,7 @@ const createPTO = async ({
   }
 };
 
-const updatePTO = async (id) => {
+const updatePTO = async (id, updates) => {
   try {
     const pto = await PayedTimeOff.findByIdAndUpdate(
       id,

@@ -1,25 +1,46 @@
-import { Box, Flex, Heading, Image, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  Heading,
+  Image,
+  Text,
+  useDisclosure,
+} from '@chakra-ui/react';
 import styles from './ConferenceOverview.styles';
 import { BiWifi, BiTv, BiLaptop, BiChalkboard } from 'react-icons/bi';
 import { useTheme } from '@chakra-ui/react';
+import ConferenceModal from './ConferenceModal';
 
-const ConferenceRoom = ({ roomNumber, name, capacity, img, equipment }) => {
+const ConferenceRoom = ({
+  roomNumber,
+  name,
+  capacity,
+  img,
+  equipment,
+  floor,
+}) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const theme = useTheme();
   const gray400 = theme.colors.gray[400];
+
   return (
-    <Flex {...styles.conferenceCard}>
-      <Box overflow={'hidden'} sx={{ 'aspectRatio': '16/6' }}>
+    <Flex {...styles.conferenceCard} onClick={onOpen}>
+      <Box overflow={'hidden'} sx={{ aspectRatio: '16/6' }}>
         <Image {...styles.conferenceRoomImage} src={img} />
       </Box>
       <Flex {...styles.conferenceRoomInfo}>
-        <Flex flexDir={'column'} gap="1">
+        <Flex flexDir={'column'} gap="2">
           <Heading {...styles.heading}>
-            <span style={{ textDecoration: 'underline' }}>{roomNumber}</span>{' '}
+            <Text as="span" {...styles.conferenceNumber}>
+              {roomNumber}
+            </Text>{' '}
             {name}
           </Heading>
           <Text {...styles.capacityInfo}>
             Capacity:{' '}
-            <span style={{ fontWeight: '600' }}>{capacity} people</span>
+            <Text as="span" fontWeight={'600'}>
+              {capacity} people
+            </Text>
           </Text>
         </Flex>
         <Flex className="see-availability" {...styles.seeAvailabilityBox}>
@@ -43,6 +64,16 @@ const ConferenceRoom = ({ roomNumber, name, capacity, img, equipment }) => {
           })}
         </Flex>
       </Flex>
+      <ConferenceModal
+        isOpen={isOpen}
+        onClose={onClose}
+        img={img}
+        roomNumber={roomNumber}
+        name={name}
+        capacity={capacity}
+        equipment={equipment}
+        tag={floor}
+      />
     </Flex>
   );
 };

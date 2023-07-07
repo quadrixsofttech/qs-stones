@@ -1,15 +1,18 @@
 const jwt = require('express-jwt');
 const jwtDecode = require('jwt-decode');
+const { StatusCodes } = require('http-status-codes');
 
 const attachUser = (req, res, next) => {
   const token = req.cookies.token;
   if (!token) {
-    return res.status(401).json({ message: 'Authentication invalid' });
+    return res
+      .status(StatusCodes.UNAUTHORIZED)
+      .json({ message: 'Authentication invalid' });
   }
   const decodedToken = jwtDecode(token);
 
   if (!decodedToken) {
-    return res.status(401).json({
+    return res.status(StatusCodes.UNAUTHORIZED).json({
       message: 'There was a problem authorizing the request',
     });
   } else {

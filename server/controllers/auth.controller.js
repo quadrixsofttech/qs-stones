@@ -1,5 +1,6 @@
 const User = require('../models/user.model');
 const jwtDecode = require('jwt-decode');
+const { StatusCodes } = require('http-status-codes');
 
 const { createToken, hashPassword, verifyPassword } = require('../util');
 
@@ -12,7 +13,7 @@ const authenticate = async (req, res) => {
     }).lean();
 
     if (!user) {
-      return res.status(403).json({
+      return res.status(StatusCodes.FORBIDDEN).json({
         message: 'Wrong email or password.',
       });
     }
@@ -37,13 +38,15 @@ const authenticate = async (req, res) => {
         expiresAt,
       });
     } else {
-      res.status(403).json({
+      res.status(StatusCodes.FORBIDDEN).json({
         message: 'Wrong email or password.',
       });
     }
   } catch (err) {
     console.log(err);
-    return res.status(400).json({ message: 'Something went wrong.' });
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ message: 'Something went wrong.' });
   }
 };
 
@@ -66,7 +69,9 @@ const signUp = async (req, res) => {
     }).lean();
 
     if (existingEmail) {
-      return res.status(400).json({ message: 'Email already exists' });
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ message: 'Email already exists' });
     }
 
     const newUser = new User(userData);
@@ -95,12 +100,12 @@ const signUp = async (req, res) => {
         expiresAt,
       });
     } else {
-      return res.status(400).json({
+      return res.status(StatusCodes.BAD_REQUEST).json({
         message: 'There was a problem creating your account',
       });
     }
   } catch (err) {
-    return res.status(400).json({
+    return res.status(StatusCodes.BAD_REQUEST).json({
       message: 'There was a problem creating your account',
     });
   }
