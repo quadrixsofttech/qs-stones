@@ -18,9 +18,10 @@ export default function NavbarButtons({
     setCurrentDate(today);
   };
 
-  const isTodaysDate = (currentDate) => {
+  const isTodaysDate = (currDate) => {
     const today = moment();
-    return currentDate.isSame(today, 'day');
+    const dateToCompare = moment(currDate);
+    return dateToCompare.isSame(today, 'day');
   };
 
   return (
