@@ -59,6 +59,7 @@ export default function ConferenceNavbar() {
       <Spacer />
       <Flex alignItems={'center'} justifyContent={'flex-end'}>
         <NavbarButtons
+          currentDate={currentDate}
           setCurrentDate={setCurrentDate}
           timelineFormat={timelineFormat}
           setTimelineFormat={setTimelineFormat}
@@ -70,6 +71,7 @@ export default function ConferenceNavbar() {
           onClick={() => {
             setTimelineOrientation('vertical');
           }}
+          _hover={{ backgroundColor: 'gray.50', borderRadius: '50%' }}
         />
         <ChakraIcon
           as={BiGridHorizontal}
@@ -77,9 +79,10 @@ export default function ConferenceNavbar() {
           onClick={() => {
             setTimelineOrientation('horizontal');
           }}
+          _hover={{ backgroundColor: 'gray.50', borderRadius: '50%' }}
         />
 
-        <Select size="sm">
+        <Select size="sm" borderRadius={'5'}>
           {Object.values(FloorTypes).map((type) => (
             <option value={type} key={FloorTypes.id + '-' + type}>
               {type}

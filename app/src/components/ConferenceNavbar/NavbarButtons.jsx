@@ -1,24 +1,26 @@
 import { Box, Divider, Flex } from '@chakra-ui/react';
 import { ButtonTypes, TodayButtonType } from './constants/ButtonTypes';
-import { useState } from 'react';
 import styles from './NavbarButtons.styles';
 import moment from 'moment';
 
 export default function NavbarButtons({
+  currentDate,
   setCurrentDate,
   timelineFormat,
   setTimelineFormat,
 }) {
-  const [activeToday, setActiveToday] = useState(false);
-
   const handleClick = (label) => {
     setTimelineFormat(label);
   };
 
   const handleTodayButtonClick = () => {
-    setActiveToday(!activeToday);
     const today = moment();
     setCurrentDate(today);
+  };
+
+  const isTodaysDate = (currentDate) => {
+    const today = moment();
+    return currentDate.isSame(today, 'day');
   };
 
   return (
@@ -26,8 +28,8 @@ export default function NavbarButtons({
       <Box
         {...styles.buttonStyles}
         onClick={handleTodayButtonClick}
-        color={activeToday ? 'purple.700' : 'gray.700'}
-        bg={activeToday ? 'purple.50' : 'white'}
+        color={isTodaysDate(currentDate) ? 'purple.700' : 'gray.700'}
+        bg={isTodaysDate(currentDate) ? 'purple.50' : 'white'}
       >
         {TodayButtonType.TODAY}
       </Box>
