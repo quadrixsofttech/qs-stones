@@ -1,4 +1,4 @@
-const User = require('../services/user/models/User');
+const User = require('../models/user.model');
 const { StatusCodes } = require('http-status-codes');
 
 const getBio = async (req, res) => {
