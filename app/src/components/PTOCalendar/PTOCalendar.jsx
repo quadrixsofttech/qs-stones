@@ -11,13 +11,14 @@ const Calendar = () => {
   const [showSaturday, setShowSaturday] = useState(false);
 
   const [type, setType] = useState('vacation');
-  const { data, ptoLoading, getPTO } = useEmployees();
+
+  const { data, isLoading, refetchPTO } = useEmployees(type);
 
   useEffect(() => {
-    getPTO(type);
-  }, [type]);
+    refetchPTO();
+  }, [type, refetchPTO]);
 
-  if (ptoLoading) {
+  if (isLoading) {
     return <Spinner />;
   }
 

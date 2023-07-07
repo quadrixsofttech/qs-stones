@@ -1,34 +1,22 @@
 import { useQuery } from 'react-query';
 import axios from 'axios';
-import { useState } from 'react';
 
-const useEmployees = () => {
-  const [data, setData] = useState();
-
-  const getPTO = async (type) => {
+const useEmployees = (type) => {
+  const getPTO = async () => {
     const { data } = await axios.get(`/api/v1/paid-time-off/${type}`);
-    //setData(data);
     return data;
   };
 
-  const { isLoading: ptoLoading, error: ptoError } = useQuery(
-    'employeesPTO',
-    getPTO,
-    {
-      onSuccess: (data) => {
-        setData(data);
-        console.log('On success');
-      },
-      enabled: true,
-    }
-  );
+  const {
+    data,
+    isLoading,
+    refetch: refetchPTO,
+  } = useQuery(['paid-time-off'], getPTO);
 
   return {
     data,
-    ptoLoading,
-    ptoError,
-    getPTO,
+    isLoading,
+    refetchPTO,
   };
 };
-
 export default useEmployees;
