@@ -3,6 +3,7 @@ const formatedDate = {
   pr: '2',
   fontWeight: '700',
   whiteSpace: 'nowrap',
+  fontSize:'2xl'
 };
 
 const iconGridHorizontal = {
@@ -16,10 +17,17 @@ const iconGridVertical = {
   ml: '5',
 };
 
+const navbarContainer = {
+  alignItems: 'center',
+  marginBlock: '16px',
+  marginInline: '24px',
+};
+
 const styles = {
   formatedDate,
   iconGridHorizontal,
   iconGridVertical,
+  navbarContainer,
 };
 
 export default styles;

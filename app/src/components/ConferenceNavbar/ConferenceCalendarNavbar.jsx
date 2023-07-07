@@ -32,7 +32,7 @@ export default function ConferenceNavbar() {
   const [timelineOrientation, setTimelineOrientation] = useState('vertical');
 
   return (
-    <Flex alignItems={'center'}>
+    <Flex {...styles.navbarContainer}>
       <Flex alignItems={'center'}>
         <ChakraIcon
           as={ChevronLeftIcon}
