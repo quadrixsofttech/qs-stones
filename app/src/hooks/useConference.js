@@ -6,9 +6,7 @@ const useConference = () => {
   const [data, setData] = useState();
 
   const getConferences = async () => {
-    const { data } = await axios.get(
-      'https://64804076f061e6ec4d48e5ce.mockapi.io/conference'
-    );
+    const { data } = await axios.get('/api/v1/conference-rooms');
     return data;
   };
 
