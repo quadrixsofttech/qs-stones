@@ -71,7 +71,12 @@ export default function ConferenceNavbar() {
           onClick={() => {
             setTimelineOrientation('vertical');
           }}
-          _hover={{ backgroundColor: 'gray.50', borderRadius: '50%' }}
+          borderRadius={'50%'}
+          _hover={{ backgroundColor: 'gray.200' }}
+          backgroundColor={
+            timelineOrientation === 'vertical' ? 'purple.50' : 'white'
+          }
+          color={timelineOrientation === 'vertical' ? 'purple.700' : 'black'}
         />
         <ChakraIcon
           as={BiGridHorizontal}
@@ -79,7 +84,12 @@ export default function ConferenceNavbar() {
           onClick={() => {
             setTimelineOrientation('horizontal');
           }}
-          _hover={{ backgroundColor: 'gray.50', borderRadius: '50%' }}
+          borderRadius={'50%'}
+          _hover={{ backgroundColor: 'gray.200' }}
+          backgroundColor={
+            timelineOrientation === 'horizontal' ? 'purple.50' : 'white'
+          }
+          color={timelineOrientation === 'horizontal' ? 'purple.700' : 'black'}
         />
 
         <Select size="sm" borderRadius={'5'}>

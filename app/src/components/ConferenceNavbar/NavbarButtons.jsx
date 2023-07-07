@@ -42,6 +42,7 @@ export default function NavbarButtons({
             onClick={() => handleClick(type)}
             color={timelineFormat === type ? 'purple.700' : 'gray.700'}
             bg={timelineFormat === type ? 'purple.50' : 'white'}
+            _hover={{ backgroundColor: 'gray.200' }}
           >
             {type}
           </Box>
