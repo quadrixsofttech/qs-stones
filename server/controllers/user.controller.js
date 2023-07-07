@@ -1,36 +1,34 @@
-const User = require('../data/User');
+const UserService = require('../services/user/user.service');
+const { StatusCodes } = require('http-status-codes');
 
-const getUser = async (req, res) => {
+const getUsers = async (req, res) => {
   try {
-    const users = await User.find()
-      .lean()
-      .select('_id firstName lastName avatar email');
-
-    res.json({
-      users,
-    });
+    let users = await UserService.getAllUsers();
+    return res.send(users);
   } catch (err) {
-    return res.status(400).json({
+    return res.status(StatusCodes.BAD_REQUEST).json({
       message: 'There was a problem getting the users',
     });
   }
 };
 
-const updateUserRole = async (req, res) => {
+const updateRole = async (req, res) => {
   try {
     const { role } = req.body;
     const allowedRoles = ['user', 'admin'];
 
     if (!allowedRoles.includes(role)) {
-      return res.status(400).json({ message: 'Role not allowed' });
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ message: 'Role not allowed' });
     }
     await User.findOneAndUpdate({ _id: req.user.sub }, { role });
     res.json({
       message: 'User role updated.',
     });
   } catch (err) {
-    return res.status(400).json({ error: err });
+    return res.status(StatusCodes.BAD_REQUEST).json({ error: err });
   }
 };
 
-module.exports = { getUser, updateUserRole };
+module.exports = { getUsers, updateRole };

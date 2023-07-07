@@ -13,7 +13,6 @@ import {
 import UserDetails from './UserDetails';
 import styles from './Users.styles';
 
-
 const Users = () => {
   const { protectedFetch } = useContext(FetchContext);
   const [users, setUsers] = useState([]);
@@ -22,7 +21,7 @@ const Users = () => {
     const getUsers = async () => {
       try {
         const { data } = await protectedFetch.get('users');
-        setUsers(data.users);
+        setUsers(data);
       } catch (err) {
         console.log(err);
       }
@@ -43,7 +42,8 @@ const Users = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {!!users.length &&
+            {!!users &&
+              users.length > 0 &&
               users.map((user) => <UserDetails key={user._id} user={user} />)}
           </Tbody>
         </Table>

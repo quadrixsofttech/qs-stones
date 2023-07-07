@@ -1,51 +1,48 @@
-const InventoryItem = require('../data/InventoryItem');
-
-const getItem = async (req, res) => {
-  try {
-    const user = req.user.sub;
-    const inventoryItems = await InventoryItem.find({
-      user,
-    });
-    res.json(inventoryItems);
-  } catch (err) {
-    return res.status(400).json({ error: err });
-  }
-};
+const InventoryService = require('../services/inventory/inventory.service');
+const { StatusCodes } = require('http-status-codes');
 
 const createItem = async (req, res) => {
   try {
-    const userId = req.user.sub;
-    const input = Object.assign({}, req.body, {
-      user: userId,
-    });
-    const inventoryItem = new InventoryItem(input);
-    await inventoryItem.save();
-    res.status(201).json({
-      message: 'Inventory item created!',
-      inventoryItem,
-    });
+    const userid = req.user.sub;
+    const itemData = req.body;
+    const createdItem = await InventoryService.createItemForUser(
+      userid,
+      itemData
+    );
+    return res.send(createdItem);
   } catch (err) {
-    return res.status(400).json({
+    return res.status(StatusCodes.BAD_REQUEST).json({
       message: 'There was a problem creating the item',
+    });
+  }
+};
+
+const getItem = async (req, res) => {
+  try {
+    const userId = req.user.sub;
+    const item = await InventoryService.getItemForUser(userId);
+    return res.send(item);
+  } catch (err) {
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      message: 'There was a problem getting the item',
     });
   }
 };
 
 const deleteItem = async (req, res) => {
   try {
-    const deletedItem = await InventoryItem.findOneAndDelete({
-      _id: req.params.id,
-      user: req.user.sub,
-    });
-    res.status(201).json({
-      message: 'Inventory item deleted!',
-      deletedItem,
-    });
+    const itemId = req.params.id;
+    const userId = req.user.sub;
+    const deletedItem = await InventoryService.deleteItemForUser(
+      itemId,
+      userId
+    );
+    return res.send(deletedItem);
   } catch (err) {
-    return res.status(400).json({
-      message: 'There was a problem deleting the item.',
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      message: 'There was a problem deleting the item',
     });
   }
 };
 
-module.exports = { getItem, createItem, deleteItem };
+module.exports = { createItem, getItem, deleteItem };
