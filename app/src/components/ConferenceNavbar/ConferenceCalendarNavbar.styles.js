@@ -19,8 +19,8 @@ const iconGridVertical = {
 
 const navbarContainer = {
   alignItems: 'center',
-  marginBlock: '16px',
-  marginInline: '24px',
+  marginBlock: '4',
+  marginInline: '6',
 };
 
 const styles = {
