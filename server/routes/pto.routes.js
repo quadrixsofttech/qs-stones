@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const ptoController = require('../controllers/pto.controller');
+const PtoController = require('../controllers/pto.controller');
 
-router.post('/', ptoController.createPaidTimeOff);
-router.get('/history', ptoController.getPaidTimeOffHistory);
+router.post('/', PtoController.createPaidTimeOff);
+router.get('/history', PtoController.getUserHistory);
 
 module.exports = router;

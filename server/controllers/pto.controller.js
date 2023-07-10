@@ -22,10 +22,10 @@ const createPaidTimeOff = async (req, res) => {
   }
 };
 
-const getPaidTimeOffHistory = async (req, res) => {
+const getUserHistory = async (req, res) => {
   try {
     const userId = req.user.id;
-    const ptoHistory = await PtoService.getPtoHistory(userId);
+    const ptoHistory = await PtoService.getUserHistory(userId);
     res.send(ptoHistory);
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
@@ -34,5 +34,5 @@ const getPaidTimeOffHistory = async (req, res) => {
 
 module.exports = {
   createPaidTimeOff,
-  getPaidTimeOffHistory,
+  getUserHistory,
 };

@@ -10,6 +10,7 @@ import {
   Tabs,
   Heading,
   Divider,
+  Spinner,
 } from '@chakra-ui/react';
 import styles from './MyHistory.styles';
 import RequestPTO from '../RequestPTO/RequestPTO';
@@ -19,15 +20,27 @@ import employees from './information';
 import { MyHistoryStats } from './MyHistoryStats';
 import { LeaveTypes, headerOrder } from './constants/constants';
 import Scrollbars from 'react-custom-scrollbars-2';
-import usePTO from '../../hooks/usePTO';
+import { PaidTimeOffCallback } from '../../hooks/usePTO';
 
 const MyHistory = () => {
   const [selectedOption, setSelectedOption] = useState(LeaveTypes.Remote);
-  const ptoHistory = usePTO();
+  const { paidTimeOffHistory, isError, isLoading } = PaidTimeOffCallback();
 
   const handleSelectChange = (event) => {
     setSelectedOption(event.target.value);
   };
+
+  if (isLoading) {
+    return (
+      <>
+        <Spinner />
+      </>
+    );
+  }
+
+  if (isError) {
+    return <>An error occured in fetching data</>;
+  }
 
   return (
     <Flex {...styles.container}>
@@ -72,8 +85,8 @@ const MyHistory = () => {
                 <MyHistoryStats
                   label="The total number of employees working today"
                   helpText="% more than yesterday"
-                  working={ptoHistory.workingToday}
-                  percent={ptoHistory.percentIncrease}
+                  working={paidTimeOffHistory.workingToday}
+                  percent={paidTimeOffHistory.percentIncrease}
                   arrow={'increase'}
                 />
                 <Divider />
@@ -81,8 +94,8 @@ const MyHistory = () => {
                   label="The total number of employees working remotly today or on
                   vacation"
                   helpText="% less than yesterday"
-                  working={ptoHistory.awayOrRemote}
-                  percent={ptoHistory.percentDecrease}
+                  working={paidTimeOffHistory.awayOrRemote}
+                  percent={paidTimeOffHistory.percentDecrease}
                   arrow={'decrease'}
                 />
               </Flex>

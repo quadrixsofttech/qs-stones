@@ -94,7 +94,7 @@ const deletePTO = async (id) => {
 
 //MyHistoryService
 
-const getPtoHistory = async (userId) => {
+const getUserHistory = async (userId) => {
   try {
     const ptoHistory = await PayedTimeOff.find({ userId });
     return ptoHistory;
@@ -103,4 +103,4 @@ const getPtoHistory = async (userId) => {
   }
 };
 
-module.exports = { getAllPTO, createPTO, updatePTO, deletePTO, getPtoHistory };
+module.exports = { getAllPTO, createPTO, updatePTO, deletePTO, getUserHistory };

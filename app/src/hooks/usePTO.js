@@ -3,12 +3,13 @@ import axios from 'axios';
 
 const fetchPaidTimeOffHistory = async () => {
   const response = await axios.get('api/v1/paid-time-off');
-  const { workingToday, awayOrRemote, percentIncrease, percentDecrease } = response.data;
-  
+  const { workingToday, awayOrRemote, percentIncrease, percentDecrease } =
+    response.data;
+
   return { workingToday, awayOrRemote, percentIncrease, percentDecrease };
 };
 
-const usePTO = () => {
+export const PaidTimeOffCallback = () => {
   const {
     data: paidTimeOffHistory = [],
     isError,
@@ -21,5 +22,3 @@ const usePTO = () => {
     isLoading,
   };
 };
-
-export default usePTO;
