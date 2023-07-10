@@ -1,4 +1,4 @@
-import { Flex, border } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import DayOfTheWeek from '../../../constants/DayOfTheWeek';
 import styles from './GenerateDayOfTheWeek.styles';
 

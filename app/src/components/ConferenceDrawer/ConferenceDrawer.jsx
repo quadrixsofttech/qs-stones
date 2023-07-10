@@ -24,9 +24,13 @@ import GenerateDayOfTheWeek from './GenerateDayOfTheWeek/GenerateDayOfTheWeek';
 import RadioButtonGroup from './RadioButtonGroup';
 import GenerateMarkerColor from './GenerateMarkerColor/GenerateMarkerColor';
 import { useState } from 'react';
+import { useToast } from '@chakra-ui/react';
 
 export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
   const [switchIsChecked, setSwitchIsChecked] = useState(false);
+  const [selectedConference, setSelectedConference] =
+    useState('01 Conference Room');
+  const toast = useToast();
 
   return (
     <>
@@ -54,9 +58,12 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
               <Box mb={2} mt={3}>
                 Choose a conference room
               </Box>
-              <Select size="md">
+              <Select
+                size="md"
+                onChange={(event) => setSelectedConference(event.target.value)}
+              >
                 {Object.values(ConferenceRooms).map((type, index) => (
-                  <option placeholder={type} key={index}>
+                  <option value={type} key={index}>
                     {type}
                   </option>
                 ))}
@@ -138,7 +145,19 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
             <Button variant="outline" mr={3} onClick={onClose}>
               Cancel
             </Button>
-            <Button colorScheme="purple">Save</Button>
+            <Button
+              colorScheme="purple"
+              onClick={() => {
+                toast({
+                  position: 'top-right',
+                  variant: 'subtle',
+                  status: 'warning',
+                  description: `You have deleted the reservation of ${selectedConference} for the date {2023/05/24} from {8:15} to {10:30}`,
+                });
+              }}
+            >
+              Save
+            </Button>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
