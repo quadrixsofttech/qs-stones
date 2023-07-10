@@ -23,8 +23,11 @@ import ConferenceRooms from '../../constants/ConferenceRooms';
 import GenerateDayOfTheWeek from './GenerateDayOfTheWeek/GenerateDayOfTheWeek';
 import RadioButtonGroup from './RadioButtonGroup';
 import GenerateMarkerColor from './GenerateMarkerColor/GenerateMarkerColor';
+import { useState } from 'react';
 
 export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
+  const [switchIsChecked, setSwitchIsChecked] = useState(false);
+
   return (
     <>
       <Drawer
@@ -79,22 +82,32 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
             <Box p={6}>
               <FormControl display="flex" alignItems="center">
                 <Switch
-                  htmlFor="reservation"
+                  isChecked={switchIsChecked}
                   colorScheme="purple"
-                  id="isChecked"
+                  onChange={(event) => setSwitchIsChecked(event.target.checked)}
                 />
                 <FormLabel htmlFor="reservation" mb="0" ml={3}>
                   Repeat reservation
                 </FormLabel>
               </FormControl>
-              <GenerateDayOfTheWeek />
+              <GenerateDayOfTheWeek switchIsChecked={switchIsChecked} />
               <Box mt={3}>
-                <Checkbox colorScheme="purple">Every day</Checkbox>
+                <Checkbox
+                  colorScheme="purple"
+                  isDisabled={switchIsChecked ? false : true}
+                >
+                  Every day
+                </Checkbox>
               </Box>
-              <Text fontSize="md" mt={3}>
+              <Text
+                fontSize="md"
+                mt={3}
+                color={switchIsChecked ? 'gray.700' : 'gray.200'}
+              >
                 Ends
               </Text>
               <RadioButtonGroup
+                switchIsChecked={switchIsChecked}
                 f_option="Never"
                 s_option="After"
                 t_option="On specific date"
