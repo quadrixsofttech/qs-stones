@@ -6,8 +6,8 @@ const createReservation = async (req, res) => {
     const {
       column,
       date,
-      start_time,
-      end_time,
+      startTime,
+      endTime,
       title,
       description,
       color,
@@ -17,8 +17,8 @@ const createReservation = async (req, res) => {
     const reservation = await ConferenceRoomReservation.createReservation({
       column,
       date,
-      start_time,
-      end_time,
+      startTime,
+      endTime,
       title,
       description,
       color,
@@ -51,8 +51,8 @@ const updateReservation = async (req, res) => {
     const {
       column,
       date,
-      start_time,
-      end_time,
+      startTime,
+      endTime,
       title,
       description,
       color,
@@ -61,8 +61,8 @@ const updateReservation = async (req, res) => {
     const update = await ConferenceRoomReservation.updateReservation(id, {
       column,
       date,
-      start_time,
-      end_time,
+      startTime,
+      endTime,
       title,
       description,
       color,
