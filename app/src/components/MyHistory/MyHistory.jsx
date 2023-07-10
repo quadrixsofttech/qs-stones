@@ -20,11 +20,11 @@ import employees from './information';
 import { MyHistoryStats } from './MyHistoryStats';
 import { LeaveTypes, headerOrder } from './constants/constants';
 import Scrollbars from 'react-custom-scrollbars-2';
-import { PaidTimeOffCallback } from '../../hooks/usePTO';
+import { usePaidTimeOff } from '../../hooks/usePTO';
 
 const MyHistory = () => {
   const [selectedOption, setSelectedOption] = useState(LeaveTypes.Remote);
-  const { paidTimeOffHistory, isError, isLoading } = PaidTimeOffCallback();
+  const [paidTimeOffHistory, isError, isLoading] = usePaidTimeOff();
 
   const handleSelectChange = (event) => {
     setSelectedOption(event.target.value);
