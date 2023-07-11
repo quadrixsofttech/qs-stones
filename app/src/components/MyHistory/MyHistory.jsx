@@ -24,7 +24,7 @@ import { usePaidTimeOff } from '../../hooks/usePTO';
 
 const MyHistory = () => {
   const [selectedOption, setSelectedOption] = useState(LeaveTypes.Remote);
-  const [paidTimeOffHistory, isError, isLoading] = usePaidTimeOff();
+  const {paidTimeOffHistory, isError, isLoading} = usePaidTimeOff();
 
   const handleSelectChange = (event) => {
     setSelectedOption(event.target.value);

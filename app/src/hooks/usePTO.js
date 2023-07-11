@@ -13,5 +13,5 @@ export const usePaidTimeOff = () => {
     isLoading,
   } = useQuery('paidTimeOffHistory', fetchPaidTimeOffHistory);
 
-  return [paidTimeOffHistory, isError, isLoading];
+  return {paidTimeOffHistory, isError, isLoading};
 };
