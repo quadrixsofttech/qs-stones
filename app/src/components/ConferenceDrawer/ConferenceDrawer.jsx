@@ -28,6 +28,10 @@ import { useToast } from '@chakra-ui/react';
 
 export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
   const [switchIsChecked, setSwitchIsChecked] = useState(false);
+  const [startTime, setStartTime] = useState('');
+  const [endTime, setEndTime] = useState('');
+  const [selectedDate, setSelectedDate] = useState('');
+
   const [selectedConference, setSelectedConference] =
     useState('01 Conference Room');
   const toast = useToast();
@@ -118,6 +122,9 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
                 f_option="Never"
                 s_option="After"
                 t_option="On specific date"
+                setStartTime={setStartTime}
+                setEndTime={setEndTime}
+                setSelectedDate={setSelectedDate}
               />
             </Box>
             <Divider />
@@ -152,7 +159,7 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
                   position: 'top-right',
                   variant: 'subtle',
                   status: 'warning',
-                  description: `You have deleted the reservation of ${selectedConference} for the date {2023/05/24} from {8:15} to {10:30}`,
+                  description: `You have deleted the reservation of ${selectedConference} for the date ${selectedDate} from ${startTime} to ${endTime}`,
                 });
               }}
             >

@@ -18,8 +18,12 @@ export default function RadioButtonGroup({
   s_option,
   t_option,
   switchIsChecked,
+  setStartTime,
+  setEndTime,
+  setSelectedDate,
 }) {
   const [value, setValue] = React.useState('1');
+
   return (
     <RadioGroup onChange={setValue} value={value}>
       <Stack mt={1}>
@@ -73,6 +77,7 @@ export default function RadioButtonGroup({
           size="sm"
           type="date"
           isDisabled={switchIsChecked ? false : true}
+          onChange={(event) => setSelectedDate(event.target.value)}
         />
         <Text fontSize="sm" color={switchIsChecked ? 'gray.700' : 'gray.200'}>
           Select time:
@@ -83,12 +88,14 @@ export default function RadioButtonGroup({
             size="sm"
             type="time"
             isDisabled={switchIsChecked ? false : true}
+            onChange={(event) => setStartTime(event.target.value)}
           />
           <Input
             placeholder="Select End Time"
             size="sm"
             type="time"
             isDisabled={switchIsChecked ? false : true}
+            onChange={(event) => setEndTime(event.target.value)}
           />
         </Flex>
       </Stack>
