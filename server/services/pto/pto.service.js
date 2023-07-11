@@ -59,7 +59,17 @@ const getPTO = async (type) => {
               },
             },
           ],
-          as: 'user',
+          as: 'userArray',
+        },
+      },
+      {
+        $addFields: {
+          user: { $arrayElemAt: ['$userArray', 0] },
+        },
+      },
+      {
+        $project: {
+          userArray: 0,
         },
       },
     ]);

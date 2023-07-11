@@ -50,8 +50,8 @@ const CalendarBox = ({ date, employeesToday, type }) => {
                   return (
                     <Avatar
                       key={x.id + Math.random().toString()}
-                      name={x.user[0].firstName}
-                      src={x.user[0].src}
+                      name={x.user.firstName}
+                      src={x.user.src}
                     />
                   );
                 })}
