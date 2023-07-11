@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ConferenceRoomSchema = new Schema({
-  roomNumber: {
+  id: {
     type: String,
     required: true,
   },

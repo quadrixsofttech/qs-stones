@@ -21,7 +21,7 @@ const ConferenceModal = ({
   isOpen,
   onClose,
   img,
-  roomNumber,
+  id,
   name,
   capacity,
   equipment,
@@ -44,7 +44,7 @@ const ConferenceModal = ({
               <Flex flexDir={'column'}>
                 <Flex gap="8" alignItems={'center'}>
                   <Heading borderBottom={'4px'} {...styles.modalHeading}>
-                    {roomNumber}
+                    {id}
                   </Heading>
                   <Heading {...styles.modalHeading} size="2xl">
                     {name}

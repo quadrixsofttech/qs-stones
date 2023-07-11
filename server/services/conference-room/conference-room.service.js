@@ -1,7 +1,7 @@
 const ConferenceRoom = require('./models/conference-room');
 
 const createConferenceRoom = async ({
-  roomNumber,
+  id,
   name,
   capacity,
   equipment,
@@ -10,7 +10,7 @@ const createConferenceRoom = async ({
 }) => {
   try {
     const conferenceRoom = new ConferenceRoom({
-      roomNumber,
+      id,
       name,
       capacity,
       equipment,
