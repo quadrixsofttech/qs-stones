@@ -116,7 +116,6 @@ const Calendar = () => {
         <Select
           {...styles.selectButton}
           onChange={(e) => {
-            console.log(typeof e.target.value);
             setType(e.target.value);
           }}
           value={type}
