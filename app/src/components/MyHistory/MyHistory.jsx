@@ -83,7 +83,7 @@ const MyHistory = () => {
             <StatGroup width={'100%'} height={'100%'}>
               <Flex {...styles.statgroupFlex}>
                 <MyHistoryStats
-                  label="The total number of employees working today"
+                  label="The total number of employees on vacation"
                   helpText="% more than yesterday"
                   working={paidTimeOffHistory.workingToday}
                   percent={paidTimeOffHistory.percentIncrease}
@@ -91,8 +91,7 @@ const MyHistory = () => {
                 />
                 <Divider />
                 <MyHistoryStats
-                  label="The total number of employees working remotly today or on
-                  vacation"
+                  label="The total number of employees in the company"
                   helpText="% less than yesterday"
                   working={paidTimeOffHistory.awayOrRemote}
                   percent={paidTimeOffHistory.percentDecrease}

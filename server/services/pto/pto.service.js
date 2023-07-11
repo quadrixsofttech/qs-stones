@@ -103,4 +103,41 @@ const getUserHistory = async (userId) => {
   }
 };
 
-module.exports = { getAllPTO, createPTO, updatePTO, deletePTO, getUserHistory };
+async function getUsersOnVacation() {
+  const vacationUsers = await Pto.countDocuments({ type: 'vacation' });
+  return vacationUsers;
+}
+
+async function calculateVacationPercentage() {
+  const currentDate = moment();
+  const lastYearDate = moment().subtract(1, 'year');
+
+  const currentYearVacationUsers = await Pto.countDocuments({
+    type: 'vacation',
+    createdAt: { $gte: currentDate.startOf('year').toDate() },
+  });
+
+  const lastYearVacationUsers = await Pto.countDocuments({
+    type: 'vacation',
+    createdAt: {
+      $gte: lastYearDate.startOf('year').toDate(),
+      $lte: lastYearDate.endOf('year').toDate(),
+    },
+  });
+
+  const percentage =
+    ((currentYearVacationUsers - lastYearVacationUsers) /
+      lastYearVacationUsers) *
+    100;
+  return percentage.toFixed(2);
+}
+
+module.exports = {
+  getAllPTO,
+  createPTO,
+  updatePTO,
+  deletePTO,
+  getUserHistory,
+  calculateVacationPercentage,
+  getUsersOnVacation,
+};
