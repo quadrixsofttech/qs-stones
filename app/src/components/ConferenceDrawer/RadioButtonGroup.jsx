@@ -12,6 +12,8 @@ import {
   Text,
 } from '@chakra-ui/react';
 import React from 'react';
+import DatePicker from 'react-multi-date-picker';
+import TimePicker from 'react-multi-date-picker/plugins/time_picker';
 
 export default function RadioButtonGroup({
   f_option,
@@ -83,19 +85,15 @@ export default function RadioButtonGroup({
           Select time:
         </Text>
         <Flex gap={2}>
-          <Input
-            placeholder="Select Start Time"
-            size="sm"
-            type="time"
-            isDisabled={switchIsChecked ? false : true}
-            onChange={(event) => setStartTime(event.target.value)}
+          <DatePicker
+            disableDayPicker
+            format="HH:mm"
+            plugins={[<TimePicker step={15} hideSeconds />]}
           />
-          <Input
-            placeholder="Select End Time"
-            size="sm"
-            type="time"
-            isDisabled={switchIsChecked ? false : true}
-            onChange={(event) => setEndTime(event.target.value)}
+          <DatePicker
+            disableDayPicker
+            format="HH:mm"
+            plugins={[<TimePicker step={15} hideSeconds />]}
           />
         </Flex>
       </Stack>
