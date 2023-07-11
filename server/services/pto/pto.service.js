@@ -1,5 +1,4 @@
 const PayedTimeOff = require('./models/PTO');
-const UserModel = require('../user/models/User');
 const moment = require('moment');
 const mongoose = require('mongoose');
 
