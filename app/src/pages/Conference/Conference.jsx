@@ -2,6 +2,8 @@ import DashboardLayout from '../../layout/DashboardLayout/DashboardLayout';
 import ConferenceNavbar from '../../components/ConferenceNavbar/ConferenceNavbar';
 import React from 'react';
 import Timeline from '../../components/Timeline/Timeline';
+import ConferenceCalendarNavbar from '../../components/ConferenceNavbar/ConferenceCalendarNavbar';
+import { Divider } from '@chakra-ui/react';
 
 const Conference = () => {
   const onEdit = (id) => {
@@ -100,6 +102,8 @@ const Conference = () => {
   return (
     <DashboardLayout Padding="0">
       <ConferenceNavbar />
+      <ConferenceCalendarNavbar />
+      <Divider />
       <Timeline
         type="horizontal"
         title={Label}
