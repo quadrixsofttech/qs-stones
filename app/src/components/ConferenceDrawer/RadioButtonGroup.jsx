@@ -1,6 +1,7 @@
 import {
+  Box,
   Flex,
-  Input,
+  Icon,
   NumberDecrementStepper,
   NumberIncrementStepper,
   NumberInput,
@@ -14,8 +15,23 @@ import {
 import React from 'react';
 import DatePicker from 'react-multi-date-picker';
 import TimePicker from 'react-multi-date-picker/plugins/time_picker';
-import { AiOutlineClockCircle } from 'react-icons/ai';
-import InputIcon from 'react-multi-date-picker/components/input_icon';
+import { AiTwotoneCalendar } from 'react-icons/ai';
+
+function CustomMultipleInput({ openCalendar, value, iconName }) {
+  return (
+    <Box onClick={openCalendar}>
+      <input
+        value={value}
+        style={{ border: '1px solid gray', borderRadius: '0.2em' }}
+      />
+      <Icon
+        as={iconName}
+        boxSize={'4'}
+        style={{ position: 'relative', right: '1.2em', top: '0.1em' }}
+      />
+    </Box>
+  );
+}
 
 export default function RadioButtonGroup({
   f_option,
@@ -77,14 +93,24 @@ export default function RadioButtonGroup({
           Select date:
         </Text>
         <DatePicker
-          render={<InputIcon />}
-          isDisabled={switchIsChecked ? false : true}
-          onChange={(event) => setSelectedDate(event.target.value)}
+          render={(value, openCalendar) => {
+            return (
+              <CustomMultipleInput
+                value={value}
+                openCalendar={openCalendar}
+                iconName={AiTwotoneCalendar}
+              />
+            );
+          }}
+          className="custom-calendar"
+          onChange={setSelectedDate}
+          disabled={switchIsChecked ? false : true}
         />
         <Text fontSize="sm" color={switchIsChecked ? 'gray.700' : 'gray.200'}>
           Select starting time:
         </Text>
         <DatePicker
+          className="custom-calendar"
           disabled={switchIsChecked ? false : true}
           disableDayPicker
           format="HH:mm"
@@ -101,6 +127,7 @@ export default function RadioButtonGroup({
           Select ending time:
         </Text>
         <DatePicker
+          className="custom-calendar"
           disabled={switchIsChecked ? false : true}
           disableDayPicker
           format="HH:mm"
