@@ -1,4 +1,4 @@
-const ConferenceRoom = require('./models/conference-room');
+const ConferenceRoom = require('../../models/conference-room');
 
 const createConferenceRoom = async ({
   id,
