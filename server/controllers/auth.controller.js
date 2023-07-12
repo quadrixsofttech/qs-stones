@@ -1,4 +1,4 @@
-const User = require('../services/user/models/User');
+const User = require('../models/User');
 const jwtDecode = require('jwt-decode');
 const { StatusCodes } = require('http-status-codes');
 

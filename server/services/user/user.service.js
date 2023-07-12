@@ -1,4 +1,4 @@
-const User = require('./models/User');
+const User = require('../../models/User');
 
 const getAllUsers = async () => {
   try {
@@ -11,7 +11,7 @@ const getAllUsers = async () => {
   }
 };
 
-const updateUserRole = async (role,userId) => {
+const updateUserRole = async (role, userId) => {
   try {
     const allowedRoles = ['user', 'admin'];
     if (!allowedRoles.includes(role)) {
