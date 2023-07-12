@@ -14,6 +14,8 @@ import {
 import React from 'react';
 import DatePicker from 'react-multi-date-picker';
 import TimePicker from 'react-multi-date-picker/plugins/time_picker';
+import { AiOutlineClockCircle } from 'react-icons/ai';
+import InputIcon from 'react-multi-date-picker/components/input_icon';
 
 export default function RadioButtonGroup({
   f_option,
@@ -74,28 +76,43 @@ export default function RadioButtonGroup({
         <Text fontSize="sm" color={switchIsChecked ? 'gray.700' : 'gray.200'}>
           Select date:
         </Text>
-        <Input
-          placeholder="Select Date"
-          size="sm"
-          type="date"
+        <DatePicker
+          render={<InputIcon />}
           isDisabled={switchIsChecked ? false : true}
           onChange={(event) => setSelectedDate(event.target.value)}
         />
         <Text fontSize="sm" color={switchIsChecked ? 'gray.700' : 'gray.200'}>
-          Select time:
+          Select starting time:
         </Text>
-        <Flex gap={2}>
-          <DatePicker
-            disableDayPicker
-            format="HH:mm"
-            plugins={[<TimePicker step={15} hideSeconds />]}
-          />
-          <DatePicker
-            disableDayPicker
-            format="HH:mm"
-            plugins={[<TimePicker step={15} hideSeconds />]}
-          />
-        </Flex>
+        <DatePicker
+          disabled={switchIsChecked ? false : true}
+          disableDayPicker
+          format="HH:mm"
+          position="top"
+          plugins={[
+            <TimePicker
+              mStep={15}
+              hideSeconds
+              onChange={(event) => setStartTime(event.target.value)}
+            />,
+          ]}
+        />
+        <Text fontSize="sm" color={switchIsChecked ? 'gray.700' : 'gray.200'}>
+          Select ending time:
+        </Text>
+        <DatePicker
+          disabled={switchIsChecked ? false : true}
+          disableDayPicker
+          format="HH:mm"
+          position="top"
+          plugins={[
+            <TimePicker
+              mStep={15}
+              hideSeconds
+              onChange={(event) => setEndTime(event.target.value)}
+            />,
+          ]}
+        />
       </Stack>
     </RadioGroup>
   );
