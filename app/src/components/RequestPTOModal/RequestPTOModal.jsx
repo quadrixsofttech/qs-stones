@@ -21,11 +21,10 @@ export const RequestPTOModal = ({ isOpen, onRequestSubmit, onClose }) => {
   const [isCurrentPageRemote, setIsCurrentPageRemote] = useState(true);
 
   const handleSubmit = () => {
+    onClose();
     setIsCurrentPageRemote(true);
     onRequestSubmit();
   };
-
-
   return (
     <Modal
       isCentered
