@@ -1,13 +1,7 @@
 import { Tag, TagCloseButton, TagLabel } from '@chakra-ui/react';
 import React from 'react';
 
-export const RenderRangeTags = ({
-  isCurrentPageRemote,
-  range,
-  key,
-  styleChange = false,
-  handleClose,
-}) => {
+export const RenderRangeTags = ({ remotePage, range, handleClose }) => {
   if (range.length !== 2) {
     return null;
   }
@@ -15,20 +9,13 @@ export const RenderRangeTags = ({
   const startDate = range[0];
   const endDate = range[1];
   return (
-    <Tag
-      key={key}
-      size="sm"
-      fontSize="12px"
-      borderRadius="full"
-      variant={styleChange || isCurrentPageRemote ? 'subtle' : 'outline'}
-      colorScheme="gray"
-    >
+    <Tag size="sm" fontSize="12px" borderRadius="full" colorScheme="gray">
       <TagLabel>
-        {startDate.format()} - {endDate.format()}
+        {startDate.format() === endDate.format()
+          ? startDate.format()
+          : startDate.format() + '-' + endDate.format()}
       </TagLabel>
-      {(isCurrentPageRemote || styleChange) && (
-        <TagCloseButton onClick={() => handleClose(range, styleChange)} />
-      )}
+      <TagCloseButton onClick={handleClose} />
     </Tag>
   );
 };
