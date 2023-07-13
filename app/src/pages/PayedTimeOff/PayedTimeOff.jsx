@@ -32,7 +32,7 @@ const PayedTimeOff = () => {
 
   return (
     <DashboardLayout>
-      <Flex mb={4} justifyContent={'space-between'}>
+      <Flex mb="4" justifyContent={'space-between'}>
         <Heading {...styles.heading}>Paid Time Off</Heading>
         <Button
           leftIcon={<FaRegCalendarPlus size={'12'} />}

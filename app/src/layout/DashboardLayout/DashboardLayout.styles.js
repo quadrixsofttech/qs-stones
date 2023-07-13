@@ -1,7 +1,6 @@
 const dashboardBox = {
-  p: 4,
   flex: 1,
-  maxHeight: '100vh',
+  height: '100%',
 };
 
 const styles = { dashboardBox };
