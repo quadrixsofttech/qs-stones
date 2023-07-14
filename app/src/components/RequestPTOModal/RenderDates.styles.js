@@ -40,6 +40,15 @@ const icon = {
   color: 'gray.400',
 };
 
+const rangeTag = {
+  size: 'sm',
+  fontSize: '12px',
+  borderRadius: '6px',
+  colorScheme: 'gray',
+  marginRight: '2',
+  marginTop: '1',
+};
+
 const styles = {
   icon,
   textRemote,
@@ -48,6 +57,7 @@ const styles = {
   flexError,
   textError,
   flexSpinner,
+  rangeTag,
 };
 
 export default styles;

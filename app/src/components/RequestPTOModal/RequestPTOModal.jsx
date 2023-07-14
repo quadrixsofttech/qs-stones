@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   Divider,
   Flex,
@@ -10,7 +9,9 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Progress,
+  Select,
+  Text,
+  Tooltip,
 } from '@chakra-ui/react';
 import styles from './RequestPTOModal.styles';
 import { Scrollbars } from 'react-custom-scrollbars-2';
@@ -20,32 +21,32 @@ import { useState } from 'react';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import { BiUserPin } from 'react-icons/bi';
 import RenderDates from './RenderDates';
+import ProgressBar from './ProgessBar';
+import { useCalendar } from '../../hooks/useCalendar';
+import { InfoIcon } from '@chakra-ui/icons';
 
 export const RequestPTOModal = ({ isOpen, onRequestSubmit, onClose }) => {
   const [isCurrentPageRemote, setIsCurrentPageRemote] = useState(true);
 
-  const [RemoteDates, setRemoteDates] = useState([]);
-  const [VacationDates, setVacationDates] = useState([]);
-
-  // Handler to update the start and end dates
-  const handleRemoteDates = (selectedDates) => {
-    setRemoteDates(selectedDates.format);
-  };
-  const handleVacationDates = (selectedDates) => {
-    setVacationDates(selectedDates);
-  };
-  const removeRemoteTag = (x) => {
-    setRemoteDates(RemoteDates.filter((element) => element !== x));
-  };
-  const removeVacationTag = (x) => {
-    setVacationDates(VacationDates.filter((element) => element !== x));
-  };
+  const [
+    RemoteDates,
+    setRemoteDates,
+    VacationDates,
+    setVacationDates,
+    handleRemoteDates,
+    handleVacationDates,
+    removeRemoteTag,
+    removeVacationTag,
+  ] = useCalendar();
 
   return (
     <Modal
       isCentered
       isOpen={isOpen}
-      onClose={onClose}
+      onClose={() => {
+        setRemoteDates([]);
+        onClose();
+      }}
       motionPreset="slideInBottom"
     >
       <ModalOverlay />
@@ -54,10 +55,28 @@ export const RequestPTOModal = ({ isOpen, onRequestSubmit, onClose }) => {
           <ModalHeader {...styles.modalHeader}>Paid Time Off</ModalHeader>
           <Divider />
           <ModalCloseButton />
-          <ModalBody maxH="600px">
-            <Flex {...styles.progress}>
-              <Box>1/2</Box>
-              <Progress hasStripe value={22} flex={1} colorScheme="purple" />
+          <ModalBody>
+            <ProgressBar isCurrentPageRemote={isCurrentPageRemote} />
+            <Flex gap={2} alignItems={'center'}>
+              <Text {...styles.modalTitle}>
+                {isCurrentPageRemote ? 'Remote' : 'Vacation'}
+              </Text>
+              <Tooltip
+                label="*Double-click to select a date on the calendar. 
+                  *Single-click to select a range of dates on the calendar."
+                hasArrow
+                placement="right"
+              >
+                <InfoIcon color={'gray.400'} />
+              </Tooltip>
+            </Flex>
+            <Flex>
+              {/* Temporary data, until getAdmins route is complete */}
+              <Select mt={2} mb={2}>
+                <option value="option" key={Math.random()}>
+                  Milos Stosic (Admin)
+                </option>
+              </Select>
             </Flex>
             <Flex alignItems="center" justifyContent="center">
               <Calendar
@@ -79,21 +98,19 @@ export const RequestPTOModal = ({ isOpen, onRequestSubmit, onClose }) => {
                 isCurrentPageRemote ? removeRemoteTag : removeVacationTag
               }
             />
-            <ModalFooter display={'flex'}>
+            <ModalFooter>
               {isCurrentPageRemote ? (
                 <>
-                  <Button onClick={onClose} width={'6rem'}>
-                    Close
-                  </Button>
+                  <Button onClick={onClose}>Cancel</Button>
                   <Button
-                    {...styles.buttonNext}
+                    {...styles.button}
                     onClick={() => {
                       setIsCurrentPageRemote(false);
                     }}
+                    rightIcon={<FaArrowRight size="12" />}
                   >
                     Next
-                    <FaArrowRight fontSize={12} ml={1} mt={1} />
-                  </Button>{' '}
+                  </Button>
                 </>
               ) : (
                 <>
@@ -102,18 +119,16 @@ export const RequestPTOModal = ({ isOpen, onRequestSubmit, onClose }) => {
                       setIsCurrentPageRemote(true);
                       setVacationDates([]);
                     }}
-                    width={'6rem'}
-                    leftIcon={<FaArrowLeft />}
+                    leftIcon={<FaArrowLeft size="12" />}
                   >
                     Back
                   </Button>
                   <Button
                     onClick={() => {
-                      //handleSubmit();
+                      onRequestSubmit();
                       onClose();
                     }}
-                    {...styles.buttonNext}
-                    width={'10rem'}
+                    {...styles.button}
                     leftIcon={<BiUserPin />}
                   >
                     Submit Request

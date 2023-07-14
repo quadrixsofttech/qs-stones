@@ -1,6 +1,6 @@
-import { Divider, Text } from '@chakra-ui/react';
+import { Box, Divider, Text } from '@chakra-ui/react';
 import styles from './RenderDates.styles';
-import { RenderRangeTags } from '../RenderRangeTags/RenderRangeTags';
+import { RenderRangeTags } from './RenderRangeTags';
 
 const RenderDates = ({
   remotePage,
@@ -9,32 +9,29 @@ const RenderDates = ({
   handleClose,
 }) => {
   return (
-    <div>
+    <Box>
       {remotePage ? (
-        <>
+        <Box>
           <Text {...styles.textRequestDates}>Requested dates for Remote:</Text>
           {remoteDates.map((x) => {
-            console.log(x);
             return (
               <RenderRangeTags
-                remotePage
                 range={x}
                 key={Math.random()}
                 handleClose={() => handleClose(x)}
               />
             );
           })}
-          <Divider />
-        </>
+          <Divider marginTop="4" />
+        </Box>
       ) : (
-        <>
+        <Box>
           <Text {...styles.textRequestDates}>
             Requested dates for Vacation:
           </Text>
           {vacationDates.map((x) => {
             return (
               <RenderRangeTags
-                remotePage
                 range={x}
                 key={Math.random()}
                 handleClose={() => handleClose(x)}
@@ -42,22 +39,24 @@ const RenderDates = ({
             );
           })}
 
-          <Divider />
-          <Text {...styles.textRequestDates}>Requested dates for Remote:</Text>
+          <Divider marginTop="4" />
+          <Text {...styles.textRequestDates} color={'gray.400'}>
+            Requested dates for Remote:
+          </Text>
           {remoteDates.map((x) => {
             return (
               <RenderRangeTags
-                remotePage
                 range={x}
                 key={Math.random()}
                 handleClose={handleClose}
+                removable={false}
               />
             );
           })}
-          <Divider />
-        </>
+          <Divider marginTop="4" />
+        </Box>
       )}
-    </div>
+    </Box>
   );
 };
 
