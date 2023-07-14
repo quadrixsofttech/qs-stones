@@ -2,7 +2,8 @@ import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { FetchContext } from '../context/FetchContext';
 import { publicFetch } from '../util/fetch';
-import { useMutation } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
+import axios from 'axios';
 
 const useUser = () => {
   const { protectedFetch } = useContext(FetchContext);
@@ -52,6 +53,17 @@ const useUser = () => {
     }
   };
 
+  const getAdmins = async () => {
+    const { data } = await axios.get('/api/v1/admins');
+    return data;
+  };
+
+  const {
+    data: admins,
+    isLoading: adminsLoading,
+    error: adminsError,
+  } = useQuery('admins', getAdmins);
+
   return {
     user,
     register,
@@ -59,6 +71,9 @@ const useUser = () => {
     authenticate,
     authenticationLoading: authenticate.isLoading,
     setUserRole,
+    admins,
+    adminsLoading,
+    adminsError,
   };
 };
 

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import moment from 'moment';
 
 export const useCalendar = () => {
   const [RemoteDates, setRemoteDates] = useState([]);
@@ -16,6 +17,12 @@ export const useCalendar = () => {
   const removeVacationTag = (x) => {
     setVacationDates(VacationDates.filter((element) => element !== x));
   };
+  const formatDates = (dates) =>
+    dates.map(([startDate, endDate]) => [
+      new Date(startDate),
+      new Date(endDate),
+    ]);
+
   return [
     RemoteDates,
     setRemoteDates,
@@ -25,5 +32,6 @@ export const useCalendar = () => {
     handleVacationDates,
     removeRemoteTag,
     removeVacationTag,
+    formatDates,
   ];
 };

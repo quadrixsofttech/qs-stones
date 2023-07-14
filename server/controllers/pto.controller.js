@@ -3,13 +3,13 @@ const { StatusCodes } = require('http-status-codes');
 
 const createPaidTimeOff = async (req, res) => {
   try {
-    const { type, status, userId, reviwerId, dates, comment } = req.body;
+    const { type, status, userId, reviewerId, dates, comment } = req.body;
 
     const pto = await PtoService.createPTO({
       type,
       status,
       userId,
-      reviwerId,
+      reviewerId,
       dates,
       comment,
     });

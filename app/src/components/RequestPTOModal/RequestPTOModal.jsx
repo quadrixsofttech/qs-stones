@@ -10,6 +10,7 @@ import {
   ModalHeader,
   ModalOverlay,
   Select,
+  Spinner,
   Text,
   Tooltip,
 } from '@chakra-ui/react';
@@ -24,8 +25,10 @@ import RenderDates from './RenderDates';
 import ProgressBar from './ProgessBar';
 import { useCalendar } from '../../hooks/useCalendar';
 import { InfoIcon } from '@chakra-ui/icons';
+import useUser from '../../hooks/useUser';
+import useEmployees from '../../hooks/useEmployees';
 
-export const RequestPTOModal = ({ isOpen, onRequestSubmit, onClose }) => {
+export const RequestPTOModal = ({ isOpen, onClose }) => {
   const [isCurrentPageRemote, setIsCurrentPageRemote] = useState(true);
 
   const [
@@ -37,7 +40,44 @@ export const RequestPTOModal = ({ isOpen, onRequestSubmit, onClose }) => {
     handleVacationDates,
     removeRemoteTag,
     removeVacationTag,
+    formatDates,
   ] = useCalendar();
+
+  const { user, admins, adminsLoading } = useUser();
+  const { createPTO } = useEmployees();
+
+  const [selectedAdmin, setSelectedAdmin] = useState();
+
+  const submitPTORequest = async () => {
+    try {
+      if (RemoteDates.length > 0) {
+        await createPTO.mutateAsync({
+          dates: formatDates(RemoteDates),
+          type: 'remote',
+          status: 'pending',
+          userId: user._id,
+          reviewerId: selectedAdmin,
+          comment: '',
+        });
+      }
+      if (VacationDates.length > 0) {
+        await createPTO.mutateAsync({
+          dates: formatDates(VacationDates),
+          type: 'vacation',
+          status: 'pending',
+          userId: user._id,
+          reviewerId: selectedAdmin,
+          comment: '',
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  if (adminsLoading) {
+    return <Spinner />;
+  }
 
   return (
     <Modal
@@ -71,11 +111,20 @@ export const RequestPTOModal = ({ isOpen, onRequestSubmit, onClose }) => {
               </Tooltip>
             </Flex>
             <Flex>
-              {/* Temporary data, until getAdmins route is complete */}
-              <Select mt={2} mb={2}>
-                <option value="option" key={Math.random()}>
-                  Milos Stosic (Admin)
-                </option>
+              <Select
+                mt={2}
+                mb={2}
+                onChange={(e) => {
+                  setSelectedAdmin(e.target.value);
+                }}
+              >
+                {admins.map((admin) => {
+                  return (
+                    <option value={admin._id} key={admin._id}>
+                      {`${admin.firstName} ${admin.lastName} (ADMIN)`}
+                    </option>
+                  );
+                })}
               </Select>
             </Flex>
             <Flex alignItems="center" justifyContent="center">
@@ -125,7 +174,7 @@ export const RequestPTOModal = ({ isOpen, onRequestSubmit, onClose }) => {
                   </Button>
                   <Button
                     onClick={() => {
-                      onRequestSubmit();
+                      submitPTORequest();
                       onClose();
                     }}
                     {...styles.button}

@@ -11,6 +11,15 @@ const getAllUsers = async () => {
   }
 };
 
+const getAdmins = async () => {
+  try {
+    const admins = await User.find({ role: 'admin' }).lean();
+    return admins;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
 const updateUserRole = async (role, userId) => {
   try {
     const allowedRoles = ['user', 'admin'];
@@ -26,4 +35,4 @@ const updateUserRole = async (role, userId) => {
   }
 };
 
-module.exports = { getAllUsers, updateUserRole };
+module.exports = { getAllUsers, updateUserRole, getAdmins };
