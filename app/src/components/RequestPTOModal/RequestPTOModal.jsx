@@ -126,6 +126,8 @@ export const RequestPTOModal = ({ isOpen, onRequestSubmit, onClose }) => {
                   <Button
                     onClick={() => {
                       onRequestSubmit();
+                      setRemoteDates([]);
+                      setVacationDates([]);
                       onClose();
                     }}
                     {...styles.button}
