@@ -96,10 +96,32 @@ const deletePTO = async (id) => {
 
 const getUserHistory = async (userId) => {
   try {
-    const ptoHistory = await PayedTimeOff.find({ userId })
-      .populate('reviewerId', 'firstName lastName')
-      .lean();
-    return ptoHistory;
+    const ptoHistory = await PayedTimeOff.find({ userId }).lean();
+
+    const reviewerIds = ptoHistory.map((pto) => pto.reviewerId);
+
+    const reviewers = await User.find(
+      { _id: { $in: reviewerIds } },
+      'firstName lastName'
+    ).lean();
+
+    const reviewerMap = reviewers.reduce((map, reviewer) => {
+      map[reviewer._id] = reviewer;
+      return map;
+    }, {});
+
+    const ptoHistoryWithReviewers = ptoHistory.map((pto) => {
+      const reviewer = reviewerMap[pto.reviewerId];
+      return {
+        ...pto,
+        reviewer: {
+          firstName: reviewer.firstName,
+          lastName: reviewer.lastName,
+        },
+      };
+    });
+
+    return ptoHistoryWithReviewers;
   } catch (err) {
     throw new Error('Error in getting history for user');
   }
