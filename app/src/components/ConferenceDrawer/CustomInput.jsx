@@ -1,23 +1,23 @@
-import { Box } from '@chakra-ui/react';
-import Icon from 'react-multi-date-picker/components/icon';
+import { AiTwotoneCalendar } from 'react-icons/ai';
 
-export default function CustomMultipleInput({ openCalendar, value, iconName }) {
+export default function CustomMultipleInput({ props, ref }) {
   return (
-    <Box onClick={openCalendar}>
+    <div style={{ position: 'relative' }}>
       <input
-        value={value}
+        onFocus={props.onFocus}
+        value={props.value}
+        onChange={props.onChange}
+        readOnly
+      />
+      <AiTwotoneCalendar
         style={{
-          border: '1px solid gray',
-          borderRadius: '0.2em',
-          width: '100%',
-          padding: '2px',
+          position: 'relative',
+          right: '10px',
+          top: '50%',
+          transform: 'translateY(-50%)',
+          cursor: 'pointer',
         }}
       />
-      <Icon
-        as={iconName}
-        boxSize={'4'}
-        style={{ position: 'relative', bottom: '1.5rem', left: '14.5rem' }}
-      />
-    </Box>
+    </div>
   );
 }
