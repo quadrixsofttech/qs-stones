@@ -20,7 +20,10 @@ import FloorTypes from './constants/FloorTypes';
 import { useState } from 'react';
 import styles from './ConferenceCalendarNavbar.styles';
 
-export default function ConferenceNavbar() {
+export default function ConferenceNavbar({
+  timelineOrientation,
+  setTimelineOrientation,
+}) {
   const {
     currentDate,
     formattedDate,
@@ -29,7 +32,6 @@ export default function ConferenceNavbar() {
     setCurrentDate,
   } = useDates(moment());
   const [timelineFormat, setTimelineFormat] = useState(false);
-  const [timelineOrientation, setTimelineOrientation] = useState('vertical');
 
   return (
     <Flex {...styles.navbarContainer}>

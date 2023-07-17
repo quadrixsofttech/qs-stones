@@ -6,6 +6,9 @@ import ConferenceCalendarNavbar from '../../components/ConferenceNavbar/Conferen
 import { Divider } from '@chakra-ui/react';
 
 const Conference = () => {
+  const [timelineOrientation, setTimelineOrientation] =
+    React.useState('vertical');
+
   const onEdit = (id) => {
     console.log('Edit' + id);
   };
@@ -102,10 +105,13 @@ const Conference = () => {
   return (
     <DashboardLayout Padding="0">
       <ConferenceNavbar />
-      <ConferenceCalendarNavbar />
+      <ConferenceCalendarNavbar
+        timelineOrientation={timelineOrientation}
+        setTimelineOrientation={setTimelineOrientation}
+      />
       <Divider />
       <Timeline
-        type="horizontal"
+        type={timelineOrientation}
         title={Label}
         data={data}
         startHour="08:00"
