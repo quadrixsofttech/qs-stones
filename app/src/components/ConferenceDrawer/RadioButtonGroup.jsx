@@ -16,6 +16,7 @@ import {
 import React from 'react';
 import DatePicker from 'react-multi-date-picker';
 import TimePicker from 'react-multi-date-picker/plugins/time_picker';
+import InputIcon from 'react-multi-date-picker/components/input_icon';
 import { AiTwotoneCalendar } from 'react-icons/ai';
 import CustomMultipleInput from './CustomInput';
 
@@ -24,9 +25,6 @@ export default function RadioButtonGroup({
   s_option,
   t_option,
   switchIsChecked,
-  setStartTime,
-  setEndTime,
-  setSelectedDate,
 }) {
   const [value, setValue] = React.useState('1');
 
@@ -79,17 +77,8 @@ export default function RadioButtonGroup({
           Select date:
         </Text>
         <DatePicker
-          render={(value, openCalendar) => {
-            return (
-              <CustomMultipleInput
-                value={value}
-                openCalendar={openCalendar}
-                iconName={AiTwotoneCalendar}
-              />
-            );
-          }}
+          render={<InputIcon />}
           className="custom-calendar"
-          onChange={setSelectedDate}
           disabled={switchIsChecked ? false : true}
         />
         <Text fontSize="sm" color={switchIsChecked ? 'gray.700' : 'gray.200'}>
@@ -101,13 +90,7 @@ export default function RadioButtonGroup({
           disableDayPicker
           format="HH:mm"
           position="top"
-          plugins={[
-            <TimePicker
-              mStep={15}
-              hideSeconds
-              onChange={(event) => setStartTime(event.target.value)}
-            />,
-          ]}
+          plugins={[<TimePicker mStep={15} hideSeconds />]}
         />
         <Text fontSize="sm" color={switchIsChecked ? 'gray.700' : 'gray.200'}>
           Select ending time:
@@ -118,13 +101,7 @@ export default function RadioButtonGroup({
           disableDayPicker
           format="HH:mm"
           position="top"
-          plugins={[
-            <TimePicker
-              mStep={15}
-              hideSeconds
-              onChange={(event) => setEndTime(event.target.value)}
-            />,
-          ]}
+          plugins={[<TimePicker mStep={15} hideSeconds />]}
         />
       </Stack>
     </RadioGroup>

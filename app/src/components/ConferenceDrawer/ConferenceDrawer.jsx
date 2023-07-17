@@ -24,20 +24,13 @@ import GenerateDayOfTheWeek from './GenerateDayOfTheWeek/GenerateDayOfTheWeek';
 import RadioButtonGroup from './RadioButtonGroup';
 import GenerateMarkerColor from './GenerateMarkerColor/GenerateMarkerColor';
 import { useState } from 'react';
-import { useToast } from '@chakra-ui/react';
 import DatePicker from 'react-multi-date-picker';
-import CustomMultipleInput from './CustomInput';
-import { AiTwotoneCalendar } from 'react-icons/ai';
+import InputIcon from 'react-multi-date-picker/components/input_icon';
+import TimePicker from 'react-multi-date-picker/plugins/time_picker';
+import CustomInputIcon from './CustomInputIcon';
 
 export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
   const [switchIsChecked, setSwitchIsChecked] = useState(false);
-  const [startTime, setStartTime] = useState('');
-  const [endTime, setEndTime] = useState('');
-  const [selectedDate, setSelectedDate] = useState('');
-
-  const [selectedConference, setSelectedConference] =
-    useState('01 Conference Room');
-  const toast = useToast();
 
   return (
     <>
@@ -65,10 +58,7 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
               <Box mb={2} mt={3}>
                 Choose a conference room
               </Box>
-              <Select
-                size="md"
-                onChange={(event) => setSelectedConference(event.target.value)}
-              >
+              <Select size="md">
                 {Object.values(ConferenceRooms).map((type, index) => (
                   <option value={type} key={index}>
                     {type}
@@ -79,35 +69,19 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
                 Start at:
               </Box>
               <DatePicker
-                render={(value, openCalendar) => {
-                  return (
-                    <CustomMultipleInput
-                      value={value}
-                      openCalendar={openCalendar}
-                      iconName={AiTwotoneCalendar}
-                    />
-                  );
-                }}
+                render={<InputIcon />}
                 className="custom-calendar"
-                onChange={setSelectedDate}
-                disabled={switchIsChecked ? false : true}
+                format="MM/DD/YYYY HH:mm:ss"
+                plugins={[<TimePicker position="left" />]}
               />
               <Box mb={2} mt={3}>
                 End at:
               </Box>
               <DatePicker
-                render={(value, openCalendar) => {
-                  return (
-                    <CustomMultipleInput
-                      value={value}
-                      openCalendar={openCalendar}
-                      iconName={AiTwotoneCalendar}
-                    />
-                  );
-                }}
+                render={<InputIcon />}
                 className="custom-calendar"
-                onChange={setSelectedDate}
-                disabled={switchIsChecked ? false : true}
+                format="MM/DD/YYYY HH:mm:ss"
+                plugins={[<TimePicker position="left" />]}
               />
             </Box>
             <Divider />
@@ -143,9 +117,6 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
                 f_option="Never"
                 s_option="After"
                 t_option="On specific date"
-                setStartTime={setStartTime}
-                setEndTime={setEndTime}
-                setSelectedDate={setSelectedDate}
               />
             </Box>
             <Divider />
@@ -173,17 +144,7 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
             <Button variant="outline" mr={3} onClick={onClose}>
               Cancel
             </Button>
-            <Button
-              colorScheme="purple"
-              onClick={() => {
-                toast({
-                  position: 'top-right',
-                  variant: 'subtle',
-                  status: 'warning',
-                  description: `You have deleted the reservation of ${selectedConference} for the date ${selectedDate} from ${startTime} to ${endTime}`,
-                });
-              }}
-            >
+            <Button colorScheme="purple" onClick={console.log('success')}>
               Save
             </Button>
           </DrawerFooter>
