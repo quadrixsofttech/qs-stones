@@ -17,24 +17,17 @@ import {
   Text,
   Input,
   Textarea,
-  Icon,
 } from '@chakra-ui/react';
 import FloorTypes from '../../constants/FloorTypes';
 import ConferenceRooms from '../../constants/ConferenceRooms';
 import GenerateDayOfTheWeek from './GenerateDayOfTheWeek/GenerateDayOfTheWeek';
 import RadioButtonGroup from './RadioButtonGroup';
 import GenerateMarkerColor from './GenerateMarkerColor/GenerateMarkerColor';
-import { useRef, useState } from 'react';
-import DatePicker from 'react-multi-date-picker';
-import InputIcon from 'react-multi-date-picker/components/input_icon';
-import TimePicker from 'react-multi-date-picker/plugins/time_picker';
-import CustomInputIcon from './CustomInputIcon';
-import { FaRegClock } from 'react-icons/fa';
+import { useState } from 'react';
 import CustomDatePicker from './CustomDatePicker';
 
 export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
   const [switchIsChecked, setSwitchIsChecked] = useState(false);
-  const datePickerRef = useRef(null);
 
   return (
     <>

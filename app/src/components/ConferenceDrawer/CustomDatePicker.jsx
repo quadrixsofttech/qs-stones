@@ -22,7 +22,7 @@ export default function CustomDatePicker({ format }) {
             ? datePickerRef.current?.closeCalendar()
             : datePickerRef.current?.openCalendar();
         }}
-        position={'relative'}
+        position="relative"
         left={'90%'}
         transform="translateY(-200%)"
         cursor="pointer"

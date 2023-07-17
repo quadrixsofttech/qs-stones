@@ -14,22 +14,31 @@ export default function CustomTimePicker({ switchIsChecked }) {
         className="custom-calendar"
         disabled={switchIsChecked ? false : true}
         format="HH:mm:ss"
-        position="top"
+        position="left"
         plugins={[<TimePicker mStep={15} hideSeconds />]}
       />
-      <Icon
-        as={FaRegClock}
-        onClick={() => {
-          datePickerRef.current?.isOpen
-            ? datePickerRef.current?.closeCalendar()
-            : datePickerRef.current?.openCalendar();
-        }}
-        position="relative"
-        left={'15em'}
-        marginLeft={'20px'}
-        transform="translateY(-220%)"
-        cursor="pointer"
-      />
+      {switchIsChecked ? (
+        <Icon
+          as={FaRegClock}
+          onClick={() => {
+            datePickerRef.current?.isOpen
+              ? datePickerRef.current?.closeCalendar()
+              : datePickerRef.current?.openCalendar();
+          }}
+          position="relative"
+          left={'90%'}
+          transform="translateY(-220%)"
+          cursor="pointer"
+        />
+      ) : (
+        <Icon
+          as={FaRegClock}
+          color={'gray.200'}
+          position="relative"
+          left={'90%'}
+          transform="translateY(-220%)"
+        />
+      )}
     </>
   );
 }

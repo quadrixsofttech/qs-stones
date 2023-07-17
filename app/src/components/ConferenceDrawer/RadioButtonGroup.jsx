@@ -13,11 +13,8 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 import DatePicker from 'react-multi-date-picker';
-import TimePicker from 'react-multi-date-picker/plugins/time_picker';
-import InputIcon from 'react-multi-date-picker/components/input_icon';
-import { FaRegClock } from 'react-icons/fa';
-import CustomDatePicker from './CustomDatePicker';
 import CustomTimePicker from './CustomTimePicker';
+import { AiTwotoneCalendar } from 'react-icons/ai';
 
 export default function RadioButtonGroup({
   f_option,
@@ -26,7 +23,7 @@ export default function RadioButtonGroup({
   switchIsChecked,
 }) {
   const [value, setValue] = React.useState('1');
-  const datePickerRefff = React.useRef(null);
+  const datePickerRef = React.useRef(null);
 
   return (
     <RadioGroup onChange={setValue} value={value}>
@@ -76,7 +73,40 @@ export default function RadioButtonGroup({
         <Text fontSize="sm" color={switchIsChecked ? 'gray.700' : 'gray.200'}>
           Select date:
         </Text>
-        <CustomDatePicker format={'MM/DD/YYYY'} />
+        <DatePicker
+          ref={datePickerRef}
+          disabled={switchIsChecked ? false : true}
+          className="custom-calendar"
+          format="MM/DD/YYYY"
+          calendarPosition="right"
+        />
+        {switchIsChecked ? (
+          <Icon
+            as={AiTwotoneCalendar}
+            onClick={() => {
+              datePickerRef.current?.isOpen
+                ? datePickerRef.current?.closeCalendar()
+                : datePickerRef.current?.openCalendar();
+            }}
+            position="relative"
+            left={'90%'}
+            transform="translateY(-220%)"
+            cursor="pointer"
+          />
+        ) : (
+          <Icon
+            as={AiTwotoneCalendar}
+            color={'gray.200'}
+            onClick={() => {
+              datePickerRef.current?.isOpen
+                ? datePickerRef.current?.closeCalendar()
+                : datePickerRef.current?.openCalendar();
+            }}
+            position="relative"
+            left={'90%'}
+            transform="translateY(-220%)"
+          />
+        )}
         <Text fontSize="sm" color={switchIsChecked ? 'gray.700' : 'gray.200'}>
           Select starting time:
         </Text>
