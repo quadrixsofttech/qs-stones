@@ -1,8 +1,6 @@
 import {
-  Box,
   Flex,
   Icon,
-  Input,
   NumberDecrementStepper,
   NumberIncrementStepper,
   NumberInput,
@@ -17,8 +15,9 @@ import React from 'react';
 import DatePicker from 'react-multi-date-picker';
 import TimePicker from 'react-multi-date-picker/plugins/time_picker';
 import InputIcon from 'react-multi-date-picker/components/input_icon';
-import { AiTwotoneCalendar } from 'react-icons/ai';
-import CustomMultipleInput from './CustomInput';
+import { FaRegClock } from 'react-icons/fa';
+import CustomDatePicker from './CustomDatePicker';
+import CustomTimePicker from './CustomTimePicker';
 
 export default function RadioButtonGroup({
   f_option,
@@ -27,6 +26,7 @@ export default function RadioButtonGroup({
   switchIsChecked,
 }) {
   const [value, setValue] = React.useState('1');
+  const datePickerRefff = React.useRef(null);
 
   return (
     <RadioGroup onChange={setValue} value={value}>
@@ -76,33 +76,15 @@ export default function RadioButtonGroup({
         <Text fontSize="sm" color={switchIsChecked ? 'gray.700' : 'gray.200'}>
           Select date:
         </Text>
-        <DatePicker
-          render={<InputIcon />}
-          className="custom-calendar"
-          disabled={switchIsChecked ? false : true}
-        />
+        <CustomDatePicker format={'MM/DD/YYYY'} />
         <Text fontSize="sm" color={switchIsChecked ? 'gray.700' : 'gray.200'}>
           Select starting time:
         </Text>
-        <DatePicker
-          className="custom-calendar"
-          disabled={switchIsChecked ? false : true}
-          disableDayPicker
-          format="HH:mm"
-          position="top"
-          plugins={[<TimePicker mStep={15} hideSeconds />]}
-        />
+        <CustomTimePicker switchIsChecked={switchIsChecked} />
         <Text fontSize="sm" color={switchIsChecked ? 'gray.700' : 'gray.200'}>
           Select ending time:
         </Text>
-        <DatePicker
-          className="custom-calendar"
-          disabled={switchIsChecked ? false : true}
-          disableDayPicker
-          format="HH:mm"
-          position="top"
-          plugins={[<TimePicker mStep={15} hideSeconds />]}
-        />
+        <CustomTimePicker switchIsChecked={switchIsChecked} />
       </Stack>
     </RadioGroup>
   );

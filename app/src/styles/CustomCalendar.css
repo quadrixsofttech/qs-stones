@@ -3,6 +3,10 @@
   height: 40px !important;
 }
 
+.rmdp-container {
+  width: 100%;
+}
+
 .custom-calendar .rmdp-week-day {
   color: black;
 }

@@ -30,6 +30,7 @@ import InputIcon from 'react-multi-date-picker/components/input_icon';
 import TimePicker from 'react-multi-date-picker/plugins/time_picker';
 import CustomInputIcon from './CustomInputIcon';
 import { FaRegClock } from 'react-icons/fa';
+import CustomDatePicker from './CustomDatePicker';
 
 export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
   const [switchIsChecked, setSwitchIsChecked] = useState(false);
@@ -71,36 +72,11 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
               <Box mb={2} mt={3}>
                 Start at:
               </Box>
-              <Box position={'relative'} display={'inline-block'}>
-                <DatePicker
-                  ref={datePickerRef}
-                  disableDayPicker
-                  format="HH:mm:ss"
-                  plugins={[<TimePicker />]}
-                />
-                <Icon
-                  as={FaRegClock}
-                  onClick={() => {
-                    datePickerRef.current?.isOpen
-                      ? datePickerRef.current?.closeCalendar()
-                      : datePickerRef.current?.openCalendar();
-                  }}
-                  position="absolute"
-                  right="10px"
-                  top="50%"
-                  transform="translateY(-50%)"
-                  cursor="pointer"
-                />
-              </Box>
+              <CustomDatePicker format={'MM/DD/YYYY HH:mm:ss'} />
               <Box mb={2} mt={3}>
                 End at:
               </Box>
-              <DatePicker
-                render={<InputIcon />}
-                className="custom-calendar"
-                format="MM/DD/YYYY HH:mm:ss"
-                plugins={[<TimePicker position="left" />]}
-              />
+              <CustomDatePicker format={'MM/DD/YYYY HH:mm:ss'} />
             </Box>
             <Divider />
             <Box p={6}>
