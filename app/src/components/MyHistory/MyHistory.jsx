@@ -11,12 +11,12 @@ import {
   Heading,
   Divider,
   Spinner,
+  Box,
 } from '@chakra-ui/react';
 import styles from './MyHistory.styles';
 import RequestPTO from '../RequestPTO/RequestPTO';
 import { useState } from 'react';
 import { Calendar } from 'react-multi-date-picker';
-import employees from './information';
 import { MyHistoryStats } from './MyHistoryStats';
 import { LeaveTypes, headerOrder } from './constants/constants';
 import Scrollbars from 'react-custom-scrollbars-2';
@@ -24,7 +24,7 @@ import { usePaidTimeOff } from '../../hooks/usePTO';
 
 const MyHistory = () => {
   const [selectedOption, setSelectedOption] = useState(LeaveTypes.Remote);
-  const {paidTimeOffHistory, isError, isLoading} = usePaidTimeOff();
+  const { paidTimeOffHistory, isError, isLoading } = usePaidTimeOff();
 
   const handleSelectChange = (event) => {
     setSelectedOption(event.target.value);
@@ -32,14 +32,14 @@ const MyHistory = () => {
 
   if (isLoading) {
     return (
-      <>
+      <Flex justify="center" align="center" minHeight="200px">
         <Spinner />
-      </>
+      </Flex>
     );
   }
 
   if (isError) {
-    return <>An error occured in fetching data</>;
+    return <Box color="red.500">An error occurred in fetching data</Box>;
   }
 
   return (
@@ -102,10 +102,22 @@ const MyHistory = () => {
           </TabPanel>
           <Scrollbars style={{ height: '100%' }}>
             <TabPanel {...styles.tabPanelRequestHistory}>
-              {Array.isArray(employees.requests) &&
-                employees.requests.map((request, id) => {
-                  return <RequestPTO key={id} {...request} />;
-                })}
+              {paidTimeOffHistory.map((pto) => (
+                <RequestPTO
+                  key={pto._id}
+                  status={pto.status}
+                  type={pto.type}
+                  time={pto.createdAt}
+                  user={{
+                    name: pto.reviewerId.firstName,
+                    role: pto.reviewerId.lastName,
+                  }}
+                  requestedDates={pto.dates.map(
+                    ([startDate, endDate]) => `${startDate} to ${endDate}`
+                  )}
+                  response={pto.comment}
+                />
+              ))}
             </TabPanel>
           </Scrollbars>
         </TabPanels>

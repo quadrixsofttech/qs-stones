@@ -24,11 +24,13 @@ const createPaidTimeOff = async (req, res) => {
 
 const getUserHistory = async (req, res) => {
   try {
-    const userId = req.user.id;
+    const userId = req.params.userId;
     const ptoHistory = await PtoService.getUserHistory(userId);
     res.send(ptoHistory);
   } catch (err) {
-    res.status(500).json({ success: false, message: err.message });
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ success: false, message: err.message });
   }
 };
 

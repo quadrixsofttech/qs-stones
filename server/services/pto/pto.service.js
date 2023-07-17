@@ -96,7 +96,9 @@ const deletePTO = async (id) => {
 
 const getUserHistory = async (userId) => {
   try {
-    const ptoHistory = await PayedTimeOff.find({ userId });
+    const ptoHistory = await PayedTimeOff.find({ userId })
+      .populate('reviewerId', 'firstName lastName')
+      .lean();
     return ptoHistory;
   } catch (err) {
     throw new Error('Error in getting history for user');
@@ -112,25 +114,75 @@ async function calculateVacationPercentage() {
   const currentDate = moment();
   const lastYearDate = moment().subtract(1, 'year');
 
-  const currentYearVacationUsers = await Pto.countDocuments({
-    type: 'vacation',
-    createdAt: { $gte: currentDate.startOf('year').toDate() },
-  });
-
-  const lastYearVacationUsers = await Pto.countDocuments({
-    type: 'vacation',
-    createdAt: {
-      $gte: lastYearDate.startOf('year').toDate(),
-      $lte: lastYearDate.endOf('year').toDate(),
+  const currentYearVacationUsers = await PayedTimeOff.aggregate([
+    {
+      $match: {
+        type: 'vacation',
+        createdAt: { $gte: currentDate.startOf('year').toDate() },
+      },
     },
-  });
+    {
+      $group: {
+        _id: '$userId',
+        count: { $sum: 1 },
+      },
+    },
+    {
+      $group: {
+        _id: null,
+        total: { $sum: 1 },
+      },
+    },
+  ]);
+
+  const lastYearVacationUsers = await PayedTimeOff.aggregate([
+    {
+      $match: {
+        type: 'vacation',
+        createdAt: {
+          $gte: lastYearDate.startOf('year').toDate(),
+          $lte: lastYearDate.endOf('year').toDate(),
+        },
+      },
+    },
+    {
+      $group: {
+        _id: '$userId',
+        count: { $sum: 1 },
+      },
+    },
+    {
+      $group: {
+        _id: null,
+        total: { $sum: 1 },
+      },
+    },
+  ]);
+
+  const currentYearVacationCount =
+    currentYearVacationUsers.length > 0 ? currentYearVacationUsers[0].total : 0;
+  const lastYearVacationCount =
+    lastYearVacationUsers.length > 0 ? lastYearVacationUsers[0].total : 0;
 
   const percentage =
-    ((currentYearVacationUsers - lastYearVacationUsers) /
-      lastYearVacationUsers) *
+    ((currentYearVacationCount - lastYearVacationCount) /
+      lastYearVacationCount) *
     100;
   return percentage.toFixed(2);
 }
+
+const getUserDates = async (userId) => {
+  try {
+    const ptoDates = await PayedTimeOff.find({ userId }, { dates: 1 }).lean();
+    const allDates = ptoDates.reduce((acc, pto) => {
+      acc.push(...pto.dates);
+      return acc;
+    }, []);
+    return allDates;
+  } catch (err) {
+    throw new Error('Error in getting dates for user');
+  }
+};
 
 module.exports = {
   getAllPTO,
@@ -140,4 +192,5 @@ module.exports = {
   getUserHistory,
   calculateVacationPercentage,
   getUsersOnVacation,
+  getUserDates,
 };
