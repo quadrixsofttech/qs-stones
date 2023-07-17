@@ -46,10 +46,10 @@ const ConferenceOverview = () => {
       <Grid {...styles.conferenceRoomGrid}>
         {conferenceRooms.map((room) => {
           return (
-            <GridItem key={room.roomNumber}>
+            <GridItem key={room.id}>
               <ConferenceRoom
-                key={room.roomNumber}
-                roomNumber={room.roomNumber}
+                key={room.id}
+                id={room.id}
                 name={room.name}
                 capacity={room.capacity}
                 img={room.img}
