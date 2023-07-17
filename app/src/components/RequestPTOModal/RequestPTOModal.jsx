@@ -13,6 +13,7 @@ import {
   Spinner,
   Text,
   Tooltip,
+  useToast,
 } from '@chakra-ui/react';
 import styles from './RequestPTOModal.styles';
 import { Scrollbars } from 'react-custom-scrollbars-2';
@@ -40,19 +41,27 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
     handleVacationDates,
     removeRemoteTag,
     removeVacationTag,
-    formatDates,
   ] = useCalendar();
 
   const { user, admins, adminsLoading } = useUser();
   const { createPTO } = useEmployees();
 
   const [selectedAdmin, setSelectedAdmin] = useState();
+  const toast = useToast();
+
+  if (adminsLoading) {
+    return <Spinner />;
+  }
 
   const submitPTORequest = async () => {
     try {
+      if (selectedAdmin === undefined) {
+        alert('Pleast select administrator');
+        return false;
+      }
       if (RemoteDates.length > 0) {
         await createPTO.mutateAsync({
-          dates: formatDates(RemoteDates),
+          dates: RemoteDates,
           type: 'remote',
           status: 'pending',
           userId: user._id,
@@ -62,7 +71,7 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
       }
       if (VacationDates.length > 0) {
         await createPTO.mutateAsync({
-          dates: formatDates(VacationDates),
+          dates: VacationDates,
           type: 'vacation',
           status: 'pending',
           userId: user._id,
@@ -70,14 +79,22 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
           comment: '',
         });
       }
+      toast({
+        title: 'Success',
+        description:
+          'You have submitted a request to the Admin for scheduling vacation and remote work',
+        position: 'top-right',
+        status: 'success',
+        isClosable: false,
+        colorScheme: 'green',
+        variant: 'subtle',
+      });
+
+      onClose();
     } catch (err) {
       console.log(err);
     }
   };
-
-  if (adminsLoading) {
-    return <Spinner />;
-  }
 
   return (
     <Modal
@@ -117,6 +134,7 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
                 onChange={(e) => {
                   setSelectedAdmin(e.target.value);
                 }}
+                placeholder="Select administrator"
               >
                 {admins.map((admin) => {
                   return (
@@ -175,7 +193,6 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
                   <Button
                     onClick={() => {
                       submitPTORequest();
-                      onClose();
                     }}
                     {...styles.button}
                     leftIcon={<BiUserPin />}
