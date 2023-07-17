@@ -2,6 +2,7 @@ import {
   Box,
   Flex,
   Icon,
+  Input,
   NumberDecrementStepper,
   NumberIncrementStepper,
   NumberInput,
@@ -16,22 +17,7 @@ import React from 'react';
 import DatePicker from 'react-multi-date-picker';
 import TimePicker from 'react-multi-date-picker/plugins/time_picker';
 import { AiTwotoneCalendar } from 'react-icons/ai';
-
-function CustomMultipleInput({ openCalendar, value, iconName }) {
-  return (
-    <Box onClick={openCalendar}>
-      <input
-        value={value}
-        style={{ border: '1px solid gray', borderRadius: '0.2em' }}
-      />
-      <Icon
-        as={iconName}
-        boxSize={'4'}
-        style={{ position: 'relative', right: '1.2em', top: '0.1em' }}
-      />
-    </Box>
-  );
-}
+import CustomMultipleInput from './CustomInput';
 
 export default function RadioButtonGroup({
   f_option,

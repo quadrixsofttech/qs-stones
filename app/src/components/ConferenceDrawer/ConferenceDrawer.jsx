@@ -25,6 +25,9 @@ import RadioButtonGroup from './RadioButtonGroup';
 import GenerateMarkerColor from './GenerateMarkerColor/GenerateMarkerColor';
 import { useState } from 'react';
 import { useToast } from '@chakra-ui/react';
+import DatePicker from 'react-multi-date-picker';
+import CustomMultipleInput from './CustomInput';
+import { AiTwotoneCalendar } from 'react-icons/ai';
 
 export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
   const [switchIsChecked, setSwitchIsChecked] = useState(false);
@@ -35,7 +38,6 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
   const [selectedConference, setSelectedConference] =
     useState('01 Conference Room');
   const toast = useToast();
-
 
   return (
     <>
@@ -76,18 +78,36 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
               <Box mb={2} mt={3}>
                 Start at:
               </Box>
-              <Input
-                placeholder="Select Date and Time"
-                size="md"
-                type="datetime-local"
+              <DatePicker
+                render={(value, openCalendar) => {
+                  return (
+                    <CustomMultipleInput
+                      value={value}
+                      openCalendar={openCalendar}
+                      iconName={AiTwotoneCalendar}
+                    />
+                  );
+                }}
+                className="custom-calendar"
+                onChange={setSelectedDate}
+                disabled={switchIsChecked ? false : true}
               />
               <Box mb={2} mt={3}>
                 End at:
               </Box>
-              <Input
-                placeholder="Select Date and Time"
-                size="md"
-                type="datetime-local"
+              <DatePicker
+                render={(value, openCalendar) => {
+                  return (
+                    <CustomMultipleInput
+                      value={value}
+                      openCalendar={openCalendar}
+                      iconName={AiTwotoneCalendar}
+                    />
+                  );
+                }}
+                className="custom-calendar"
+                onChange={setSelectedDate}
+                disabled={switchIsChecked ? false : true}
               />
             </Box>
             <Divider />
