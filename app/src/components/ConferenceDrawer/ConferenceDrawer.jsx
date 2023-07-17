@@ -17,20 +17,23 @@ import {
   Text,
   Input,
   Textarea,
+  Icon,
 } from '@chakra-ui/react';
 import FloorTypes from '../../constants/FloorTypes';
 import ConferenceRooms from '../../constants/ConferenceRooms';
 import GenerateDayOfTheWeek from './GenerateDayOfTheWeek/GenerateDayOfTheWeek';
 import RadioButtonGroup from './RadioButtonGroup';
 import GenerateMarkerColor from './GenerateMarkerColor/GenerateMarkerColor';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import DatePicker from 'react-multi-date-picker';
 import InputIcon from 'react-multi-date-picker/components/input_icon';
 import TimePicker from 'react-multi-date-picker/plugins/time_picker';
 import CustomInputIcon from './CustomInputIcon';
+import { FaRegClock } from 'react-icons/fa';
 
 export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
   const [switchIsChecked, setSwitchIsChecked] = useState(false);
+  const datePickerRef = useRef(null);
 
   return (
     <>
@@ -68,12 +71,27 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
               <Box mb={2} mt={3}>
                 Start at:
               </Box>
-              <DatePicker
-                render={<InputIcon />}
-                className="custom-calendar"
-                format="MM/DD/YYYY HH:mm:ss"
-                plugins={[<TimePicker position="left" />]}
-              />
+              <Box position={'relative'} display={'inline-block'}>
+                <DatePicker
+                  ref={datePickerRef}
+                  disableDayPicker
+                  format="HH:mm:ss"
+                  plugins={[<TimePicker />]}
+                />
+                <Icon
+                  as={FaRegClock}
+                  onClick={() => {
+                    datePickerRef.current?.isOpen
+                      ? datePickerRef.current?.closeCalendar()
+                      : datePickerRef.current?.openCalendar();
+                  }}
+                  position="absolute"
+                  right="10px"
+                  top="50%"
+                  transform="translateY(-50%)"
+                  cursor="pointer"
+                />
+              </Box>
               <Box mb={2} mt={3}>
                 End at:
               </Box>
