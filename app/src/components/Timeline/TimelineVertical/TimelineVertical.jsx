@@ -1,7 +1,7 @@
 import { Box, Flex, Grid, GridItem, Heading, Text } from '@chakra-ui/react';
 import styles from './TimelineVertical.styles';
 import TimelineCard from './';
-import CurrentTimeLine from '../CurrentTimeLine/CurrentTimeLine';
+import CurrentTimeLine from '../../CurrentTimeLine/CurrentTimeLine';
 import moment from 'moment';
 import { useMemo } from 'react';
 
