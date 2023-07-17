@@ -3,6 +3,6 @@ const router = express.Router();
 const PtoController = require('../controllers/pto.controller');
 
 router.post('/', PtoController.createPaidTimeOff);
-router.get('/history', PtoController.getUserHistory);
+router.get('/history/:usedId', PtoController.getUserHistory); 
 
 module.exports = router;

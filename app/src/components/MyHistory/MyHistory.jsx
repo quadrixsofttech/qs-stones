@@ -42,6 +42,21 @@ const MyHistory = () => {
     return <Box color="red.500">An error occurred in fetching data</Box>;
   }
 
+  const getRequestedDates = () => {
+    if (selectedOption === LeaveTypes.Remote) {
+      return paidTimeOffHistory
+        .filter((pto) => pto.type === LeaveTypes.Remote)
+        .map((pto) => pto.dates)
+        .flat();
+    } else if (selectedOption === LeaveTypes.Vacation) {
+      return paidTimeOffHistory
+        .filter((pto) => pto.type === LeaveTypes.Vacation)
+        .map((pto) => pto.dates)
+        .flat();
+    }
+    return [];
+  };
+
   return (
     <Flex {...styles.container}>
       <Flex {...styles.header}>
@@ -113,7 +128,7 @@ const MyHistory = () => {
                     role: pto.reviewerId.lastName,
                   }}
                   requestedDates={pto.dates.map(
-                    ([startDate, endDate]) => `${startDate} to ${endDate}`
+                    ([startDate, endDate]) => `${startDate} to ${endDate}; `
                   )}
                   response={pto.comment}
                 />
