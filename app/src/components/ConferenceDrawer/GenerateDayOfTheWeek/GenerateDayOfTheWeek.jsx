@@ -3,21 +3,46 @@ import DayOfTheWeek from '../../../constants/DayOfTheWeek';
 import styles from './GenerateDayOfTheWeek.styles';
 import React from 'react';
 
-export default function GenerateDayOfTheWeek({ switchIsChecked }) {
-  const [selectedColorIndex, setSelectedColorIndex] = React.useState(null);
+export default function GenerateDayOfTheWeek({
+  switchIsChecked,
+  everyDayChecked,
+  setEveryDayChecked,
+}) {
+  const [selectedColorIndex, setSelectedColorIndex] = React.useState(-1);
 
   const handleColorClick = (index) => {
-    setSelectedColorIndex((prevIndex) => (prevIndex === index ? null : index));
+    if (everyDayChecked) {
+      setEveryDayChecked(false);
+    } else {
+      setSelectedColorIndex((prevIndex) => (prevIndex === index ? -1 : index));
+    }
   };
+
+  React.useEffect(() => {
+    if (everyDayChecked) {
+      setSelectedColorIndex(-1);
+    }
+  }, [everyDayChecked]);
+
   return (
     <Flex alignItems={'center'} justifyContent={'space-around'} mt={4}>
       {Object.values(DayOfTheWeek).map((day, index) => (
         <Flex
           {...styles.dayContainer}
           key={index}
-          color={switchIsChecked ? 'black' : 'gray.200'}
+          color={
+            switchIsChecked || everyDayChecked
+              ? selectedColorIndex === -1 || selectedColorIndex === index
+                ? 'white'
+                : 'black'
+              : 'gray.200'
+          }
           borderColor={switchIsChecked ? 'gray.200' : 'gray.100'}
-          bgColor={selectedColorIndex === index ? 'purple.500' : 'transparent'}
+          bgColor={
+            everyDayChecked || selectedColorIndex === index
+              ? 'purple.500'
+              : 'transparent'
+          }
           onClick={() => handleColorClick(index)}
         >
           {day}

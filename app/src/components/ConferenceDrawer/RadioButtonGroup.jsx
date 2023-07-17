@@ -22,24 +22,27 @@ export default function RadioButtonGroup({
   t_option,
   switchIsChecked,
 }) {
-  const [value, setValue] = React.useState('1');
   const datePickerRef = React.useRef(null);
+  const [repeatReservation, setRepeatReservation] = React.useState('never');
+
+  const handleRadioChange = (newValue) => {
+    setRepeatReservation(newValue);
+  };
 
   return (
-    <RadioGroup onChange={setValue} value={value}>
+    <RadioGroup onChange={handleRadioChange} value={repeatReservation}>
       <Stack mt={1}>
         <Radio
           size="sm"
-          value="first"
+          value="never"
           colorScheme="purple"
-          defaultChecked
           isDisabled={switchIsChecked ? false : true}
         >
           <Text fontSize="sm">{f_option}</Text>
         </Radio>
         <Radio
           size="sm"
-          value="second"
+          value="after"
           colorScheme="purple"
           isDisabled={switchIsChecked ? false : true}
         >
@@ -64,23 +67,40 @@ export default function RadioButtonGroup({
         </Radio>
         <Radio
           size="sm"
-          value="third"
+          value="on specific date"
           colorScheme="purple"
           isDisabled={switchIsChecked ? false : true}
         >
           <Text fontSize="sm">{t_option}</Text>
         </Radio>
-        <Text fontSize="sm" color={switchIsChecked ? 'gray.700' : 'gray.200'}>
+        <Text
+          fontSize="sm"
+          color={
+            switchIsChecked &&
+            repeatReservation !== 'never' &&
+            repeatReservation !== 'after'
+              ? 'gray.700'
+              : 'gray.200'
+          }
+        >
           Select date:
         </Text>
         <DatePicker
           ref={datePickerRef}
-          disabled={switchIsChecked ? false : true}
+          disabled={
+            switchIsChecked &&
+            repeatReservation !== 'never' &&
+            repeatReservation !== 'after'
+              ? false
+              : true
+          }
           className="custom-calendar"
           format="MM/DD/YYYY"
           calendarPosition="right"
         />
-        {switchIsChecked ? (
+        {switchIsChecked &&
+        repeatReservation !== 'never' &&
+        repeatReservation !== 'after' ? (
           <Icon
             as={AiTwotoneCalendar}
             onClick={() => {
@@ -107,14 +127,38 @@ export default function RadioButtonGroup({
             transform="translateY(-220%)"
           />
         )}
-        <Text fontSize="sm" color={switchIsChecked ? 'gray.700' : 'gray.200'}>
+        <Text
+          fontSize="sm"
+          color={
+            switchIsChecked &&
+            repeatReservation !== 'never' &&
+            repeatReservation !== 'after'
+              ? 'gray.700'
+              : 'gray.200'
+          }
+        >
           Select starting time:
         </Text>
-        <CustomTimePicker switchIsChecked={switchIsChecked} />
-        <Text fontSize="sm" color={switchIsChecked ? 'gray.700' : 'gray.200'}>
+        <CustomTimePicker
+          switchIsChecked={switchIsChecked}
+          repeatReservation={repeatReservation}
+        />
+        <Text
+          fontSize="sm"
+          color={
+            switchIsChecked &&
+            repeatReservation !== 'never' &&
+            repeatReservation !== 'after'
+              ? 'gray.700'
+              : 'gray.200'
+          }
+        >
           Select ending time:
         </Text>
-        <CustomTimePicker switchIsChecked={switchIsChecked} />
+        <CustomTimePicker
+          switchIsChecked={switchIsChecked}
+          repeatReservation={repeatReservation}
+        />
       </Stack>
     </RadioGroup>
   );

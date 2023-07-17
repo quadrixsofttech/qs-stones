@@ -28,6 +28,11 @@ import CustomDatePicker from './CustomDatePicker';
 
 export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
   const [switchIsChecked, setSwitchIsChecked] = useState(false);
+  const [everyDayChecked, setEveryDayChecked] = useState(false);
+
+  const handleEveryDayCheck = () => {
+    setEveryDayChecked(!everyDayChecked);
+  };
 
   return (
     <>
@@ -83,11 +88,17 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
                   Repeat reservation
                 </FormLabel>
               </FormControl>
-              <GenerateDayOfTheWeek switchIsChecked={switchIsChecked} />
+              <GenerateDayOfTheWeek
+                switchIsChecked={switchIsChecked}
+                everyDayChecked={everyDayChecked}
+                setEveryDayChecked={setEveryDayChecked}
+              />
               <Box mt={3}>
                 <Checkbox
                   colorScheme="purple"
                   isDisabled={switchIsChecked ? false : true}
+                  isChecked={everyDayChecked}
+                  onChange={handleEveryDayCheck}
                 >
                   Every day
                 </Checkbox>

@@ -4,7 +4,10 @@ import { FaRegClock } from 'react-icons/fa';
 import DatePicker from 'react-multi-date-picker';
 import TimePicker from 'react-multi-date-picker/plugins/time_picker';
 
-export default function CustomTimePicker({ switchIsChecked }) {
+export default function CustomTimePicker({
+  switchIsChecked,
+  repeatReservation,
+}) {
   const datePickerRef = React.useRef(null);
   return (
     <>
@@ -12,12 +15,20 @@ export default function CustomTimePicker({ switchIsChecked }) {
         ref={datePickerRef}
         disableDayPicker
         className="custom-calendar"
-        disabled={switchIsChecked ? false : true}
+        disabled={
+          switchIsChecked &&
+          repeatReservation !== 'never' &&
+          repeatReservation !== 'after'
+            ? false
+            : true
+        }
         format="HH:mm:ss"
         position="left"
         plugins={[<TimePicker mStep={15} hideSeconds />]}
       />
-      {switchIsChecked ? (
+      {switchIsChecked &&
+      repeatReservation !== 'never' &&
+      repeatReservation !== 'after' ? (
         <Icon
           as={FaRegClock}
           onClick={() => {
