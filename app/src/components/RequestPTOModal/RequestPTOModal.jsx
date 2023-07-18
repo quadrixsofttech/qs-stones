@@ -102,6 +102,7 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
       isOpen={isOpen}
       onClose={() => {
         setRemoteDates([]);
+        setVacationDates([]);
         onClose();
       }}
       motionPreset="slideInBottom"
@@ -124,7 +125,7 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
                 hasArrow
                 placement="right"
               >
-                <InfoIcon color={'gray.400'} />
+                <InfoIcon color={'gray.400'} mt="1" />
               </Tooltip>
             </Flex>
             <Flex>
@@ -184,7 +185,6 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
                   <Button
                     onClick={() => {
                       setIsCurrentPageRemote(true);
-                      setVacationDates([]);
                     }}
                     leftIcon={<FaArrowLeft size="12" />}
                   >
@@ -193,6 +193,9 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
                   <Button
                     onClick={() => {
                       submitPTORequest();
+                      setRemoteDates([]);
+                      setVacationDates([]);
+                      onClose();
                     }}
                     {...styles.button}
                     leftIcon={<BiUserPin />}
