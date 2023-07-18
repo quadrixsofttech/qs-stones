@@ -103,6 +103,7 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
       onClose={() => {
         setRemoteDates([]);
         setVacationDates([]);
+        setIsCurrentPageRemote(true);
         onClose();
       }}
       motionPreset="slideInBottom"
@@ -193,9 +194,6 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
                   <Button
                     onClick={() => {
                       submitPTORequest();
-                      setRemoteDates([]);
-                      setVacationDates([]);
-                      onClose();
                     }}
                     {...styles.button}
                     leftIcon={<BiUserPin />}

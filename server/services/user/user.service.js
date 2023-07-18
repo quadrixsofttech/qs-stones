@@ -13,7 +13,9 @@ const getAllUsers = async () => {
 
 const getAdmins = async () => {
   try {
-    const admins = await User.find({ role: 'admin' }).lean();
+    const admins = await User.find({ role: 'admin' })
+      .select('_id firstName lastName')
+      .lean();
     return admins;
   } catch (err) {
     throw new Error(err);
