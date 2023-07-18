@@ -60,7 +60,13 @@ const getReservations = async (date) => {
           as: 'user',
         },
       },
+      {
+        $addFields: {
+          user: { $arrayElemAt: ['$user', 0] },
+        },
+      },
     ]);
+
     return reservations;
   } catch (err) {
     throw new Error(err);
