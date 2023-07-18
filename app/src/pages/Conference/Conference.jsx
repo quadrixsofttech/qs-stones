@@ -1,20 +1,14 @@
 import DashboardLayout from '../../layout/DashboardLayout/DashboardLayout';
 import ConferenceNavbar from '../../components/ConferenceNavbar/ConferenceNavbar';
-import React from 'react';
+import React, { useState } from 'react';
 import Timeline from '../../components/Timeline/Timeline';
 import ConferenceCalendarNavbar from '../../components/ConferenceNavbar/ConferenceCalendarNavbar';
-import { Divider } from '@chakra-ui/react';
+import { Divider, useDisclosure } from '@chakra-ui/react';
+import ConferenceRoomReservationModal from '../../components/ConferenceRoomReservationModal';
 
 const Conference = () => {
-  const onEdit = (id) => {
-    console.log('Edit' + id);
-  };
-  const onDelete = (id) => {
-    console.log('Delete' + id);
-  };
-  const onOpen = (id) => {
-    console.log('Open' + id);
-  };
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [modalData, setModalData] = useState(null);
   const Label = [
     {
       name: 'conference-room-1',
@@ -99,6 +93,18 @@ const Conference = () => {
       },
     },
   ];
+  const handleEdit = (id) => {
+    console.log('Edit' + id);
+  };
+  const handleDelete = (id) => {
+    console.log('Delete' + id);
+  };
+  const handleOpen = (id) => {
+    const filteredData = data?.find((room) => room.id === id);
+    setModalData(filteredData);
+    onOpen();
+  };
+
   return (
     <DashboardLayout Padding="0">
       <ConferenceNavbar />
@@ -110,9 +116,16 @@ const Conference = () => {
         data={data}
         startHour="08:00"
         endHour="17:00"
-        onOpen={onOpen}
-        onEdit={onEdit}
-        onDelete={onDelete}
+        onOpen={handleOpen}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
+      />
+      <ConferenceRoomReservationModal
+        isOpen={isOpen}
+        onClose={onClose}
+        data={modalData}
+        handleDelete={handleDelete}
+        handleEdit={handleEdit}
       />
     </DashboardLayout>
   );
