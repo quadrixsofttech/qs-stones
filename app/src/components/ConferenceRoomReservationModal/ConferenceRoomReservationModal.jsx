@@ -36,32 +36,26 @@ const ConferenceRoomReservationModal = ({
     <Modal isCentered isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent pl="6" pr="6">
-        <ModalHeader
-          paddingTop="4"
-          paddingBottom={'4'}
-          pl={0}
-          color={'gray.700'}
-        >
-          {data.title}
-        </ModalHeader>
-        <Flex position={'absolute'} right={4} top={2} gap="4">
+        <ModalHeader {...styles.modalHeader}>{data.title}</ModalHeader>
+        <Flex {...styles.iconBox}>
+          {data.enabled && (
+            <IconButton
+              {...styles.icon}
+              onClick={() => handleEdit(data.id)}
+              icon={<BiPencil size="20" />}
+            />
+          )}
+          {data.enabled && (
+            <IconButton
+              {...styles.icon}
+              onClick={() => handleDelete(data.id)}
+              icon={<BiTrash size="20" />}
+            />
+          )}
           <IconButton
-            backgroundColor="white"
-            borderRadius={'50%'}
-            onClick={() => handleEdit(data.id)}
-            icon={<BiPencil size="20" />}
-          />
-          <IconButton
-            backgroundColor="white"
-            borderRadius={'50%'}
-            onClick={() => handleDelete(data.id)}
-            icon={<BiTrash size="20" />}
-          />
-          <IconButton
+            {...styles.icon}
             icon={<BiX size="20" />}
             onClick={onClose}
-            borderRadius={'50%'}
-            backgroundColor="white"
           />
         </Flex>
 
@@ -72,24 +66,22 @@ const ConferenceRoomReservationModal = ({
             <Text color={'gray.700'}>{data.column}</Text>
             <Tag {...styles.tag}>"Upper floor"</Tag>
           </Flex>
-          <Flex alignItems={'center'} mt="4" gap="2">
+          <Flex {...styles.infoBox}>
             <BiCalendar />
             <Text color={'gray.700'}>May 24, Wednesday</Text>
           </Flex>
-          <Flex alignItems={'center'} mt="4" gap="2">
+          <Flex {...styles.infoBox}>
             <BiTime />
             <Text color={'gray.700'}>
               {data.start} - {data.end}
             </Text>
           </Flex>
-          <Text mt="4" color={'gray.700'} fontWeight={'semibold'}>
-            Description:
-          </Text>
+          <Text {...styles.description}>Description:</Text>
           <Text mt="1" color={'gray.700'}>
             {data.description}
           </Text>
           <Divider mt="4" />
-          <Flex pt="4" pb="4" alignItems={'center'} gap="1">
+          <Flex {...styles.modalFooter}>
             <Avatar size="xs" src={data.user.image} />
             <Text color={'gray.700'} fontSize="xs">
               {data.user.name}

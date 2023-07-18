@@ -111,7 +111,7 @@ const Conference = () => {
       <ConferenceCalendarNavbar />
       <Divider />
       <Timeline
-        type="horizontal"
+        type="vertical"
         title={Label}
         data={data}
         startHour="08:00"
