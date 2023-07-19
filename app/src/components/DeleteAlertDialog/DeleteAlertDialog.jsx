@@ -15,7 +15,9 @@ const DeleteAlertDialog = ({ isOpen, onClose, idToDelete }) => {
   const deleteReservation = async (id) => {
     try {
       await deleteConferenceReservation.mutateAsync(id);
-    } catch (err) {}
+    } catch (err) {
+      throw new Error(err);
+    }
   };
   return (
     <AlertDialog isOpen={isOpen} onClose={onClose} isCentered>
