@@ -12,6 +12,7 @@ export default function NavbarButtons({
 }) {
   const handleClick = (label) => {
     setTimelineType(label);
+    setTimelineFilter(label);
   };
 
   const handleTodayButtonClick = () => {
@@ -38,10 +39,7 @@ export default function NavbarButtons({
       <Divider orientation="vertical" h={8} />
       <Box
         {...styles.buttonStyles}
-        onClick={() => {
-          handleClick('TIMELINE DAY');
-          setTimelineFilter('TIMELINE DAY');
-        }}
+        onClick={() => handleClick('TIMELINE DAY')}
         color={timelineType === 'TIMELINE DAY' ? 'purple.700' : 'gray.700'}
         bg={timelineType === 'TIMELINE DAY' ? 'purple.50' : 'white'}
         _hover={{ backgroundColor: 'gray.200' }}
@@ -50,10 +48,7 @@ export default function NavbarButtons({
       </Box>
       <Box
         {...styles.buttonStyles}
-        onClick={() => {
-          handleClick('TIMELINE WEEK');
-          setTimelineFilter('TIMELINE WEEK');
-        }}
+        onClick={() => handleClick('TIMELINE WEEK')}
         color={timelineType === 'TIMELINE WEEK' ? 'purple.700' : 'gray.700'}
         bg={timelineType === 'TIMELINE WEEK' ? 'purple.50' : 'white'}
         _hover={{ backgroundColor: 'gray.200' }}

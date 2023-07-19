@@ -1,14 +1,13 @@
 import DashboardLayout from '../../layout/DashboardLayout/DashboardLayout';
 import ConferenceNavbar from '../../components/ConferenceNavbar/ConferenceNavbar';
-import React from 'react';
+import React, { useState } from 'react';
 import Timeline from '../../components/Timeline/Timeline';
 import ConferenceCalendarNavbar from '../../components/ConferenceNavbar/ConferenceCalendarNavbar';
 import { Divider } from '@chakra-ui/react';
 
 const Conference = () => {
-  const [timelineOrientation, setTimelineOrientation] =
-    React.useState('vertical');
-  const [timelineFilter, setTimelineFilter] = React.useState('');
+  const [timelineOrientation, setTimelineOrientation] = useState('vertical');
+  const [timelineFilter, setTimelineFilter] = useState('');
 
   const onEdit = (id) => {
     console.log('Edit' + id);
