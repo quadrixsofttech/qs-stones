@@ -1,18 +1,23 @@
 import DashboardLayout from '../../layout/DashboardLayout/DashboardLayout';
 import ConferenceNavbar from '../../components/ConferenceNavbar/ConferenceNavbar';
-import React from 'react';
+import React, { useState } from 'react';
 import Timeline from '../../components/Timeline/Timeline';
 import ConferenceCalendarNavbar from '../../components/ConferenceNavbar/ConferenceCalendarNavbar';
-import { Divider } from '@chakra-ui/react';
+import { Divider, useDisclosure } from '@chakra-ui/react';
+import DeleteAlertDialog from '../../components/DeleteAlertDialog/DeleteAlertDialog';
 
 const Conference = () => {
-  const onEdit = (id) => {
+  const alertDialogDisclosure = useDisclosure();
+  const [idToDelete, setIdToDelete] = useState();
+
+  const handleEdit = (id) => {
     console.log('Edit' + id);
   };
-  const onDelete = (id) => {
-    console.log('Delete' + id);
+  const handleDelete = (id) => {
+    setIdToDelete(id);
+    alertDialogDisclosure.onOpen();
   };
-  const onOpen = (id) => {
+  const handleOpen = (id) => {
     console.log('Open' + id);
   };
   const Label = [
@@ -27,7 +32,7 @@ const Conference = () => {
 
   const data = [
     {
-      id: '123456',
+      id: '64abdc4407a59e172e853077',
       enabled: true,
       column: 'conference-room-1',
       start: '08:15',
@@ -41,7 +46,7 @@ const Conference = () => {
       },
     },
     {
-      id: '123457',
+      id: '64abdc4407a59e172e853078',
       enabled: true,
       column: 'conference-room-1',
       start: '11:00',
@@ -55,7 +60,7 @@ const Conference = () => {
       },
     },
     {
-      id: '123458',
+      id: '64abdc4407a59e172e853079',
       enabled: true,
       column: 'conference-room-1',
       start: '09:00',
@@ -70,7 +75,7 @@ const Conference = () => {
       },
     },
     {
-      id: '123459',
+      id: '64abdc4407a59e172e85307a',
       enabled: false,
       column: 'conference-room-2',
       start: '08:30',
@@ -84,7 +89,7 @@ const Conference = () => {
       },
     },
     {
-      id: '123460',
+      id: '64abe2797efc0819a3f203b7',
       enabled: true,
       column: 'brainstorm-room',
       start: '08:15',
@@ -105,14 +110,19 @@ const Conference = () => {
       <ConferenceCalendarNavbar />
       <Divider />
       <Timeline
-        type="horizontal"
+        type="vertical"
         title={Label}
         data={data}
         startHour="08:00"
         endHour="17:00"
-        onOpen={onOpen}
-        onEdit={onEdit}
-        onDelete={onDelete}
+        onOpen={handleOpen}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
+      />
+      <DeleteAlertDialog
+        isOpen={alertDialogDisclosure.isOpen}
+        onClose={alertDialogDisclosure.onClose}
+        idToDelete={idToDelete}
       />
     </DashboardLayout>
   );
