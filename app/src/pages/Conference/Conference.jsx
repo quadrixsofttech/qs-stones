@@ -109,7 +109,6 @@ const Conference = () => {
       <ConferenceCalendarNavbar
         timelineOrientation={timelineOrientation}
         setTimelineOrientation={setTimelineOrientation}
-        timelineFilter={timelineFilter}
         setTimelineFilter={setTimelineFilter}
       />
       <Divider />

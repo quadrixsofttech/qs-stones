@@ -67,7 +67,6 @@ export default function ConferenceNavbar({
           setCurrentDate={setCurrentDate}
           timelineType={timelineType}
           setTimelineType={setTimelineType}
-          timelineFilter={timelineFilter}
           setTimelineFilter={setTimelineFilter}
         />
         <Divider orientation="vertical" h={8} />

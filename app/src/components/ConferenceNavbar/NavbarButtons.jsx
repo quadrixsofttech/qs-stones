@@ -8,7 +8,6 @@ export default function NavbarButtons({
   setCurrentDate,
   timelineType,
   setTimelineType,
-  timelineFilter,
   setTimelineFilter,
 }) {
   const handleClick = (label) => {
