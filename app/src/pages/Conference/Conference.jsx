@@ -8,6 +8,7 @@ import { Divider } from '@chakra-ui/react';
 const Conference = () => {
   const [timelineOrientation, setTimelineOrientation] =
     React.useState('vertical');
+  const [timelineFilter, setTimelineFilter] = React.useState('');
 
   const onEdit = (id) => {
     console.log('Edit' + id);
@@ -108,6 +109,8 @@ const Conference = () => {
       <ConferenceCalendarNavbar
         timelineOrientation={timelineOrientation}
         setTimelineOrientation={setTimelineOrientation}
+        timelineFilter={timelineFilter}
+        setTimelineFilter={setTimelineFilter}
       />
       <Divider />
       <Timeline
@@ -119,6 +122,7 @@ const Conference = () => {
         onOpen={onOpen}
         onEdit={onEdit}
         onDelete={onDelete}
+        timelineFilter={timelineFilter}
       />
     </DashboardLayout>
   );

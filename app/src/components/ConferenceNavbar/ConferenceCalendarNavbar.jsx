@@ -23,6 +23,8 @@ import styles from './ConferenceCalendarNavbar.styles';
 export default function ConferenceNavbar({
   timelineOrientation,
   setTimelineOrientation,
+  timelineFilter,
+  setTimelineFilter,
 }) {
   const {
     currentDate,
@@ -31,7 +33,7 @@ export default function ConferenceNavbar({
     handlePreviousDay,
     setCurrentDate,
   } = useDates(moment());
-  const [timelineFormat, setTimelineFormat] = useState(false);
+  const [timelineType, setTimelineType] = useState(false);
 
   return (
     <Flex {...styles.navbarContainer}>
@@ -63,8 +65,10 @@ export default function ConferenceNavbar({
         <NavbarButtons
           currentDate={currentDate}
           setCurrentDate={setCurrentDate}
-          timelineFormat={timelineFormat}
-          setTimelineFormat={setTimelineFormat}
+          timelineType={timelineType}
+          setTimelineType={setTimelineType}
+          timelineFilter={timelineFilter}
+          setTimelineFilter={setTimelineFilter}
         />
         <Divider orientation="vertical" h={8} />
         <ChakraIcon
