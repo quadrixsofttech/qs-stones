@@ -7,7 +7,7 @@ import { Divider, useDisclosure } from '@chakra-ui/react';
 import ConferenceRoomReservationModal from '../../components/ConferenceRoomReservationModal';
 
 const Conference = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const modalDisclosure = useDisclosure();
   const [modalData, setModalData] = useState(null);
   const Label = [
     {
@@ -102,7 +102,7 @@ const Conference = () => {
   const handleOpen = (id) => {
     const filteredData = data?.find((room) => room.id === id);
     setModalData(filteredData);
-    onOpen();
+    modalDisclosure.onOpen();
   };
 
   return (
@@ -121,11 +121,11 @@ const Conference = () => {
         onDelete={handleDelete}
       />
       <ConferenceRoomReservationModal
-        isOpen={isOpen}
-        onClose={onClose}
+        isOpen={modalDisclosure.isOpen}
+        onClose={modalDisclosure.onClose}
         data={modalData}
-        handleDelete={handleDelete}
-        handleEdit={handleEdit}
+        onDelete={handleDelete}
+        onEdit={handleEdit}
       />
     </DashboardLayout>
   );

@@ -26,8 +26,8 @@ const ConferenceRoomReservationModal = ({
   isOpen,
   onClose,
   data,
-  handleDelete,
-  handleEdit,
+  onDelete,
+  onEdit,
 }) => {
   if (!data) {
     return <Spinner />;
@@ -39,18 +39,19 @@ const ConferenceRoomReservationModal = ({
         <ModalHeader {...styles.modalHeader}>{data.title}</ModalHeader>
         <Flex {...styles.iconBox}>
           {data.enabled && (
-            <IconButton
-              {...styles.icon}
-              onClick={() => handleEdit(data.id)}
-              icon={<BiPencil size="20" />}
-            />
-          )}
-          {data.enabled && (
-            <IconButton
-              {...styles.icon}
-              onClick={() => handleDelete(data.id)}
-              icon={<BiTrash size="20" />}
-            />
+            <>
+              <IconButton
+                {...styles.icon}
+                onClick={() => onEdit(data.id)}
+                icon={<BiPencil size="20" />}
+              />
+
+              <IconButton
+                {...styles.icon}
+                onClick={() => onDelete(data.id)}
+                icon={<BiTrash size="20" />}
+              />
+            </>
           )}
           <IconButton
             {...styles.icon}
