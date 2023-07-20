@@ -6,12 +6,10 @@ import moment from 'moment';
 export default function NavbarButtons({
   currentDate,
   setCurrentDate,
-  timelineType,
-  setTimelineType,
+  timelineFilter,
   setTimelineFilter,
 }) {
   const handleClick = (label) => {
-    setTimelineType(label);
     setTimelineFilter(label);
   };
 
@@ -40,8 +38,8 @@ export default function NavbarButtons({
       <Box
         {...styles.buttonStyles}
         onClick={() => handleClick('TIMELINE DAY')}
-        color={timelineType === 'TIMELINE DAY' ? 'purple.700' : 'gray.700'}
-        bg={timelineType === 'TIMELINE DAY' ? 'purple.50' : 'white'}
+        color={timelineFilter === 'TIMELINE DAY' ? 'purple.700' : 'gray.700'}
+        bg={timelineFilter === 'TIMELINE DAY' ? 'purple.50' : 'white'}
         _hover={{ backgroundColor: 'gray.200' }}
       >
         TIMELINE DAY
@@ -49,8 +47,8 @@ export default function NavbarButtons({
       <Box
         {...styles.buttonStyles}
         onClick={() => handleClick('TIMELINE WEEK')}
-        color={timelineType === 'TIMELINE WEEK' ? 'purple.700' : 'gray.700'}
-        bg={timelineType === 'TIMELINE WEEK' ? 'purple.50' : 'white'}
+        color={timelineFilter === 'TIMELINE WEEK' ? 'purple.700' : 'gray.700'}
+        bg={timelineFilter === 'TIMELINE WEEK' ? 'purple.50' : 'white'}
         _hover={{ backgroundColor: 'gray.200' }}
       >
         TIMELINE WEEK

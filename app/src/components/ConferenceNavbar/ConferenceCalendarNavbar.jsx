@@ -17,7 +17,6 @@ import DatePicker from 'react-multi-date-picker';
 import NavbarButtons from './NavbarButtons';
 import moment from 'moment';
 import FloorTypes from './constants/FloorTypes';
-import { useState } from 'react';
 import styles from './ConferenceCalendarNavbar.styles';
 
 export default function ConferenceNavbar({
@@ -33,7 +32,6 @@ export default function ConferenceNavbar({
     handlePreviousDay,
     setCurrentDate,
   } = useDates(moment());
-  const [timelineType, setTimelineType] = useState(false);
 
   return (
     <Flex {...styles.navbarContainer}>
@@ -65,8 +63,7 @@ export default function ConferenceNavbar({
         <NavbarButtons
           currentDate={currentDate}
           setCurrentDate={setCurrentDate}
-          timelineType={timelineType}
-          setTimelineType={setTimelineType}
+          timelineFilter={timelineFilter}
           setTimelineFilter={setTimelineFilter}
         />
         <Divider orientation="vertical" h={8} />

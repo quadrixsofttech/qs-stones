@@ -109,6 +109,7 @@ const Conference = () => {
         timelineOrientation={timelineOrientation}
         setTimelineOrientation={setTimelineOrientation}
         setTimelineFilter={setTimelineFilter}
+        timelineFilter={timelineFilter}
       />
       <Divider />
       <Timeline
