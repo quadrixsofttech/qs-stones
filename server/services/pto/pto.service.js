@@ -187,9 +187,12 @@ async function calculateVacationPercentage() {
     lastYearVacationUsers.length > 0 ? lastYearVacationUsers[0].total : 0;
 
   const percentage =
-    ((currentYearVacationCount - lastYearVacationCount) /
-      lastYearVacationCount) *
-    100;
+    lastYearVacationCount === 0
+      ? 0
+      : ((currentYearVacationCount - lastYearVacationCount) /
+          lastYearVacationCount) *
+        100;
+
   return percentage.toFixed(2);
 }
 
@@ -202,7 +205,7 @@ const getUserDates = async (userId) => {
     }, []);
     return allDates;
   } catch (err) {
-    throw new Error('Error in getting dates for user');
+    return [];
   }
 };
 
