@@ -96,7 +96,6 @@ export default function RadioButtonGroup({
           }
           className="custom-calendar"
           format="MM/DD/YYYY"
-          calendarPosition="right"
         />
         {switchIsChecked &&
         repeatReservation !== 'never' &&

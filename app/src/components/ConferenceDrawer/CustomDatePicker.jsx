@@ -12,7 +12,6 @@ export default function CustomDatePicker({ format }) {
         ref={datePickerRef}
         className="custom-calendar"
         format={format}
-        calendarPosition="right"
         plugins={[<TimePicker />]}
       />
       <Icon

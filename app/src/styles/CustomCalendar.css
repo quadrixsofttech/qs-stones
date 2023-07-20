@@ -3,6 +3,10 @@
   height: 40px !important;
 }
 
+.error {
+  color: red;
+}
+
 .rmdp-container {
   width: 100%;
 }

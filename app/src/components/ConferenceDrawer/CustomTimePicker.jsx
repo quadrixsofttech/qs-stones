@@ -23,7 +23,6 @@ export default function CustomTimePicker({
             : true
         }
         format="HH:mm:ss"
-        position="left"
         plugins={[<TimePicker mStep={15} hideSeconds />]}
       />
       {switchIsChecked &&
