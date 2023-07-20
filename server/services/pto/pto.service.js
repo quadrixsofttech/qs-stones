@@ -1,5 +1,6 @@
 const PayedTimeOff = require('../../models/Pto');
 const moment = require('moment');
+const mongoose = require('mongoose');
 
 const holidays = [
   '2023-01-01',
@@ -24,6 +25,57 @@ const getAllPTO = async () => {
   try {
     const pto = await PayedTimeOff.find().lean();
     return pto;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
+const getPTO = async (type) => {
+  try {
+    const pto = await PayedTimeOff.aggregate([
+      {
+        $match: {
+          type: type,
+          status: 'approved',
+        },
+      },
+      {
+        $lookup: {
+          from: 'users',
+          let: { userId: '$userId' },
+          pipeline: [
+            {
+              $match: {
+                $expr: { $eq: ['$_id', '$$userId'] },
+              },
+            },
+            {
+              $project: {
+                _id: 0,
+                firstName: 1,
+                lastName: 1,
+                src: 1,
+              },
+            },
+          ],
+          as: 'userArray',
+        },
+      },
+      {
+        $addFields: {
+          user: { $arrayElemAt: ['$userArray', 0] },
+        },
+      },
+      {
+        $project: {
+          userArray: 0,
+        },
+      },
+    ]);
+
+    return {
+      pto: pto,
+    };
   } catch (err) {
     throw new Error(err);
   }
@@ -92,4 +144,4 @@ const deletePTO = async (id) => {
   }
 };
 
-module.exports = { getAllPTO, createPTO, updatePTO, deletePTO };
+module.exports = { getAllPTO, createPTO, updatePTO, deletePTO, getPTO };
