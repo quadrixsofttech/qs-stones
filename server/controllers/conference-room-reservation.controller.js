@@ -4,7 +4,7 @@ const { StatusCodes } = require('http-status-codes');
 const createReservation = async (req, res) => {
   try {
     const {
-      column,
+      conferenceRoom,
       date,
       startTime,
       endTime,
@@ -15,7 +15,7 @@ const createReservation = async (req, res) => {
     } = req.body;
 
     const reservation = await ConferenceRoomReservation.createReservation({
-      column,
+      conferenceRoom,
       date,
       startTime,
       endTime,
