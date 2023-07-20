@@ -1,38 +1,29 @@
-import axios from 'axios';
 import { useState } from 'react';
-import { useQuery } from 'react-query';
 
 export const useCalendar = () => {
-  const [listOfRanges, setListOfRanges] = useState([]);
-  const [listOfRangesVacation, setListOfRangesVacation] = useState([]);
+  const [RemoteDates, setRemoteDates] = useState([]);
+  const [VacationDates, setVacationDates] = useState([]);
 
-  const handleClose = (range, isVacation = false) => {
-    if (isVacation) {
-      setListOfRangesVacation((prevList) =>
-        prevList.filter((r) => r !== range)
-      );
-    } else {
-      setListOfRanges((prevList) => prevList.filter((r) => r !== range));
-    }
+  const handleRemoteDates = (selectedDates) => {
+    setRemoteDates(selectedDates);
   };
-
-  const fetchData = async () => {
-    const response = await axios.get(
-      'https://646329a24dca1a661355d68c.mockapi.io/users'
-    );
-    return response.data;
+  const handleVacationDates = (selectedDates) => {
+    setVacationDates(selectedDates);
   };
-
-  const { data, isLoading, error } = useQuery('users', fetchData);
-
+  const removeRemoteTag = (x) => {
+    setRemoteDates(RemoteDates.filter((element) => element !== x));
+  };
+  const removeVacationTag = (x) => {
+    setVacationDates(VacationDates.filter((element) => element !== x));
+  };
   return [
-    listOfRanges,
-    setListOfRanges,
-    listOfRangesVacation,
-    setListOfRangesVacation,
-    handleClose,
-    data,
-    isLoading,
-    error,
+    RemoteDates,
+    setRemoteDates,
+    VacationDates,
+    setVacationDates,
+    handleRemoteDates,
+    handleVacationDates,
+    removeRemoteTag,
+    removeVacationTag,
   ];
 };
