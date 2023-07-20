@@ -1,9 +1,3 @@
-const progress = {
-  alignItems: 'center',
-  gap: 2,
-  mt: 2,
-};
-
 const textRemote = {
   fontSize: '2rem',
   fontFamily: 'Inter',
@@ -46,15 +40,24 @@ const icon = {
   color: 'gray.400',
 };
 
+const rangeTag = {
+  size: 'sm',
+  fontSize: '12px',
+  borderRadius: '6px',
+  colorScheme: 'gray',
+  marginRight: '2',
+  marginTop: '1',
+};
+
 const styles = {
   icon,
-  progress,
   textRemote,
   textRequestDates,
   flexTag,
   flexError,
   textError,
   flexSpinner,
+  rangeTag,
 };
 
 export default styles;

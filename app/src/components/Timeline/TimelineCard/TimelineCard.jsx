@@ -25,6 +25,7 @@ const TimelineCard = ({
   color,
   user,
   type,
+  orientation,
   onEdit,
   onDelete,
   onOpen,
@@ -37,16 +38,17 @@ const TimelineCard = ({
       {...styles.timelineCard}
       onMouseEnter={() => enabled && setCardHover(true)}
       onMouseLeave={() => enabled && setCardHover(false)}
+      justifyContent={type === 'small' ? 'space-around' : 'space-between'}
+      padding={orientation === 'horizontal' ? 1 : 4}
+      paddingLeft={4}
+      height={orientation === 'horizontal' ? '96%' : '100%'}
       onClick={() => onOpen(id)}
       sx={
-        (type === 'small' && {
-          justifyContent: 'space-between',
-        },
         enabled && {
           _hover: {
             backgroundColor: 'gray.50',
           },
-        })
+        }
       }
       borderColor={enabled ? color : 'gray'}
     >
@@ -61,20 +63,23 @@ const TimelineCard = ({
           <Menu
             onOpen={() => setSettingsOpen(true)}
             onClose={() => setSettingsOpen(false)}
-            placement="bottom"
+            placement="auto"
           >
-            {type === 'small' && (
-              <Tooltip hasArrow label={user.name} placement="top">
-                <Avatar size={'xs'} src={user.image} />
+            <Flex gap="0.5">
+              {type === 'small' && (
+                <Tooltip hasArrow label={user.name} placement="top">
+                  <Avatar size={'xs'} src={user.image} />
+                </Tooltip>
+              )}
+              <Tooltip hasArrow label="Settings" placement="top">
+                <MenuButton
+                  {...styles.settingsButton}
+                  as={IconButton}
+                  icon={<BiDotsVerticalRounded size="24" />}
+                />
               </Tooltip>
-            )}
-            <Tooltip hasArrow label="Settings" placement="top">
-              <MenuButton
-                {...styles.settingsButton}
-                as={IconButton}
-                icon={<BiDotsVerticalRounded />}
-              />
-            </Tooltip>
+            </Flex>
+
             <MenuList minWidth="120px">
               <MenuItem onClick={() => onEdit(id)}>
                 <BiEditAlt />
@@ -97,9 +102,7 @@ const TimelineCard = ({
             <Text fontSize={'xs'} color="gray.700">
               {start} - {end}
             </Text>
-            <Text noOfLines={'2'} fontSize={'xs'} color="gray.700">
-              {description}
-            </Text>
+            <Text {...styles.description}>{description}</Text>
           </Flex>
           <Flex gap="1" alignItems={'center'}>
             <Avatar size={'xs'} src={user.image} />
@@ -110,9 +113,11 @@ const TimelineCard = ({
         </>
       ) : (
         <>
-          <Heading {...styles.heading} as="h2">
-            {title}
-          </Heading>
+          <Tooltip label={title} placement="auto">
+            <Heading {...styles.heading} as="h2">
+              {title}
+            </Heading>
+          </Tooltip>
           <Text fontSize={'xs'} color="gray.700">
             {start} - {end}
           </Text>

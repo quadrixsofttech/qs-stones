@@ -1,4 +1,4 @@
-const InventoryItem = require('./models/InventoryItem');
+const InventoryItem = require('../../models/InventoryItem');
 
 const createItemForUser = async (userId, itemData) => {
   try {
