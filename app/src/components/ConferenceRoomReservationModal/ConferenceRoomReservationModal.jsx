@@ -8,7 +8,6 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
-  Spinner,
   Tag,
   Text,
 } from '@chakra-ui/react';
