@@ -1,10 +1,4 @@
-import {
-  Button,
-  Heading,
-  Flex,
-  useDisclosure,
-  useToast,
-} from '@chakra-ui/react';
+import { Button, Heading, Flex, useDisclosure } from '@chakra-ui/react';
 import DashboardLayout from '../../layout/DashboardLayout/DashboardLayout';
 import styles from './PayedTimeOff.styles';
 import MyHistory from '../../components/MyHistory/MyHistory';
@@ -15,20 +9,6 @@ import { FaRegCalendarPlus } from 'react-icons/fa';
 
 const PayedTimeOff = () => {
   const { onClose, isOpen, onOpen } = useDisclosure();
-  const toast = useToast();
-
-  const handleRequestSubmit = () => {
-    return toast({
-      title: 'Success',
-      description:
-        'You have submitted a request to the Admin for scheduling vacation and remote work',
-      position: 'top-right',
-      status: 'success',
-      isClosable: false,
-      colorScheme: 'green',
-      variant: 'subtle',
-    });
-  };
 
   return (
     <DashboardLayout>
@@ -42,11 +22,7 @@ const PayedTimeOff = () => {
           Request PTO
         </Button>
       </Flex>
-      <RequestPTOModal
-        isOpen={isOpen}
-        onRequestSubmit={handleRequestSubmit}
-        onClose={onClose}
-      />
+      <RequestPTOModal isOpen={isOpen} onClose={onClose} />
       <Flex gap={4} pb={4}>
         <Flex flexDir={'column'}>
           <PTOCalendar />

@@ -10,8 +10,10 @@ import {
   ModalHeader,
   ModalOverlay,
   Select,
+  Spinner,
   Text,
   Tooltip,
+  useToast,
 } from '@chakra-ui/react';
 import styles from './RequestPTOModal.styles';
 import { Scrollbars } from 'react-custom-scrollbars-2';
@@ -24,8 +26,10 @@ import RenderDates from './RenderDates';
 import ProgressBar from './ProgessBar';
 import { useCalendar } from '../../hooks/useCalendar';
 import { InfoIcon } from '@chakra-ui/icons';
+import useUser from '../../hooks/useUser';
+import useEmployees from '../../hooks/useEmployees';
 
-export const RequestPTOModal = ({ isOpen, onRequestSubmit, onClose }) => {
+export const RequestPTOModal = ({ isOpen, onClose }) => {
   const [isCurrentPageRemote, setIsCurrentPageRemote] = useState(true);
 
   const [
@@ -39,6 +43,59 @@ export const RequestPTOModal = ({ isOpen, onRequestSubmit, onClose }) => {
     removeVacationTag,
   ] = useCalendar();
 
+  const { user, admins, adminsLoading } = useUser();
+  const { createPTO } = useEmployees();
+
+  const [selectedAdmin, setSelectedAdmin] = useState();
+  const toast = useToast();
+
+  if (adminsLoading) {
+    return <Spinner />;
+  }
+
+  const submitPTORequest = async () => {
+    try {
+      if (selectedAdmin === undefined) {
+        alert('Pleast select administrator');
+        return false;
+      }
+      if (RemoteDates.length > 0) {
+        await createPTO.mutateAsync({
+          dates: RemoteDates,
+          type: 'remote',
+          status: 'pending',
+          userId: user._id,
+          reviewerId: selectedAdmin,
+          comment: '',
+        });
+      }
+      if (VacationDates.length > 0) {
+        await createPTO.mutateAsync({
+          dates: VacationDates,
+          type: 'vacation',
+          status: 'pending',
+          userId: user._id,
+          reviewerId: selectedAdmin,
+          comment: '',
+        });
+      }
+      toast({
+        title: 'Success',
+        description:
+          'You have submitted a request to the Admin for scheduling vacation and remote work',
+        position: 'top-right',
+        status: 'success',
+        isClosable: false,
+        colorScheme: 'green',
+        variant: 'subtle',
+      });
+
+      onClose();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <Modal
       isCentered
@@ -46,6 +103,7 @@ export const RequestPTOModal = ({ isOpen, onRequestSubmit, onClose }) => {
       onClose={() => {
         setRemoteDates([]);
         setVacationDates([]);
+        setIsCurrentPageRemote(true);
         onClose();
       }}
       motionPreset="slideInBottom"
@@ -72,11 +130,21 @@ export const RequestPTOModal = ({ isOpen, onRequestSubmit, onClose }) => {
               </Tooltip>
             </Flex>
             <Flex>
-              {/* Temporary data, until getAdmins route is complete */}
-              <Select mt={2} mb={2}>
-                <option value="option" key={Math.random()}>
-                  Milos Stosic (Admin)
-                </option>
+              <Select
+                mt={2}
+                mb={2}
+                onChange={(e) => {
+                  setSelectedAdmin(e.target.value);
+                }}
+                placeholder="Select administrator"
+              >
+                {admins.map((admin) => {
+                  return (
+                    <option value={admin._id} key={admin._id}>
+                      {`${admin.firstName} ${admin.lastName} (ADMIN)`}
+                    </option>
+                  );
+                })}
               </Select>
             </Flex>
             <Flex alignItems="center" justifyContent="center">
@@ -125,10 +193,7 @@ export const RequestPTOModal = ({ isOpen, onRequestSubmit, onClose }) => {
                   </Button>
                   <Button
                     onClick={() => {
-                      onRequestSubmit();
-                      setRemoteDates([]);
-                      setVacationDates([]);
-                      onClose();
+                      submitPTORequest();
                     }}
                     {...styles.button}
                     leftIcon={<BiUserPin />}
