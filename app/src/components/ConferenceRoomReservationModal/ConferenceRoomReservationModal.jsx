@@ -29,6 +29,9 @@ const ConferenceRoomReservationModal = ({
   onDelete,
   onEdit,
 }) => {
+  if (!data) {
+    return <></>;
+  }
   return (
     <Modal isCentered isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
