@@ -12,7 +12,6 @@ import {
   ChevronDownIcon,
 } from '@chakra-ui/icons';
 import { BiGridVertical, BiGridHorizontal } from 'react-icons/bi';
-import useDates from '../../hooks/useDates';
 import DatePicker from 'react-multi-date-picker';
 import NavbarButtons from './NavbarButtons';
 import FloorTypes from './constants/FloorTypes';
