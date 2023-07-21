@@ -8,6 +8,13 @@ const UserSchema = new Schema({
   password: { type: String, required: true },
   role: { type: String, required: true, default: 'user' },
   bio: { type: String, required: false },
+  vacationDays: [
+    {
+      year: { type: Number, required: true },
+      vacationDays: { type: Number, default: 20 },
+      usedDays: { type: Number, default: 0 },
+    },
+  ],
 });
 
 module.exports = mongoose.model('user', UserSchema);
