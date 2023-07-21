@@ -3,21 +3,16 @@ import ConferenceNavbar from '../../components/ConferenceNavbar/ConferenceNavbar
 import React, { useState } from 'react';
 import Timeline from '../../components/Timeline/Timeline';
 import ConferenceCalendarNavbar from '../../components/ConferenceNavbar/ConferenceCalendarNavbar';
-import { Divider } from '@chakra-ui/react';
+import { Divider, useDisclosure } from '@chakra-ui/react';
+import ConferenceRoomReservationModal from '../../components/ConferenceRoomReservationModal';
 
 const Conference = () => {
   const [timelineOrientation, setTimelineOrientation] = useState('vertical');
   const [timelineFilter, setTimelineFilter] = useState('');
+  const modalDisclosure = useDisclosure();
+  const [modalData, setModalData] = useState(null);
 
-  const onEdit = (id) => {
-    console.log('Edit' + id);
-  };
-  const onDelete = (id) => {
-    console.log('Delete' + id);
-  };
-  const onOpen = (id) => {
-    console.log('Open' + id);
-  };
+
   const Label = [
     {
       name: 'conference-room-1',
@@ -102,6 +97,18 @@ const Conference = () => {
       },
     },
   ];
+  const handleEdit = (id) => {
+    console.log('Edit' + id);
+  };
+  const handleDelete = (id) => {
+    console.log('Delete' + id);
+  };
+  const handleOpen = (id) => {
+    const filteredData = data?.find((room) => room.id === id);
+    setModalData(filteredData);
+    modalDisclosure.onOpen();
+  };
+
   return (
     <DashboardLayout Padding="0">
       <ConferenceNavbar />
@@ -118,10 +125,17 @@ const Conference = () => {
         data={data}
         startHour="08:00"
         endHour="17:00"
-        onOpen={onOpen}
-        onEdit={onEdit}
-        onDelete={onDelete}
+        onOpen={handleOpen}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
         timelineFilter={timelineFilter}
+      />
+      <ConferenceRoomReservationModal
+        isOpen={modalDisclosure.isOpen}
+        onClose={modalDisclosure.onClose}
+        data={modalData}
+        onDelete={handleDelete}
+        onEdit={handleEdit}
       />
     </DashboardLayout>
   );
