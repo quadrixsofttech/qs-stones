@@ -26,6 +26,8 @@ const ConferenceNavbar = ({
   timelineFilter,
   setTimelineFilter,
   setDate,
+  floor,
+  setFloor,
 }) => {
   const {
     currentDate,
@@ -36,7 +38,7 @@ const ConferenceNavbar = ({
   } = useDates(moment());
 
   useEffect(() => {
-    setDate(currentDate);
+    setDate(currentDate.format('YYYY-MM-DD'));
   }, [currentDate, setDate]);
 
   return (
@@ -100,7 +102,12 @@ const ConferenceNavbar = ({
           color={timelineOrientation === 'horizontal' ? 'purple.700' : 'black'}
         />
 
-        <Select size="sm" borderRadius={'5'}>
+        <Select
+          size="sm"
+          borderRadius={'5'}
+          onChange={(e) => setFloor(e.target.value)}
+          value={floor}
+        >
           {Object.values(FloorTypes).map((type) => (
             <option value={type} key={FloorTypes.id + '-' + type}>
               {type}

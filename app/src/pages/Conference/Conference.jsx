@@ -13,6 +13,7 @@ const Conference = () => {
   const modalDisclosure = useDisclosure();
   const [modalData, setModalData] = useState(null);
   const [date, setDate] = useState(moment());
+  const [floor, setFloor] = useState('Upper floor');
 
   const Label = [
     {
@@ -119,6 +120,8 @@ const Conference = () => {
         setTimelineFilter={setTimelineFilter}
         timelineFilter={timelineFilter}
         setDate={setDate}
+        floor={floor}
+        setFloor={setFloor}
       />
       <Divider />
       <Timeline
