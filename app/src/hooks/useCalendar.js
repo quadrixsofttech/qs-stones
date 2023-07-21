@@ -16,6 +16,7 @@ export const useCalendar = () => {
   const removeVacationTag = (x) => {
     setVacationDates(VacationDates.filter((element) => element !== x));
   };
+
   return [
     RemoteDates,
     setRemoteDates,

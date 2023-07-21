@@ -12,6 +12,17 @@ const getUsers = async (req, res) => {
   }
 };
 
+const getAdministrators = async (req, res) => {
+  try {
+    const user = await UserService.getAdmins();
+    res.send(user);
+  } catch (err) {
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      message: 'There was a problem getting administrators',
+    });
+  }
+};
+
 const updateRole = async (req, res) => {
   try {
     const { role } = req.body;
@@ -31,4 +42,4 @@ const updateRole = async (req, res) => {
   }
 };
 
-module.exports = { getUsers, updateRole };
+module.exports = { getUsers, updateRole, getAdministrators };
