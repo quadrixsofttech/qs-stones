@@ -19,12 +19,12 @@ import moment from 'moment';
 import FloorTypes from './constants/FloorTypes';
 import styles from './ConferenceCalendarNavbar.styles';
 
-export default function ConferenceNavbar({
+const ConferenceNavbar = ({
   timelineOrientation,
   setTimelineOrientation,
   timelineFilter,
   setTimelineFilter,
-}) {
+}) => {
   const {
     currentDate,
     formattedDate,
@@ -104,4 +104,6 @@ export default function ConferenceNavbar({
       </Flex>
     </Flex>
   );
-}
+};
+
+export default ConferenceNavbar;

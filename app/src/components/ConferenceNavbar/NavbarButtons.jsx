@@ -3,12 +3,12 @@ import { TodayButtonType } from './constants/ButtonTypes';
 import styles from './NavbarButtons.styles';
 import moment from 'moment';
 
-export default function NavbarButtons({
+const NavbarButtons = ({
   currentDate,
   setCurrentDate,
   timelineFilter,
   setTimelineFilter,
-}) {
+}) => {
   const handleClick = (label) => {
     setTimelineFilter(label);
   };
@@ -55,4 +55,6 @@ export default function NavbarButtons({
       </Box>
     </Flex>
   );
-}
+};
+
+export default NavbarButtons;
