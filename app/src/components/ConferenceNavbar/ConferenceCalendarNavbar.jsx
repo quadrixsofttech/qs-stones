@@ -16,18 +16,29 @@ import DatePicker from 'react-multi-date-picker';
 import NavbarButtons from './NavbarButtons';
 import FloorTypes from './constants/FloorTypes';
 import styles from './ConferenceCalendarNavbar.styles';
+import useDates from '../../hooks/useDates';
+import moment from 'moment';
+import { useEffect } from 'react';
 
 const ConferenceNavbar = ({
   timelineOrientation,
   setTimelineOrientation,
   timelineFilter,
   setTimelineFilter,
-  currentDate,
-  formattedDate,
-  handleNextDay,
-  handlePreviousDay,
-  setCurrentDate,
+  setDate,
 }) => {
+  const {
+    currentDate,
+    formattedDate,
+    handleNextDay,
+    handlePreviousDay,
+    setCurrentDate,
+  } = useDates(moment());
+
+  useEffect(() => {
+    setDate(currentDate);
+  }, [currentDate, setDate]);
+
   return (
     <Flex {...styles.navbarContainer}>
       <Flex alignItems={'center'}>
