@@ -17,15 +17,19 @@ const CalendarPopoverContent = ({ date, employeesToday, type }) => {
       <PopoverArrow />
       <PopoverCloseButton />
       <PopoverHeader {...styles.popoverHeader}>
-        {type} : {date}
+        {type.toUpperCase()} : {date}
       </PopoverHeader>
       <PopoverBody maxH="300px" overflowY="auto">
         <Flex {...styles.popoverBox}>
           {employeesToday.map((x) => {
             return (
-              <Flex key={x.id} alignItems={'center'} gap={'10px'}>
-                <Avatar name={x.firstName} src={x.src} />
-                <Text>{`${x.firstName}  ${x.lastName}`}</Text>
+              <Flex
+                key={x.id + Math.random().toString()}
+                alignItems={'center'}
+                gap={'10px'}
+              >
+                <Avatar name={x.user.firstName} src={x.src} />
+                <Text>{`${x.user.firstName}  ${x.user.lastName}`}</Text>
               </Flex>
             );
           })}
