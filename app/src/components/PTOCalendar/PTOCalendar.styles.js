@@ -18,7 +18,7 @@ const sixColumnGridStyles = {
 const calendarContainerStyles = {
   width: '59vw',
   marginBottom: '5',
-  rounded: '3',
+  rounded: '6',
   border: '1px',
   borderColor: 'gray.200',
   overflow: 'hidden',

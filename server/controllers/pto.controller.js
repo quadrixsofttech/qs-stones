@@ -22,6 +22,17 @@ const createPaidTimeOff = async (req, res) => {
   }
 };
 
+const getPaidTimeOff = async (req, res) => {
+  try {
+    const { type } = req.params;
+    const pto = await PtoService.getPTO(type);
+    return res.send(pto);
+  } catch (err) {
+    res.status(400).json({ success: false, message: err.message });
+  }
+};
+
 module.exports = {
   createPaidTimeOff,
+  getPaidTimeOff,
 };

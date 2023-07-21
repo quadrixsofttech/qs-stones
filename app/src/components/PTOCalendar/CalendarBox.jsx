@@ -47,7 +47,13 @@ const CalendarBox = ({ date, employeesToday, type }) => {
             <Box height={'8'}>
               <AvatarGroup {...styles.avatarGroup}>
                 {employeesToday.map((x) => {
-                  return <Avatar key={x.id} name={x.firstName} src={x.src} />;
+                  return (
+                    <Avatar
+                      key={x.id + Math.random().toString()}
+                      name={x.user.firstName}
+                      src={x.user.src}
+                    />
+                  );
                 })}
               </AvatarGroup>
             </Box>
