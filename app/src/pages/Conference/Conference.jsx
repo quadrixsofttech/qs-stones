@@ -5,6 +5,8 @@ import Timeline from '../../components/Timeline/Timeline';
 import ConferenceCalendarNavbar from '../../components/ConferenceNavbar/ConferenceCalendarNavbar';
 import { Divider, useDisclosure } from '@chakra-ui/react';
 import ConferenceRoomReservationModal from '../../components/ConferenceRoomReservationModal';
+import useDates from '../../hooks/useDates';
+import moment from 'moment';
 
 const Conference = () => {
   const [timelineOrientation, setTimelineOrientation] = useState('vertical');
@@ -12,6 +14,13 @@ const Conference = () => {
   const modalDisclosure = useDisclosure();
   const [modalData, setModalData] = useState(null);
 
+  const {
+    currentDate,
+    formattedDate,
+    handleNextDay,
+    handlePreviousDay,
+    setCurrentDate,
+  } = useDates(moment());
 
   const Label = [
     {
@@ -117,6 +126,11 @@ const Conference = () => {
         setTimelineOrientation={setTimelineOrientation}
         setTimelineFilter={setTimelineFilter}
         timelineFilter={timelineFilter}
+        currentDate={currentDate}
+        formattedDate={formattedDate}
+        handleNextDay={handleNextDay}
+        handlePreviousDay={handlePreviousDay}
+        setCurrentDate={setCurrentDate}
       />
       <Divider />
       <Timeline

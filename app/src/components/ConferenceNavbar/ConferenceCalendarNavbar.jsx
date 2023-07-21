@@ -15,7 +15,6 @@ import { BiGridVertical, BiGridHorizontal } from 'react-icons/bi';
 import useDates from '../../hooks/useDates';
 import DatePicker from 'react-multi-date-picker';
 import NavbarButtons from './NavbarButtons';
-import moment from 'moment';
 import FloorTypes from './constants/FloorTypes';
 import styles from './ConferenceCalendarNavbar.styles';
 
@@ -24,15 +23,12 @@ const ConferenceNavbar = ({
   setTimelineOrientation,
   timelineFilter,
   setTimelineFilter,
+  currentDate,
+  formattedDate,
+  handleNextDay,
+  handlePreviousDay,
+  setCurrentDate,
 }) => {
-  const {
-    currentDate,
-    formattedDate,
-    handleNextDay,
-    handlePreviousDay,
-    setCurrentDate,
-  } = useDates(moment());
-
   return (
     <Flex {...styles.navbarContainer}>
       <Flex alignItems={'center'}>
