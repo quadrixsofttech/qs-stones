@@ -21,7 +21,14 @@ const getAdmins = async () => {
     throw new Error(err);
   }
 };
-
+const getUserVacation = async (id) => {
+  try {
+    const vacation = await User.findOne({ _id: id }).select('vacation').lean();
+    return vacation;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
 const updateUserRole = async (role, userId) => {
   try {
     const allowedRoles = ['user', 'admin'];
@@ -37,4 +44,4 @@ const updateUserRole = async (role, userId) => {
   }
 };
 
-module.exports = { getAllUsers, updateUserRole, getAdmins };
+module.exports = { getAllUsers, updateUserRole, getAdmins, getUserVacation };

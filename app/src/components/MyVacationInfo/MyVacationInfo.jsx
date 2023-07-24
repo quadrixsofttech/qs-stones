@@ -2,13 +2,22 @@ import styles from './MyVacationInfo.styles';
 import { Box, Divider, Flex, Heading, Spinner } from '@chakra-ui/react';
 import MyVacationInfoBox from './MyVacationInfoBox';
 import useVacation from '../../hooks/useVacation';
+import useUser from '../../hooks/useUser';
 
 export const MyVacationInfo = () => {
-  const { vacationInfo, isLoading } = useVacation();
+  const { user } = useUser();
+  const { vacationInfo, isLoading } = useVacation(user._id);
 
   if (isLoading) {
     return <Spinner />;
   }
+
+  const currentYear = vacationInfo.vacation.find(
+    (x) => x.year === new Date().getFullYear()
+  );
+  const lastYear = vacationInfo.vacation.find(
+    (x) => x.year === new Date().getFullYear() - 1
+  );
 
   return (
     <Flex {...styles.mainBox}>
@@ -26,8 +35,10 @@ export const MyVacationInfo = () => {
               to date
             </>
           }
-          numberInfo={vacationInfo.VacationDaysToDate}
-          footer={`${vacationInfo.VacationDaysLeft} days left`}
+          numberInfo={currentYear.vacationDays}
+          footer={`${String(
+            currentYear.vacationDays - currentYear.usedDays
+          )} days left`}
         />
         <Divider orientation="vertical" height={'100px'} />
         <MyVacationInfoBox
@@ -38,7 +49,7 @@ export const MyVacationInfo = () => {
               from this year
             </>
           }
-          numberInfo={vacationInfo.NewVacationDaysFromThisYear}
+          numberInfo={currentYear.vacationDays}
           footer={'Usable until June next year'}
         />
         <Divider orientation="vertical" height={'100px'} />
@@ -50,7 +61,7 @@ export const MyVacationInfo = () => {
               from last year
             </>
           }
-          numberInfo={vacationInfo.UnusedVacationDaysFromLastYear}
+          numberInfo={currentYear.usedDays}
           footer={'Usable until June this year'}
         />
         <Divider orientation="vertical" height={'100px'} />
@@ -60,7 +71,7 @@ export const MyVacationInfo = () => {
               Total Vacation <br /> Days
             </>
           }
-          numberInfo={vacationInfo.TotalVacationDays}
+          numberInfo={currentYear.vacationDays}
           footer={'New and unused days'}
         />
       </Flex>

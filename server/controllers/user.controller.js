@@ -23,6 +23,18 @@ const getAdministrators = async (req, res) => {
   }
 };
 
+const getVacations = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const vacations = await UserService.getUserVacation(id);
+    res.send(vacations);
+  } catch (err) {
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      message: 'There was a problem getting vacations',
+    });
+  }
+};
+
 const updateRole = async (req, res) => {
   try {
     const { role } = req.body;
@@ -42,4 +54,4 @@ const updateRole = async (req, res) => {
   }
 };
 
-module.exports = { getUsers, updateRole, getAdministrators };
+module.exports = { getUsers, updateRole, getAdministrators, getVacations };
