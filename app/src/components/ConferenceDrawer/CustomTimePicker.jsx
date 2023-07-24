@@ -9,6 +9,7 @@ export default function CustomTimePicker({
   repeatReservation,
 }) {
   const datePickerRef = React.useRef(null);
+
   return (
     <>
       <DatePicker
@@ -22,7 +23,7 @@ export default function CustomTimePicker({
             ? false
             : true
         }
-        format="HH:mm:ss"
+        format="HH:mm"
         plugins={[<TimePicker mStep={15} hideSeconds />]}
       />
       {switchIsChecked &&

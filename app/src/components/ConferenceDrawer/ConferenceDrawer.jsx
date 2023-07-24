@@ -17,6 +17,7 @@ import {
   Text,
   Input,
   Textarea,
+  useToast,
 } from '@chakra-ui/react';
 import FloorTypes from '../../constants/FloorTypes';
 import ConferenceRooms from '../../constants/ConferenceRooms';
@@ -39,9 +40,30 @@ const reservationSchema = Yup.object().shape({
 export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
   const [switchIsChecked, setSwitchIsChecked] = useState(false);
   const [everyDayChecked, setEveryDayChecked] = useState(false);
+  const [selectedConference, setSelectedConference] =
+    useState('01 Conference Room');
+  const [reservationData, setReservationData] = useState({
+    startAt: null,
+    endAt: null,
+  });
+
+  const toast = useToast();
 
   const handleEveryDayCheck = () => {
     setEveryDayChecked(!everyDayChecked);
+  };
+
+  const handleSave = () => {
+    onClose();
+    const { startAt, endAt } = reservationData;
+    toast({
+      position: 'top-right',
+      status: 'success',
+      variant: 'subtle',
+      description: `You have successfully reserved ${selectedConference} for the date ${startAt?.format(
+        'YYYY/MM/DD'
+      )} from ${startAt?.format('HH:mm')} to ${endAt?.format('HH:mm')}`,
+    });
   };
 
   return (
@@ -102,7 +124,14 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
                     </Box>
                     <Field name="conferenceRoom">
                       {({ field }) => (
-                        <Select size="md" {...field}>
+                        <Select
+                          size="md"
+                          {...field}
+                          value={selectedConference}
+                          onChange={(e) =>
+                            setSelectedConference(e.target.value)
+                          }
+                        >
                           {Object.values(ConferenceRooms).map((type, index) => (
                             <option value={type} key={index}>
                               {type}
@@ -123,10 +152,10 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
                     <Field name="startAt">
                       {({ field }) => (
                         <CustomDatePicker
-                          format={'MM/DD/YYYY HH:mm:ss'}
+                          format={'MM/DD/YYYY HH:mm'}
                           {...field}
-                          selected={field.value}
-                          onChange={(date) => setFieldValue('startAt', date)}
+                          value={reservationData.startAt}
+                          setReservationData={setReservationData}
                         />
                       )}
                     </Field>
@@ -142,10 +171,10 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
                     <Field name="endAt">
                       {({ field }) => (
                         <CustomDatePicker
-                          format={'MM/DD/YYYY HH:mm:ss'}
+                          format={'MM/DD/YYYY HH:mm'}
                           {...field}
-                          selected={field.value}
-                          onChange={(date) => setFieldValue('endAt', date)}
+                          value={reservationData.endAt}
+                          setReservationData={setReservationData}
                         />
                       )}
                     </Field>
@@ -176,13 +205,11 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
                         </FormControl>
                       )}
                     </Field>
-
                     <GenerateDayOfTheWeek
                       switchIsChecked={switchIsChecked}
                       everyDayChecked={everyDayChecked}
                       setEveryDayChecked={setEveryDayChecked}
                     />
-
                     <Box mt={3}>
                       <Field name="everyDay">
                         {({ field }) => (
@@ -209,7 +236,6 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
                     >
                       Ends
                     </Text>
-
                     <RadioButtonGroup
                       switchIsChecked={switchIsChecked}
                       f_option="Never"
@@ -270,7 +296,7 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
                   <Button variant="outline" mr={3} onClick={onClose}>
                     Cancel
                   </Button>
-                  <Button colorScheme="purple" onClick={console.log('success')}>
+                  <Button colorScheme="purple" onClick={handleSave}>
                     Save
                   </Button>
                 </DrawerFooter>

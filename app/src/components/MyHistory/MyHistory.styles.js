@@ -9,7 +9,7 @@ const container = {
   justifyContent: 'center',
   width: '100%',
   height: '100%',
-  overflow:'hidden'
+  overflow: 'hidden',
 };
 
 const tabindicator = {
@@ -39,8 +39,8 @@ const stat = {
   width: '100%',
   height: '100%',
   pb: 2,
-  display:'flex',
-  alignItems:'center',
+  display: 'flex',
+  alignItems: 'center',
 };
 
 const statgroupFlex = {
@@ -67,13 +67,13 @@ const tabPanels = {
 };
 
 const tabPanelPTO = {
-  display:'flex',
-  alignItems:'center',
-  justifyContent:'center',
-  flexDir:'column',
-  height:'100%',
-  width:'100%'
-}
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  flexDir: 'column',
+  height: '100%',
+  width: '100%',
+};
 
 const styles = {
   container,
@@ -84,7 +84,7 @@ const styles = {
   statgroupFlex,
   tabPanelRequestHistory,
   tabPanels,
-  tabPanelPTO
+  tabPanelPTO,
 };
 
 export default styles;

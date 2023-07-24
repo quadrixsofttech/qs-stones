@@ -33,7 +33,7 @@ const RequestPTO = ({
       <Box as="span">
         <Text {...styles.grayText}>{time}</Text>
         <Text {...styles.mainText}>
-          You sent Request PTO/Remote to {' '}
+          You sent Request PTO/Remote to{' '}
           <Text {...styles.adminText} as="span">
             {user.name}({user.role})
           </Text>
@@ -53,7 +53,7 @@ const RequestPTO = ({
             <AccordionItem pt={2}>
               <h2>
                 <AccordionButton onClick={toggleAccordion}>
-                  <Box color={'gray.500'} >
+                  <Box color={'gray.500'}>
                     {isAccordionOpen ? 'See less' : 'See more'}
                   </Box>
                   <AccordionIcon />
