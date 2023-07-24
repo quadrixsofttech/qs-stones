@@ -6,6 +6,8 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const publicRouter = require('./routes/public.routes');
 
+const { cronUpdateVacation } = require('./cron');
+
 const app = express();
 const port = process.env.PORT || 3001;
 
@@ -24,6 +26,7 @@ async function connect() {
       useUnifiedTopology: true,
       useFindAndModify: false,
     });
+    cronUpdateVacation.start();
   } catch (err) {
     console.log('Mongoose error', err);
   }
