@@ -12,15 +12,23 @@ import {
   ChevronDownIcon,
 } from '@chakra-ui/icons';
 import { BiGridVertical, BiGridHorizontal } from 'react-icons/bi';
-import useDates from '../../hooks/useDates';
 import DatePicker from 'react-multi-date-picker';
 import NavbarButtons from './NavbarButtons';
-import moment from 'moment';
 import FloorTypes from './constants/FloorTypes';
-import { useState } from 'react';
 import styles from './ConferenceCalendarNavbar.styles';
+import useDates from '../../hooks/useDates';
+import moment from 'moment';
+import { useEffect } from 'react';
 
-export default function ConferenceNavbar() {
+const ConferenceNavbar = ({
+  timelineOrientation,
+  setTimelineOrientation,
+  timelineFilter,
+  setTimelineFilter,
+  setDate,
+  floor,
+  setFloor,
+}) => {
   const {
     currentDate,
     formattedDate,
@@ -28,8 +36,10 @@ export default function ConferenceNavbar() {
     handlePreviousDay,
     setCurrentDate,
   } = useDates(moment());
-  const [timelineFormat, setTimelineFormat] = useState(false);
-  const [timelineOrientation, setTimelineOrientation] = useState('vertical');
+
+  useEffect(() => {
+    setDate(currentDate.format('YYYY-MM-DD'));
+  }, [currentDate, setDate]);
 
   return (
     <Flex {...styles.navbarContainer}>
@@ -61,8 +71,8 @@ export default function ConferenceNavbar() {
         <NavbarButtons
           currentDate={currentDate}
           setCurrentDate={setCurrentDate}
-          timelineFormat={timelineFormat}
-          setTimelineFormat={setTimelineFormat}
+          timelineFilter={timelineFilter}
+          setTimelineFilter={setTimelineFilter}
         />
         <Divider orientation="vertical" h={8} />
         <ChakraIcon
@@ -92,7 +102,12 @@ export default function ConferenceNavbar() {
           color={timelineOrientation === 'horizontal' ? 'purple.700' : 'black'}
         />
 
-        <Select size="sm" borderRadius={'5'}>
+        <Select
+          size="sm"
+          borderRadius={'5'}
+          onChange={(e) => setFloor(e.target.value)}
+          value={floor}
+        >
           {Object.values(FloorTypes).map((type) => (
             <option value={type} key={FloorTypes.id + '-' + type}>
               {type}
@@ -102,4 +117,6 @@ export default function ConferenceNavbar() {
       </Flex>
     </Flex>
   );
-}
+};
+
+export default ConferenceNavbar;

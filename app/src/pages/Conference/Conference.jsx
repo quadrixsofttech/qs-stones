@@ -1,22 +1,22 @@
 import DashboardLayout from '../../layout/DashboardLayout/DashboardLayout';
 import ConferenceNavbar from '../../components/ConferenceNavbar/ConferenceNavbar';
-import React from 'react';
-import { Flex, useDisclosure, Divider } from '@chakra-ui/react';
-import styles from './Conference.styles';
-import ConferenceDrawer from './../../components/ConferenceDrawer/ConferenceDrawer';
+import React, { useState } from 'react';
 import Timeline from '../../components/Timeline/Timeline';
 import ConferenceCalendarNavbar from '../../components/ConferenceNavbar/ConferenceCalendarNavbar';
+import { Divider, Flex, useDisclosure } from '@chakra-ui/react';
+import ConferenceRoomReservationModal from '../../components/ConferenceRoomReservationModal';
+import moment from 'moment';
+import ConferenceDrawer from '../../components/ConferenceDrawer/ConferenceDrawer';
+import styles from './Conference.styles';
 
 const Conference = () => {
-  const onEdit = (id) => {
-    console.log('Edit' + id);
-  };
-  const onDelete = (id) => {
-    console.log('Delete' + id);
-  };
-  const onOpenTimeline = (id) => {
-    console.log('Open' + id);
-  };
+  const [timelineOrientation, setTimelineOrientation] = useState('vertical');
+  const [timelineFilter, setTimelineFilter] = useState('');
+  const modalDisclosure = useDisclosure();
+  const [modalData, setModalData] = useState(null);
+  const [date, setDate] = useState(moment());
+  const [floor, setFloor] = useState('Upper floor');
+
   const Label = [
     {
       name: 'conference-room-1',
@@ -103,26 +103,61 @@ const Conference = () => {
   ];
 
   const btnRef = React.useRef();
-  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const handleEdit = (id) => {
+    console.log('Edit' + id);
+  };
+  const handleDelete = (id) => {
+    console.log('Delete' + id);
+  };
+  const handleOpen = (id) => {
+    const filteredData = data?.find((room) => room.id === id);
+    setModalData(filteredData);
+    modalDisclosure.onOpen();
+  };
 
   return (
     <DashboardLayout Padding="0">
       <ConferenceNavbar />
-      <ConferenceCalendarNavbar />
+      <ConferenceCalendarNavbar
+        timelineOrientation={timelineOrientation}
+        setTimelineOrientation={setTimelineOrientation}
+        setTimelineFilter={setTimelineFilter}
+        timelineFilter={timelineFilter}
+        setDate={setDate}
+        floor={floor}
+        setFloor={setFloor}
+      />
       <Divider />
       <Timeline
-        type="horizontal"
+        type={timelineOrientation}
         title={Label}
         data={data}
         startHour="08:00"
         endHour="17:00"
-        onOpenTimeline={onOpenTimeline}
-        onEdit={onEdit}
-        onDelete={onDelete}
+        onOpen={handleOpen}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
+        timelineFilter={timelineFilter}
       />
-      <Flex {...styles.buttonModal} ref={btnRef} onClick={onOpen}>
+      <ConferenceRoomReservationModal
+        isOpen={modalDisclosure.isOpen}
+        onClose={modalDisclosure.onClose}
+        data={modalData}
+        onDelete={handleDelete}
+        onEdit={handleEdit}
+      />
+      <Flex
+        {...styles.buttonModal}
+        ref={btnRef}
+        onClick={modalDisclosure.onOpen}
+      >
         <Flex mb={'1'}>+</Flex>
-        <ConferenceDrawer btnRef={btnRef} isOpen={isOpen} onClose={onClose} />
+        <ConferenceDrawer
+          btnRef={btnRef}
+          isOpen={modalDisclosure.isOpen}
+          onClose={modalDisclosure.onClose}
+        />
       </Flex>
     </DashboardLayout>
   );
