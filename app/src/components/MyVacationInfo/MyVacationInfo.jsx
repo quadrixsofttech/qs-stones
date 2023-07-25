@@ -37,7 +37,7 @@ export const MyVacationInfo = () => {
           }
           numberInfo={currentYear.vacationDays}
           footer={`${String(
-            currentYear?.vacationDays - currentYear?.usedDays || 0
+            currentYear?.vacationDays - currentYear?.usedDays
           )} days left`}
         />
         <Divider orientation="vertical" height={'100px'} />
@@ -71,7 +71,7 @@ export const MyVacationInfo = () => {
               Total Vacation <br /> Days
             </>
           }
-          numberInfo={currentYear?.vacationDays + lastYear?.vacationDays || 0}
+          numberInfo={currentYear?.vacationDays + (lastYear?.vacationDays || 0)}
           footer={'New and unused days'}
         />
       </Flex>
