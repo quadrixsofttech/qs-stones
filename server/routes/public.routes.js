@@ -7,6 +7,7 @@ const userRouter = require('./user.routes');
 const dashboardRouter = require('./dashboard.routes');
 const bioRouter = require('./bio.routes');
 const ptoRouter = require('./pto.routes');
+const conferenceRoomRouter = require('./conference-room.routes');
 const { attachUser } = require('../middleware/user');
 
 const router = express.Router();
@@ -21,5 +22,6 @@ router.use('/', userRouter);
 router.use('/bio', bioRouter);
 router.use('/inventory', inventoryRouter);
 router.use('/paid-time-off', ptoRouter);
+router.use('/conference-rooms', conferenceRoomRouter);
 
 module.exports = router;

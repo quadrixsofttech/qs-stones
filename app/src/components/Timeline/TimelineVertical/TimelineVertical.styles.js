@@ -42,7 +42,7 @@ const timelineCard = {
   mt: '2px',
   height: 'calc(100% - 4px)',
   width: 'calc(100% - 32px)',
-  ml: '16px',
+  ml: '4',
 };
 const underlineNumber = {
   as: 'span',

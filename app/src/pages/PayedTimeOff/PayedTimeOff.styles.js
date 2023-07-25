@@ -19,6 +19,7 @@ const heading = {
   fontWeight: 700,
   paddingTop: '2',
   paddingLeft: '1',
+  color: 'gray.700',
 };
 
 const modalHeader = {
@@ -36,16 +37,16 @@ const buttonNext = {
 };
 
 const modalContent = {
-  maxW:'700',
-  height:'600',
-  maxH:'600'
-}
+  maxW: '700',
+  height: '600',
+  maxH: '600',
+};
 const styles = {
   button,
   heading,
   modalHeader,
   buttonNext,
-  modalContent
+  modalContent,
 };
 
 export default styles;
