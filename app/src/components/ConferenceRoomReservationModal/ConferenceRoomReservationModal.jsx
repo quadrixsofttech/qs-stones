@@ -8,7 +8,6 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
-  Spinner,
   Tag,
   Text,
 } from '@chakra-ui/react';
@@ -30,7 +29,7 @@ const ConferenceRoomReservationModal = ({
   onEdit,
 }) => {
   if (!data) {
-    return <Spinner />;
+    return <></>;
   }
   return (
     <Modal isCentered isOpen={isOpen} onClose={onClose}>

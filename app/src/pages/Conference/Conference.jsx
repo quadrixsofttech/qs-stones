@@ -5,10 +5,16 @@ import Timeline from '../../components/Timeline/Timeline';
 import ConferenceCalendarNavbar from '../../components/ConferenceNavbar/ConferenceCalendarNavbar';
 import { Divider, useDisclosure } from '@chakra-ui/react';
 import ConferenceRoomReservationModal from '../../components/ConferenceRoomReservationModal';
+import moment from 'moment';
 
 const Conference = () => {
+  const [timelineOrientation, setTimelineOrientation] = useState('vertical');
+  const [timelineFilter, setTimelineFilter] = useState('');
   const modalDisclosure = useDisclosure();
   const [modalData, setModalData] = useState(null);
+  const [date, setDate] = useState(moment());
+  const [floor, setFloor] = useState('Upper floor');
+
   const Label = [
     {
       name: 'conference-room-1',
@@ -108,10 +114,18 @@ const Conference = () => {
   return (
     <DashboardLayout Padding="0">
       <ConferenceNavbar />
-      <ConferenceCalendarNavbar />
+      <ConferenceCalendarNavbar
+        timelineOrientation={timelineOrientation}
+        setTimelineOrientation={setTimelineOrientation}
+        setTimelineFilter={setTimelineFilter}
+        timelineFilter={timelineFilter}
+        setDate={setDate}
+        floor={floor}
+        setFloor={setFloor}
+      />
       <Divider />
       <Timeline
-        type="vertical"
+        type={timelineOrientation}
         title={Label}
         data={data}
         startHour="08:00"
@@ -119,6 +133,7 @@ const Conference = () => {
         onOpen={handleOpen}
         onEdit={handleEdit}
         onDelete={handleDelete}
+        timelineFilter={timelineFilter}
       />
       <ConferenceRoomReservationModal
         isOpen={modalDisclosure.isOpen}
