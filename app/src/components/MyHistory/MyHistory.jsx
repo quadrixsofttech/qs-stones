@@ -30,6 +30,22 @@ const MyHistory = () => {
   const handleSelectChange = (event) => {
     setSelectedOption(event.target.value);
   };
+
+  const getRequestedDates = () => {
+    if (selectedOption === LeaveTypes.Remote) {
+      return paidTimeOffHistory
+        .filter((pto) => pto.type === LeaveTypes.Remote)
+        .map((pto) => pto.dates)
+        .flat();
+    } else if (selectedOption === LeaveTypes.Vacation) {
+      return paidTimeOffHistory
+        .filter((pto) => pto.type === LeaveTypes.Vacation)
+        .map((pto) => pto.dates)
+        .flat();
+    }
+    return [];
+  };
+
   if (isLoading) {
     return (
       <Flex justify="center" align="center" minHeight="200px">
