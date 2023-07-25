@@ -49,7 +49,7 @@ export const MyVacationInfo = () => {
               from this year
             </>
           }
-          numberInfo={currentYear?.vacationDays || 0}
+          numberInfo={currentYear?.vacationDays}
           footer={'Usable until June next year'}
         />
         <Divider orientation="vertical" height={'100px'} />
