@@ -35,7 +35,8 @@ const RequestPTO = ({
         <Text {...styles.mainText}>
           You sent Request PTO/Remote to
           <Text {...styles.adminText} as="span">
-            {user.name}({user.role})
+            ({user.name}
+            {user.role})
           </Text>
         </Text>
         <Text display={'inline'} {...styles.grayText}>

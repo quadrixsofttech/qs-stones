@@ -109,11 +109,16 @@ const MyHistory = () => {
                   type={pto.type}
                   time={moment(pto.createdAt).format('YYYY-MM-DD HH:mm:ss')}
                   user={{
-                    name: pto.reviewerId.firstName,
-                    role: pto.reviewerId.lastName,
+                    name: pto.reviewer.firstName,
+                    role: pto.reviewer.lastName,
                   }}
                   requestedDates={pto.dates.map(
-                    ([startDate, endDate]) => `${startDate} to ${endDate}; `
+                    ([startDate, endDate]) =>
+                      `${moment(startDate * 1).format(
+                        'YYYY-MM-DD HH:mm:ss'
+                      )} to ${moment(endDate * 1).format(
+                        'YYYY-MM-DD HH:mm:ss'
+                      )}; `
                   )}
                   response={pto.comment}
                 />
