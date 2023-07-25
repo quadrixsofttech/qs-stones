@@ -42,10 +42,6 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
   const [everyDayChecked, setEveryDayChecked] = useState(false);
   const [selectedConference, setSelectedConference] =
     useState('01 Conference Room');
-  const [reservationData, setReservationData] = useState({
-    startAt: null,
-    endAt: null,
-  });
 
   const toast = useToast();
 
@@ -55,14 +51,11 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
 
   const handleSave = () => {
     onClose();
-    const { startAt, endAt } = reservationData;
     toast({
       position: 'top-right',
       status: 'success',
       variant: 'subtle',
-      description: `You have successfully reserved ${selectedConference} for the date ${startAt?.format(
-        'YYYY/MM/DD'
-      )} from ${startAt?.format('HH:mm')} to ${endAt?.format('HH:mm')}`,
+      description: `You have successfully reserved ${selectedConference}`,
     });
   };
 
@@ -154,8 +147,6 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
                         <CustomDatePicker
                           format={'MM/DD/YYYY HH:mm'}
                           {...field}
-                          value={reservationData.startAt}
-                          setReservationData={setReservationData}
                         />
                       )}
                     </Field>
@@ -173,8 +164,6 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
                         <CustomDatePicker
                           format={'MM/DD/YYYY HH:mm'}
                           {...field}
-                          value={reservationData.endAt}
-                          setReservationData={setReservationData}
                         />
                       )}
                     </Field>

@@ -4,26 +4,15 @@ import DatePicker from 'react-multi-date-picker';
 import TimePicker from 'react-multi-date-picker/plugins/time_picker';
 import React from 'react';
 
-export default function CustomDatePicker({
-  format,
-  value,
-  setReservationData,
-}) {
+export default function CustomDatePicker({ format }) {
   const datePickerRef = React.useRef(null);
 
-  const handleReservationChange = (name, date) => {
-    setReservationData((prevData) => ({
-      ...prevData,
-      [name]: date,
-    }));
-  };
   return (
     <>
       <DatePicker
         ref={datePickerRef}
         className="custom-calendar"
         format={format}
-        value={value}
         plugins={[<TimePicker hideSeconds mStep={15} />]}
       />
       <Icon
