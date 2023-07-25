@@ -8,7 +8,7 @@ export const MyVacationInfo = () => {
   const { user } = useUser();
   const { vacationInfo, isLoading } = useVacation(user._id);
 
-  if (isLoading) {
+  if (isLoading || !vacationInfo) {
     return <Spinner />;
   }
 
