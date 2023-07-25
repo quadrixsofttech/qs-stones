@@ -20,6 +20,7 @@ import {
   BiTrash,
   BiX,
 } from 'react-icons/bi';
+import moment from 'moment';
 
 const ConferenceRoomReservationModal = ({
   isOpen,
@@ -27,6 +28,7 @@ const ConferenceRoomReservationModal = ({
   data,
   onDelete,
   onEdit,
+  enabled,
 }) => {
   if (!data) {
     return <></>;
@@ -37,7 +39,7 @@ const ConferenceRoomReservationModal = ({
       <ModalContent pl="6" pr="6">
         <ModalHeader {...styles.modalHeader}>{data.title}</ModalHeader>
         <Flex {...styles.iconBox}>
-          {data.enabled && (
+          {enabled && (
             <>
               <IconButton
                 {...styles.icon}
@@ -63,17 +65,23 @@ const ConferenceRoomReservationModal = ({
         <ModalBody p="0" mt="4">
           <Flex alignItems={'center'} gap="2">
             <BiChalkboard />
-            <Text color={'gray.700'}>{data.column}</Text>
-            <Tag {...styles.tag}>"Upper floor"</Tag>
+            <Text color={'gray.700'}>
+              {data.conferenceRoom.id + ' ' + data.conferenceRoom.name}
+            </Text>
+            <Tag {...styles.tag}>{data.conferenceRoom.floor}</Tag>
           </Flex>
           <Flex {...styles.infoBox}>
             <BiCalendar />
-            <Text color={'gray.700'}>May 24, Wednesday</Text>
+            <Text color={'gray.700'}>
+              {moment(data.date).format('MMMM DD') +
+                ', ' +
+                moment(data.date).format('dddd')}
+            </Text>
           </Flex>
           <Flex {...styles.infoBox}>
             <BiTime />
             <Text color={'gray.700'}>
-              {data.start} - {data.end}
+              {data.startTime} - {data.endTime}
             </Text>
           </Flex>
           <Text {...styles.description}>Description:</Text>
@@ -84,7 +92,7 @@ const ConferenceRoomReservationModal = ({
           <Flex {...styles.modalFooter}>
             <Avatar size="xs" src={data.user.image} />
             <Text color={'gray.700'} fontSize="xs">
-              {data.user.name}
+              {data.user.firstName + ' ' + data.user.lastName}
             </Text>
           </Flex>
         </ModalBody>

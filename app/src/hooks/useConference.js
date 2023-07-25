@@ -19,7 +19,7 @@ const useConference = () => {
   );
 
   return {
-    data,
+    conferenceRooms: data,
     conferenceLoading,
     conferenceError,
   };

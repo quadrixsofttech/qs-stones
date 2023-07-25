@@ -13,6 +13,7 @@ const TimelineVertical = ({
   onOpen,
   onEdit,
   onDelete,
+  enabled,
 }) => {
   const timeIntervals = useMemo(() => {
     const startTime = moment(startHour, 'HH:mm');
@@ -68,10 +69,10 @@ const TimelineVertical = ({
             <GridItem colSpan={1}></GridItem>
             {title.map((headline) => {
               return (
-                <GridItem pt="5" colSpan={1} key={`${headline.label}-headline`}>
+                <GridItem pt="5" colSpan={1} key={`${headline.name}-headline`}>
                   <Heading {...styles.label}>
-                    <Text {...styles.underlineNumber}>{headline.number}</Text>{' '}
-                    {headline.label}
+                    <Text {...styles.underlineNumber}>{headline.id}</Text>{' '}
+                    {headline.name}
                   </Heading>
                 </GridItem>
               );
@@ -132,23 +133,24 @@ const TimelineVertical = ({
                 {gridItems}
 
                 {data.map((data) => {
-                  if (data.column === x.name) {
+                  if (data.conferenceRoom.name === x.name) {
                     const difference =
-                      getRowIdentifier(data.end) - getRowIdentifier(data.start);
+                      getRowIdentifier(data.endTime) -
+                      getRowIdentifier(data.startTime);
                     return (
                       <GridItem
                         {...styles.timelineCard}
                         key={`${data.id}`}
-                        rowStart={getRowIdentifier(data.start)}
-                        rowEnd={getRowIdentifier(data.end)}
+                        rowStart={getRowIdentifier(data.startTime)}
+                        rowEnd={getRowIdentifier(data.endTime)}
                       >
                         <TimelineCard
                           id={data.id}
                           type={difference > 2 ? 'big' : 'small'}
-                          enabled={data.enabled}
-                          title={data.title}
-                          start={data.start}
-                          end={data.end}
+                          enabled={enabled}
+                          title={data.conferenceRoom.name}
+                          start={data.startTime}
+                          end={data.endTime}
                           description={data.description}
                           color={data.color}
                           user={data.user}

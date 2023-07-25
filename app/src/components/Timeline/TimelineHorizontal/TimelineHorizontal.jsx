@@ -13,6 +13,7 @@ const TimelineHorizontal = ({
   onOpen,
   onEdit,
   onDelete,
+  enabled,
 }) => {
   const timeSlots = useMemo(() => {
     const startTime = moment(startHour, 'HH:mm');
@@ -76,9 +77,9 @@ const TimelineHorizontal = ({
                 <Flex p="4" pl="2">
                   <Heading {...styles.headingConference}>
                     <Heading {...styles.underlineHeading} as="span">
-                      {title.number}
+                      {title.id}
                     </Heading>
-                    {title.label}
+                    {title.name}
                   </Heading>
                 </Flex>
               </GridItem>
@@ -92,21 +93,21 @@ const TimelineHorizontal = ({
                 );
               })}
               {data.map((data, index) => {
-                if (data.column === title.name) {
+                if (data.conferenceRoom.name === title.name) {
                   return (
                     <GridItem
                       {...styles.horizontalCard}
-                      gridColumnStart={getColumnIdentifier(data.start)}
-                      gridColumnEnd={getColumnIdentifier(data.end)}
-                      key={`key-${data.start}- ${index}index`}
+                      gridColumnStart={getColumnIdentifier(data.startTime)}
+                      gridColumnEnd={getColumnIdentifier(data.endTime)}
+                      key={`key-${data.startTime}- ${index}index`}
                     >
                       <TimelineCard
                         id={data.id}
                         type={'small'}
-                        enabled={data.enabled}
-                        title={data.title}
-                        start={data.start}
-                        end={data.end}
+                        enabled={enabled}
+                        title={data.conferenceRoom.name}
+                        start={data.startTime}
+                        end={data.endTime}
                         description={data.description}
                         color={data.color}
                         user={data.user}
