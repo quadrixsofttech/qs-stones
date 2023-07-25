@@ -1,5 +1,6 @@
 const PayedTimeOff = require('../../models/pto.model');
 const moment = require('moment');
+const User = require('../../models/user.model');
 
 const holidays = [
   '2023-01-01',
@@ -66,7 +67,7 @@ const createPTO = async ({
     await pto.save();
     return pto;
   } catch (err) {
-    throw new Error(err);
+    throw new Error({ success: false, message: 'Problem in creating pto' });
   }
 };
 
@@ -79,7 +80,7 @@ const updatePTO = async (id, updates) => {
     );
     return pto;
   } catch (err) {
-    throw new Error(err);
+    throw new Error({ success: false, message: 'Problem in updateing pto' });
   }
 };
 
@@ -88,7 +89,7 @@ const deletePTO = async (id) => {
     const pto = await PayedTimeOff.findByIdAndDelete(id);
     return pto;
   } catch (err) {
-    throw new Error(err);
+    throw new Error({ success: false, message: 'Problem in deleting pto' });
   }
 };
 
@@ -99,6 +100,10 @@ const getUserHistory = async (userId) => {
     const ptoHistory = await PayedTimeOff.find({ userId }).lean();
 
     const reviewerIds = ptoHistory.map((pto) => pto.reviewerId);
+
+    if (reviewerIds === 0) {
+      return [];
+    }
 
     const reviewers = await User.find(
       { _id: { $in: reviewerIds } },
@@ -123,7 +128,7 @@ const getUserHistory = async (userId) => {
 
     return ptoHistoryWithReviewers;
   } catch (err) {
-    throw new Error('Error in getting history for user');
+    throw err;
   }
 };
 

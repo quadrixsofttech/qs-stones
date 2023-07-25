@@ -21,6 +21,7 @@ import { MyHistoryStats } from './MyHistoryStats';
 import { LeaveTypes, headerOrder } from './constants/constants';
 import Scrollbars from 'react-custom-scrollbars-2';
 import { usePaidTimeOff } from '../../hooks/usePTO';
+import moment from 'moment';
 
 const MyHistory = () => {
   const [selectedOption, setSelectedOption] = useState(LeaveTypes.Remote);
@@ -29,7 +30,6 @@ const MyHistory = () => {
   const handleSelectChange = (event) => {
     setSelectedOption(event.target.value);
   };
-
   if (isLoading) {
     return (
       <Flex justify="center" align="center" minHeight="200px">
@@ -41,21 +41,6 @@ const MyHistory = () => {
   if (isError) {
     return <Box color="red.500">An error occurred in fetching data</Box>;
   }
-
-  const getRequestedDates = () => {
-    if (selectedOption === LeaveTypes.Remote) {
-      return paidTimeOffHistory
-        .filter((pto) => pto.type === LeaveTypes.Remote)
-        .map((pto) => pto.dates)
-        .flat();
-    } else if (selectedOption === LeaveTypes.Vacation) {
-      return paidTimeOffHistory
-        .filter((pto) => pto.type === LeaveTypes.Vacation)
-        .map((pto) => pto.dates)
-        .flat();
-    }
-    return [];
-  };
 
   return (
     <Flex {...styles.container}>
@@ -122,7 +107,7 @@ const MyHistory = () => {
                   key={pto._id}
                   status={pto.status}
                   type={pto.type}
-                  time={pto.createdAt}
+                  time={moment(pto.createdAt).format('YYYY-MM-DD HH:mm:ss')}
                   user={{
                     name: pto.reviewerId.firstName,
                     role: pto.reviewerId.lastName,
