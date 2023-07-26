@@ -15,7 +15,7 @@ import {
 } from '@chakra-ui/react';
 import styles from './MyHistory.styles';
 import RequestPTO from '../RequestPTO/RequestPTO';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Calendar } from 'react-multi-date-picker';
 import { MyHistoryStats } from './MyHistoryStats';
 import { LeaveTypes, headerOrder } from './constants/constants';
@@ -24,29 +24,20 @@ import { usePaidTimeOff } from '../../hooks/usePTO';
 import moment from 'moment';
 
 const MyHistory = () => {
-  const [selectedOption, setSelectedOption] = useState(LeaveTypes.Remote);
+  const [selectedOption, setSelectedOption] = useState(LeaveTypes.Vacation);
   const { paidTimeOffHistory, isError, isLoading } = usePaidTimeOff();
+  const [dates, setDates] = useState([]);
 
   const handleSelectChange = (event) => {
     setSelectedOption(event.target.value);
   };
 
-  const getRequestedDates = () => {
-    if (selectedOption === LeaveTypes.Remote) {
-      return paidTimeOffHistory
-        .filter((pto) => pto.type === LeaveTypes.Remote)
-        .map((pto) => pto.dates)
-        .flat();
-    } else if (selectedOption === LeaveTypes.Vacation) {
-      return paidTimeOffHistory
-        .filter((pto) => pto.type === LeaveTypes.Vacation)
-        .map((pto) => pto.dates)
-        .flat();
-    }
-    return [];
-  };
-
-  const requestedDates = getRequestedDates();
+  useEffect(() => {
+    const flattenedDates = paidTimeOffHistory
+      .filter((select) => select.type === selectedOption)
+      .flatMap((obj) => obj.days);
+    setDates(flattenedDates);
+  }, [selectedOption, paidTimeOffHistory]);
 
   if (isLoading) {
     return (
@@ -61,7 +52,7 @@ const MyHistory = () => {
       <Flex>
         <Box color="red.500">An error occurred in fetching data</Box>;
       </Flex>
-    ) ;
+    );
   }
 
   return (
@@ -92,16 +83,18 @@ const MyHistory = () => {
             </Select>
             {selectedOption === LeaveTypes.Remote && (
               <Calendar
+                readOnly={true}
                 headerOrder={headerOrder}
                 className="custom-calendar-history"
-                value={requestedDates}
+                value={dates}
               />
             )}
             {selectedOption === LeaveTypes.Vacation && (
               <Calendar
+                readOnly={true}
                 headerOrder={headerOrder}
                 className="custom-calendar-history"
-                value={requestedDates}
+                value={dates}
               />
             )}
             <StatGroup width={'100%'} height={'100%'}>
@@ -133,16 +126,14 @@ const MyHistory = () => {
                   type={pto.type}
                   time={moment(pto.createdAt).format('YYYY-MM-DD HH:mm:ss')}
                   user={{
-                    name: pto.reviewer.firstName,
-                    role: pto.reviewer.lastName,
+                    firstName: pto.reviewer.firstName,
+                    lastName: pto.reviewer.lastName,
                   }}
                   requestedDates={pto.dates.map(
                     ([startDate, endDate]) =>
                       `${moment(startDate * 1).format(
-                        'YYYY-MM-DD HH:mm:ss'
-                      )} to ${moment(endDate * 1).format(
-                        'YYYY-MM-DD HH:mm:ss'
-                      )}; `
+                        'YYYY-MM-DD'
+                      )} to ${moment(endDate * 1).format('YYYY-MM-DD')}; `
                   )}
                   response={pto.comment}
                 />
