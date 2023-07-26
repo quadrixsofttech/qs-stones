@@ -1,6 +1,5 @@
-const PayedTimeOff = require('../../models/Pto');
+const PayedTimeOff = require('../../models/pto.model');
 const moment = require('moment');
-const mongoose = require('mongoose');
 
 const holidays = [
   '2023-01-01',
