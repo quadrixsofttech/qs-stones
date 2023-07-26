@@ -1,4 +1,8 @@
 const User = require('../../models/user.model');
+<<<<<<< HEAD
+=======
+const moment = require('moment');
+>>>>>>> main
 
 const getAllUsers = async () => {
   try {
@@ -37,4 +41,16 @@ const updateUserRole = async (role, userId) => {
   }
 };
 
-module.exports = { getAllUsers, updateUserRole, getAdmins };
+async function getTotalUsersWorkingToday() {
+  const currentDate = moment().format('YYYY/MM/DD');
+  const activeUsers = await User.find({ active: true, days: currentDate });
+  return activeUsers.length;
+}
+4;
+
+module.exports = {
+  getAllUsers,
+  updateUserRole,
+  getAdmins,
+  getTotalUsersWorkingToday,
+};
