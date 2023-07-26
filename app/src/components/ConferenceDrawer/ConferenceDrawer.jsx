@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  Checkbox,
   Divider,
   Drawer,
   DrawerBody,
@@ -10,34 +9,19 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
-  FormControl,
-  FormLabel,
-  Select,
-  Switch,
   Text,
-  Input,
-  Textarea,
   useToast,
 } from '@chakra-ui/react';
 
 import GenerateDayOfTheWeek from './GenerateDayOfTheWeek/GenerateDayOfTheWeek';
 import RadioButtonGroup from './RadioButtonGroup';
-import GenerateMarkerColor from './GenerateMarkerColor/GenerateMarkerColor';
 import { useState } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-import PickTimeAndRoom from './PickTimeAndRoom/PickTimeAndRoom';
+import { Formik, Form } from 'formik';
+import PickTimeAndRoom from './PickTimeAndRoom';
 import CustomSwitch from './CustomSwitch';
 import CustomCheckBox from './CustomCheckBox';
 import CardInfo from './CardInfo';
-
-const reservationSchema = Yup.object().shape({
-  floor: Yup.string().required('Floor is required'),
-  conferenceRoom: Yup.string().required('Conference room is required'),
-  startAt: Yup.date().required('Start time is required'),
-  endAt: Yup.date().required('End time is required'),
-  title: Yup.string().required('Title is required'),
-});
+import { reservationSchema, initialValues } from './formikConfig';
 
 export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
   const [switchIsChecked, setSwitchIsChecked] = useState(false);
@@ -76,17 +60,7 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
           <DrawerHeader>Reserve Conference Room</DrawerHeader>
           <Divider />
           <Formik
-            initialValues={{
-              floor: '',
-              conferenceRoom: '',
-              startAt: '',
-              endAt: '',
-              repeatReservation: false,
-              everyDay: false,
-              title: '',
-              description: '',
-              markerColor: '',
-            }}
+            initialValues={initialValues}
             validationSchema={reservationSchema}
             onSubmit={(values) => {
               console.log(values);

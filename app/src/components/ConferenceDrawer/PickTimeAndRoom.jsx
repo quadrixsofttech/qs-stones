@@ -1,9 +1,9 @@
 import { Box, Select } from '@chakra-ui/react';
 import { ErrorMessage, Field } from 'formik';
 import React from 'react';
-import CustomDatePicker from '../CustomDatePicker';
-import FloorTypes from '../../../constants/FloorTypes';
-import ConferenceRooms from '../../../constants/ConferenceRooms';
+import CustomDatePicker from './CustomDatePicker';
+import FloorTypes from '../../constants/FloorTypes';
+import ConferenceRooms from '../../constants/ConferenceRooms';
 
 const PickTimeAndRoom = ({ selectedConference, setSelectedConference }) => {
   return (
