@@ -1,7 +1,6 @@
 import { Icon } from '@chakra-ui/react';
 import { AiTwotoneCalendar } from 'react-icons/ai';
 import DatePicker from 'react-multi-date-picker';
-import TimePicker from 'react-multi-date-picker/plugins/time_picker';
 import React from 'react';
 
 export default function CustomDatePicker({ format }) {
@@ -13,7 +12,6 @@ export default function CustomDatePicker({ format }) {
         ref={datePickerRef}
         className="custom-calendar"
         format={format}
-        plugins={[<TimePicker hideSeconds mStep={15} />]}
       />
       <Icon
         as={AiTwotoneCalendar}

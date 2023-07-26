@@ -1,9 +1,10 @@
-import { Box, Select } from '@chakra-ui/react';
+import { Box, Flex, Select } from '@chakra-ui/react';
 import { ErrorMessage, Field } from 'formik';
 import React from 'react';
 import CustomDatePicker from './CustomDatePicker';
 import FloorTypes from '../../constants/FloorTypes';
 import ConferenceRooms from '../../constants/ConferenceRooms';
+import CustomTimePicker from './CustomTimePicker';
 
 const PickTimeAndRoom = ({ selectedConference, setSelectedConference }) => {
   return (
@@ -57,6 +58,21 @@ const PickTimeAndRoom = ({ selectedConference, setSelectedConference }) => {
         {({ field }) => <CustomDatePicker format={'MM/DD/YYYY'} {...field} />}
       </Field>
       <ErrorMessage name="endAt" component="div" className="error" />
+      <Box mb={2} mt={3}>
+        Start at:
+      </Box>
+      <Field name="startAtTime">
+        {({ field }) => <CustomTimePicker {...field} switchIsChecked={true} />}
+      </Field>
+      <ErrorMessage name="startAtTime" component="div" className="error" />
+
+      <Box mb={2} mt={3}>
+        End at:
+      </Box>
+      <Field name="endAtTime">
+        {({ field }) => <CustomTimePicker {...field} switchIsChecked={true} />}
+      </Field>
+      <ErrorMessage name="endAtTime" component="div" className="error" />
     </>
   );
 };
