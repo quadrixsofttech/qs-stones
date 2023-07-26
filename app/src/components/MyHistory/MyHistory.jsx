@@ -46,6 +46,8 @@ const MyHistory = () => {
     return [];
   };
 
+  const requestedDates = getRequestedDates();
+
   if (isLoading) {
     return (
       <Flex justify="center" align="center" minHeight="200px">
@@ -55,7 +57,11 @@ const MyHistory = () => {
   }
 
   if (isError) {
-    return <Box color="red.500">An error occurred in fetching data</Box>;
+    return (
+      <Flex>
+        <Box color="red.500">An error occurred in fetching data</Box>;
+      </Flex>
+    ) ;
   }
 
   return (
@@ -88,12 +94,14 @@ const MyHistory = () => {
               <Calendar
                 headerOrder={headerOrder}
                 className="custom-calendar-history"
+                value={requestedDates}
               />
             )}
             {selectedOption === LeaveTypes.Vacation && (
               <Calendar
                 headerOrder={headerOrder}
                 className="custom-calendar-history"
+                value={requestedDates}
               />
             )}
             <StatGroup width={'100%'} height={'100%'}>
