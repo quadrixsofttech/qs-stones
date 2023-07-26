@@ -62,9 +62,7 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
           <Formik
             initialValues={initialValues}
             validationSchema={reservationSchema}
-            onSubmit={(values) => {
-              console.log(values);
-            }}
+            onSubmit={handleSave}
           >
             {({ values, setFieldValue, handleSubmit, isSubmitting }) => (
               <Form onSubmit={handleSubmit}>
@@ -87,6 +85,7 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
                       <CustomCheckBox
                         handleEveryDayCheck={handleEveryDayCheck}
                         switchIsChecked={switchIsChecked}
+                        checkBox_text={'Every day'}
                       />
                     </Box>
                     <Text

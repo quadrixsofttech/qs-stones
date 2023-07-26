@@ -1,7 +1,11 @@
 import { Checkbox } from '@chakra-ui/react';
 import { Field } from 'formik';
 
-const CustomCheckBox = ({ switchIsChecked, handleEveryDayCheck }) => {
+const CustomCheckBox = ({
+  switchIsChecked,
+  handleEveryDayCheck,
+  checkBox_text,
+}) => {
   return (
     <>
       <Field name="everyDay">
@@ -16,7 +20,7 @@ const CustomCheckBox = ({ switchIsChecked, handleEveryDayCheck }) => {
               field.onChange(!checked);
             }}
           >
-            Every day
+            {checkBox_text}
           </Checkbox>
         )}
       </Field>
