@@ -13,7 +13,7 @@ const TimelineVertical = ({
   onOpen,
   onEdit,
   onDelete,
-  enabled,
+  user,
 }) => {
   const timeIntervals = useMemo(() => {
     const startTime = moment(startHour, 'HH:mm');
@@ -145,9 +145,9 @@ const TimelineVertical = ({
                         rowEnd={getRowIdentifier(data.endTime)}
                       >
                         <TimelineCard
-                          id={data.id}
+                          id={data._id}
                           type={difference > 2 ? 'big' : 'small'}
-                          enabled={enabled}
+                          enabled={data.userId === user._id}
                           title={data.conferenceRoom.name}
                           start={data.startTime}
                           end={data.endTime}

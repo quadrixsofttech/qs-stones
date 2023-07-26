@@ -1,8 +1,5 @@
 const User = require('../../models/user.model');
-<<<<<<< HEAD
-=======
 const moment = require('moment');
->>>>>>> main
 
 const getAllUsers = async () => {
   try {

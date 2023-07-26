@@ -28,11 +28,12 @@ const ConferenceRoomReservationModal = ({
   data,
   onDelete,
   onEdit,
-  enabled,
+  user,
 }) => {
   if (!data) {
     return <></>;
   }
+  const enabled = data.userId === user._id;
   return (
     <Modal isCentered isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />

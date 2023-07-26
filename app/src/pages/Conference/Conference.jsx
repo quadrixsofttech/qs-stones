@@ -8,6 +8,7 @@ import ConferenceRoomReservationModal from '../../components/ConferenceRoomReser
 import moment from 'moment';
 import useConference from '../../hooks/useConference';
 import useReservations from '../../hooks/useReservations';
+import useUser from '../../hooks/useUser';
 
 const Conference = () => {
   const [timelineOrientation, setTimelineOrientation] = useState('vertical');
@@ -19,6 +20,7 @@ const Conference = () => {
 
   const { conferenceRooms, conferenceLoading, conferenceError } =
     useConference();
+  const { user } = useUser();
 
   const {
     reservationsData,
@@ -31,13 +33,18 @@ const Conference = () => {
     refetchReservations();
   }, [date, refetchReservations]);
 
-  if (reservationsLoading || !reservationsData || reservationsError) {
+  if (
+    reservationsLoading ||
+    !reservationsData ||
+    reservationsError ||
+    conferenceLoading ||
+    !conferenceRooms ||
+    conferenceError ||
+    !user
+  ) {
     return <Spinner />;
   }
 
-  if (conferenceLoading || !conferenceRooms || conferenceError) {
-    return <Spinner />;
-  }
   const selectedFloorConferenceRooms = conferenceRooms.filter(
     (x) => x.floor === floor
   );
@@ -49,7 +56,7 @@ const Conference = () => {
     console.log('Delete' + id);
   };
   const handleOpen = (id) => {
-    const filteredData = reservationsData?.find((room) => room.id === id);
+    const filteredData = reservationsData?.find((room) => room._id === id);
     setModalData(filteredData);
     modalDisclosure.onOpen();
   };
@@ -76,7 +83,7 @@ const Conference = () => {
         onEdit={handleEdit}
         onDelete={handleDelete}
         timelineFilter={timelineFilter}
-        enabled={true}
+        user={user}
       />
       <ConferenceRoomReservationModal
         isOpen={modalDisclosure.isOpen}
@@ -84,7 +91,7 @@ const Conference = () => {
         data={modalData}
         onDelete={handleDelete}
         onEdit={handleEdit}
-        enabled={true}
+        user={user}
       />
     </DashboardLayout>
   );

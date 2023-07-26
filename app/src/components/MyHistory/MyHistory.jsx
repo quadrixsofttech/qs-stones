@@ -33,11 +33,13 @@ const MyHistory = () => {
   };
 
   useEffect(() => {
-    const flattenedDates = paidTimeOffHistory
-      .filter((select) => select.type === selectedOption)
-      .flatMap((obj) => obj.days);
-    setDates(flattenedDates);
-  }, [selectedOption, paidTimeOffHistory]);
+    if (!isLoading) {
+      const flattenedDates = paidTimeOffHistory
+        .filter((select) => select.type === selectedOption)
+        .flatMap((obj) => obj.days);
+      setDates(flattenedDates);
+    }
+  }, [paidTimeOffHistory, selectedOption, isLoading]);
 
   if (isLoading) {
     return (

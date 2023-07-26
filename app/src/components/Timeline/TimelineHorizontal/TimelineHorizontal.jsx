@@ -13,7 +13,7 @@ const TimelineHorizontal = ({
   onOpen,
   onEdit,
   onDelete,
-  enabled,
+  user,
 }) => {
   const timeSlots = useMemo(() => {
     const startTime = moment(startHour, 'HH:mm');
@@ -102,15 +102,15 @@ const TimelineHorizontal = ({
                       key={`key-${data.startTime}- ${index}index`}
                     >
                       <TimelineCard
-                        id={data.id}
+                        id={data._id}
                         type={'small'}
-                        enabled={enabled}
                         title={data.conferenceRoom.name}
                         start={data.startTime}
                         end={data.endTime}
                         description={data.description}
                         color={data.color}
                         user={data.user}
+                        enabled={data.userId === user._id}
                         orientation="horizontal"
                         onEdit={onEdit}
                         onDelete={onDelete}
