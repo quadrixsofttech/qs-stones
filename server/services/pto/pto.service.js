@@ -1,5 +1,6 @@
-const PayedTimeOff = require('../../models/Pto');
+const PayedTimeOff = require('../../models/pto.model');
 const moment = require('moment');
+const User = require('../../models/user.model');
 const mongoose = require('mongoose');
 
 const holidays = [
@@ -118,7 +119,7 @@ const createPTO = async ({
     await pto.save();
     return pto;
   } catch (err) {
-    throw new Error(err);
+    throw new Error({ success: false, message: 'Problem in creating pto' });
   }
 };
 
@@ -131,7 +132,7 @@ const updatePTO = async (id, updates) => {
     );
     return pto;
   } catch (err) {
-    throw new Error(err);
+    throw new Error({ success: false, message: 'Problem in updateing pto' });
   }
 };
 
@@ -140,8 +141,139 @@ const deletePTO = async (id) => {
     const pto = await PayedTimeOff.findByIdAndDelete(id);
     return pto;
   } catch (err) {
-    throw new Error(err);
+    throw new Error({ success: false, message: 'Problem in deleting pto' });
   }
 };
 
-module.exports = { getAllPTO, createPTO, updatePTO, deletePTO, getPTO };
+//MyHistoryService
+
+const getUserHistory = async (userId) => {
+  try {
+    const ptoHistory = await PayedTimeOff.find({ userId }).lean();
+
+    const reviewerIds = ptoHistory.map((pto) => pto.reviewerId);
+
+    if (reviewerIds === 0) {
+      return [];
+    }
+
+    const reviewers = await User.find(
+      { _id: { $in: reviewerIds } },
+      'firstName lastName'
+    ).lean();
+
+    const reviewerMap = reviewers.reduce((map, reviewer) => {
+      map[reviewer._id] = reviewer;
+      return map;
+    }, {});
+
+    const ptoHistoryWithReviewers = ptoHistory.map((pto) => {
+      const reviewer = reviewerMap[pto.reviewerId];
+      return {
+        ...pto,
+        reviewer: {
+          firstName: reviewer.firstName,
+          lastName: reviewer.lastName,
+        },
+      };
+    });
+
+    return ptoHistoryWithReviewers;
+  } catch (err) {
+    throw err;
+  }
+};
+
+async function getUsersOnVacation() {
+  const vacationUsers = await Pto.countDocuments({ type: 'vacation' });
+  return vacationUsers;
+}
+
+async function calculateVacationPercentage() {
+  const currentDate = moment();
+  const lastYearDate = moment().subtract(1, 'year');
+
+  const currentYearVacationUsers = await PayedTimeOff.aggregate([
+    {
+      $match: {
+        type: 'vacation',
+        createdAt: { $gte: currentDate.startOf('year').toDate() },
+      },
+    },
+    {
+      $group: {
+        _id: '$userId',
+        count: { $sum: 1 },
+      },
+    },
+    {
+      $group: {
+        _id: null,
+        total: { $sum: 1 },
+      },
+    },
+  ]);
+
+  const lastYearVacationUsers = await PayedTimeOff.aggregate([
+    {
+      $match: {
+        type: 'vacation',
+        createdAt: {
+          $gte: lastYearDate.startOf('year').toDate(),
+          $lte: lastYearDate.endOf('year').toDate(),
+        },
+      },
+    },
+    {
+      $group: {
+        _id: '$userId',
+        count: { $sum: 1 },
+      },
+    },
+    {
+      $group: {
+        _id: null,
+        total: { $sum: 1 },
+      },
+    },
+  ]);
+
+  const currentYearVacationCount =
+    currentYearVacationUsers.length > 0 ? currentYearVacationUsers[0].total : 0;
+  const lastYearVacationCount =
+    lastYearVacationUsers.length > 0 ? lastYearVacationUsers[0].total : 0;
+
+  const percentage =
+    lastYearVacationCount === 0
+      ? 0
+      : ((currentYearVacationCount - lastYearVacationCount) /
+          lastYearVacationCount) *
+        100;
+
+  return percentage.toFixed(2);
+}
+
+const getUserDates = async (userId) => {
+  try {
+    const ptoDates = await PayedTimeOff.find({ userId }, { dates: 1 }).lean();
+    const allDates = ptoDates.reduce((acc, pto) => {
+      acc.push(...pto.dates);
+      return acc;
+    }, []);
+    return allDates;
+  } catch (err) {
+    return [];
+  }
+};
+
+module.exports = {
+  getAllPTO,
+  getPTO,
+  createPTO,
+  updatePTO,
+  deletePTO,
+  getUserHistory,
+  calculateVacationPercentage,
+  getUsersOnVacation,
+  getUserDates,
+};

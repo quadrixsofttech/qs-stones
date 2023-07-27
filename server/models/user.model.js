@@ -15,5 +15,6 @@ const UserSchema = new Schema({
       usedDays: { type: Number, default: 0 },
     },
   ],
+  active: { type: Boolean, required: true },
 });
 module.exports = mongoose.model('user', UserSchema);

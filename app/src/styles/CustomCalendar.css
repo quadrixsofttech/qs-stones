@@ -8,6 +8,10 @@
   right: 5px;
 }
 
+.rmdp-wrapper.rmdp-shadow.custom-calendar-history {
+  z-index: 5 !important;
+}
+
 .custom-calendar .rmdp-arrow {
   border: solid black;
   border-width: 0 2px 2px 0;
@@ -65,6 +69,7 @@
 
 .custom-calendar .rmdp-day-picker {
   gap: 50px;
+  z-index: 5;
 }
 
 .custom-calendar .rmdp-header-values {

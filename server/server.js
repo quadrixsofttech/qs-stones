@@ -18,6 +18,7 @@ app.use(cookieParser());
 
 app.use('/api/v1', publicRouter);
 
+
 async function connect() {
   try {
     mongoose.Promise = global.Promise;
