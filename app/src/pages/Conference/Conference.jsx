@@ -3,7 +3,7 @@ import ConferenceNavbar from '../../components/ConferenceNavbar/ConferenceNavbar
 import React, { useEffect, useState } from 'react';
 import Timeline from '../../components/Timeline/Timeline';
 import ConferenceCalendarNavbar from '../../components/ConferenceNavbar/ConferenceCalendarNavbar';
-import { Divider, Spinner, useDisclosure } from '@chakra-ui/react';
+import { Divider, Flex, Spinner, useDisclosure } from '@chakra-ui/react';
 import ConferenceRoomReservationModal from '../../components/ConferenceRoomReservationModal';
 import moment from 'moment';
 import useConference from '../../hooks/useConference';
@@ -42,7 +42,11 @@ const Conference = () => {
     conferenceError ||
     !user
   ) {
-    return <Spinner />;
+    return (
+      <Flex justifyContent={'center'}>
+        <Spinner />
+      </Flex>
+    );
   }
 
   const selectedFloorConferenceRooms = conferenceRooms.filter(
