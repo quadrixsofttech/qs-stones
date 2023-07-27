@@ -11,10 +11,10 @@ import useConference from '../../hooks/useConference';
 import styles from './DeleteAlertDialog.styles';
 
 const DeleteAlertDialog = ({ isOpen, onClose, idToDelete }) => {
-  const { deleteConferenceReservation } = useConference();
-  const deleteReservation = async (id) => {
+  const { deleteReservation } = useConference();
+  const deleteConferenceReservation = async (id) => {
     try {
-      await deleteConferenceReservation.mutateAsync(id);
+      await deleteReservation.mutateAsync(id);
     } catch (err) {
       throw new Error(err);
     }
@@ -38,7 +38,7 @@ const DeleteAlertDialog = ({ isOpen, onClose, idToDelete }) => {
             <Button
               colorScheme="red"
               onClick={() => {
-                deleteReservation(idToDelete);
+                deleteConferenceReservation(idToDelete);
                 onClose();
               }}
               ml={4}

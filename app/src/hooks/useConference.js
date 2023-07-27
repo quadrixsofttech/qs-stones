@@ -18,20 +18,20 @@ const useConference = () => {
     }
   );
 
-  const deleteReservation = async (id) => {
+  const deleteReservationCallback = async (id) => {
     const { data } = await axios.delete(
       `/api/v1/conference-rooms/reservations/${id}`
     );
     return data;
   };
 
-  const deleteConferenceReservation = useMutation(deleteReservation);
+  const deleteReservation = useMutation(deleteReservationCallback);
 
   return {
     data,
     conferenceLoading,
     conferenceError,
-    deleteConferenceReservation,
+    deleteReservation,
   };
 };
 
