@@ -18,7 +18,6 @@ app.use(cookieParser());
 
 app.use('/api/v1', publicRouter);
 
-
 async function connect() {
   try {
     mongoose.Promise = global.Promise;
@@ -27,7 +26,7 @@ async function connect() {
       useUnifiedTopology: true,
       useFindAndModify: false,
     });
-    startCronJobs.start();
+    startCronJobs();
   } catch (err) {
     console.log('Mongoose error', err);
   }

@@ -1,6 +1,6 @@
 const cron = require('node-cron');
 const mongoose = require('mongoose');
-const User = require('./models/User');
+const User = require('./models/user.model');
 
 const cronUpdateVacation = cron.schedule('0 0 1 1 *', async () => {
   try {
@@ -30,7 +30,7 @@ const cronUpdateVacation = cron.schedule('0 0 1 1 *', async () => {
 });
 
 function startCronJobs() {
-  cronUpdateVacation();
+  cronUpdateVacation.start();
 }
 
 module.exports = { startCronJobs };
