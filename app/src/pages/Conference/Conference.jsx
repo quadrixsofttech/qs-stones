@@ -5,21 +5,19 @@ import Timeline from '../../components/Timeline/Timeline';
 import ConferenceCalendarNavbar from '../../components/ConferenceNavbar/ConferenceCalendarNavbar';
 import { Divider, useDisclosure } from '@chakra-ui/react';
 import DeleteAlertDialog from '../../components/DeleteAlertDialog/DeleteAlertDialog';
+import ConferenceRoomReservationModal from '../../components/ConferenceRoomReservationModal/ConferenceRoomReservationModal';
+import moment from 'moment';
 
 const Conference = () => {
+  const [timelineOrientation, setTimelineOrientation] = useState('vertical');
+  const [timelineFilter, setTimelineFilter] = useState('');
+  const modalDisclosure = useDisclosure();
   const alertDialogDisclosure = useDisclosure();
   const [idToDelete, setIdToDelete] = useState();
+  const [modalData, setModalData] = useState(null);
+  const [date, setDate] = useState(moment());
+  const [floor, setFloor] = useState('Upper floor');
 
-  const handleEdit = (id) => {
-    console.log('Edit' + id);
-  };
-  const handleDelete = (id) => {
-    setIdToDelete(id);
-    alertDialogDisclosure.onOpen();
-  };
-  const handleOpen = (id) => {
-    console.log('Open' + id);
-  };
   const Label = [
     {
       name: 'conference-room-1',
@@ -104,13 +102,34 @@ const Conference = () => {
       },
     },
   ];
+  const handleEdit = (id) => {
+    console.log('Edit' + id);
+  };
+  const handleDelete = (id) => {
+    setIdToDelete(id);
+    alertDialogDisclosure.onOpen();
+  };
+  const handleOpen = (id) => {
+    const filteredData = data?.find((room) => room.id === id);
+    setModalData(filteredData);
+    modalDisclosure.onOpen();
+  };
+
   return (
     <DashboardLayout Padding="0">
       <ConferenceNavbar />
-      <ConferenceCalendarNavbar />
+      <ConferenceCalendarNavbar
+        timelineOrientation={timelineOrientation}
+        setTimelineOrientation={setTimelineOrientation}
+        setTimelineFilter={setTimelineFilter}
+        timelineFilter={timelineFilter}
+        setDate={setDate}
+        floor={floor}
+        setFloor={setFloor}
+      />
       <Divider />
       <Timeline
-        type="vertical"
+        type={timelineOrientation}
         title={Label}
         data={data}
         startHour="08:00"
@@ -123,6 +142,14 @@ const Conference = () => {
         isOpen={alertDialogDisclosure.isOpen}
         onClose={alertDialogDisclosure.onClose}
         idToDelete={idToDelete}
+        timelineFilter={timelineFilter}
+      />
+      <ConferenceRoomReservationModal
+        isOpen={modalDisclosure.isOpen}
+        onClose={modalDisclosure.onClose}
+        data={modalData}
+        onDelete={handleDelete}
+        onEdit={handleEdit}
       />
     </DashboardLayout>
   );

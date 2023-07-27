@@ -6,7 +6,7 @@ const ConferenceRoomReservation = require('../controllers/conference-room-reserv
 
 router.get('/', ConferenceRoomController.getConferenceRooms);
 router.get('/reservations', ConferenceRoomReservation.getReservations);
-router.post('/reservations/', ConferenceRoomReservation.createReservation);
+router.post('/reservations', ConferenceRoomReservation.createReservation);
 router.patch('/reservations/:id', ConferenceRoomReservation.updateReservation);
 router.delete('/reservations/:id', ConferenceRoomReservation.deleteReservation);
 

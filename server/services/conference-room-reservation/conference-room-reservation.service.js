@@ -1,8 +1,8 @@
-const ConferenceRoomReservation = require('./models/conference-room-reservation');
+const ConferenceRoomReservation = require('../../models/conference-room-reservation');
 
 const createReservation = async ({
   enabled,
-  column,
+  conferenceRoom,
   date,
   startTime,
   endTime,
@@ -14,7 +14,7 @@ const createReservation = async ({
   try {
     const reservation = new ConferenceRoomReservation({
       enabled,
-      column,
+      conferenceRoom,
       date,
       startTime,
       endTime,
@@ -63,6 +63,33 @@ const getReservations = async (date) => {
       {
         $addFields: {
           user: { $arrayElemAt: ['$user', 0] },
+        },
+      },
+      {
+        $lookup: {
+          from: 'conference-room-overviews',
+          let: { conferenceRoom: '$conferenceRoom' },
+          pipeline: [
+            {
+              $match: {
+                $expr: { $eq: ['$_id', '$$conferenceRoom'] },
+              },
+            },
+            {
+              $project: {
+                id: 1,
+                name: 1,
+                capacity: 1,
+                floor: 1,
+              },
+            },
+          ],
+          as: 'conferenceRoom',
+        },
+      },
+      {
+        $addFields: {
+          conferenceRoom: { $arrayElemAt: ['$conferenceRoom', 0] },
         },
       },
     ]);
