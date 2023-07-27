@@ -29,4 +29,8 @@ const cronUpdateVacation = cron.schedule('0 0 1 1 *', async () => {
   }
 });
 
-module.exports = { cronUpdateVacation };
+function startCronJobs() {
+  cronUpdateVacation();
+}
+
+module.exports = { startCronJobs };
