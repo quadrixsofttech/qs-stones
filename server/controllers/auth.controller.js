@@ -83,9 +83,10 @@ const signUp = async (req, res) => {
       const decodedToken = jwtDecode(token);
       const expiresAt = decodedToken.exp;
 
-      const { firstName, lastName, email, role, vacation } = savedUser;
+      const { _id, firstName, lastName, email, role, vacation } = savedUser;
 
       const userInfo = {
+        _id,
         firstName,
         lastName,
         email,
