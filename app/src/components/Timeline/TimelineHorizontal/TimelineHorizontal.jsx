@@ -93,7 +93,7 @@ const TimelineHorizontal = ({
                 );
               })}
               {data.map((data, index) => {
-                if (data.conferenceRoom.name === title.name) {
+                if (data.column === title.name) {
                   return (
                     <GridItem
                       {...styles.horizontalCard}
@@ -104,7 +104,7 @@ const TimelineHorizontal = ({
                       <TimelineCard
                         id={data._id}
                         type={'small'}
-                        title={data.conferenceRoom.name}
+                        title={data.title}
                         start={data.startTime}
                         end={data.endTime}
                         description={data.description}

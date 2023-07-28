@@ -133,14 +133,14 @@ const TimelineVertical = ({
                 {gridItems}
 
                 {data.map((data) => {
-                  if (data.conferenceRoom.name === x.name) {
+                  if (data.column === x.name) {
                     const difference =
                       getRowIdentifier(data.endTime) -
                       getRowIdentifier(data.startTime);
                     return (
                       <GridItem
                         {...styles.timelineCard}
-                        key={`${data.id}`}
+                        key={`${data._id}`}
                         rowStart={getRowIdentifier(data.startTime)}
                         rowEnd={getRowIdentifier(data.endTime)}
                       >
@@ -148,7 +148,7 @@ const TimelineVertical = ({
                           id={data._id}
                           type={difference > 2 ? 'big' : 'small'}
                           enabled={data.userId === user._id}
-                          title={data.conferenceRoom.name}
+                          title={data.title}
                           start={data.startTime}
                           end={data.endTime}
                           description={data.description}

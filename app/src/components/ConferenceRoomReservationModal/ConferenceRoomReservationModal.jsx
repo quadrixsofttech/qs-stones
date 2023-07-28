@@ -66,17 +66,13 @@ const ConferenceRoomReservationModal = ({
         <ModalBody p="0" mt="4">
           <Flex alignItems={'center'} gap="2">
             <BiChalkboard />
-            <Text color={'gray.700'}>
-              {data.conferenceRoom.id + ' ' + data.conferenceRoom.name}
-            </Text>
-            <Tag {...styles.tag}>{data.conferenceRoom.floor}</Tag>
+            <Text color={'gray.700'}>{data.id + ' ' + data.column}</Text>
+            <Tag {...styles.tag}>{data.tag}</Tag>
           </Flex>
           <Flex {...styles.infoBox}>
             <BiCalendar />
             <Text color={'gray.700'}>
-              {moment(data.date).format('MMMM DD') +
-                ', ' +
-                moment(data.date).format('dddd')}
+              {moment(data.date).format('MMMM DD, dddd')}
             </Text>
           </Flex>
           <Flex {...styles.infoBox}>
