@@ -35,7 +35,7 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
     setEveryDayChecked(!everyDayChecked);
   };
 
-  const handleSave = () => {
+  const handleSave = (values) => {
     onClose();
     toast({
       position: 'top-right',
@@ -43,6 +43,7 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
       variant: 'subtle',
       description: `You have successfully reserved ${selectedConference}`,
     });
+    console.log(values);
   };
 
   return (
@@ -75,7 +76,10 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
                   </Box>
                   <Divider />
                   <Box p={6}>
-                    <CustomSwitch setSwitchIsChecked={setSwitchIsChecked} />
+                    <CustomSwitch
+                      setSwitchIsChecked={setSwitchIsChecked}
+                      switch_text={'Repeat reservation'}
+                    />
                     <GenerateDayOfTheWeek
                       switchIsChecked={switchIsChecked}
                       everyDayChecked={everyDayChecked}

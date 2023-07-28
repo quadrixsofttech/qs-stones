@@ -3,7 +3,7 @@ import { AiTwotoneCalendar } from 'react-icons/ai';
 import DatePicker from 'react-multi-date-picker';
 import React from 'react';
 
-export default function CustomDatePicker({ format }) {
+export default function CustomDatePicker({ format, ...formikProps }) {
   const datePickerRef = React.useRef(null);
 
   return (
@@ -12,6 +12,7 @@ export default function CustomDatePicker({ format }) {
         ref={datePickerRef}
         className="custom-calendar"
         format={format}
+        {...formikProps}
       />
       <Icon
         as={AiTwotoneCalendar}

@@ -1,21 +1,43 @@
-import { Box, Flex, Select } from '@chakra-ui/react';
+import { Box, Select, Spinner } from '@chakra-ui/react';
 import { ErrorMessage, Field } from 'formik';
-import React from 'react';
+import React, { useState } from 'react';
 import CustomDatePicker from './CustomDatePicker';
-import FloorTypes from '../../constants/FloorTypes';
-import ConferenceRooms from '../../constants/ConferenceRooms';
 import CustomTimePicker from './CustomTimePicker';
+import useConference from '../../hooks/useConference';
 
 const PickTimeAndRoom = ({ selectedConference, setSelectedConference }) => {
+  const [floor, setFloor] = useState('Upper Floor');
+  const { data: conferenceRooms, conferenceLoading } = useConference();
+
+  if (conferenceLoading || !conferenceRooms) {
+    return <Spinner />;
+  }
+
+  const floors = ['Upper Floor', 'Lower Floor'];
+
+  const handleFloorChange = (e) => {
+    setFloor(e.target.value);
+  };
+
+  const filteredConferenceRooms =
+    floor === 'Upper Floor'
+      ? conferenceRooms.filter((room) => room.floor === 'Upper Floor')
+      : conferenceRooms.filter((room) => room.floor === 'Lower Floor');
+
   return (
     <>
       <Box mb={2}>Choose a floor</Box>
       <Field name="floor">
         {({ field }) => (
-          <Select size="md" {...field}>
-            {Object.values(FloorTypes).map((type, index) => (
-              <option value={type} key={index}>
-                {type}
+          <Select
+            size="md"
+            {...field}
+            onChange={handleFloorChange}
+            value={floor}
+          >
+            {floors.map((floor) => (
+              <option key={floor} value={floor}>
+                {floor}
               </option>
             ))}
           </Select>
@@ -31,12 +53,15 @@ const PickTimeAndRoom = ({ selectedConference, setSelectedConference }) => {
           <Select
             size="md"
             {...field}
-            value={selectedConference}
-            onChange={(e) => setSelectedConference(e.target.value)}
+            value={field.value}
+            onChange={(e) => {
+              field.onChange(e);
+              setSelectedConference(e.target.value);
+            }}
           >
-            {Object.values(ConferenceRooms).map((type, index) => (
-              <option value={type} key={index}>
-                {type}
+            {filteredConferenceRooms.map((room) => (
+              <option key={room.id} value={room.name}>
+                {room.name}
               </option>
             ))}
           </Select>
@@ -44,35 +69,26 @@ const PickTimeAndRoom = ({ selectedConference, setSelectedConference }) => {
       </Field>
       <ErrorMessage name="conferenceRoom" component="div" className="error" />
       <Box mb={2} mt={3}>
-        Start at:
+        Select date:
       </Box>
-      <Field name="startAt">
+      <Field name="date">
         {({ field }) => <CustomDatePicker format={'MM/DD/YYYY'} {...field} />}
       </Field>
-      <ErrorMessage name="startAt" component="div" className="error" />
-
+      <ErrorMessage name="date" component="div" className="error" />
       <Box mb={2} mt={3}>
-        End at:
+        Start at time:
       </Box>
-      <Field name="endAt">
-        {({ field }) => <CustomDatePicker format={'MM/DD/YYYY'} {...field} />}
-      </Field>
-      <ErrorMessage name="endAt" component="div" className="error" />
-      <Box mb={2} mt={3}>
-        Start at:
-      </Box>
-      <Field name="startAtTime">
+      <Field name="startTime">
         {({ field }) => <CustomTimePicker {...field} switchIsChecked={true} />}
       </Field>
-      <ErrorMessage name="startAtTime" component="div" className="error" />
-
+      <ErrorMessage name="startTime" component="div" className="error" />
       <Box mb={2} mt={3}>
-        End at:
+        End at time:
       </Box>
-      <Field name="endAtTime">
+      <Field name="endTime">
         {({ field }) => <CustomTimePicker {...field} switchIsChecked={true} />}
       </Field>
-      <ErrorMessage name="endAtTime" component="div" className="error" />
+      <ErrorMessage name="endTime" component="div" className="error" />
     </>
   );
 };
