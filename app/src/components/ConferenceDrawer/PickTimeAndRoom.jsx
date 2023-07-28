@@ -33,7 +33,7 @@ const PickTimeAndRoom = ({ selectedConference, setSelectedConference }) => {
             size="md"
             {...field}
             onChange={handleFloorChange}
-            value={floor}
+            value={field.value}
           >
             {floors.map((floor) => (
               <option key={floor} value={floor}>
@@ -72,7 +72,9 @@ const PickTimeAndRoom = ({ selectedConference, setSelectedConference }) => {
         Select date:
       </Box>
       <Field name="date">
-        {({ field }) => <CustomDatePicker format={'MM/DD/YYYY'} {...field} />}
+        {({ field }) => (
+          <CustomDatePicker format={'MM/DD/YYYY'} field={field} />
+        )}
       </Field>
       <ErrorMessage name="date" component="div" className="error" />
       <Box mb={2} mt={3}>
