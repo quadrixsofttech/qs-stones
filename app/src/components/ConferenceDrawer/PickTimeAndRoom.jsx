@@ -6,16 +6,24 @@ import CustomTimePicker from './CustomTimePicker';
 import useConference from '../../hooks/useConference';
 
 const PickTimeAndRoom = ({
-  selectedConference,
   setSelectedConference,
-  selectedDate,
   setSelectedDate,
+  setSelectedStartTime,
+  setSelectedEndTime,
 }) => {
   const [floor, setFloor] = useState('Upper Floor');
   const { data: conferenceRooms, conferenceLoading } = useConference();
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
+  };
+
+  const handleStartTimeChange = (time) => {
+    setSelectedStartTime(time.format('HH:mm'));
+  };
+
+  const handleEndTimeChange = (time) => {
+    setSelectedEndTime(time.format('HH:mm'));
   };
 
   if (conferenceLoading || !conferenceRooms) {
@@ -97,9 +105,10 @@ const PickTimeAndRoom = ({
       <Field name="startTime">
         {({ field }) => (
           <CustomTimePicker
-            {...field}
+            field={field}
             switchIsChecked={true}
-            name="date-picker"
+            name="start-time-picker"
+            onTimeChange={handleStartTimeChange}
           />
         )}
       </Field>
@@ -108,7 +117,14 @@ const PickTimeAndRoom = ({
         End at time:
       </Box>
       <Field name="endTime">
-        {({ field }) => <CustomTimePicker {...field} switchIsChecked={true} />}
+        {({ field }) => (
+          <CustomTimePicker
+            field={field}
+            switchIsChecked={true}
+            name="end-time-picker"
+            onTimeChange={handleEndTimeChange}
+          />
+        )}
       </Field>
       <ErrorMessage name="endTime" component="div" className="error" />
     </>

@@ -1,20 +1,39 @@
 import { Icon } from '@chakra-ui/react';
-import React from 'react';
+import React, { useState } from 'react';
 import { FaRegClock } from 'react-icons/fa';
 import DatePicker from 'react-multi-date-picker';
 import TimePicker from 'react-multi-date-picker/plugins/time_picker';
+import moment from 'moment';
 
 export default function CustomTimePicker({
   switchIsChecked,
   repeatReservation,
+  onTimeChange,
+  field,
+  name,
 }) {
   const datePickerRef = React.useRef(null);
+  const [selectedTime, setSelectedTime] = useState(field?.value || moment());
+
+  const handleTimeChange = (value) => {
+    setSelectedTime(value.format('HH:mm'));
+    if (field) {
+      field.onChange({ target: { value, name } });
+    }
+    if (onTimeChange) {
+      onTimeChange(value);
+    }
+  };
+
+  console.log(selectedTime);
 
   return (
     <>
       <DatePicker
         ref={datePickerRef}
         disableDayPicker
+        value={selectedTime}
+        onChange={handleTimeChange}
         className="custom-calendar"
         disabled={
           switchIsChecked &&

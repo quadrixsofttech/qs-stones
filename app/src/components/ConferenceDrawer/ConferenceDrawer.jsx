@@ -22,12 +22,15 @@ import CustomSwitch from './CustomSwitch';
 import CustomCheckBox from './CustomCheckBox';
 import CardInfo from './CardInfo';
 import { reservationSchema, initialValues } from './formikConfig';
+import moment from 'moment';
 
 export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
   const [switchIsChecked, setSwitchIsChecked] = useState(false);
   const [everyDayChecked, setEveryDayChecked] = useState(false);
   const [selectedConference, setSelectedConference] = useState('');
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedStartTime, setSelectedStartTime] = useState(moment());
+  const [selectedEndTime, setSelectedEndTime] = useState(moment());
 
   const toast = useToast();
 
@@ -41,7 +44,10 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
       position: 'top-right',
       status: 'success',
       variant: 'subtle',
-      description: `You have successfully reserved ${selectedConference} for the date ${selectedDate}`,
+      description: `You have successfully reserved ${selectedConference} for the date
+      ${selectedDate} from ${selectedStartTime.format(
+        'HH:mm'
+      )} to ${selectedEndTime.format('HH:mm')}`,
     });
   };
 
@@ -72,10 +78,10 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
                 <DrawerBody p={0}>
                   <Box p={6}>
                     <PickTimeAndRoom
-                      selectedConference={selectedConference}
                       setSelectedConference={setSelectedConference}
-                      selectedDate={selectedDate}
                       setSelectedDate={setSelectedDate}
+                      setSelectedStartTime={setSelectedStartTime}
+                      setSelectedEndTime={setSelectedEndTime}
                     />
                   </Box>
                   <Divider />
