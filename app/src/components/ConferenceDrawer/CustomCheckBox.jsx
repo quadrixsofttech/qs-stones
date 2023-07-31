@@ -15,7 +15,7 @@ const CustomCheckBox = ({
             isDisabled={switchIsChecked ? false : true}
             isChecked={field.value}
             onChange={(e) => {
-              const { checked } = e.target;
+              const { checked } = field;
               handleEveryDayCheck();
               field.onChange({ target: { name: field.name, value: !checked } });
             }}
