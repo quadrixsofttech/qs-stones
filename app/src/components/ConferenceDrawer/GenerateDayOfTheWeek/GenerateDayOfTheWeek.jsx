@@ -1,48 +1,49 @@
 import { Flex } from '@chakra-ui/react';
 import DayOfTheWeek from '../../../constants/DayOfTheWeek';
 import styles from './GenerateDayOfTheWeek.styles';
-import React from 'react';
+import React, { useState } from 'react';
 
 export default function GenerateDayOfTheWeek({
   switchIsChecked,
   everyDayChecked,
   setEveryDayChecked,
 }) {
-  const [selectedColorIndex, setSelectedColorIndex] = React.useState(-1);
+  const [selectedColorIndices, setSelectedColorIndices] = useState([]);
 
   const handleColorClick = (index) => {
-    if (everyDayChecked) {
-      setEveryDayChecked(false);
-    } else {
-      setSelectedColorIndex((prevIndex) => (prevIndex === index ? -1 : index));
+    if (switchIsChecked) {
+      if (everyDayChecked) {
+        setEveryDayChecked(false);
+        setSelectedColorIndices([index]);
+      } else {
+        setSelectedColorIndices((prevIndices) =>
+          prevIndices.includes(index)
+            ? prevIndices.filter((i) => i !== index)
+            : [...prevIndices, index]
+        );
+      }
     }
   };
 
-  React.useEffect(() => {
-    if (everyDayChecked) {
-      setSelectedColorIndex(-1);
-    }
-  }, [everyDayChecked]);
-
   return (
-    <Flex alignItems={'center'} justifyContent={'space-around'} mt={4}>
+    <Flex alignItems="center" justifyContent="space-around" mt={4}>
       {Object.values(DayOfTheWeek).map((day, index) => (
         <Flex
           {...styles.dayContainer}
           key={index}
           color={
-            switchIsChecked || everyDayChecked
-              ? selectedColorIndex === -1 || selectedColorIndex === index
-                ? 'white'
-                : 'black'
-              : 'gray.200'
+            !switchIsChecked
+              ? 'gray.200'
+              : selectedColorIndices.includes(index)
+              ? 'white'
+              : 'black'
+          }
+          bgColor={
+            selectedColorIndices.includes(index) || everyDayChecked
+              ? 'purple.400'
+              : 'white'
           }
           borderColor={switchIsChecked ? 'gray.200' : 'gray.100'}
-          bgColor={
-            everyDayChecked || selectedColorIndex === index
-              ? 'purple.500'
-              : 'transparent'
-          }
           onClick={() => handleColorClick(index)}
         >
           {day}
