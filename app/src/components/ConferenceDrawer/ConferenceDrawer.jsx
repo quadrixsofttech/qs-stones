@@ -27,7 +27,7 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
   const [switchIsChecked, setSwitchIsChecked] = useState(false);
   const [everyDayChecked, setEveryDayChecked] = useState(false);
   const [selectedConference, setSelectedConference] =
-    useState('01 Conference Room');
+    useState('');
 
   const toast = useToast();
 
