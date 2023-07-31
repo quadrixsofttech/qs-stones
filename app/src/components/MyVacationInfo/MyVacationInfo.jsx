@@ -12,10 +12,10 @@ export const MyVacationInfo = () => {
     return <Spinner />;
   }
 
-  const currentYear = vacationInfo.vacation.find(
+  const currentYear = vacationInfo?.vacation.find(
     (x) => x.year === new Date().getFullYear()
   );
-  const lastYear = vacationInfo.vacation.find(
+  const lastYear = vacationInfo?.vacation.find(
     (x) => x.year === new Date().getFullYear() - 1
   );
 
@@ -35,7 +35,7 @@ export const MyVacationInfo = () => {
               to date
             </>
           }
-          numberInfo={currentYear.vacationDays}
+          numberInfo={currentYear?.vacationDays}
           footer={`${String(
             currentYear?.vacationDays - currentYear?.usedDays
           )} days left`}

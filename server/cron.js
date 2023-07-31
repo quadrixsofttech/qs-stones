@@ -2,7 +2,7 @@ const cron = require('node-cron');
 const mongoose = require('mongoose');
 const User = require('./models/user.model');
 
-const cronUpdateVacation = cron.schedule('0 0 1 1 *', async () => {
+const cronUpdateVacation = cron.schedule('0 0 1 7 *', async () => {
   try {
     const currentYear = new Date().getFullYear();
 
@@ -10,20 +10,21 @@ const cronUpdateVacation = cron.schedule('0 0 1 1 *', async () => {
       {
         vacation: {
           $not: {
-            $elemMatch: { year: currentYear },
+            $elemMatch: { year: currentYear + 1 },
           },
         },
       },
       {
         $addToSet: {
           vacation: {
-            year: currentYear,
+            year: currentYear + 1,
             vacationDays: 20,
             usedDays: 0,
           },
         },
       }
     );
+    console.log('Uradio sam to i to');
   } catch (error) {
     console.error('Error updating vacation days:', error.message);
   }
