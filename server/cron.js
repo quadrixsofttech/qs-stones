@@ -24,7 +24,6 @@ const cronUpdateVacation = cron.schedule('0 0 1 7 *', async () => {
         },
       }
     );
-    console.log('Uradio sam to i to');
   } catch (error) {
     console.error('Error updating vacation days:', error.message);
   }
