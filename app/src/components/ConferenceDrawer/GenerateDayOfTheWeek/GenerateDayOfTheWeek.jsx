@@ -1,7 +1,7 @@
 import { Flex } from '@chakra-ui/react';
 import DayOfTheWeek from '../../../constants/DayOfTheWeek';
 import styles from './GenerateDayOfTheWeek.styles';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function GenerateDayOfTheWeek({
   switchIsChecked,
@@ -9,6 +9,14 @@ export default function GenerateDayOfTheWeek({
   setEveryDayChecked,
 }) {
   const [selectedColorIndices, setSelectedColorIndices] = useState([]);
+
+  useEffect(() => {
+    if (everyDayChecked) {
+      setSelectedColorIndices(Object.keys(DayOfTheWeek));
+    } else {
+      setSelectedColorIndices([]);
+    }
+  }, [everyDayChecked]);
 
   const handleColorClick = (index) => {
     if (switchIsChecked) {
@@ -34,7 +42,7 @@ export default function GenerateDayOfTheWeek({
           color={
             !switchIsChecked
               ? 'gray.200'
-              : selectedColorIndices.includes(index)
+              : everyDayChecked || selectedColorIndices.includes(index)
               ? 'white'
               : 'black'
           }

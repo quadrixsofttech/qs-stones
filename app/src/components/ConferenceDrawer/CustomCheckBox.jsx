@@ -8,16 +8,16 @@ const CustomCheckBox = ({
 }) => {
   return (
     <>
-      <Field name="everyDay">
+      <Field type="checkbox" name="everyDay">
         {({ field }) => (
           <Checkbox
             colorScheme="purple"
             isDisabled={switchIsChecked ? false : true}
             isChecked={field.value}
-            onChange={() => {
-              const { checked } = field;
+            onChange={(e) => {
+              const { checked } = e.target;
               handleEveryDayCheck();
-              field.onChange(!checked);
+              field.onChange({ target: { name: field.name, value: !checked } });
             }}
           >
             {checkBox_text}
