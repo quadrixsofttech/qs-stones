@@ -44,7 +44,7 @@ const PickTimeAndRoom = ({
   return (
     <>
       <Box mb={2}>Choose a floor</Box>
-      <Field name="floor">
+      <Field name="selectedFloor">
         {({ field }) => (
           <Select
             size="md"
@@ -60,7 +60,7 @@ const PickTimeAndRoom = ({
           </Select>
         )}
       </Field>
-      <ErrorMessage name="floor" component="div" className="error" />
+      <ErrorMessage name="selectedFloor" component="div" className="error" />
 
       <Box mb={2} mt={3}>
         Choose a conference room
