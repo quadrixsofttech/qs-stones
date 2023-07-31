@@ -73,7 +73,11 @@ const PickTimeAndRoom = ({ selectedConference, setSelectedConference }) => {
       </Box>
       <Field name="date">
         {({ field }) => (
-          <CustomDatePicker format={'MM/DD/YYYY'} field={field} />
+          <CustomDatePicker
+            format={'MM/DD/YYYY'}
+            field={field}
+            name="date-picker"
+          />
         )}
       </Field>
       <ErrorMessage name="date" component="div" className="error" />
@@ -81,7 +85,13 @@ const PickTimeAndRoom = ({ selectedConference, setSelectedConference }) => {
         Start at time:
       </Box>
       <Field name="startTime">
-        {({ field }) => <CustomTimePicker {...field} switchIsChecked={true} />}
+        {({ field }) => (
+          <CustomTimePicker
+            {...field}
+            switchIsChecked={true}
+            name="date-picker"
+          />
+        )}
       </Field>
       <ErrorMessage name="startTime" component="div" className="error" />
       <Box mb={2} mt={3}>

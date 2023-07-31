@@ -35,7 +35,7 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
     setEveryDayChecked(!everyDayChecked);
   };
 
-  const handleSave = (values) => {
+  const handleSave = () => {
     onClose();
     toast({
       position: 'top-right',
@@ -43,7 +43,6 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
       variant: 'subtle',
       description: `You have successfully reserved ${selectedConference}`,
     });
-    console.log(values);
   };
 
   return (
@@ -63,7 +62,10 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
           <Formik
             initialValues={initialValues}
             validationSchema={reservationSchema}
-            onSubmit={handleSave}
+            onSubmit={(values) => {
+              handleSave();
+              console.log(values);
+            }}
           >
             {({ values, setFieldValue, handleSubmit, isSubmitting }) => (
               <Form onSubmit={handleSubmit}>

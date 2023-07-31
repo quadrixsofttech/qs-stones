@@ -3,17 +3,18 @@ import { AiTwotoneCalendar } from 'react-icons/ai';
 import DatePicker from 'react-multi-date-picker';
 import React from 'react';
 
-export default function CustomDatePicker({ format, field }) {
+export default function CustomDatePicker({ format, field, name }) {
   const datePickerRef = React.useRef(null);
 
   return (
     <>
       <DatePicker
+        name={name}
         ref={datePickerRef}
         className="custom-calendar"
         format={format}
         value={field.value}
-        onChange={(value) => field.onChange({ target: { value } })}
+        onChange={(value) => field.onChange({ target: { name, value } })}
       />
       <Icon
         as={AiTwotoneCalendar}
