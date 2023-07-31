@@ -1,10 +1,24 @@
 import { Icon } from '@chakra-ui/react';
 import { AiTwotoneCalendar } from 'react-icons/ai';
 import DatePicker from 'react-multi-date-picker';
-import React from 'react';
+import React, { useState } from 'react';
 
-export default function CustomDatePicker({ format, field, name }) {
+export default function CustomDatePicker({
+  format,
+  field,
+  name,
+  onDateChange,
+}) {
   const datePickerRef = React.useRef(null);
+  const [selectedDate, setSelectedDate] = useState(field.value || new Date());
+
+  const handleDateChange = (value) => {
+    setSelectedDate(value);
+    field.onChange({ target: { name, value } });
+    if (onDateChange) {
+      onDateChange(value);
+    }
+  };
 
   return (
     <>
@@ -13,8 +27,8 @@ export default function CustomDatePicker({ format, field, name }) {
         ref={datePickerRef}
         className="custom-calendar"
         format={format}
-        value={field.value}
-        onChange={(value) => field.onChange({ target: { name, value } })}
+        value={selectedDate}
+        onChange={handleDateChange}
       />
       <Icon
         as={AiTwotoneCalendar}

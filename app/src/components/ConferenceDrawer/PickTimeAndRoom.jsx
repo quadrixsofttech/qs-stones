@@ -5,9 +5,18 @@ import CustomDatePicker from './CustomDatePicker';
 import CustomTimePicker from './CustomTimePicker';
 import useConference from '../../hooks/useConference';
 
-const PickTimeAndRoom = ({ selectedConference, setSelectedConference }) => {
+const PickTimeAndRoom = ({
+  selectedConference,
+  setSelectedConference,
+  selectedDate,
+  setSelectedDate,
+}) => {
   const [floor, setFloor] = useState('Upper Floor');
   const { data: conferenceRooms, conferenceLoading } = useConference();
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
 
   if (conferenceLoading || !conferenceRooms) {
     return <Spinner />;
@@ -77,6 +86,7 @@ const PickTimeAndRoom = ({ selectedConference, setSelectedConference }) => {
             format={'MM/DD/YYYY'}
             field={field}
             name="date-picker"
+            onDateChange={handleDateChange}
           />
         )}
       </Field>

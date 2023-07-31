@@ -26,8 +26,8 @@ import { reservationSchema, initialValues } from './formikConfig';
 export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
   const [switchIsChecked, setSwitchIsChecked] = useState(false);
   const [everyDayChecked, setEveryDayChecked] = useState(false);
-  const [selectedConference, setSelectedConference] =
-    useState('');
+  const [selectedConference, setSelectedConference] = useState('');
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   const toast = useToast();
 
@@ -41,7 +41,7 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
       position: 'top-right',
       status: 'success',
       variant: 'subtle',
-      description: `You have successfully reserved ${selectedConference}`,
+      description: `You have successfully reserved ${selectedConference} for the date ${selectedDate}`,
     });
   };
 
@@ -74,6 +74,8 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
                     <PickTimeAndRoom
                       selectedConference={selectedConference}
                       setSelectedConference={setSelectedConference}
+                      selectedDate={selectedDate}
+                      setSelectedDate={setSelectedDate}
                     />
                   </Box>
                   <Divider />
