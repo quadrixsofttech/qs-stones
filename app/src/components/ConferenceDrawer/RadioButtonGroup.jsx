@@ -126,38 +126,6 @@ export default function RadioButtonGroup({
             transform="translateY(-220%)"
           />
         )}
-        <Text
-          fontSize="sm"
-          color={
-            switchIsChecked &&
-            repeatReservation !== 'never' &&
-            repeatReservation !== 'after'
-              ? 'gray.700'
-              : 'gray.200'
-          }
-        >
-          Select starting time:
-        </Text>
-        <CustomTimePicker
-          switchIsChecked={switchIsChecked}
-          repeatReservation={repeatReservation}
-        />
-        <Text
-          fontSize="sm"
-          color={
-            switchIsChecked &&
-            repeatReservation !== 'never' &&
-            repeatReservation !== 'after'
-              ? 'gray.700'
-              : 'gray.200'
-          }
-        >
-          Select ending time:
-        </Text>
-        <CustomTimePicker
-          switchIsChecked={switchIsChecked}
-          repeatReservation={repeatReservation}
-        />
       </Stack>
     </RadioGroup>
   );

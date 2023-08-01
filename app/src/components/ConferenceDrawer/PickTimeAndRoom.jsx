@@ -2,8 +2,9 @@ import { Box, Select, Spinner } from '@chakra-ui/react';
 import { ErrorMessage, Field } from 'formik';
 import React, { useState } from 'react';
 import CustomDatePicker from './CustomDatePicker';
-import CustomTimePicker from './CustomTimePicker';
+import TimePicker from './CustomTimePicker';
 import useConference from '../../hooks/useConference';
+
 
 const PickTimeAndRoom = ({
   setSelectedConference,
@@ -18,13 +19,6 @@ const PickTimeAndRoom = ({
     setSelectedDate(date);
   };
 
-  const handleStartTimeChange = (time) => {
-    setSelectedStartTime(time.format('HH:mm'));
-  };
-
-  const handleEndTimeChange = (time) => {
-    setSelectedEndTime(time.format('HH:mm'));
-  };
 
   if (conferenceLoading || !conferenceRooms) {
     return <Spinner />;
@@ -40,6 +34,7 @@ const PickTimeAndRoom = ({
     floor === 'Upper Floor'
       ? conferenceRooms.filter((room) => room.floor === 'Upper Floor')
       : conferenceRooms.filter((room) => room.floor === 'Lower Floor');
+
 
   return (
     <>
@@ -100,33 +95,10 @@ const PickTimeAndRoom = ({
       </Field>
       <ErrorMessage name="date" component="div" className="error" />
       <Box mb={2} mt={3}>
-        Start at time:
+        Select meeting time:
       </Box>
-      <Field name="startTime">
-        {({ field }) => (
-          <CustomTimePicker
-            field={field}
-            switchIsChecked={true}
-            name="start-time-picker"
-            onTimeChange={handleStartTimeChange}
-          />
-        )}
-      </Field>
-      <ErrorMessage name="startTime" component="div" className="error" />
-      <Box mb={2} mt={3}>
-        End at time:
-      </Box>
-      <Field name="endTime">
-        {({ field }) => (
-          <CustomTimePicker
-            field={field}
-            switchIsChecked={true}
-            name="end-time-picker"
-            onTimeChange={handleEndTimeChange}
-          />
-        )}
-      </Field>
-      <ErrorMessage name="endTime" component="div" className="error" />
+      <Field name="startTime">{({ field }) => <TimePicker {...field} />}</Field>
+      <ErrorMessage name="startEndTime" component="div" className="error" />
     </>
   );
 };
