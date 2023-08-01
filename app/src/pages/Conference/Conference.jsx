@@ -13,6 +13,7 @@ const Conference = () => {
   const [timelineOrientation, setTimelineOrientation] = useState('vertical');
   const [timelineFilter, setTimelineFilter] = useState('');
   const modalDisclosure = useDisclosure();
+  const drawerDisclosure = useDisclosure();
   const [modalData, setModalData] = useState(null);
   const [date, setDate] = useState(moment());
   const [floor, setFloor] = useState('Upper floor');
@@ -150,13 +151,13 @@ const Conference = () => {
       <Flex
         {...styles.buttonModal}
         ref={btnRef}
-        onClick={modalDisclosure.onOpen}
+        onClick={drawerDisclosure.onOpen}
       >
         <Flex mb={'1'}>+</Flex>
         <ConferenceDrawer
           btnRef={btnRef}
-          isOpen={modalDisclosure.isOpen}
-          onClose={modalDisclosure.onClose}
+          isOpen={drawerDisclosure.isOpen}
+          onClose={drawerDisclosure.onClose}
         />
       </Flex>
     </DashboardLayout>
