@@ -28,9 +28,12 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
   const [switchIsChecked, setSwitchIsChecked] = useState(false);
   const [everyDayChecked, setEveryDayChecked] = useState(false);
   const [selectedConference, setSelectedConference] = useState('');
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const [selectedStartTime, setSelectedStartTime] = useState(moment());
-  const [selectedEndTime, setSelectedEndTime] = useState(moment());
+  const [selectedDate, setSelectedDate] = useState(moment());
+
+  const [startTime, setStartTime] = useState('');
+  const [endTime, setEndTime] = useState('');
+  const [startTimes, setStartTimes] = useState([]);
+  const [endTimes, setEndTimes] = useState([]);
 
   const toast = useToast();
 
@@ -45,9 +48,7 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
       status: 'success',
       variant: 'subtle',
       description: `You have successfully reserved ${selectedConference} for the date
-      ${selectedDate} from ${selectedStartTime.format(
-        'HH:mm'
-      )} to ${selectedEndTime.format('HH:mm')}`,
+      ${selectedDate.format('YYYY/MM/dd')} from ${startTime} to ${endTime}`,
     });
   };
 
@@ -80,8 +81,14 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
                     <PickTimeAndRoom
                       setSelectedConference={setSelectedConference}
                       setSelectedDate={setSelectedDate}
-                      setSelectedStartTime={setSelectedStartTime}
-                      setSelectedEndTime={setSelectedEndTime}
+                      startTime={startTime}
+                      setStartTime={setStartTime}
+                      endTime={endTime}
+                      setEndTime={setEndTime}
+                      startTimes={startTimes}
+                      setStartTimes={setStartTimes}
+                      endTimes={endTimes}
+                      setEndTimes={setEndTimes}
                     />
                   </Box>
                   <Divider />

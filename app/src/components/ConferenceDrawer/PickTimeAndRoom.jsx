@@ -5,12 +5,17 @@ import CustomDatePicker from './CustomDatePicker';
 import TimePicker from './CustomTimePicker';
 import useConference from '../../hooks/useConference';
 
-
 const PickTimeAndRoom = ({
   setSelectedConference,
   setSelectedDate,
-  setSelectedStartTime,
-  setSelectedEndTime,
+  startTime,
+  endTime,
+  setStartTime,
+  setEndTime,
+  startTimes,
+  setStartTimes,
+  endTimes,
+  setEndTimes,
 }) => {
   const [floor, setFloor] = useState('Upper Floor');
   const { data: conferenceRooms, conferenceLoading } = useConference();
@@ -18,7 +23,6 @@ const PickTimeAndRoom = ({
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
-
 
   if (conferenceLoading || !conferenceRooms) {
     return <Spinner />;
@@ -34,7 +38,6 @@ const PickTimeAndRoom = ({
     floor === 'Upper Floor'
       ? conferenceRooms.filter((room) => room.floor === 'Upper Floor')
       : conferenceRooms.filter((room) => room.floor === 'Lower Floor');
-
 
   return (
     <>
@@ -97,7 +100,21 @@ const PickTimeAndRoom = ({
       <Box mb={2} mt={3}>
         Select meeting time:
       </Box>
-      <Field name="startTime">{({ field }) => <TimePicker {...field} />}</Field>
+      <Field name="startTime">
+        {({ field }) => (
+          <TimePicker
+            {...field}
+            startTime={startTime}
+            setStartTime={setStartTime}
+            endTime={endTime}
+            setEndTime={setEndTime}
+            startTimes={startTimes}
+            setStartTimes={setStartTimes}
+            endTimes={endTimes}
+            setEndTimes={setEndTimes}
+          />
+        )}
+      </Field>
       <ErrorMessage name="startEndTime" component="div" className="error" />
     </>
   );

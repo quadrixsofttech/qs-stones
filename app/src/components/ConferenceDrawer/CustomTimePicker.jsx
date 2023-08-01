@@ -1,13 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Select, VStack } from '@chakra-ui/react';
 import moment from 'moment';
 
-const TimePicker = () => {
-  const [startTime, setStartTime] = useState('');
-  const [endTime, setEndTime] = useState('');
-  const [startTimes, setStartTimes] = useState([]);
-  const [endTimes, setEndTimes] = useState([]);
-
+const TimePicker = ({
+  startTime,
+  setStartTime,
+  endTime,
+  setEndTime,
+  startTimes,
+  setStartTimes,
+  endTimes,
+  setEndTimes,
+}) => {
+ 
   useEffect(() => {
     const now = moment();
     const start = moment(now).startOf('day').add(8, 'hours');
