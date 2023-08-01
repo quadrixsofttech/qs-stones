@@ -9,42 +9,50 @@ const TimePicker = () => {
   const [endTimes, setEndTimes] = useState([]);
 
   useEffect(() => {
-    // Calculate times for the first select based on current time
     const now = moment();
     const start = moment(now).startOf('day').add(8, 'hours');
     const end = moment(now).startOf('day').add(17, 'hours');
-    const times = calculateTimes(start, end, 5);
+    const times = calculateTimes(start, end, 15);
     setStartTimes(times.filter((time) => moment(time, 'HH:mm').isAfter(now)));
   }, []);
 
   useEffect(() => {
-    // Calculate times for the second select based on the selected start time
     if (startTime) {
       const startTimeMoment = moment(startTime, 'HH:mm');
-      const end = moment(startTimeMoment).startOf('day').add(17, 'hours');
-      const times = calculateTimes(startTimeMoment, end, 15);
-      setEndTimes(times);
+
+      const nextHour = moment(startTimeMoment).startOf('hour').add(1, 'hour');
+      const timesWith15MinIncrement = calculateTimes(
+        startTimeMoment,
+        nextHour,
+        15
+      );
+
+      const end = moment(startTimeMoment)
+        .startOf('day')
+        .add(17, 'hours')
+        .add(0, 'minutes');
+      const timesAfterStartTime = calculateTimes(nextHour, end, 15);
+
+      const times = [...timesWith15MinIncrement, ...timesAfterStartTime];
+      setEndTimes(times.slice(1));
       setEndTime('');
     }
   }, [startTime]);
 
-  // Function to calculate times with a given interval between start and end time
   const calculateTimes = (start, end, interval) => {
     const times = [];
     let currentTime = moment(start);
-    while (currentTime.isSameOrBefore(end)) {
+    while (currentTime.isBefore(end) || currentTime.isSame(end, 'minute')) {
       times.push(currentTime.format('HH:mm'));
       currentTime.add(interval, 'minutes');
     }
     return times;
   };
 
-  // Function to handle start time selection
   const handleStartTimeSelection = (e) => {
     setStartTime(e.target.value);
   };
 
-  // Function to handle end time selection
   const handleEndTimeSelection = (e) => {
     setEndTime(e.target.value);
   };
