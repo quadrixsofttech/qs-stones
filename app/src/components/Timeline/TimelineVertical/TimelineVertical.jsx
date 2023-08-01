@@ -10,7 +10,7 @@ const TimelineVertical = ({
   data,
   startHour,
   endHour,
-  onOpenTimeline,
+  onOpen,
   onEdit,
   onDelete,
 }) => {
@@ -154,7 +154,7 @@ const TimelineVertical = ({
                           user={data.user}
                           onEdit={onEdit}
                           onDelete={onDelete}
-                          onOpenTimeline={onOpenTimeline}
+                          onOpen={onOpen}
                         />
                       </GridItem>
                     );
