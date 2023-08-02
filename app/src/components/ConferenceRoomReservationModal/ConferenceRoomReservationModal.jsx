@@ -44,13 +44,13 @@ const ConferenceRoomReservationModal = ({
             <>
               <IconButton
                 {...styles.icon}
-                onClick={() => onEdit(data.id)}
+                onClick={() => onEdit(data._id)}
                 icon={<BiPencil size="20" />}
               />
 
               <IconButton
                 {...styles.icon}
-                onClick={() => onDelete(data.id)}
+                onClick={() => onDelete(data._id)}
                 icon={<BiTrash size="20" />}
               />
             </>

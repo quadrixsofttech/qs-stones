@@ -55,7 +55,7 @@ const Conference = () => {
   const selectedFloorConferenceRooms = conferenceRooms.filter(
     (x) => x.floor === floor
   );
-  console.log(reservationsData);
+
   const handleEdit = (id) => {
     console.log('Edit' + id);
   };
@@ -90,6 +90,7 @@ const Conference = () => {
         onOpen={handleOpen}
         onEdit={handleEdit}
         onDelete={handleDelete}
+        user={user}
       />
       <DeleteAlertDialog
         isOpen={alertDialogDisclosure.isOpen}
