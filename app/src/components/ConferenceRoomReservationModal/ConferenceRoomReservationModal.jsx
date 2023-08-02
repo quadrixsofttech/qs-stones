@@ -67,7 +67,7 @@ const ConferenceRoomReservationModal = ({
           <Flex alignItems={'center'} gap="2">
             <BiChalkboard />
             <Text color={'gray.700'}>{data.id + ' ' + data.column}</Text>
-            <Tag {...styles.tag}>{data.tag}</Tag>
+            <Tag {...styles.tag}>{data.floor}</Tag>
           </Flex>
           <Flex {...styles.infoBox}>
             <BiCalendar />

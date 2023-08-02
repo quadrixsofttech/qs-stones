@@ -83,7 +83,7 @@ const getReservations = async (date) => {
         $addFields: {
           conferenceRoom: { $arrayElemAt: ['$conferenceRoom', 0] },
           column: { $arrayElemAt: ['$conferenceRoom.name', 0] },
-          tag: { $arrayElemAt: ['$conferenceRoom.floor', 0] },
+          floor: { $arrayElemAt: ['$conferenceRoom.floor', 0] },
           id: { $arrayElemAt: ['$conferenceRoom.id', 0] },
         },
       },

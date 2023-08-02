@@ -4,8 +4,8 @@ import React, { useEffect, useState } from 'react';
 import Timeline from '../../components/Timeline/Timeline';
 import ConferenceCalendarNavbar from '../../components/ConferenceNavbar/ConferenceCalendarNavbar';
 import { Divider, Flex, Spinner, useDisclosure } from '@chakra-ui/react';
-import ConferenceRoomReservationModal from '../../components/ConferenceRoomReservationModal';
 import DeleteAlertDialog from '../../components/DeleteAlertDialog/DeleteAlertDialog';
+import ConferenceRoomReservationModal from '../../components/ConferenceRoomReservationModal/ConferenceRoomReservationModal';
 import moment from 'moment';
 import useConference from '../../hooks/useConference';
 import useReservations from '../../hooks/useReservations';
@@ -55,7 +55,7 @@ const Conference = () => {
   const selectedFloorConferenceRooms = conferenceRooms.filter(
     (x) => x.floor === floor
   );
-
+  console.log(reservationsData);
   const handleEdit = (id) => {
     console.log('Edit' + id);
   };
