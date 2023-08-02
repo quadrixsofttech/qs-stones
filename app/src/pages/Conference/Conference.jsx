@@ -5,6 +5,7 @@ import Timeline from '../../components/Timeline/Timeline';
 import ConferenceCalendarNavbar from '../../components/ConferenceNavbar/ConferenceCalendarNavbar';
 import { Divider, Flex, Spinner, useDisclosure } from '@chakra-ui/react';
 import ConferenceRoomReservationModal from '../../components/ConferenceRoomReservationModal';
+import DeleteAlertDialog from '../../components/DeleteAlertDialog/DeleteAlertDialog';
 import moment from 'moment';
 import useConference from '../../hooks/useConference';
 import useReservations from '../../hooks/useReservations';
@@ -14,6 +15,8 @@ const Conference = () => {
   const [timelineOrientation, setTimelineOrientation] = useState('vertical');
   const [timelineFilter, setTimelineFilter] = useState('');
   const modalDisclosure = useDisclosure();
+  const alertDialogDisclosure = useDisclosure();
+  const [idToDelete, setIdToDelete] = useState();
   const [modalData, setModalData] = useState(null);
   const [date, setDate] = useState(moment());
   const [floor, setFloor] = useState('Upper Floor');
@@ -57,7 +60,8 @@ const Conference = () => {
     console.log('Edit' + id);
   };
   const handleDelete = (id) => {
-    console.log('Delete' + id);
+    setIdToDelete(id);
+    alertDialogDisclosure.onOpen();
   };
   const handleOpen = (id) => {
     const filteredData = reservationsData?.find((room) => room._id === id);
@@ -86,6 +90,11 @@ const Conference = () => {
         onOpen={handleOpen}
         onEdit={handleEdit}
         onDelete={handleDelete}
+      />
+      <DeleteAlertDialog
+        isOpen={alertDialogDisclosure.isOpen}
+        onClose={alertDialogDisclosure.onClose}
+        idToDelete={idToDelete}
         timelineFilter={timelineFilter}
         user={user}
       />

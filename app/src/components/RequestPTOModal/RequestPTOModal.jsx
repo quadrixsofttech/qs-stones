@@ -28,6 +28,7 @@ import { useCalendar } from '../../hooks/useCalendar';
 import { InfoIcon } from '@chakra-ui/icons';
 import useUser from '../../hooks/useUser';
 import useEmployees from '../../hooks/useEmployees';
+import moment from 'moment';
 
 export const RequestPTOModal = ({ isOpen, onClose }) => {
   const [isCurrentPageRemote, setIsCurrentPageRemote] = useState(true);
@@ -149,6 +150,7 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
             </Flex>
             <Flex alignItems="center" justifyContent="center">
               <Calendar
+                minDate={new moment().format('YYYY-MM-DD')}
                 range
                 numberOfMonths={2}
                 multiple
