@@ -98,6 +98,8 @@ const Conference = () => {
         idToDelete={idToDelete}
         timelineFilter={timelineFilter}
         user={user}
+        refetchReservations={refetchReservations}
+        closeModal={modalDisclosure.onClose}
       />
       <ConferenceRoomReservationModal
         isOpen={modalDisclosure.isOpen}
