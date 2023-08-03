@@ -17,6 +17,6 @@ const initialValues = {
   everyDay: false,
   title: '',
   description: '',
-  markerColor: '',
+  color: '',
 };
 export { reservationSchema, initialValues };

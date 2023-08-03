@@ -22,6 +22,7 @@ const Conference = () => {
   const [modalData, setModalData] = useState(null);
   const [date, setDate] = useState(moment());
   const [floor, setFloor] = useState('Upper floor');
+  const [reservationData, setReservationData] = useState(null);
 
   const Label = [
     {
@@ -111,8 +112,11 @@ const Conference = () => {
   const btnRef = React.useRef();
 
   const handleEdit = (id) => {
-    console.log('Edit' + id);
+    const reservation = data.find((room) => room.id === id);
+    setReservationData(reservation);
+    drawerDisclosure.onOpen();
   };
+
   const handleDelete = (id) => {
     setIdToDelete(id);
     alertDialogDisclosure.onOpen();
@@ -169,6 +173,7 @@ const Conference = () => {
           btnRef={btnRef}
           isOpen={drawerDisclosure.isOpen}
           onClose={drawerDisclosure.onClose}
+          reservationData={reservationData}
         />
       </Flex>
     </DashboardLayout>

@@ -15,7 +15,7 @@ import {
 
 import GenerateDayOfTheWeek from './GenerateDayOfTheWeek/GenerateDayOfTheWeek';
 import RadioButtonGroup from './RadioButtonGroup';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Formik, Form } from 'formik';
 import PickTimeAndRoom from './PickTimeAndRoom';
 import CustomSwitch from './CustomSwitch';
@@ -23,8 +23,14 @@ import CustomCheckBox from './CustomCheckBox';
 import CardInfo from './CardInfo';
 import { reservationSchema, initialValues } from './formikConfig';
 import moment from 'moment';
+import axios from 'axios';
 
-export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
+export default function ConferenceDrawer({
+  btnRef,
+  isOpen,
+  onClose,
+  reservationData,
+}) {
   const [switchIsChecked, setSwitchIsChecked] = useState(false);
   const [everyDayChecked, setEveryDayChecked] = useState(false);
   const [selectedConference, setSelectedConference] = useState('');
@@ -34,6 +40,7 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
   const [endTime, setEndTime] = useState('');
   const [startTimes, setStartTimes] = useState([]);
   const [endTimes, setEndTimes] = useState([]);
+  const [formData, setFormData] = useState(initialValues);
 
   const toast = useToast();
 
@@ -41,15 +48,27 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
     setEveryDayChecked(!everyDayChecked);
   };
 
+  useEffect(() => {
+    if (reservationData) {
+      setFormData({
+        title: reservationData.title,
+        description: reservationData.description,
+        start: reservationData.start,
+        end: reservationData.end,
+        column: reservationData.column,
+      });
+    }
+  }, [reservationData]);
+
   const handleSave = () => {
     onClose();
-    toast({
-      position: 'top-right',
-      status: 'success',
-      variant: 'subtle',
-      description: `You have successfully reserved ${selectedConference} for the date
-      ${selectedDate.format('YYYY/MM/dd')} from ${startTime} to ${endTime}`,
-    });
+    // toast({
+    //   position: 'top-right',
+    //   status: 'success',
+    //   variant: 'subtle',
+    //   description: `You have successfully reserved ${selectedConference} for the date
+    //   ${selectedDate.format('YYYY/MM/dd')} from ${startTime} to ${endTime}`,
+    // });
   };
 
   return (
@@ -67,11 +86,30 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
           <DrawerHeader>Reserve Conference Room</DrawerHeader>
           <Divider />
           <Formik
-            initialValues={initialValues}
+            initialValues={formData}
             validationSchema={reservationSchema}
-            onSubmit={(values) => {
-              handleSave();
-              console.log(values);
+            onSubmit={async (values) => {
+              try {
+                const response = await axios.put(
+                  `/api/v1/conference-rooms/reservations/${reservationData.id}`,
+                  values
+                );
+                handleSave();
+                toast({
+                  position: 'top-right',
+                  status: 'success',
+                  variant: 'subtle',
+                  description: `Reservation updated successfully.`,
+                });
+              } catch (error) {
+                console.error(error.message);
+                toast({
+                  position: 'top-right',
+                  status: 'error',
+                  variant: 'subtle',
+                  description: `Failed to update reservation. Please try again.`,
+                });
+              }
             }}
           >
             {({ values, setFieldValue, handleSubmit, isSubmitting }) => (
@@ -81,10 +119,10 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
                     <PickTimeAndRoom
                       setSelectedConference={setSelectedConference}
                       setSelectedDate={setSelectedDate}
-                      startTime={startTime}
-                      setStartTime={setStartTime}
-                      endTime={endTime}
-                      setEndTime={setEndTime}
+                      startTime={values.startTime}
+                      setStartTime={setFieldValue}
+                      endTime={values.endTime}
+                      setEndTime={setFieldValue}
                       startTimes={startTimes}
                       setStartTimes={setStartTimes}
                       endTimes={endTimes}
