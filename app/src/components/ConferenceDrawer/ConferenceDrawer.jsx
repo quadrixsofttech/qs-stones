@@ -23,13 +23,14 @@ import CustomCheckBox from './CustomCheckBox';
 import CardInfo from './CardInfo';
 import { reservationSchema, initialValues } from './formikConfig';
 import moment from 'moment';
-import axios from 'axios';
+import { useConferenceRoomReservation } from '../../hooks/useConferenceRoomReservation.js';
 
 export default function ConferenceDrawer({
   btnRef,
   isOpen,
   onClose,
   reservationData,
+  isEditMode,
 }) {
   const [switchIsChecked, setSwitchIsChecked] = useState(false);
   const [everyDayChecked, setEveryDayChecked] = useState(false);
@@ -42,6 +43,9 @@ export default function ConferenceDrawer({
   const [endTimes, setEndTimes] = useState([]);
   const [formData, setFormData] = useState(initialValues);
 
+  const { createReservation, updateReservation, isLoading } =
+    useConferenceRoomReservation();
+
   const toast = useToast();
 
   const handleEveryDayCheck = () => {
@@ -53,8 +57,8 @@ export default function ConferenceDrawer({
       setFormData({
         title: reservationData.title,
         description: reservationData.description,
-        start: reservationData.start,
-        end: reservationData.end,
+        start: reservationData.startTime,
+        end: reservationData.endTime,
         column: reservationData.column,
       });
     }
@@ -62,13 +66,13 @@ export default function ConferenceDrawer({
 
   const handleSave = () => {
     onClose();
-    // toast({
-    //   position: 'top-right',
-    //   status: 'success',
-    //   variant: 'subtle',
-    //   description: `You have successfully reserved ${selectedConference} for the date
-    //   ${selectedDate.format('YYYY/MM/dd')} from ${startTime} to ${endTime}`,
-    // });
+    toast({
+      position: 'top-right',
+      status: 'success',
+      variant: 'subtle',
+      description: `You have successfully reserved ${selectedConference} for the date
+      ${selectedDate.format('YYYY/MM/dd')} from ${startTime} to ${endTime}`,
+    });
   };
 
   return (
@@ -86,29 +90,18 @@ export default function ConferenceDrawer({
           <DrawerHeader>Reserve Conference Room</DrawerHeader>
           <Divider />
           <Formik
-            initialValues={formData}
+            initialValues={isEditMode ? formData : initialValues}
             validationSchema={reservationSchema}
             onSubmit={async (values) => {
               try {
-                const response = await axios.put(
-                  `/api/v1/conference-rooms/reservations/${reservationData.id}`,
-                  values
-                );
-                handleSave();
-                toast({
-                  position: 'top-right',
-                  status: 'success',
-                  variant: 'subtle',
-                  description: `Reservation updated successfully.`,
-                });
+                if (isEditMode) {
+                  await updateReservation(reservationData.id, values);
+                } else {
+                  await createReservation(values);
+                }
+                onClose();
               } catch (error) {
-                console.error(error.message);
-                toast({
-                  position: 'top-right',
-                  status: 'error',
-                  variant: 'subtle',
-                  description: `Failed to update reservation. Please try again.`,
-                });
+                console.error(error);
               }
             }}
           >
