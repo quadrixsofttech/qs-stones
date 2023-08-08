@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import axios from 'axios';
 import { useState } from 'react';
 
@@ -18,10 +18,20 @@ const useConference = () => {
     }
   );
 
+  const deleteReservationCallback = async (id) => {
+    const { data } = await axios.delete(
+      `/api/v1/conference-rooms/reservations/${id}`
+    );
+    return data;
+  };
+
+  const deleteReservation = useMutation(deleteReservationCallback);
+
   return {
     data,
     conferenceLoading,
     conferenceError,
+    deleteReservation,
   };
 };
 

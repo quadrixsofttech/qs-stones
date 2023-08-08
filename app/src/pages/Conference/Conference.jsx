@@ -4,13 +4,16 @@ import React, { useState } from 'react';
 import Timeline from '../../components/Timeline/Timeline';
 import ConferenceCalendarNavbar from '../../components/ConferenceNavbar/ConferenceCalendarNavbar';
 import { Divider, useDisclosure } from '@chakra-ui/react';
-import ConferenceRoomReservationModal from '../../components/ConferenceRoomReservationModal';
+import DeleteAlertDialog from '../../components/DeleteAlertDialog/DeleteAlertDialog';
+import ConferenceRoomReservationModal from '../../components/ConferenceRoomReservationModal/ConferenceRoomReservationModal';
 import moment from 'moment';
 
 const Conference = () => {
   const [timelineOrientation, setTimelineOrientation] = useState('vertical');
   const [timelineFilter, setTimelineFilter] = useState('');
   const modalDisclosure = useDisclosure();
+  const alertDialogDisclosure = useDisclosure();
+  const [idToDelete, setIdToDelete] = useState();
   const [modalData, setModalData] = useState(null);
   const [date, setDate] = useState(moment());
   const [floor, setFloor] = useState('Upper floor');
@@ -27,7 +30,7 @@ const Conference = () => {
 
   const data = [
     {
-      id: '123456',
+      id: '64abdc4407a59e172e853077',
       enabled: true,
       column: 'conference-room-1',
       start: '08:15',
@@ -41,7 +44,7 @@ const Conference = () => {
       },
     },
     {
-      id: '123457',
+      id: '64abdc4407a59e172e853078',
       enabled: true,
       column: 'conference-room-1',
       start: '11:00',
@@ -55,7 +58,7 @@ const Conference = () => {
       },
     },
     {
-      id: '123458',
+      id: '64abdc4407a59e172e853079',
       enabled: true,
       column: 'conference-room-1',
       start: '09:00',
@@ -70,7 +73,7 @@ const Conference = () => {
       },
     },
     {
-      id: '123459',
+      id: '64abdc4407a59e172e85307a',
       enabled: false,
       column: 'conference-room-2',
       start: '08:30',
@@ -84,7 +87,7 @@ const Conference = () => {
       },
     },
     {
-      id: '123460',
+      id: '64abe2797efc0819a3f203b7',
       enabled: true,
       column: 'brainstorm-room',
       start: '08:15',
@@ -103,7 +106,8 @@ const Conference = () => {
     console.log('Edit' + id);
   };
   const handleDelete = (id) => {
-    console.log('Delete' + id);
+    setIdToDelete(id);
+    alertDialogDisclosure.onOpen();
   };
   const handleOpen = (id) => {
     const filteredData = data?.find((room) => room.id === id);
@@ -133,6 +137,11 @@ const Conference = () => {
         onOpen={handleOpen}
         onEdit={handleEdit}
         onDelete={handleDelete}
+      />
+      <DeleteAlertDialog
+        isOpen={alertDialogDisclosure.isOpen}
+        onClose={alertDialogDisclosure.onClose}
+        idToDelete={idToDelete}
         timelineFilter={timelineFilter}
       />
       <ConferenceRoomReservationModal
