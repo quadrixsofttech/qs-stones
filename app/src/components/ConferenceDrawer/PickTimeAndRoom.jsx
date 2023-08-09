@@ -8,6 +8,7 @@ import useConference from '../../hooks/useConference';
 const PickTimeAndRoom = ({
   setSelectedConference,
   setSelectedDate,
+  selectedDate,
   startTime,
   endTime,
   setStartTime,
@@ -93,6 +94,8 @@ const PickTimeAndRoom = ({
             field={field}
             name="date-picker"
             onDateChange={handleDateChange}
+            selectedDate={selectedDate}
+            setSelectedDate={setSelectedDate}
           />
         )}
       </Field>
@@ -112,6 +115,7 @@ const PickTimeAndRoom = ({
             setStartTimes={setStartTimes}
             endTimes={endTimes}
             setEndTimes={setEndTimes}
+            selectedDate={selectedDate}
           />
         )}
       </Field>

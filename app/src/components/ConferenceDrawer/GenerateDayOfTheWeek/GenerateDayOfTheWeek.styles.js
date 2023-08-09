@@ -6,6 +6,7 @@ const dayContainer = {
   alignItems: 'center',
   justifyContent: 'center',
   border: '1px solid gray',
+  cursor: 'pointer',
 };
 
 const styles = {

@@ -81,6 +81,7 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
                     <PickTimeAndRoom
                       setSelectedConference={setSelectedConference}
                       setSelectedDate={setSelectedDate}
+                      selectedDate={selectedDate}
                       startTime={startTime}
                       setStartTime={setStartTime}
                       endTime={endTime}
