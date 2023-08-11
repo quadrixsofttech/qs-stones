@@ -67,7 +67,7 @@ const TimelineCard = ({
           >
             <Flex gap="0.5">
               {type === 'small' && (
-                <Tooltip hasArrow label={user.name} placement="top">
+                <Tooltip hasArrow label={user.firstName} placement="top">
                   <Avatar size={'xs'} src={user.image} />
                 </Tooltip>
               )}
@@ -107,7 +107,7 @@ const TimelineCard = ({
           <Flex gap="1" alignItems={'center'}>
             <Avatar size={'xs'} src={user.image} />
             <Text fontSize={'xs'} color="gray.700">
-              {user.name}
+              {user.firstName + ' ' + user.lastName}
             </Text>
           </Flex>
         </>

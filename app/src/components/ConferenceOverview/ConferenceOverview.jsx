@@ -7,9 +7,9 @@ import useConference from '../../hooks/useConference';
 const ConferenceOverview = () => {
   const [floor, setFloor] = useState('Upper Floor');
 
-  const { data, conferenceLoading } = useConference();
+  const { conferenceRooms, conferenceLoading } = useConference();
 
-  if (conferenceLoading || !data) {
+  if (conferenceLoading || !conferenceRooms) {
     return <Spinner />;
   }
 
@@ -21,10 +21,10 @@ const ConferenceOverview = () => {
     });
   };
 
-  const conferenceRooms =
+  const conferenceRoomsFiltered =
     floor === 'Upper Floor'
-      ? data.filter((room) => room.floor === 'Upper Floor')
-      : data.filter((room) => room.floor === 'Lower Floor');
+      ? conferenceRooms.filter((room) => room.floor === 'Upper Floor')
+      : conferenceRooms.filter((room) => room.floor === 'Lower Floor');
 
   return (
     <Flex flexDir={'column'} position={'relative'}>
@@ -44,7 +44,7 @@ const ConferenceOverview = () => {
         </Select>
       </Flex>
       <Grid {...styles.conferenceRoomGrid}>
-        {conferenceRooms.map((room) => {
+        {conferenceRoomsFiltered.map((room) => {
           return (
             <GridItem key={room.id}>
               <ConferenceRoom
