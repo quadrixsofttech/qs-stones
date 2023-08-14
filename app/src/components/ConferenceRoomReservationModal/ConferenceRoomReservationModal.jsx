@@ -20,6 +20,7 @@ import {
   BiTrash,
   BiX,
 } from 'react-icons/bi';
+import moment from 'moment';
 
 const ConferenceRoomReservationModal = ({
   isOpen,
@@ -27,27 +28,29 @@ const ConferenceRoomReservationModal = ({
   data,
   onDelete,
   onEdit,
+  user,
 }) => {
   if (!data) {
     return <></>;
   }
+  const enabled = data.userId === user._id;
   return (
     <Modal isCentered isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent pl="6" pr="6">
         <ModalHeader {...styles.modalHeader}>{data.title}</ModalHeader>
         <Flex {...styles.iconBox}>
-          {data.enabled && (
+          {enabled && (
             <>
               <IconButton
                 {...styles.icon}
-                onClick={() => onEdit(data.id)}
+                onClick={() => onEdit(data._id)}
                 icon={<BiPencil size="20" />}
               />
 
               <IconButton
                 {...styles.icon}
-                onClick={() => onDelete(data.id)}
+                onClick={() => onDelete(data._id)}
                 icon={<BiTrash size="20" />}
               />
             </>
@@ -63,17 +66,19 @@ const ConferenceRoomReservationModal = ({
         <ModalBody p="0" mt="4">
           <Flex alignItems={'center'} gap="2">
             <BiChalkboard />
-            <Text color={'gray.700'}>{data.column}</Text>
-            <Tag {...styles.tag}>"Upper floor"</Tag>
+            <Text color={'gray.700'}>{data.id + ' ' + data.column}</Text>
+            <Tag {...styles.tag}>{data.floor}</Tag>
           </Flex>
           <Flex {...styles.infoBox}>
             <BiCalendar />
-            <Text color={'gray.700'}>May 24, Wednesday</Text>
+            <Text color={'gray.700'}>
+              {moment(data.date).format('MMMM DD, dddd')}
+            </Text>
           </Flex>
           <Flex {...styles.infoBox}>
             <BiTime />
             <Text color={'gray.700'}>
-              {data.start} - {data.end}
+              {data.startTime} - {data.endTime}
             </Text>
           </Flex>
           <Text {...styles.description}>Description:</Text>
@@ -84,7 +89,7 @@ const ConferenceRoomReservationModal = ({
           <Flex {...styles.modalFooter}>
             <Avatar size="xs" src={data.user.image} />
             <Text color={'gray.700'} fontSize="xs">
-              {data.user.name}
+              {data.user.firstName + ' ' + data.user.lastName}
             </Text>
           </Flex>
         </ModalBody>

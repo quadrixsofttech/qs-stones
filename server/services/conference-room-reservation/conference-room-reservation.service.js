@@ -75,14 +75,6 @@ const getReservations = async (date) => {
                 $expr: { $eq: ['$_id', '$$conferenceRoom'] },
               },
             },
-            {
-              $project: {
-                id: 1,
-                name: 1,
-                capacity: 1,
-                floor: 1,
-              },
-            },
           ],
           as: 'conferenceRoom',
         },
@@ -90,6 +82,9 @@ const getReservations = async (date) => {
       {
         $addFields: {
           conferenceRoom: { $arrayElemAt: ['$conferenceRoom', 0] },
+          column: { $arrayElemAt: ['$conferenceRoom.name', 0] },
+          floor: { $arrayElemAt: ['$conferenceRoom.floor', 0] },
+          id: { $arrayElemAt: ['$conferenceRoom.id', 0] },
         },
       },
     ]);

@@ -13,6 +13,7 @@ const TimelineHorizontal = ({
   onOpen,
   onEdit,
   onDelete,
+  user,
 }) => {
   const timeSlots = useMemo(() => {
     const startTime = moment(startHour, 'HH:mm');
@@ -76,9 +77,9 @@ const TimelineHorizontal = ({
                 <Flex p="4" pl="2">
                   <Heading {...styles.headingConference}>
                     <Heading {...styles.underlineHeading} as="span">
-                      {title.number}
+                      {title.id}
                     </Heading>
-                    {title.label}
+                    {title.name}
                   </Heading>
                 </Flex>
               </GridItem>
@@ -96,20 +97,20 @@ const TimelineHorizontal = ({
                   return (
                     <GridItem
                       {...styles.horizontalCard}
-                      gridColumnStart={getColumnIdentifier(data.start)}
-                      gridColumnEnd={getColumnIdentifier(data.end)}
-                      key={`key-${data.start}- ${index}index`}
+                      gridColumnStart={getColumnIdentifier(data.startTime)}
+                      gridColumnEnd={getColumnIdentifier(data.endTime)}
+                      key={`key-${data.startTime}- ${index}index`}
                     >
                       <TimelineCard
-                        id={data.id}
+                        id={data._id}
                         type={'small'}
-                        enabled={data.enabled}
                         title={data.title}
-                        start={data.start}
-                        end={data.end}
+                        start={data.startTime}
+                        end={data.endTime}
                         description={data.description}
                         color={data.color}
                         user={data.user}
+                        enabled={data.userId === user._id}
                         orientation="horizontal"
                         onEdit={onEdit}
                         onDelete={onDelete}
