@@ -6,6 +6,8 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const publicRouter = require('./routes/public.routes');
 
+const { startCronJobs } = require('./cron');
+
 const app = express();
 const port = process.env.PORT || 3001;
 
@@ -16,7 +18,6 @@ app.use(cookieParser());
 
 app.use('/api/v1', publicRouter);
 
-
 async function connect() {
   try {
     mongoose.Promise = global.Promise;
@@ -25,6 +26,7 @@ async function connect() {
       useUnifiedTopology: true,
       useFindAndModify: false,
     });
+    startCronJobs();
   } catch (err) {
     console.log('Mongoose error', err);
   }

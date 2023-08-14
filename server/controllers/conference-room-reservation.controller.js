@@ -35,7 +35,7 @@ const createReservation = async (req, res) => {
 
 const getReservations = async (req, res) => {
   try {
-    const { date } = req.body;
+    const { date } = req.params;
     const reservations = await ConferenceRoomReservation.getReservations(date);
     return res.send(reservations);
   } catch (err) {

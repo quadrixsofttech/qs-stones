@@ -1,23 +1,20 @@
 import { useQuery } from 'react-query';
 import axios from 'axios';
-import { MyVacationInfoContext } from '../context/MyVacationInfoContext';
-import { useContext } from 'react';
+import { useState } from 'react';
 
-const useVacation = () => {
-  const myVacationContext = useContext(MyVacationInfoContext);
+const useVacation = (id) => {
+  const [data, setData] = useState();
   const getVacationInfo = async () => {
-    const { data } = await axios.get(
-      'https://645ca939250a246ae30a5bb8.mockapi.io/vacation'
-    );
-    return data[0]; // Api bi trebao da vrati samo jedan obejcet.
+    const { data } = await axios.get(`/api/v1/vacations/${id}`);
+    return data;
   };
 
   const { isLoading, error } = useQuery('vacationInfo', getVacationInfo, {
-    onSuccess: (data) => myVacationContext.setVacationInfo(data),
+    onSuccess: (data) => setData(data),
   });
 
   return {
-    vacationInfo: myVacationContext.myVacationInfoState,
+    vacationInfo: data,
     isLoading,
     error,
   };
