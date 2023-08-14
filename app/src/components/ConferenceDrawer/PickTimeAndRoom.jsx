@@ -17,6 +17,8 @@ const PickTimeAndRoom = ({
   setStartTimes,
   endTimes,
   setEndTimes,
+  isEditMode,
+  formData,
 }) => {
   const [floor, setFloor] = useState('Upper Floor');
   const { conferenceRooms, conferenceLoading } = useConference();
@@ -33,12 +35,16 @@ const PickTimeAndRoom = ({
 
   const handleFloorChange = (e) => {
     setFloor(e.target.value);
+    // if (isEditMode) {
+    //   setFloor(formData.column);
+    // }
   };
 
   const filteredConferenceRooms =
     floor === 'Upper Floor'
       ? conferenceRooms?.filter((room) => room.floor === 'Upper Floor')
       : conferenceRooms?.filter((room) => room.floor === 'Lower Floor');
+  // console.log(formData.column);
 
   return (
     <>
@@ -49,7 +55,7 @@ const PickTimeAndRoom = ({
             size="md"
             {...field}
             onChange={handleFloorChange}
-            value={field.value}
+            value={isEditMode ? formData.floor : field.value}
           >
             {floors.map((floor) => (
               <option key={floor} value={floor}>
@@ -69,7 +75,7 @@ const PickTimeAndRoom = ({
           <Select
             size="md"
             {...field}
-            value={field.value}
+            value={isEditMode ? formData.column : field.value}
             onChange={(e) => {
               field.onChange(e);
               setSelectedConference(e.target.value);
@@ -116,6 +122,8 @@ const PickTimeAndRoom = ({
             endTimes={endTimes}
             setEndTimes={setEndTimes}
             selectedDate={selectedDate}
+            formData={formData}
+            isEditMode={isEditMode}
           />
         )}
       </Field>

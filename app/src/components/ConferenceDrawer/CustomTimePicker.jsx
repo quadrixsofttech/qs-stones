@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Select, VStack } from '@chakra-ui/react';
 import moment from 'moment';
+import workingHours from '../../constants/WorkingDayHours.js';
 
 const TimePicker = ({
   startTime,
@@ -12,6 +13,8 @@ const TimePicker = ({
   endTimes,
   setEndTimes,
   selectedDate,
+  formData,
+  isEditMode,
 }) => {
   useEffect(() => {
     const now = moment();
@@ -35,7 +38,7 @@ const TimePicker = ({
     } else {
       setStartTimes(times);
     }
-  }, [selectedDate]);
+  }, [selectedDate, setStartTimes]);
 
   useEffect(() => {
     if (startTime) {
@@ -59,7 +62,7 @@ const TimePicker = ({
       setEndTimes(uniqueTimes.slice(1));
       setEndTime('');
     }
-  }, [startTime]);
+  }, [startTime, setEndTime, setEndTimes]);
 
   const calculateTimes = (start, end, interval) => {
     const times = [];
@@ -83,10 +86,10 @@ const TimePicker = ({
     <VStack spacing={4} direction="row">
       <Select
         placeholder="Select Start Time"
-        value={startTime}
+        value={isEditMode ? formData.startTime : startTime}
         onChange={handleStartTimeSelection}
       >
-        {startTimes.map((time) => (
+        {workingHours.map((time) => (
           <option key={time} value={time}>
             {time}
           </option>
@@ -94,10 +97,10 @@ const TimePicker = ({
       </Select>
       <Select
         placeholder="Select End Time"
-        value={endTime}
+        value={isEditMode ? formData.endTime : endTime}
         onChange={handleEndTimeSelection}
       >
-        {endTimes.map((time) => (
+        {workingHours.map((time) => (
           <option key={time} value={time}>
             {time}
           </option>

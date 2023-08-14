@@ -2,7 +2,7 @@ import { Input, Text, Textarea } from '@chakra-ui/react';
 import { ErrorMessage, Field } from 'formik';
 import GenerateMarkerColor from './GenerateMarkerColor/GenerateMarkerColor';
 
-const CardInfo = ({ formData }) => {
+const CardInfo = ({ formData, isEditMode }) => {
   return (
     <>
       <Text fontSize="md" mb={1} fontWeight={'400'}>
@@ -13,7 +13,7 @@ const CardInfo = ({ formData }) => {
           <Input
             {...field}
             placeholder="Please enter a title..."
-            value={formData.title}
+            value={isEditMode ? formData.title : ''}
           />
         )}
       </Field>
@@ -28,7 +28,7 @@ const CardInfo = ({ formData }) => {
             {...field}
             placeholder="Please enter a description..."
             h={'20'}
-            value={formData.description}
+            value={isEditMode ? formData.description : ''}
           />
         )}
       </Field>

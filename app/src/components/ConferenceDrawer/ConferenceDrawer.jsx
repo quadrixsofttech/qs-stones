@@ -64,7 +64,7 @@ export default function ConferenceDrawer({
     }
   }, [reservationData, isEditMode]);
 
-  console.log(reservationData);
+  console.log(formData.column);
 
   const handleSave = () => {
     onClose();
@@ -123,6 +123,8 @@ export default function ConferenceDrawer({
                       setStartTimes={setStartTimes}
                       endTimes={endTimes}
                       setEndTimes={setEndTimes}
+                      isEditMode={isEditMode}
+                      formData={formData}
                     />
                   </Box>
                   <Divider />
@@ -159,7 +161,7 @@ export default function ConferenceDrawer({
                   </Box>
                   <Divider />
                   <Box p={6}>
-                    <CardInfo formData={formData} />
+                    <CardInfo formData={formData} isEditMode={isEditMode} />
                   </Box>
                 </DrawerBody>
 
