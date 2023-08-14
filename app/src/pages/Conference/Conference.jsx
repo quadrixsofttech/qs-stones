@@ -26,7 +26,7 @@ const Conference = () => {
   const [date, setDate] = useState(moment());
   const [floor, setFloor] = useState('Upper Floor');
   const [reservationData, setReservationData] = useState(null);
-  const [isEditMode, setIsEditMode] = useState(true);
+  const [isEditMode, setIsEditMode] = useState(false);
 
   const { conferenceRooms, conferenceLoading, conferenceError } =
     useConference();
@@ -43,7 +43,6 @@ const Conference = () => {
   useEffect(() => {
     refetchReservations();
   }, [date, refetchReservations]);
-
 
   if (
     reservationsLoading ||
@@ -67,11 +66,10 @@ const Conference = () => {
 
   const handleEdit = (id) => {
     const reservation = reservationsData?.find((room) => room._id === id);
+    setIsEditMode(true);
     setReservationData(reservation);
     drawerDisclosure.onOpen();
   };
-
-
   const handleDelete = (id) => {
     setIdToDelete(id);
     alertDialogDisclosure.onOpen();
@@ -125,7 +123,10 @@ const Conference = () => {
       <Flex
         {...styles.buttonModal}
         ref={btnRef}
-        onClick={drawerDisclosure.onOpen}
+        onClick={() => {
+          setIsEditMode(false);
+          drawerDisclosure.onOpen();
+        }}
       >
         <Flex mb={'1'}>+</Flex>
         <ConferenceDrawer

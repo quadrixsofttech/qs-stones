@@ -53,7 +53,7 @@ export default function ConferenceDrawer({
   };
 
   useEffect(() => {
-    if (reservationData) {
+    if (reservationData && isEditMode) {
       setFormData({
         title: reservationData.title,
         description: reservationData.description,
@@ -62,7 +62,7 @@ export default function ConferenceDrawer({
         column: reservationData.column,
       });
     }
-  }, [reservationData]);
+  }, [reservationData, isEditMode]);
 
   console.log(reservationData);
 
@@ -92,7 +92,7 @@ export default function ConferenceDrawer({
           <DrawerHeader>Reserve Conference Room</DrawerHeader>
           <Divider />
           <Formik
-            initialValues={isEditMode ? formData : initialValues}
+            initialValues={isEditMode ? initialValues : formData}
             validationSchema={reservationSchema}
             onSubmit={async (values) => {
               try {
