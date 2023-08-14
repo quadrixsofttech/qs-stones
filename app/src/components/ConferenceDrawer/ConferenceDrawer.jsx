@@ -57,12 +57,14 @@ export default function ConferenceDrawer({
       setFormData({
         title: reservationData.title,
         description: reservationData.description,
-        start: reservationData.startTime,
-        end: reservationData.endTime,
+        startTime: reservationData.startTime,
+        endTime: reservationData.endTime,
         column: reservationData.column,
       });
     }
   }, [reservationData]);
+
+  console.log(reservationData);
 
   const handleSave = () => {
     onClose();
@@ -156,7 +158,7 @@ export default function ConferenceDrawer({
                   </Box>
                   <Divider />
                   <Box p={6}>
-                    <CardInfo />
+                    <CardInfo formData={formData} />
                   </Box>
                 </DrawerBody>
 

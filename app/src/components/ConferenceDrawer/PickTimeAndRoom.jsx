@@ -18,7 +18,7 @@ const PickTimeAndRoom = ({
   setEndTimes,
 }) => {
   const [floor, setFloor] = useState('Upper Floor');
-  const { data: conferenceRooms, conferenceLoading } = useConference();
+  const { conferenceRooms, conferenceLoading } = useConference();
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -36,8 +36,8 @@ const PickTimeAndRoom = ({
 
   const filteredConferenceRooms =
     floor === 'Upper Floor'
-      ? conferenceRooms.filter((room) => room.floor === 'Upper Floor')
-      : conferenceRooms.filter((room) => room.floor === 'Lower Floor');
+      ? conferenceRooms?.filter((room) => room.floor === 'Upper Floor')
+      : conferenceRooms?.filter((room) => room.floor === 'Lower Floor');
 
   return (
     <>

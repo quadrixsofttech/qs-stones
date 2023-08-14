@@ -9,10 +9,12 @@ const reservationSchema = Yup.object().shape({
 });
 
 const initialValues = {
+  id:'',
   floor: '',
-  conferenceRoom: '',
-  startAt: '',
-  endAt: '',
+  column: '',
+  startTime: '',
+  endTime: '',
+  date:'',
   repeatReservation: false,
   everyDay: false,
   title: '',

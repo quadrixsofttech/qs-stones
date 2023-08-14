@@ -27,6 +27,7 @@ const Conference = () => {
   const [date, setDate] = useState(moment());
   const [floor, setFloor] = useState('Upper Floor');
   const [reservationData, setReservationData] = useState(null);
+  const [isEditMode, setIsEditMode] = useState(true);
 
   const { conferenceRooms, conferenceLoading, conferenceError } =
     useConference();
@@ -65,10 +66,11 @@ const Conference = () => {
   );
 
   const handleEdit = (id) => {
-    const reservation = reservationsData?.find((room) => room.id === id);
+    const reservation = reservationsData?.find((room) => room._id === id);
     setReservationData(reservation);
     drawerDisclosure.onOpen();
   };
+
 
   const handleDelete = (id) => {
     setIdToDelete(id);
@@ -131,6 +133,7 @@ const Conference = () => {
           isOpen={drawerDisclosure.isOpen}
           onClose={drawerDisclosure.onClose}
           reservationData={reservationData}
+          isEditMode={isEditMode}
         />
       </Flex>
     </DashboardLayout>
