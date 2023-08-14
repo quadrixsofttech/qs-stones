@@ -1,12 +1,12 @@
 const TimelineHorizontal = {
-  pb: '24',
+  pb: '20',
   overflow: 'auto',
   backgroundColor: 'gray.200',
   borderBottom: '1px',
   borderColor: 'gray.200',
   position: 'relative',
-  minHeight: 'calc(100% - 42px)',
-  maxHeight: 'calc(100% - 42px)',
+  minHeight: 'calc(100% - 115px)',
+  maxHeight: 'calc(100% - 115px)',
   zIndex: '0',
 };
 const conferenceHeader = {

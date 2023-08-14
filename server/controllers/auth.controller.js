@@ -62,6 +62,7 @@ const signUp = async (req, res) => {
       lastName,
       password: hashedPassword,
       role: 'admin',
+      vacation: [{}],
     };
 
     const existingEmail = await User.findOne({
@@ -82,13 +83,15 @@ const signUp = async (req, res) => {
       const decodedToken = jwtDecode(token);
       const expiresAt = decodedToken.exp;
 
-      const { firstName, lastName, email, role } = savedUser;
+      const { _id, firstName, lastName, email, role, vacation } = savedUser;
 
       const userInfo = {
+        _id,
         firstName,
         lastName,
         email,
         role,
+        vacation,
       };
 
       res.cookie('token', token, { httpOnly: true });

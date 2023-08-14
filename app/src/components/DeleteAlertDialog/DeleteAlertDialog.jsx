@@ -10,11 +10,20 @@ import {
 import useConference from '../../hooks/useConference';
 import styles from './DeleteAlertDialog.styles';
 
-const DeleteAlertDialog = ({ isOpen, onClose, idToDelete }) => {
+const DeleteAlertDialog = ({
+  isOpen,
+  onClose,
+  idToDelete,
+  refetchReservations,
+  closeModal,
+}) => {
   const { deleteReservation } = useConference();
   const deleteConferenceReservation = async (id) => {
     try {
       await deleteReservation.mutateAsync(id);
+      onClose();
+      refetchReservations();
+      closeModal();
     } catch (err) {
       throw new Error(err);
     }
@@ -39,7 +48,6 @@ const DeleteAlertDialog = ({ isOpen, onClose, idToDelete }) => {
               colorScheme="red"
               onClick={() => {
                 deleteConferenceReservation(idToDelete);
-                onClose();
               }}
               ml={4}
             >

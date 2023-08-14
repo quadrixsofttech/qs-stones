@@ -28,7 +28,7 @@ const useConference = () => {
   const deleteReservation = useMutation(deleteReservationCallback);
 
   return {
-    data,
+    conferenceRooms: data,
     conferenceLoading,
     conferenceError,
     deleteReservation,
