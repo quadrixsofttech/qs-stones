@@ -3,7 +3,6 @@ import ConferenceNavbar from '../../components/ConferenceNavbar/ConferenceNavbar
 import React, { useEffect, useState } from 'react';
 import Timeline from '../../components/Timeline/Timeline';
 import ConferenceCalendarNavbar from '../../components/ConferenceNavbar/ConferenceCalendarNavbar';
-
 import ConferenceRoomReservationModal from '../../components/ConferenceRoomReservationModal';
 import { Divider, Flex, Spinner, useDisclosure } from '@chakra-ui/react';
 import DeleteAlertDialog from '../../components/DeleteAlertDialog/DeleteAlertDialog';
@@ -44,6 +43,7 @@ const Conference = () => {
   useEffect(() => {
     refetchReservations();
   }, [date, refetchReservations]);
+
 
   if (
     reservationsLoading ||

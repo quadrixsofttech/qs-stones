@@ -1,16 +1,18 @@
 import { Icon } from '@chakra-ui/react';
 import { AiTwotoneCalendar } from 'react-icons/ai';
 import DatePicker from 'react-multi-date-picker';
-import React, { useState } from 'react';
+import React from 'react';
+import moment from 'moment';
 
 export default function CustomDatePicker({
   format,
   field,
   name,
   onDateChange,
+  selectedDate,
+  setSelectedDate,
 }) {
   const datePickerRef = React.useRef(null);
-  const [selectedDate, setSelectedDate] = useState(field.value || new Date());
 
   const handleDateChange = (value) => {
     setSelectedDate(value);
@@ -23,6 +25,7 @@ export default function CustomDatePicker({
   return (
     <>
       <DatePicker
+        minDate={new moment().format('YYYY-MM-DD')}
         name={name}
         ref={datePickerRef}
         className="custom-calendar"

@@ -114,10 +114,11 @@ export default function ConferenceDrawer({
                     <PickTimeAndRoom
                       setSelectedConference={setSelectedConference}
                       setSelectedDate={setSelectedDate}
-                      startTime={values.startTime}
-                      setStartTime={setFieldValue}
-                      endTime={values.endTime}
-                      setEndTime={setFieldValue}
+                      selectedDate={selectedDate}
+                      startTime={startTime}
+                      setStartTime={setStartTime}
+                      endTime={endTime}
+                      setEndTime={setEndTime}
                       startTimes={startTimes}
                       setStartTimes={setStartTimes}
                       endTimes={endTimes}

@@ -55,6 +55,7 @@ export default function RadioButtonGroup({
               min={1}
               max={40}
               clampValueOnBlur={false}
+              isDisabled={repeatReservation === 'after' ? false : true}
             >
               <NumberInputField />
               <NumberInputStepper>

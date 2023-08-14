@@ -11,15 +11,31 @@ const TimePicker = ({
   setStartTimes,
   endTimes,
   setEndTimes,
+  selectedDate,
 }) => {
- 
   useEffect(() => {
     const now = moment();
-    const start = moment(now).startOf('day').add(8, 'hours');
-    const end = moment(now).startOf('day').add(17, 'hours');
+    const start = moment(selectedDate).startOf('day').add(8, 'hours');
+    const end = moment(selectedDate).startOf('day').add(17, 'hours');
+
+    if (!moment(selectedDate).isSame(now, 'day')) {
+      start.set('date', moment(selectedDate).date());
+      end.set('date', moment(selectedDate).date());
+    }
+
     const times = calculateTimes(start, end, 15);
-    setStartTimes(times.filter((time) => moment(time, 'HH:mm').isAfter(now)));
-  }, []);
+
+    if (moment(selectedDate).isSame(now, 'day')) {
+      const currentTime = now.clone().startOf('hour').add(1, 'hour');
+      const nearestTimes = times.filter((time) =>
+        moment(time, 'HH:mm').isSameOrAfter(currentTime)
+      );
+
+      setStartTimes(nearestTimes);
+    } else {
+      setStartTimes(times);
+    }
+  }, [selectedDate]);
 
   useEffect(() => {
     if (startTime) {
@@ -39,7 +55,8 @@ const TimePicker = ({
       const timesAfterStartTime = calculateTimes(nextHour, end, 15);
 
       const times = [...timesWith15MinIncrement, ...timesAfterStartTime];
-      setEndTimes(times.slice(1));
+      const uniqueTimes = [...new Set(times)];
+      setEndTimes(uniqueTimes.slice(1));
       setEndTime('');
     }
   }, [startTime]);
