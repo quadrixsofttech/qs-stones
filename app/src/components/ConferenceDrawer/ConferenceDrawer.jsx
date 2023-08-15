@@ -61,6 +61,7 @@ export default function ConferenceDrawer({
         startTime: reservationData.startTime,
         endTime: reservationData.endTime,
         column: reservationData.column,
+        date: reservationData.date,
       });
     }
   }, [reservationData, isEditMode]);

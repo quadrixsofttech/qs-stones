@@ -12,12 +12,12 @@ export default function CustomDatePicker({
   selectedDate,
   setSelectedDate,
   formData,
-  isEditMode
+  isEditMode,
 }) {
   const datePickerRef = React.useRef(null);
 
   const handleDateChange = (value) => {
-    setSelectedDate(value);
+    setSelectedDate(value.format('YYYY-MM-dd'));
     field.onChange({ target: { name, value } });
     if (onDateChange) {
       onDateChange(value);
