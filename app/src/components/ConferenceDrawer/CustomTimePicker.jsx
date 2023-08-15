@@ -17,25 +17,22 @@ const TimePicker = ({
     const now = moment();
     const start = moment(selectedDate).startOf('day').add(8, 'hours');
     const end = moment(selectedDate).startOf('day').add(17, 'hours');
-
     if (!moment(selectedDate).isSame(now, 'day')) {
       start.set('date', moment(selectedDate).date());
       end.set('date', moment(selectedDate).date());
-    }
+      const times = calculateTimes(start, end, 15);
+      setStartTimes(times);
+    } else {
+      const times = calculateTimes(start, end, 15);
 
-    const times = calculateTimes(start, end, 15);
-
-    if (moment(selectedDate).isSame(now, 'day')) {
       const currentTime = now.clone().startOf('hour').add(1, 'hour');
       const nearestTimes = times.filter((time) =>
         moment(time, 'HH:mm').isSameOrAfter(currentTime)
       );
 
       setStartTimes(nearestTimes);
-    } else {
-      setStartTimes(times);
     }
-  }, [selectedDate]);
+  }, [selectedDate, setStartTimes]);
 
   useEffect(() => {
     if (startTime) {
@@ -59,7 +56,7 @@ const TimePicker = ({
       setEndTimes(uniqueTimes.slice(1));
       setEndTime('');
     }
-  }, [startTime]);
+  }, [startTime, setEndTime, setEndTimes]);
 
   const calculateTimes = (start, end, interval) => {
     const times = [];
@@ -78,6 +75,8 @@ const TimePicker = ({
   const handleEndTimeSelection = (e) => {
     setEndTime(e.target.value);
   };
+
+  console.log(selectedDate);
 
   return (
     <VStack spacing={4} direction="row">
