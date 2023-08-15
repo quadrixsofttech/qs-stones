@@ -79,9 +79,13 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
                 <DrawerBody p={0}>
                   <Box p={6}>
                     <PickTimeAndRoom
-                      setSelectedConference={setSelectedConference}
-                      setSelectedDate={setSelectedDate}
-                      selectedDate={selectedDate}
+                      setSelectedConference={(conference) =>
+                        setFieldValue('selectedConference', conference)
+                      }
+                      setSelectedDate={(date) =>
+                        setFieldValue('selectedDate', date)
+                      }
+                      selectedDate={values.selectedDate}
                       startTime={startTime}
                       setStartTime={setStartTime}
                       endTime={endTime}
@@ -95,7 +99,9 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
                   <Divider />
                   <Box p={6}>
                     <CustomSwitch
-                      setSwitchIsChecked={setSwitchIsChecked}
+                      setSwitchIsChecked={(checked) =>
+                        setFieldValue('switchIsChecked', checked)
+                      }
                       switch_text={'Repeat reservation'}
                     />
                     <GenerateDayOfTheWeek
@@ -106,7 +112,7 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
                     <Box mt={3}>
                       <CustomCheckBox
                         handleEveryDayCheck={handleEveryDayCheck}
-                        switchIsChecked={switchIsChecked}
+                        switchIsChecked={values.switchIsChecked}
                         checkBox_text={'Every day'}
                       />
                     </Box>

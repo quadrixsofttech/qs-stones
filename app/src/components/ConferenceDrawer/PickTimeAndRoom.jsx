@@ -103,7 +103,7 @@ const PickTimeAndRoom = ({
       <Box mb={2} mt={3}>
         Select meeting time:
       </Box>
-      <Field name="startTime">
+      <Field name="meetingTime">
         {({ field }) => (
           <TimePicker
             {...field}
@@ -119,7 +119,7 @@ const PickTimeAndRoom = ({
           />
         )}
       </Field>
-      <ErrorMessage name="startEndTime" component="div" className="error" />
+      <ErrorMessage name="meetingTime" component="div" className="error" />
     </>
   );
 };
