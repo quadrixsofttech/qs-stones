@@ -81,9 +81,7 @@ const TimePicker = ({
   const handleEndTimeSelection = (e) => {
     setEndTime(e.target.value);
   };
-  // console.log(formData.startTime);
-  console.log('start time:', startTime);
-  console.log(isEditMode);
+ 
 
   return (
     <VStack spacing={4} direction="row">
