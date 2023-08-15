@@ -102,6 +102,8 @@ const PickTimeAndRoom = ({
             onDateChange={handleDateChange}
             selectedDate={selectedDate}
             setSelectedDate={setSelectedDate}
+            formData={formData}
+            isEditMode={isEditMode}
           />
         )}
       </Field>

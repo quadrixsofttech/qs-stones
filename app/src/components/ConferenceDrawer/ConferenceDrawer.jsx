@@ -64,8 +64,7 @@ export default function ConferenceDrawer({
       });
     }
   }, [reservationData, isEditMode]);
-  
-  
+
   if (isLoading) {
     return <Spinner />;
   }
@@ -136,6 +135,8 @@ export default function ConferenceDrawer({
                     <CustomSwitch
                       setSwitchIsChecked={setSwitchIsChecked}
                       switch_text={'Repeat reservation'}
+                      isEditMode={isEditMode}
+                      formData={formData}
                     />
                     <GenerateDayOfTheWeek
                       switchIsChecked={switchIsChecked}
@@ -147,6 +148,8 @@ export default function ConferenceDrawer({
                         handleEveryDayCheck={handleEveryDayCheck}
                         switchIsChecked={switchIsChecked}
                         checkBox_text={'Every day'}
+                        isEditMode={isEditMode}
+                        formData={formData}
                       />
                     </Box>
                     <Text

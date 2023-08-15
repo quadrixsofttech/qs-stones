@@ -1,7 +1,12 @@
 import { FormControl, FormLabel, Switch } from '@chakra-ui/react';
 import { Field } from 'formik';
 
-const CustomSwitch = ({ setSwitchIsChecked, switch_text }) => {
+const CustomSwitch = ({
+  setSwitchIsChecked,
+  switch_text,
+  formData,
+  isEditMode,
+}) => {
   return (
     <>
       <Field name="repeatReservation">
@@ -10,7 +15,7 @@ const CustomSwitch = ({ setSwitchIsChecked, switch_text }) => {
             <Switch
               {...field}
               colorScheme="purple"
-              isChecked={field.value}
+              isChecked={isEditMode ? formData.repeatReservation : field.value}
               onChange={(event) => {
                 const { checked } = event.target;
                 setSwitchIsChecked(checked);

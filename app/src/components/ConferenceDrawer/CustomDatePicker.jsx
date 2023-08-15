@@ -11,6 +11,8 @@ export default function CustomDatePicker({
   onDateChange,
   selectedDate,
   setSelectedDate,
+  formData,
+  isEditMode
 }) {
   const datePickerRef = React.useRef(null);
 
@@ -30,7 +32,7 @@ export default function CustomDatePicker({
         ref={datePickerRef}
         className="custom-calendar"
         format={format}
-        value={selectedDate}
+        value={isEditMode ? formData.date : selectedDate}
         onChange={handleDateChange}
       />
       <Icon
