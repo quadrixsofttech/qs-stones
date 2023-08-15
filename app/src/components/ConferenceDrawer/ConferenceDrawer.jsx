@@ -9,6 +9,7 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
+  Spinner,
   Text,
   useToast,
 } from '@chakra-ui/react';
@@ -63,8 +64,11 @@ export default function ConferenceDrawer({
       });
     }
   }, [reservationData, isEditMode]);
-
-  console.log(formData.column);
+  
+  
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   const handleSave = () => {
     onClose();

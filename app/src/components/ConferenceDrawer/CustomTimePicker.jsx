@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Select, VStack } from '@chakra-ui/react';
 import moment from 'moment';
-import workingHours from '../../constants/WorkingDayHours.js';
+import workingHours from '../../constants/WorkingDayHours';
 
 const TimePicker = ({
   startTime,
@@ -81,6 +81,9 @@ const TimePicker = ({
   const handleEndTimeSelection = (e) => {
     setEndTime(e.target.value);
   };
+  // console.log(formData.startTime);
+  console.log('start time:', startTime);
+  console.log(isEditMode);
 
   return (
     <VStack spacing={4} direction="row">
