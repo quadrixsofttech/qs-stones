@@ -35,16 +35,12 @@ const PickTimeAndRoom = ({
 
   const handleFloorChange = (e) => {
     setFloor(e.target.value);
-    // if (isEditMode) {
-    //   setFloor(formData.column);
-    // }
   };
 
   const filteredConferenceRooms =
     floor === 'Upper Floor'
       ? conferenceRooms?.filter((room) => room.floor === 'Upper Floor')
       : conferenceRooms?.filter((room) => room.floor === 'Lower Floor');
-  // console.log(formData.column);
 
   return (
     <>
