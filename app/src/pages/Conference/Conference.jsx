@@ -3,10 +3,12 @@ import ConferenceNavbar from '../../components/ConferenceNavbar/ConferenceNavbar
 import React, { useEffect, useState } from 'react';
 import Timeline from '../../components/Timeline/Timeline';
 import ConferenceCalendarNavbar from '../../components/ConferenceNavbar/ConferenceCalendarNavbar';
+import ConferenceRoomReservationModal from '../../components/ConferenceRoomReservationModal';
 import { Divider, Flex, Spinner, useDisclosure } from '@chakra-ui/react';
 import DeleteAlertDialog from '../../components/DeleteAlertDialog/DeleteAlertDialog';
-import ConferenceRoomReservationModal from '../../components/ConferenceRoomReservationModal/ConferenceRoomReservationModal';
 import moment from 'moment';
+import ConferenceDrawer from '../../components/ConferenceDrawer/ConferenceDrawer';
+import styles from './Conference.styles';
 import useConference from '../../hooks/useConference';
 import useReservations from '../../hooks/useReservations';
 import useUser from '../../hooks/useUser';
@@ -14,8 +16,11 @@ import useUser from '../../hooks/useUser';
 const Conference = () => {
   const [timelineOrientation, setTimelineOrientation] = useState('vertical');
   const [timelineFilter, setTimelineFilter] = useState('');
+
   const modalDisclosure = useDisclosure();
+  const drawerDisclosure = useDisclosure();
   const alertDialogDisclosure = useDisclosure();
+
   const [idToDelete, setIdToDelete] = useState();
   const [modalData, setModalData] = useState(null);
   const [date, setDate] = useState(moment());
@@ -35,6 +40,8 @@ const Conference = () => {
   useEffect(() => {
     refetchReservations();
   }, [date, refetchReservations]);
+
+  const btnRef = React.useRef();
 
   if (
     reservationsLoading ||
@@ -109,6 +116,18 @@ const Conference = () => {
         onEdit={handleEdit}
         user={user}
       />
+      <Flex
+        {...styles.buttonModal}
+        ref={btnRef}
+        onClick={drawerDisclosure.onOpen}
+      >
+        <Flex mb={'1'}>+</Flex>
+        <ConferenceDrawer
+          btnRef={btnRef}
+          isOpen={drawerDisclosure.isOpen}
+          onClose={drawerDisclosure.onClose}
+        />
+      </Flex>
     </DashboardLayout>
   );
 };

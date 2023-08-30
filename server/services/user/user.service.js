@@ -1,6 +1,7 @@
 const User = require('../../models/user.model');
 const moment = require('moment');
 
+
 const getAllUsers = async () => {
   try {
     const users = await User.find()

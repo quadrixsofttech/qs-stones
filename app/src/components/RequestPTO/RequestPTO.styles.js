@@ -1,4 +1,3 @@
-
 const box = {
   fontFamily: "'Inter', sans-serif",
   p: '2',
