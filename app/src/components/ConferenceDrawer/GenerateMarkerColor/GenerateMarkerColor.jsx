@@ -3,12 +3,17 @@ import React, { useState } from 'react';
 import Colors from '../../../constants/Colors';
 import DefaultColor from '../assets/no_color.png';
 import styles from './GenerateMarkerColor.styles';
+import { useFormikContext } from 'formik';
 
 export default function GenerateMarkerColor() {
   const [selectedColor, setSelectedColor] = useState(null);
 
+  const { setFieldValue } = useFormikContext();
+
   const handleColorClick = (color) => {
     setSelectedColor(color === selectedColor ? null : color);
+    let stringColor = color.replace(/\.\d+$/, '');
+    setFieldValue('markerColor', stringColor);
   };
 
   return (

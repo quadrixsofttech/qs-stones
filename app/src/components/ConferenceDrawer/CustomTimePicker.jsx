@@ -1,17 +1,19 @@
 import React, { useEffect } from 'react';
-import { Flex, Select, VStack } from '@chakra-ui/react';
+import { Flex, Select } from '@chakra-ui/react';
 import moment from 'moment';
 import { ErrorMessage, Field, useFormikContext } from 'formik';
 
-const TimePicker = ({ selectedDate }) => {
+const TimePicker = () => {
   const { values, setFieldValue } = useFormikContext();
   useEffect(() => {
-    const start = moment(selectedDate).startOf('day').add(8, 'hours');
-    const end = moment(selectedDate).startOf('day').add(17, 'hours');
+    const start = moment(values.selectedDate).startOf('day').add(8, 'hours');
+    const end = moment(values.selectedDate).startOf('day').add(17, 'hours');
 
-    if (selectedDate.format('YYYY-MM-DD') !== moment().format('YYYY-MM-DD')) {
-      start.set('date', moment(selectedDate).date());
-      end.set('date', moment(selectedDate).date());
+    if (
+      values.selectedDate.format('YYYY-MM-DD') !== moment().format('YYYY-MM-DD')
+    ) {
+      start.set('date', moment(values.selectedDate).date());
+      end.set('date', moment(values.selectedDate).date());
       const times = calculateTimes(start, end, 15);
       setFieldValue('startAtArray', times);
     } else {
@@ -23,7 +25,7 @@ const TimePicker = ({ selectedDate }) => {
       );
       setFieldValue('startAtArray', nearestTimes);
     }
-  }, [selectedDate, setFieldValue]);
+  }, [values.selectedDate, setFieldValue]);
 
   useEffect(() => {
     if (values.startAt) {

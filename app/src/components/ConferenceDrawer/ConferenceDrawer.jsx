@@ -15,21 +15,17 @@ import {
 
 import GenerateDayOfTheWeek from './GenerateDayOfTheWeek/GenerateDayOfTheWeek';
 import RadioButtonGroup from './RadioButtonGroup';
-import { useState } from 'react';
 import { Formik, Form } from 'formik';
 import PickTimeAndRoom from './PickTimeAndRoom';
 import CustomSwitch from './CustomSwitch';
 import CustomCheckBox from './CustomCheckBox';
 import CardInfo from './CardInfo';
 import { reservationSchema, initialValues } from './formikConfig';
-import moment from 'moment';
 
 export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
-  const [selectedDate, setSelectedDate] = useState(moment());
-
   const toast = useToast();
 
-  const handleSubmit = (values,errors) => {
+  const handleSubmit = (values, errors) => {
     onClose();
     console.log(errors);
     toast({
@@ -39,7 +35,7 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
       description: `You have successfully reserved ${
         values.conferenceRoom
       } for the date
-      ${selectedDate.format('YYYY/MM/DD')} from ${values.startAt} to ${
+      ${values.selectedDate.format('YYYY/MM/DD')} from ${values.startAt} to ${
         values.endAt
       }`,
     });
@@ -68,10 +64,7 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
               <Form>
                 <DrawerBody p={0}>
                   <Box p={6}>
-                    <PickTimeAndRoom
-                      selectedDate={selectedDate}
-                      setSelectedDate={setSelectedDate}
-                    />
+                    <PickTimeAndRoom />
                   </Box>
                   <Divider />
                   <Box p={6}>

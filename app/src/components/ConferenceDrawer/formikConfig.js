@@ -1,3 +1,4 @@
+import moment from 'moment';
 import * as Yup from 'yup';
 
 const reservationSchema = Yup.object().shape({
@@ -11,6 +12,7 @@ const reservationSchema = Yup.object().shape({
 const initialValues = {
   floor: 'Upper Floor',
   conferenceRoom: 'Collaboration Room',
+  selectedDate: moment(),
   startAt: '',
   endAt: '',
   startAtArray: '',
@@ -19,7 +21,6 @@ const initialValues = {
   everyDay: false,
   title: '',
   description: '',
-  markerColor: '',
-  selectedDate: '',
+  markerColor: 'white',
 };
 export { reservationSchema, initialValues };

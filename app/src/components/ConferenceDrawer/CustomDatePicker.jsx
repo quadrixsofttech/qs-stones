@@ -3,13 +3,13 @@ import { AiTwotoneCalendar } from 'react-icons/ai';
 import DatePicker from 'react-multi-date-picker';
 import React from 'react';
 import moment from 'moment';
+import { useFormikContext } from 'formik';
 
 export default function CustomDatePicker({
   name,
-  selectedDate,
-  setSelectedDate,
 }) {
   const datePickerRef = React.useRef(null);
+  const { values, setFieldValue } = useFormikContext();
 
   return (
     <>
@@ -19,8 +19,8 @@ export default function CustomDatePicker({
         ref={datePickerRef}
         className="custom-calendar"
         format={'YYYY-MM-DD'}
-        value={selectedDate.format('YYYY-MM-DD')}
-        onChange={(value) => setSelectedDate(value)}
+        value={values.selectedDate.format('YYYY-MM-DD')}
+        onChange={(value) => setFieldValue('selectedDate', value)}
       />
       <Icon
         as={AiTwotoneCalendar}
