@@ -14,12 +14,10 @@ const TimePicker = ({
   selectedDate,
 }) => {
   useEffect(() => {
-    const now = moment();
     const start = moment(selectedDate).startOf('day').add(8, 'hours');
     const end = moment(selectedDate).startOf('day').add(17, 'hours');
-    if (
-      selectedDate.format('YYYY-MM-DD') !== moment().format('YYYY-MM-DD')
-    ) {
+
+    if (selectedDate.format('YYYY-MM-DD') !== moment().format('YYYY-MM-DD')) {
       start.set('date', moment(selectedDate).date());
       end.set('date', moment(selectedDate).date());
       const times = calculateTimes(start, end, 15);
@@ -27,9 +25,9 @@ const TimePicker = ({
     } else {
       const times = calculateTimes(start, end, 15);
 
-      const currentTime = now.clone().startOf('hour').add(1, 'hour');
+      const currentTime = moment();
       const nearestTimes = times.filter((time) =>
-        moment(time, 'HH:mm').isSameOrAfter(currentTime)
+        moment(time, 'HH:mm').isSameOrAfter(currentTime, 'minute')
       );
       setStartTimes(nearestTimes);
     }

@@ -71,7 +71,6 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
             validationSchema={reservationSchema}
             onSubmit={(values) => {
               handleSave();
-
             }}
           >
             {({ values, setFieldValue, handleSubmit, isSubmitting }) => (
@@ -95,9 +94,7 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
                   <Divider />
                   <Box p={6}>
                     <CustomSwitch
-                      setSwitchIsChecked={(checked) =>
-                        setFieldValue('switchIsChecked', checked)
-                      }
+                      setSwitchIsChecked={setSwitchIsChecked}
                       switch_text={'Repeat reservation'}
                     />
                     <GenerateDayOfTheWeek

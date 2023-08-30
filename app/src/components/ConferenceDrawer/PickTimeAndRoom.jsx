@@ -21,10 +21,6 @@ const PickTimeAndRoom = ({
   const [floor, setFloor] = useState('Upper Floor');
   const { conferenceRooms, conferenceLoading } = useConference();
 
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-  };
-
   if (conferenceLoading || !conferenceRooms) {
     return <Spinner />;
   }
