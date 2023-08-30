@@ -17,7 +17,9 @@ const TimePicker = ({
     const now = moment();
     const start = moment(selectedDate).startOf('day').add(8, 'hours');
     const end = moment(selectedDate).startOf('day').add(17, 'hours');
-    if (!moment(selectedDate).isSame(now, 'day')) {
+    if (
+      selectedDate.format('YYYY-MM-DD') !== moment().format('YYYY-MM-DD')
+    ) {
       start.set('date', moment(selectedDate).date());
       end.set('date', moment(selectedDate).date());
       const times = calculateTimes(start, end, 15);
@@ -29,7 +31,6 @@ const TimePicker = ({
       const nearestTimes = times.filter((time) =>
         moment(time, 'HH:mm').isSameOrAfter(currentTime)
       );
-
       setStartTimes(nearestTimes);
     }
   }, [selectedDate, setStartTimes]);
@@ -75,8 +76,6 @@ const TimePicker = ({
   const handleEndTimeSelection = (e) => {
     setEndTime(e.target.value);
   };
-
-  console.log(selectedDate);
 
   return (
     <VStack spacing={4} direction="row">

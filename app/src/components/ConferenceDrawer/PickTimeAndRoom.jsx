@@ -90,10 +90,7 @@ const PickTimeAndRoom = ({
       <Field name="date">
         {({ field }) => (
           <CustomDatePicker
-            format={'MM/DD/YYYY'}
-            field={field}
             name="date-picker"
-            onDateChange={handleDateChange}
             selectedDate={selectedDate}
             setSelectedDate={setSelectedDate}
           />

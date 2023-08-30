@@ -5,22 +5,11 @@ import React from 'react';
 import moment from 'moment';
 
 export default function CustomDatePicker({
-  format,
-  field,
   name,
-  onDateChange,
   selectedDate,
   setSelectedDate,
 }) {
   const datePickerRef = React.useRef(null);
-
-  const handleDateChange = (value) => {
-    setSelectedDate(value);
-    field.onChange({ target: { name, value } });
-    if (onDateChange) {
-      onDateChange(value);
-    }
-  };
 
   return (
     <>
@@ -29,9 +18,9 @@ export default function CustomDatePicker({
         name={name}
         ref={datePickerRef}
         className="custom-calendar"
-        format={format}
-        value={selectedDate}
-        onChange={handleDateChange}
+        format={'YYYY-MM-DD'}
+        value={selectedDate.format('YYYY-MM-DD')}
+        onChange={(value) => setSelectedDate(value)}
       />
       <Icon
         as={AiTwotoneCalendar}

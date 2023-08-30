@@ -71,7 +71,7 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
             validationSchema={reservationSchema}
             onSubmit={(values) => {
               handleSave();
-              console.log(values);
+
             }}
           >
             {({ values, setFieldValue, handleSubmit, isSubmitting }) => (
@@ -79,13 +79,9 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
                 <DrawerBody p={0}>
                   <Box p={6}>
                     <PickTimeAndRoom
-                      setSelectedConference={(conference) =>
-                        setFieldValue('selectedConference', conference)
-                      }
-                      setSelectedDate={(date) =>
-                        setFieldValue('selectedDate', date)
-                      }
-                      selectedDate={values.selectedDate}
+                      setSelectedConference={setSelectedConference}
+                      setSelectedDate={setSelectedDate}
+                      selectedDate={selectedDate}
                       startTime={startTime}
                       setStartTime={setStartTime}
                       endTime={endTime}
