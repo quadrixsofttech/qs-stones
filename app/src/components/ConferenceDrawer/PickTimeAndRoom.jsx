@@ -1,25 +1,15 @@
 import { Box, Select, Spinner } from '@chakra-ui/react';
-import { ErrorMessage, Field } from 'formik';
-import React, { useState } from 'react';
+import { ErrorMessage, Field, useFormikContext } from 'formik';
+import React from 'react';
 import CustomDatePicker from './CustomDatePicker';
 import TimePicker from './CustomTimePicker';
 import useConference from '../../hooks/useConference';
 
-const PickTimeAndRoom = ({
-  setSelectedConference,
-  setSelectedDate,
-  selectedDate,
-  startTime,
-  endTime,
-  setStartTime,
-  setEndTime,
-  startTimes,
-  setStartTimes,
-  endTimes,
-  setEndTimes,
-}) => {
-  const [floor, setFloor] = useState('Upper Floor');
+const PickTimeAndRoom = ({ setSelectedDate, selectedDate }) => {
   const { conferenceRooms, conferenceLoading } = useConference();
+
+  const formik = useFormikContext();
+  console.log(formik.values);
 
   if (conferenceLoading || !conferenceRooms) {
     return <Spinner />;
@@ -28,11 +18,11 @@ const PickTimeAndRoom = ({
   const floors = ['Upper Floor', 'Lower Floor'];
 
   const handleFloorChange = (e) => {
-    setFloor(e.target.value);
+    formik.setFieldValue('floor', e.target.value);
   };
 
   const filteredConferenceRooms =
-    floor === 'Upper Floor'
+    formik.values.floor === 'Upper Floor'
       ? conferenceRooms.filter((room) => room.floor === 'Upper Floor')
       : conferenceRooms.filter((room) => room.floor === 'Lower Floor');
 
@@ -45,7 +35,7 @@ const PickTimeAndRoom = ({
             size="md"
             {...field}
             onChange={handleFloorChange}
-            value={field.value}
+            value={formik.values.selectedFloor}
           >
             {floors.map((floor) => (
               <option key={floor} value={floor}>
@@ -65,10 +55,10 @@ const PickTimeAndRoom = ({
           <Select
             size="md"
             {...field}
-            value={field.value}
+            value={formik.values.conferenceRoom}
             onChange={(e) => {
               field.onChange(e);
-              setSelectedConference(e.target.value);
+              formik.setFieldValue('conferenceRoom', e.target.value);
             }}
           >
             {filteredConferenceRooms.map((room) => (
@@ -96,23 +86,7 @@ const PickTimeAndRoom = ({
       <Box mb={2} mt={3}>
         Select meeting time:
       </Box>
-      <Field name="meetingTime">
-        {({ field }) => (
-          <TimePicker
-            {...field}
-            startTime={startTime}
-            setStartTime={setStartTime}
-            endTime={endTime}
-            setEndTime={setEndTime}
-            startTimes={startTimes}
-            setStartTimes={setStartTimes}
-            endTimes={endTimes}
-            setEndTimes={setEndTimes}
-            selectedDate={selectedDate}
-          />
-        )}
-      </Field>
-      <ErrorMessage name="meetingTime" component="div" className="error" />
+      <TimePicker selectedDate={selectedDate} />
     </>
   );
 };

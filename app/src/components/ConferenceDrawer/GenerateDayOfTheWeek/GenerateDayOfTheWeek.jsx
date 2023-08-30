@@ -2,26 +2,24 @@ import { Flex } from '@chakra-ui/react';
 import DayOfTheWeek from '../../../constants/DayOfTheWeek';
 import styles from './GenerateDayOfTheWeek.styles';
 import React, { useState, useEffect } from 'react';
+import { useFormikContext } from 'formik';
 
-export default function GenerateDayOfTheWeek({
-  switchIsChecked,
-  everyDayChecked,
-  setEveryDayChecked,
-}) {
+export default function GenerateDayOfTheWeek({}) {
   const [selectedColorIndices, setSelectedColorIndices] = useState([]);
+  const { values, setFieldValue } = useFormikContext();
 
   useEffect(() => {
-    if (everyDayChecked) {
+    if (values.everyDay) {
       setSelectedColorIndices(Object.keys(DayOfTheWeek));
     } else {
       setSelectedColorIndices([]);
     }
-  }, [everyDayChecked]);
+  }, [values.everyDay]);
 
   const handleColorClick = (index) => {
-    if (switchIsChecked) {
-      if (everyDayChecked) {
-        setEveryDayChecked(false);
+    if (values.repeatReservation) {
+      if (values.everyDay) {
+        setFieldValue('everyDay', false);
         setSelectedColorIndices([index]);
       } else {
         setSelectedColorIndices((prevIndices) =>
@@ -40,18 +38,18 @@ export default function GenerateDayOfTheWeek({
           {...styles.dayContainer}
           key={index}
           color={
-            !switchIsChecked
+            !values.repeatReservation
               ? 'gray.200'
-              : everyDayChecked || selectedColorIndices.includes(index)
+              : values.everyDay || selectedColorIndices.includes(index)
               ? 'white'
               : 'black'
           }
           bgColor={
-            selectedColorIndices.includes(index) || everyDayChecked
+            selectedColorIndices.includes(index) || values.everyDay
               ? 'purple.400'
               : 'white'
           }
-          borderColor={switchIsChecked ? 'gray.200' : 'gray.100'}
+          borderColor={values.repeatReservation ? 'gray.200' : 'gray.100'}
           onClick={() => handleColorClick(index)}
         >
           {day}

@@ -25,30 +25,23 @@ import { reservationSchema, initialValues } from './formikConfig';
 import moment from 'moment';
 
 export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
-  const [switchIsChecked, setSwitchIsChecked] = useState(false);
-  const [everyDayChecked, setEveryDayChecked] = useState(false);
-  const [selectedConference, setSelectedConference] = useState('');
   const [selectedDate, setSelectedDate] = useState(moment());
-
-  const [startTime, setStartTime] = useState('');
-  const [endTime, setEndTime] = useState('');
-  const [startTimes, setStartTimes] = useState([]);
-  const [endTimes, setEndTimes] = useState([]);
 
   const toast = useToast();
 
-  const handleEveryDayCheck = () => {
-    setEveryDayChecked(!everyDayChecked);
-  };
-
-  const handleSave = () => {
+  const handleSubmit = (values,errors) => {
     onClose();
+    console.log(errors);
     toast({
       position: 'top-right',
       status: 'success',
       variant: 'subtle',
-      description: `You have successfully reserved ${selectedConference} for the date
-      ${selectedDate.format('YYYY/MM/dd')} from ${startTime} to ${endTime}`,
+      description: `You have successfully reserved ${
+        values.conferenceRoom
+      } for the date
+      ${selectedDate.format('YYYY/MM/DD')} from ${values.startAt} to ${
+        values.endAt
+      }`,
     });
   };
 
@@ -69,55 +62,32 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
           <Formik
             initialValues={initialValues}
             validationSchema={reservationSchema}
-            onSubmit={(values) => {
-              handleSave();
-            }}
+            onSubmit={handleSubmit}
           >
-            {({ values, setFieldValue, handleSubmit, isSubmitting }) => (
-              <Form onSubmit={handleSubmit}>
+            {({ values }) => (
+              <Form>
                 <DrawerBody p={0}>
                   <Box p={6}>
                     <PickTimeAndRoom
-                      setSelectedConference={setSelectedConference}
-                      setSelectedDate={setSelectedDate}
                       selectedDate={selectedDate}
-                      startTime={startTime}
-                      setStartTime={setStartTime}
-                      endTime={endTime}
-                      setEndTime={setEndTime}
-                      startTimes={startTimes}
-                      setStartTimes={setStartTimes}
-                      endTimes={endTimes}
-                      setEndTimes={setEndTimes}
+                      setSelectedDate={setSelectedDate}
                     />
                   </Box>
                   <Divider />
                   <Box p={6}>
-                    <CustomSwitch
-                      setSwitchIsChecked={setSwitchIsChecked}
-                      switch_text={'Repeat reservation'}
-                    />
-                    <GenerateDayOfTheWeek
-                      switchIsChecked={switchIsChecked}
-                      everyDayChecked={everyDayChecked}
-                      setEveryDayChecked={setEveryDayChecked}
-                    />
+                    <CustomSwitch switch_text={'Repeat reservation'} />
+                    <GenerateDayOfTheWeek />
                     <Box mt={3}>
-                      <CustomCheckBox
-                        handleEveryDayCheck={handleEveryDayCheck}
-                        switchIsChecked={values.switchIsChecked}
-                        checkBox_text={'Every day'}
-                      />
+                      <CustomCheckBox checkBox_text={'Every day'} />
                     </Box>
                     <Text
                       fontSize="md"
                       mt={3}
-                      color={switchIsChecked ? 'gray.700' : 'gray.200'}
+                      color={values.repeatReservation ? 'gray.700' : 'gray.200'}
                     >
                       Ends
                     </Text>
                     <RadioButtonGroup
-                      switchIsChecked={switchIsChecked}
                       f_option="Never"
                       s_option="After"
                       t_option="On specific date"
@@ -134,8 +104,8 @@ export default function ConferenceDrawer({ btnRef, isOpen, onClose }) {
                   <Button variant="outline" mr={3} onClick={onClose}>
                     Cancel
                   </Button>
-                  <Button colorScheme="purple" onClick={handleSave}>
-                    Save
+                  <Button colorScheme="purple" type="submit">
+                    Submit
                   </Button>
                 </DrawerFooter>
               </Form>

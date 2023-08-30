@@ -1,23 +1,20 @@
 import { Checkbox } from '@chakra-ui/react';
-import { Field } from 'formik';
+import { Field, useFormikContext } from 'formik';
 
-const CustomCheckBox = ({
-  switchIsChecked,
-  handleEveryDayCheck,
-  checkBox_text,
-}) => {
+const CustomCheckBox = ({ checkBox_text }) => {
+  const { values, setFieldValue } = useFormikContext();
+
   return (
     <>
       <Field type="checkbox" name="everyDay">
         {({ field }) => (
           <Checkbox
             colorScheme="purple"
-            isDisabled={switchIsChecked ? false : true}
-            isChecked={field.value}
-            onChange={(e) => {
-              const { checked } = field;
-              handleEveryDayCheck();
-              field.onChange({ target: { name: field.name, value: !checked } });
+            isDisabled={values.repeatReservation ? false : true}
+            isChecked={values.everyDay}
+            onChange={() => {
+              const checked = values.everyDay;
+              setFieldValue('everyDay', !checked);
             }}
           >
             {checkBox_text}

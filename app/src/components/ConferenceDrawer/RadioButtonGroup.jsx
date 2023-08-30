@@ -13,30 +13,26 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 import DatePicker from 'react-multi-date-picker';
-import CustomTimePicker from './CustomTimePicker';
 import { AiTwotoneCalendar } from 'react-icons/ai';
+import { useFormikContext } from 'formik';
 
-export default function RadioButtonGroup({
-  f_option,
-  s_option,
-  t_option,
-  switchIsChecked,
-}) {
+export default function RadioButtonGroup({ f_option, s_option, t_option }) {
   const datePickerRef = React.useRef(null);
-  const [repeatReservation, setRepeatReservation] = React.useState('never');
+  const [meetingRepetition, setMeetingRepetiotion] = React.useState('never');
+  const { values } = useFormikContext();
 
   const handleRadioChange = (newValue) => {
-    setRepeatReservation(newValue);
+    setMeetingRepetiotion(newValue);
   };
 
   return (
-    <RadioGroup onChange={handleRadioChange} value={repeatReservation}>
+    <RadioGroup onChange={handleRadioChange} value={meetingRepetition}>
       <Stack mt={1}>
         <Radio
           size="sm"
           value="never"
           colorScheme="purple"
-          isDisabled={switchIsChecked ? false : true}
+          isDisabled={values.repeatReservation ? false : true}
         >
           <Text fontSize="sm">{f_option}</Text>
         </Radio>
@@ -44,7 +40,7 @@ export default function RadioButtonGroup({
           size="sm"
           value="after"
           colorScheme="purple"
-          isDisabled={switchIsChecked ? false : true}
+          isDisabled={values.repeatReservation ? false : true}
         >
           <Flex alignItems={'center'} gap={3}>
             <Text fontSize="sm">{s_option}</Text>
@@ -55,7 +51,7 @@ export default function RadioButtonGroup({
               min={1}
               max={40}
               clampValueOnBlur={false}
-              isDisabled={repeatReservation === 'after' ? false : true}
+              isDisabled={meetingRepetition === 'after' ? false : true}
             >
               <NumberInputField />
               <NumberInputStepper>
@@ -70,16 +66,16 @@ export default function RadioButtonGroup({
           size="sm"
           value="on specific date"
           colorScheme="purple"
-          isDisabled={switchIsChecked ? false : true}
+          isDisabled={values.repeatReservation ? false : true}
         >
           <Text fontSize="sm">{t_option}</Text>
         </Radio>
         <Text
           fontSize="sm"
           color={
-            switchIsChecked &&
-            repeatReservation !== 'never' &&
-            repeatReservation !== 'after'
+            values.repeatReservation &&
+            meetingRepetition !== 'never' &&
+            meetingRepetition !== 'after'
               ? 'gray.700'
               : 'gray.200'
           }
@@ -89,18 +85,18 @@ export default function RadioButtonGroup({
         <DatePicker
           ref={datePickerRef}
           disabled={
-            switchIsChecked &&
-            repeatReservation !== 'never' &&
-            repeatReservation !== 'after'
+            values.repeatReservation &&
+            meetingRepetition !== 'never' &&
+            meetingRepetition !== 'after'
               ? false
               : true
           }
           className="custom-calendar"
           format="MM/DD/YYYY"
         />
-        {switchIsChecked &&
-        repeatReservation !== 'never' &&
-        repeatReservation !== 'after' ? (
+        {values.repeatReservation &&
+        meetingRepetition !== 'never' &&
+        meetingRepetition !== 'after' ? (
           <Icon
             as={AiTwotoneCalendar}
             onClick={() => {

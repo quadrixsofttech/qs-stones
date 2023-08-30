@@ -1,18 +1,10 @@
 import React, { useEffect } from 'react';
-import { Select, VStack } from '@chakra-ui/react';
+import { Flex, Select, VStack } from '@chakra-ui/react';
 import moment from 'moment';
+import { ErrorMessage, Field, useFormikContext } from 'formik';
 
-const TimePicker = ({
-  startTime,
-  setStartTime,
-  endTime,
-  setEndTime,
-  startTimes,
-  setStartTimes,
-  endTimes,
-  setEndTimes,
-  selectedDate,
-}) => {
+const TimePicker = ({ selectedDate }) => {
+  const { values, setFieldValue } = useFormikContext();
   useEffect(() => {
     const start = moment(selectedDate).startOf('day').add(8, 'hours');
     const end = moment(selectedDate).startOf('day').add(17, 'hours');
@@ -21,7 +13,7 @@ const TimePicker = ({
       start.set('date', moment(selectedDate).date());
       end.set('date', moment(selectedDate).date());
       const times = calculateTimes(start, end, 15);
-      setStartTimes(times);
+      setFieldValue('startAtArray', times);
     } else {
       const times = calculateTimes(start, end, 15);
 
@@ -29,13 +21,13 @@ const TimePicker = ({
       const nearestTimes = times.filter((time) =>
         moment(time, 'HH:mm').isSameOrAfter(currentTime, 'minute')
       );
-      setStartTimes(nearestTimes);
+      setFieldValue('startAtArray', nearestTimes);
     }
-  }, [selectedDate, setStartTimes]);
+  }, [selectedDate, setFieldValue]);
 
   useEffect(() => {
-    if (startTime) {
-      const startTimeMoment = moment(startTime, 'HH:mm');
+    if (values.startAt) {
+      const startTimeMoment = moment(values.startAt, 'HH:mm');
 
       const nextHour = moment(startTimeMoment).startOf('hour').add(1, 'hour');
       const timesWith15MinIncrement = calculateTimes(
@@ -52,10 +44,9 @@ const TimePicker = ({
 
       const times = [...timesWith15MinIncrement, ...timesAfterStartTime];
       const uniqueTimes = [...new Set(times)];
-      setEndTimes(uniqueTimes.slice(1));
-      setEndTime('');
+      setFieldValue('endAtArray', uniqueTimes.slice(1));
     }
-  }, [startTime, setEndTime, setEndTimes]);
+  }, [values.startAt, setFieldValue]);
 
   const calculateTimes = (start, end, interval) => {
     const times = [];
@@ -68,38 +59,48 @@ const TimePicker = ({
   };
 
   const handleStartTimeSelection = (e) => {
-    setStartTime(e.target.value);
+    setFieldValue('startAt', e.target.value);
   };
 
   const handleEndTimeSelection = (e) => {
-    setEndTime(e.target.value);
+    setFieldValue('endAt', e.target.value);
   };
 
   return (
-    <VStack spacing={4} direction="row">
-      <Select
-        placeholder="Select Start Time"
-        value={startTime}
-        onChange={handleStartTimeSelection}
-      >
-        {startTimes.map((time) => (
-          <option key={time} value={time}>
-            {time}
-          </option>
-        ))}
-      </Select>
-      <Select
-        placeholder="Select End Time"
-        value={endTime}
-        onChange={handleEndTimeSelection}
-      >
-        {endTimes.map((time) => (
-          <option key={time} value={time}>
-            {time}
-          </option>
-        ))}
-      </Select>
-    </VStack>
+    <Flex flexDir={'column'} justifyContent={'flex-start'} gap={'3'}>
+      <Field name="startAt">
+        {({ field }) => (
+          <Select
+            placeholder="Select Start Time"
+            value={values.startAt}
+            onChange={handleStartTimeSelection}
+          >
+            {Object.values(values.startAtArray).map((time) => (
+              <option key={time} value={time}>
+                {time}
+              </option>
+            ))}
+          </Select>
+        )}
+      </Field>
+      <ErrorMessage name="startAt" component="div" className="error" />
+      <Field name="endAt">
+        {({ field }) => (
+          <Select
+            placeholder="Select End Time"
+            value={values.endAt}
+            onChange={handleEndTimeSelection}
+          >
+            {Object.values(values.endAtArray).map((time) => (
+              <option key={time} value={time}>
+                {time}
+              </option>
+            ))}
+          </Select>
+        )}
+      </Field>
+      <ErrorMessage name="endAt" component="div" className="error" />
+    </Flex>
   );
 };
 
