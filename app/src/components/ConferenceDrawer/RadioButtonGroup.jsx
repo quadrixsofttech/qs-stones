@@ -15,6 +15,7 @@ import React from 'react';
 import DatePicker from 'react-multi-date-picker';
 import { AiTwotoneCalendar } from 'react-icons/ai';
 import { useFormikContext } from 'formik';
+import moment from 'moment';
 
 export default function RadioButtonGroup({ f_option, s_option, t_option }) {
   const datePickerRef = React.useRef(null);
@@ -84,6 +85,7 @@ export default function RadioButtonGroup({ f_option, s_option, t_option }) {
         </Text>
         <DatePicker
           ref={datePickerRef}
+          minDate={new moment().format('YYYY-MM-DD')}
           disabled={
             values.repeatReservation &&
             meetingRepetition !== 'never' &&
