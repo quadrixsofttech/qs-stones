@@ -69,6 +69,20 @@ export default function ConferenceDrawer({
     });
   };
 
+  const handleFormikOnSubmit = async (values) => {
+    try {
+      if (isEditMode) {
+        await updateReservation(reservationData.id, values);
+      } else {
+        // await createReservation(values);
+        await handleSubmit();
+      }
+      onClose();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <Drawer
@@ -86,19 +100,7 @@ export default function ConferenceDrawer({
           <Formik
             initialValues={isEditMode ? initialValues : formData}
             validationSchema={reservationSchema}
-            onSubmit={async (values) => {
-              try {
-                if (isEditMode) {
-                  await updateReservation(reservationData.id, values);
-                } else {
-                  // await createReservation(values);
-                  await handleSubmit();
-                }
-                onClose();
-              } catch (error) {
-                console.error(error);
-              }
-            }}
+            onSubmit={handleFormikOnSubmit}
           >
             {({ values }) => (
               <Form>
