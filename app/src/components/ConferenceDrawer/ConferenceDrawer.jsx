@@ -16,42 +16,25 @@ import {
 
 import GenerateDayOfTheWeek from './GenerateDayOfTheWeek/GenerateDayOfTheWeek';
 import RadioButtonGroup from './RadioButtonGroup';
-import { useEffect, useState } from 'react';
 import { Formik, Form } from 'formik';
 import PickTimeAndRoom from './PickTimeAndRoom';
 import CustomSwitch from './CustomSwitch';
 import CustomCheckBox from './CustomCheckBox';
 import CardInfo from './CardInfo';
 import { reservationSchema, initialValues } from './formikConfig';
-import moment from 'moment';
-import { useConferenceRoomReservation } from '../../hooks/useConferenceRoomReservation.js';
+import { useConferenceRoomReservation } from '../../hooks/useConferenceRoomReservation';
+import { useEffect, useState } from 'react';
 
 export default function ConferenceDrawer({
   btnRef,
   isOpen,
   onClose,
-  reservationData,
   isEditMode,
+  reservationData,
 }) {
-  const [switchIsChecked, setSwitchIsChecked] = useState(false);
-  const [everyDayChecked, setEveryDayChecked] = useState(false);
-  const [selectedConference, setSelectedConference] = useState('');
-  const [selectedDate, setSelectedDate] = useState(moment());
-
-  const [startTime, setStartTime] = useState('');
-  const [endTime, setEndTime] = useState('');
-  const [startTimes, setStartTimes] = useState([]);
-  const [endTimes, setEndTimes] = useState([]);
-  const [formData, setFormData] = useState(initialValues);
-
-  const { createReservation, updateReservation, isLoading } =
-    useConferenceRoomReservation();
-
   const toast = useToast();
-
-  const handleEveryDayCheck = () => {
-    setEveryDayChecked(!everyDayChecked);
-  };
+  const [formData, setFormData] = useState(initialValues);
+  const { isLoading, updateReservation } = useConferenceRoomReservation();
 
   useEffect(() => {
     if (reservationData && isEditMode) {
@@ -70,14 +53,19 @@ export default function ConferenceDrawer({
     return <Spinner />;
   }
 
-  const handleSave = () => {
+  const handleSubmit = (values, errors) => {
     onClose();
+    console.log(errors);
     toast({
       position: 'top-right',
       status: 'success',
       variant: 'subtle',
-      description: `You have successfully reserved ${selectedConference} for the date
-      ${selectedDate.format('YYYY/MM/dd')} from ${startTime} to ${endTime}`,
+      description: `You have successfully reserved ${
+        values.conferenceRoom
+      } for the date
+      ${values.selectedDate.format('YYYY/MM/DD')} from ${values.startAt} to ${
+        values.endAt
+      }`,
     });
   };
 
@@ -103,7 +91,8 @@ export default function ConferenceDrawer({
                 if (isEditMode) {
                   await updateReservation(reservationData.id, values);
                 } else {
-                  await createReservation(values);
+                  // await createReservation(values);
+                  await handleSubmit();
                 }
                 onClose();
               } catch (error) {
@@ -111,22 +100,11 @@ export default function ConferenceDrawer({
               }
             }}
           >
-            {({ values, setFieldValue, handleSubmit, isSubmitting }) => (
-              <Form onSubmit={handleSubmit}>
+            {({ values }) => (
+              <Form>
                 <DrawerBody p={0}>
                   <Box p={6}>
                     <PickTimeAndRoom
-                      setSelectedConference={setSelectedConference}
-                      setSelectedDate={setSelectedDate}
-                      selectedDate={selectedDate}
-                      startTime={startTime}
-                      setStartTime={setStartTime}
-                      endTime={endTime}
-                      setEndTime={setEndTime}
-                      startTimes={startTimes}
-                      setStartTimes={setStartTimes}
-                      endTimes={endTimes}
-                      setEndTimes={setEndTimes}
                       isEditMode={isEditMode}
                       formData={formData}
                     />
@@ -134,20 +112,13 @@ export default function ConferenceDrawer({
                   <Divider />
                   <Box p={6}>
                     <CustomSwitch
-                      setSwitchIsChecked={setSwitchIsChecked}
                       switch_text={'Repeat reservation'}
                       isEditMode={isEditMode}
                       formData={formData}
                     />
-                    <GenerateDayOfTheWeek
-                      switchIsChecked={switchIsChecked}
-                      everyDayChecked={everyDayChecked}
-                      setEveryDayChecked={setEveryDayChecked}
-                    />
+                    <GenerateDayOfTheWeek />
                     <Box mt={3}>
                       <CustomCheckBox
-                        handleEveryDayCheck={handleEveryDayCheck}
-                        switchIsChecked={switchIsChecked}
                         checkBox_text={'Every day'}
                         isEditMode={isEditMode}
                         formData={formData}
@@ -156,12 +127,11 @@ export default function ConferenceDrawer({
                     <Text
                       fontSize="md"
                       mt={3}
-                      color={switchIsChecked ? 'gray.700' : 'gray.200'}
+                      color={values.repeatReservation ? 'gray.700' : 'gray.200'}
                     >
                       Ends
                     </Text>
                     <RadioButtonGroup
-                      switchIsChecked={switchIsChecked}
                       f_option="Never"
                       s_option="After"
                       t_option="On specific date"
@@ -178,8 +148,8 @@ export default function ConferenceDrawer({
                   <Button variant="outline" mr={3} onClick={onClose}>
                     Cancel
                   </Button>
-                  <Button colorScheme="purple" onClick={handleSave}>
-                    Save
+                  <Button colorScheme="purple" type="submit">
+                    Submit
                   </Button>
                 </DrawerFooter>
               </Form>
