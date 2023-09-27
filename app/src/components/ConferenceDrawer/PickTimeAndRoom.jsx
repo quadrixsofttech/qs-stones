@@ -80,7 +80,7 @@ const PickTimeAndRoom = ({ isEditMode, formData }) => {
       <Box mb={2} mt={3}>
         Select meeting time:
       </Box>
-      <TimePicker />
+      <TimePicker isEditMode={isEditMode} formData={formData} />
     </>
   );
 };
