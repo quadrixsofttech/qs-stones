@@ -33,63 +33,6 @@ const createReservation = async ({
 
 const getReservations = async (date) => {
   try {
-    // const reservations = await ConferenceRoomReservation.aggregate([
-    //   {
-    //     $match: {
-    //       date: new Date(date),
-    //     },
-    //   },
-    //   {
-    //     $lookup: {
-    //       from: 'users',
-    //       let: { userId: '$userId' },
-    //       pipeline: [
-    //         {
-    //           $match: {
-    //             $expr: { $eq: ['$_id', '$$userId'] },
-    //           },
-    //         },
-    //         {
-    //           $project: {
-    //             _id: 0,
-    //             firstName: 1,
-    //             lastName: 1,
-    //             src: 1,
-    //           },
-    //         },
-    //       ],
-    //       as: 'user',
-    //     },
-    //   },
-    //   {
-    //     $addFields: {
-    //       user: { $arrayElemAt: ['$user', 0] },
-    //     },
-    //   },
-    //   {
-    //     $lookup: {
-    //       from: 'conference-room-overviews',
-    //       let: { conferenceRoom: '$conferenceRoom' },
-    //       pipeline: [
-    //         {
-    //           $match: {
-    //             $expr: { $eq: ['$_id', '$$conferenceRoom'] },
-    //           },
-    //         },
-    //       ],
-    //       as: 'conferenceRoom',
-    //     },
-    //   },
-    //   {
-    //     $addFields: {
-    //       conferenceRoom: { $arrayElemAt: ['$conferenceRoom', 0] },
-    //       column: { $arrayElemAt: ['$conferenceRoom.name', 0] },
-    //       floor: { $arrayElemAt: ['$conferenceRoom.floor', 0] },
-    //       id: { $arrayElemAt: ['$conferenceRoom.id', 0] },
-    //     },
-    //   },
-    // ]);
-
     const reservationsFull = await ConferenceRoomReservation.find({
       date: date,
     })
