@@ -30,6 +30,90 @@ const createReservation = async ({
   }
 };
 
+const createRepeatReservations = async ({
+  conferenceRoom,
+  date,
+  startTime,
+  endTime,
+  title,
+  description,
+  color,
+  userId,
+  repeatReservation,
+  selectedDaysInTheWeek,
+  everyDay,
+  endReservation,
+}) => {
+  try {
+    const reservations = [];
+    const startDate = moment(date);
+    
+    switch (endReservation) {
+      case 'Never':
+        while (startDate.year() === moment().year()) {
+          if (!selectedDaysInTheWeek || selectedDaysInTheWeek.includes(startDate.format('dddd'))) {
+            const reservation = new ConferenceRoomReservation({
+              conferenceRoom,
+              date: startDate.toDate(),
+              startTime,
+              endTime,
+              title,
+              description,
+              color,
+              userId,
+            });
+            reservations.push(reservation);
+          }
+          startDate.add(1, 'weeks');
+        }
+        break;
+
+      case 'After n occurrences':
+        const n = parseInt(repeatReservation, 10); //ove treba value od onog chakrinog inputa
+        for (let i = 0; i < n; i++) {
+          const reservation = new ConferenceRoomReservation({
+            conferenceRoom,
+            date: startDate.toDate(),
+            startTime,
+            endTime,
+            title,
+            description,
+            color,
+            userId,
+          });
+          reservations.push(reservation);
+          startDate.add(1, 'weeks');
+        }
+        break;
+
+      case 'On selected date':
+        const endDate = moment(endReservationDate);
+        while (startDate.isSameOrBefore(endDate)) {
+          if (!selectedDaysInTheWeek || selectedDaysInTheWeek.includes(startDate.format('dddd'))) {
+            const reservation = new ConferenceRoomReservation({
+              conferenceRoom,
+              date: startDate.toDate(),
+              startTime,
+              endTime,
+              title,
+              description,
+              color,
+              userId,
+            });
+            reservations.push(reservation);
+          }
+          startDate.add(1, 'weeks');
+        }
+        break;
+    }
+
+    const savedReservations = await ConferenceRoomReservation.insertMany(reservations);
+    return savedReservations;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
 const getReservations = async (date) => {
   try {
     const reservations = await ConferenceRoomReservation.aggregate([

@@ -18,6 +18,21 @@ const ConferenceRoomReservationSchema = new Schema({
     type: String,
     required: true,
   },
+  repeatReservation: {
+    type: Boolean,
+    default: false,
+  },
+  selectedDaysInTheWeek: {
+    type: String,
+  },
+  everyDay: {
+    type: Boolean,
+    default: false,
+  },
+  endReservation: {
+    type: String,
+    enum: ['Never', 'After n occurences', 'On selected date'],
+  },
   title: {
     type: String,
     required: true,
