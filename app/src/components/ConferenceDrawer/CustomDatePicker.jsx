@@ -9,7 +9,6 @@ export default function CustomDatePicker({ name, isEditMode, formData }) {
   const datePickerRef = React.useRef(null);
   const { values, setFieldValue } = useFormikContext();
 
-  console.log(values.selectedDate);
 
   return (
     <>
@@ -22,7 +21,7 @@ export default function CustomDatePicker({ name, isEditMode, formData }) {
         value={
           isEditMode
             ? formData.date
-            : moment(values.selectedDate)
+            : values.selectedDate
         }
         onChange={(value) => setFieldValue('selectedDate', value)}
       />

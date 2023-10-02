@@ -24,6 +24,7 @@ import CardInfo from './CardInfo';
 import { reservationSchema, initialValues } from './formikConfig';
 import { useConferenceRoomReservation } from '../../hooks/useConferenceRoomReservation';
 import { useEffect, useState } from 'react';
+import moment from 'moment';
 
 export default function ConferenceDrawer({
   btnRef,
@@ -45,6 +46,7 @@ export default function ConferenceDrawer({
         endTime: reservationData.endTime,
         column: reservationData.column,
         date: reservationData.date,
+        selectedDate: moment()
       });
     }
   }, [reservationData, isEditMode]);

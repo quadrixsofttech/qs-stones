@@ -15,8 +15,8 @@ const TimePicker = ({ isEditMode, formData, setFormData }) => {
   // );
   // console.log(isEditMode);
   // console.log('values', values.startTime, values.endTime);
-  console.log('FormData:', formData);
-  console.log('Values:', values);
+  // console.log('FormData:', formData);
+  // console.log('Values:', values.selectedDate);
   useEffect(() => {
     const start = moment(values.selectedDate).startOf('day').add(8, 'hours');
     const end = moment(values.selectedDate).startOf('day').add(17, 'hours');
@@ -99,11 +99,14 @@ const TimePicker = ({ isEditMode, formData, setFormData }) => {
             value={isEditMode ? formData.startTime : values.startTime}
             onChange={handleStartTimeSelection}
           >
-            {Object.values(values.startAtArray).map((time) => (
-              <option key={time} value={time}>
-                {time}
-              </option>
-            ))}
+            {values.startAtArray &&
+              Array.isArray(values.startAtArray) &&
+              values.startAtArray.length > 0 &&
+              values.startAtArray.map((time) => (
+                <option key={time} value={time}>
+                  {time}
+                </option>
+              ))}
           </Select>
         )}
       </Field>
@@ -115,11 +118,14 @@ const TimePicker = ({ isEditMode, formData, setFormData }) => {
             value={isEditMode ? formData.endTime : values.endTime}
             onChange={handleEndTimeSelection}
           >
-            {Object.values(values.endAtArray).map((time) => (
-              <option key={time} value={time}>
-                {time}
-              </option>
-            ))}
+            {values.startAtArray &&
+              Array.isArray(values.startAtArray) &&
+              values.startAtArray.length > 0 &&
+              values.startAtArray.map((time) => (
+                <option key={time} value={time}>
+                  {time}
+                </option>
+              ))}
           </Select>
         )}
       </Field>
