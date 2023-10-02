@@ -5,7 +5,7 @@ import CustomDatePicker from './CustomDatePicker';
 import TimePicker from './CustomTimePicker';
 import useConference from '../../hooks/useConference';
 
-const PickTimeAndRoom = ({ isEditMode, formData }) => {
+const PickTimeAndRoom = ({ isEditMode, formData, setFormData }) => {
   const { conferenceRooms, conferenceLoading } = useConference();
 
   const { values, setFieldValue } = useFormikContext();
@@ -80,7 +80,11 @@ const PickTimeAndRoom = ({ isEditMode, formData }) => {
       <Box mb={2} mt={3}>
         Select meeting time:
       </Box>
-      <TimePicker isEditMode={isEditMode} formData={formData} />
+      <TimePicker
+        isEditMode={isEditMode}
+        formData={formData}
+        setFormData={setFormData}
+      />
     </>
   );
 };

@@ -21,8 +21,8 @@ export default function CustomDatePicker({ name, isEditMode, formData }) {
         format={'YYYY-MM-DD'}
         value={
           isEditMode
-            ? formData && formData.date
-            : values.selectedDate && moment(values.selectedDate)
+            ? formData.date
+            : moment(values.selectedDate)
         }
         onChange={(value) => setFieldValue('selectedDate', value)}
       />

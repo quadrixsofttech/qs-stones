@@ -109,6 +109,7 @@ export default function ConferenceDrawer({
                     <PickTimeAndRoom
                       isEditMode={isEditMode}
                       formData={formData}
+                      setFormData={setFormData}
                     />
                   </Box>
                   <Divider />

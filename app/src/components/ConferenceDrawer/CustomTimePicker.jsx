@@ -3,7 +3,7 @@ import { Flex, Select } from '@chakra-ui/react';
 import moment from 'moment';
 import { ErrorMessage, Field, useFormikContext } from 'formik';
 
-const TimePicker = ({ isEditMode, formData }) => {
+const TimePicker = ({ isEditMode, formData, setFormData }) => {
   const { values, setFieldValue } = useFormikContext();
 
   // console.log(formData);
@@ -24,7 +24,7 @@ const TimePicker = ({ isEditMode, formData }) => {
     if (isEditMode) {
       const startAtArray = calculateTimes(start, end, 15);
       setFieldValue('startAtArray', startAtArray);
-      const endAtArray = calculateTimes(start,end,15);
+      const endAtArray = calculateTimes(start, end, 15);
       setFieldValue('endAtArray', endAtArray);
     } else {
       if (
@@ -49,24 +49,24 @@ const TimePicker = ({ isEditMode, formData }) => {
 
   useEffect(() => {
     if (values.startTime) {
-        const startTimeMoment = moment(values.startTime, 'HH:mm');
+      const startTimeMoment = moment(values.startTime, 'HH:mm');
 
-        const nextHour = moment(startTimeMoment).startOf('hour').add(1, 'hour');
-        const timesWith15MinIncrement = calculateTimes(
-          startTimeMoment,
-          nextHour,
-          15
-        );
+      const nextHour = moment(startTimeMoment).startOf('hour').add(1, 'hour');
+      const timesWith15MinIncrement = calculateTimes(
+        startTimeMoment,
+        nextHour,
+        15
+      );
 
-        const end = moment(startTimeMoment)
-          .startOf('day')
-          .add(17, 'hours')
-          .add(0, 'minutes');
-        const timesAfterStartTime = calculateTimes(nextHour, end, 15);
+      const end = moment(startTimeMoment)
+        .startOf('day')
+        .add(17, 'hours')
+        .add(0, 'minutes');
+      const timesAfterStartTime = calculateTimes(nextHour, end, 15);
 
-        const times = [...timesWith15MinIncrement, ...timesAfterStartTime];
-        const uniqueTimes = [...new Set(times)];
-        setFieldValue('endAtArray', uniqueTimes.slice(1));
+      const times = [...timesWith15MinIncrement, ...timesAfterStartTime];
+      const uniqueTimes = [...new Set(times)];
+      setFieldValue('endAtArray', uniqueTimes.slice(1));
     }
   }, [values.startTime, setFieldValue, isEditMode, values.selectedDate]);
 
@@ -82,10 +82,12 @@ const TimePicker = ({ isEditMode, formData }) => {
 
   const handleStartTimeSelection = (e) => {
     setFieldValue('startTime', e.target.value);
+    setFormData({ ...formData, startTime: e.target.value });
   };
 
   const handleEndTimeSelection = (e) => {
     setFieldValue('endTime', e.target.value);
+    setFormData({ ...formData, endTime: e.target.value });
   };
 
   return (
