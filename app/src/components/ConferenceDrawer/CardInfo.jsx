@@ -2,9 +2,14 @@ import { Input, Text, Textarea } from '@chakra-ui/react';
 import { ErrorMessage, Field, useFormikContext } from 'formik';
 import GenerateMarkerColor from './GenerateMarkerColor/GenerateMarkerColor';
 
-const CardInfo = ({ isEditMode, formData }) => {
+const CardInfo = ({ isEditMode, formData, setFormData }) => {
   const { values } = useFormikContext();
 
+  const handleTitleChange = (e) => {
+    setFormData({ ...formData, title: e.target.value });
+  };
+
+  console.log(formData);
   return (
     <>
       <Text fontSize="md" mb={1} fontWeight={'400'}>
@@ -16,6 +21,7 @@ const CardInfo = ({ isEditMode, formData }) => {
             {...field}
             placeholder="Please enter a title..."
             value={isEditMode ? formData.title : values.title}
+            onChange={handleTitleChange}
           />
         )}
       </Field>

@@ -10,6 +10,9 @@ const PickTimeAndRoom = ({ isEditMode, formData, setFormData }) => {
 
   const { values, setFieldValue } = useFormikContext();
 
+  console.log('VALUES:', values);
+  console.log(formData);
+
   if (conferenceLoading || !conferenceRooms) {
     return <Spinner />;
   }

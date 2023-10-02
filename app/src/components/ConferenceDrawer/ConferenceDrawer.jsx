@@ -46,7 +46,7 @@ export default function ConferenceDrawer({
         endTime: reservationData.endTime,
         column: reservationData.column,
         date: reservationData.date,
-        selectedDate: moment()
+        selectedDate: moment(),
       });
     }
   }, [reservationData, isEditMode]);
@@ -144,7 +144,11 @@ export default function ConferenceDrawer({
                   </Box>
                   <Divider />
                   <Box p={6}>
-                    <CardInfo formData={formData} isEditMode={isEditMode} />
+                    <CardInfo
+                      formData={formData}
+                      isEditMode={isEditMode}
+                      setFormData={setFormData}
+                    />
                   </Box>
                 </DrawerBody>
 
