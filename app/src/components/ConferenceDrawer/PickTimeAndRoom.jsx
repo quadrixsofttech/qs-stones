@@ -54,7 +54,7 @@ const PickTimeAndRoom = ({ isEditMode, formData }) => {
           <Select
             size="md"
             {...field}
-            value={isEditMode ? formData.column : values.conferenceRoom}
+            value={isEditMode ? formData.column : values.column}
             onChange={(e) => {
               field.onChange(e);
               setFieldValue('conferenceRoom', e.target.value);

@@ -26,7 +26,7 @@ const CardInfo = ({ isEditMode, formData }) => {
       <Textarea
         placeholder="Please enter a description..."
         h={'20'}
-        value={isEditMode ? formData.description : values.description}
+        defaultValue={isEditMode ? formData.description : values.description}
         resize="none"
       />
 
