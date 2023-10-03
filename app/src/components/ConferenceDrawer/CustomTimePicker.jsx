@@ -3,20 +3,9 @@ import { Flex, Select } from '@chakra-ui/react';
 import moment from 'moment';
 import { ErrorMessage, Field, useFormikContext } from 'formik';
 
-const TimePicker = ({ isEditMode, formData, setFormData }) => {
+const TimePicker = ({ isEditMode }) => {
   const { values, setFieldValue } = useFormikContext();
 
-  // console.log(formData);
-
-  // console.log(
-  //   'Form datastart time and end time',
-  //   formData.startTime,
-  //   formData.endTime
-  // );
-  // console.log(isEditMode);
-  // console.log('values', values.startTime, values.endTime);
-  // console.log('FormData:', formData);
-  // console.log('Values:', values.selectedDate);
   useEffect(() => {
     const start = moment(values.selectedDate).startOf('day').add(8, 'hours');
     const end = moment(values.selectedDate).startOf('day').add(17, 'hours');
@@ -43,6 +32,9 @@ const TimePicker = ({ isEditMode, formData, setFormData }) => {
           moment(time, 'HH:mm').isSameOrAfter(currentTime, 'minute')
         );
         setFieldValue('startAtArray', nearestTimes);
+
+        setFieldValue('startTime', '');
+        setFieldValue('endTime', '');
       }
     }
   }, [values.selectedDate, setFieldValue, isEditMode]);
@@ -81,13 +73,13 @@ const TimePicker = ({ isEditMode, formData, setFormData }) => {
   };
 
   const handleStartTimeSelection = (e) => {
-    setFieldValue('startTime', e.target.value);
-    setFormData({ ...formData, startTime: e.target.value });
+    const selectedStartTime = e.target.value;
+    setFieldValue('startTime', selectedStartTime);
   };
 
   const handleEndTimeSelection = (e) => {
-    setFieldValue('endTime', e.target.value);
-    setFormData({ ...formData, endTime: e.target.value });
+    const selectedEndTime = e.target.value;
+    setFieldValue('endTime', selectedEndTime);
   };
 
   return (
@@ -96,7 +88,7 @@ const TimePicker = ({ isEditMode, formData, setFormData }) => {
         {({ field }) => (
           <Select
             placeholder="Select Start Time"
-            value={isEditMode ? formData.startTime : values.startTime}
+            value={isEditMode ? values.startTime : ''}
             onChange={handleStartTimeSelection}
           >
             {values.startAtArray &&
@@ -115,7 +107,7 @@ const TimePicker = ({ isEditMode, formData, setFormData }) => {
         {({ field }) => (
           <Select
             placeholder="Select End Time"
-            value={isEditMode ? formData.endTime : values.endTime}
+            value={isEditMode ? values.endTime : ''}
             onChange={handleEndTimeSelection}
           >
             {values.startAtArray &&

@@ -25,7 +25,7 @@ const Conference = () => {
   const [modalData, setModalData] = useState(null);
   const [date, setDate] = useState(moment());
   const [floor, setFloor] = useState('Upper Floor');
-  const [reservationData, setReservationData] = useState(null);
+  const [reservationData, setReservationData] = useState('');
   const [isEditMode, setIsEditMode] = useState(false);
 
   const { conferenceRooms, conferenceLoading, conferenceError } =

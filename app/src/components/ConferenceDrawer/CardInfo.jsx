@@ -2,14 +2,17 @@ import { Input, Text, Textarea } from '@chakra-ui/react';
 import { ErrorMessage, Field, useFormikContext } from 'formik';
 import GenerateMarkerColor from './GenerateMarkerColor/GenerateMarkerColor';
 
-const CardInfo = ({ isEditMode, formData, setFormData }) => {
-  const { values } = useFormikContext();
+const CardInfo = ({ isEditMode }) => {
+  const { values, setFieldValue } = useFormikContext();
 
   const handleTitleChange = (e) => {
-    setFormData({ ...formData, title: e.target.value });
+    setFieldValue('title', e.target.value);
   };
 
-  console.log(formData);
+  const handleDescriptionChange = (e) => {
+    setFieldValue('description', e.target.value);
+  };
+
   return (
     <>
       <Text fontSize="md" mb={1} fontWeight={'400'}>
@@ -20,7 +23,7 @@ const CardInfo = ({ isEditMode, formData, setFormData }) => {
           <Input
             {...field}
             placeholder="Please enter a title..."
-            value={isEditMode ? formData.title : values.title}
+            defaultValue={isEditMode ? values.title : ''}
             onChange={handleTitleChange}
           />
         )}
@@ -32,15 +35,14 @@ const CardInfo = ({ isEditMode, formData, setFormData }) => {
       <Textarea
         placeholder="Please enter a description..."
         h={'20'}
-        defaultValue={isEditMode ? formData.description : values.description}
+        defaultValue={isEditMode ? values.description : ''}
+        onChange={handleDescriptionChange}
         resize="none"
       />
-
       <Text mt={3} fontSize="md">
         Choose marker color
       </Text>
       <Field name="markerColor" component={GenerateMarkerColor} />
-      <ErrorMessage name="markerColor" component="div" className="error" />
     </>
   );
 };

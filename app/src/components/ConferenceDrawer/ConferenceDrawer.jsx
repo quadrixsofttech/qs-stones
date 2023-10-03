@@ -23,8 +23,6 @@ import CustomCheckBox from './CustomCheckBox';
 import CardInfo from './CardInfo';
 import { reservationSchema, initialValues } from './formikConfig';
 import { useConferenceRoomReservation } from '../../hooks/useConferenceRoomReservation';
-import { useEffect, useState } from 'react';
-import moment from 'moment';
 
 export default function ConferenceDrawer({
   btnRef,
@@ -34,22 +32,8 @@ export default function ConferenceDrawer({
   reservationData,
 }) {
   const toast = useToast();
-  const [formData, setFormData] = useState(initialValues);
-  const { isLoading, updateReservation } = useConferenceRoomReservation();
 
-  useEffect(() => {
-    if (reservationData && isEditMode) {
-      setFormData({
-        title: reservationData.title,
-        description: reservationData.description,
-        startTime: reservationData.startTime,
-        endTime: reservationData.endTime,
-        column: reservationData.column,
-        date: reservationData.date,
-        selectedDate: moment(),
-      });
-    }
-  }, [reservationData, isEditMode]);
+  const { isLoading, updateReservation } = useConferenceRoomReservation();
 
   if (isLoading) {
     return <Spinner />;
@@ -65,8 +49,8 @@ export default function ConferenceDrawer({
       description: `You have successfully reserved ${
         values.conferenceRoom
       } for the date
-      ${values.selectedDate.format('YYYY/MM/DD')} from ${values.startAt} to ${
-        values.endAt
+      ${values.selectedDate.format('YYYY/MM/DD')} from ${values.startTime} to ${
+        values.endTime
       }`,
     });
   };
@@ -77,7 +61,7 @@ export default function ConferenceDrawer({
         await updateReservation(reservationData.id, values);
       } else {
         // await createReservation(values);
-        await handleSubmit();
+        handleSubmit();
       }
       onClose();
     } catch (error) {
@@ -100,7 +84,7 @@ export default function ConferenceDrawer({
           <DrawerHeader>Reserve Conference Room</DrawerHeader>
           <Divider />
           <Formik
-            initialValues={isEditMode ? initialValues : formData}
+            initialValues={initialValues}
             validationSchema={reservationSchema}
             onSubmit={handleFormikOnSubmit}
           >
@@ -110,8 +94,7 @@ export default function ConferenceDrawer({
                   <Box p={6}>
                     <PickTimeAndRoom
                       isEditMode={isEditMode}
-                      formData={formData}
-                      setFormData={setFormData}
+                      reservationData={reservationData}
                     />
                   </Box>
                   <Divider />
@@ -119,14 +102,12 @@ export default function ConferenceDrawer({
                     <CustomSwitch
                       switch_text={'Repeat reservation'}
                       isEditMode={isEditMode}
-                      formData={formData}
                     />
                     <GenerateDayOfTheWeek />
                     <Box mt={3}>
                       <CustomCheckBox
                         checkBox_text={'Every day'}
                         isEditMode={isEditMode}
-                        formData={formData}
                       />
                     </Box>
                     <Text
@@ -144,11 +125,7 @@ export default function ConferenceDrawer({
                   </Box>
                   <Divider />
                   <Box p={6}>
-                    <CardInfo
-                      formData={formData}
-                      isEditMode={isEditMode}
-                      setFormData={setFormData}
-                    />
+                    <CardInfo isEditMode={isEditMode} />
                   </Box>
                 </DrawerBody>
 
