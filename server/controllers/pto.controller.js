@@ -28,10 +28,12 @@ const updatePaidTimeOff = async (req, res) => {
     const updatedPTO = await PtoService.updatePTO(id, { status });
 
     if (!updatedPTO) {
-      return res.status(404).json({ success: false, message: 'PTO not found' });
+      return res
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ success: false, message: 'PTO not found' });
     }
     res
-      .status(200)
+      .status(StatusCodes.OK)
       .json({ success: true, message: 'PTO updated successfully', updatedPTO });
   } catch (err) {
     res
