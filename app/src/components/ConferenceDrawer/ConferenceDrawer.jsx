@@ -97,32 +97,38 @@ export default function ConferenceDrawer({
                       reservationData={reservationData}
                     />
                   </Box>
-                  <Divider />
-                  <Box p={6}>
-                    <CustomSwitch
-                      switch_text={'Repeat reservation'}
-                      isEditMode={isEditMode}
-                    />
-                    <GenerateDayOfTheWeek />
-                    <Box mt={3}>
-                      <CustomCheckBox
-                        checkBox_text={'Every day'}
-                        isEditMode={isEditMode}
-                      />
-                    </Box>
-                    <Text
-                      fontSize="md"
-                      mt={3}
-                      color={values.repeatReservation ? 'gray.700' : 'gray.200'}
-                    >
-                      Ends
-                    </Text>
-                    <RadioButtonGroup
-                      f_option="Never"
-                      s_option="After"
-                      t_option="On specific date"
-                    />
-                  </Box>
+                  {!isEditMode && (
+                    <>
+                      <Divider />
+                      <Box p={6}>
+                        <CustomSwitch
+                          switch_text={'Repeat reservation'}
+                          isEditMode={isEditMode}
+                        />
+                        <GenerateDayOfTheWeek />
+                        <Box mt={3}>
+                          <CustomCheckBox
+                            checkBox_text={'Every day'}
+                            isEditMode={isEditMode}
+                          />
+                        </Box>
+                        <Text
+                          fontSize="md"
+                          mt={3}
+                          color={
+                            values.repeatReservation ? 'gray.700' : 'gray.200'
+                          }
+                        >
+                          Ends
+                        </Text>
+                        <RadioButtonGroup
+                          f_option="Never"
+                          s_option="After"
+                          t_option="On specific date"
+                        />
+                      </Box>
+                    </>
+                  )}
                   <Divider />
                   <Box p={6}>
                     <CardInfo isEditMode={isEditMode} />

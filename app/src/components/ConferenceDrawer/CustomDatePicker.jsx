@@ -17,7 +17,11 @@ export default function CustomDatePicker({ name, isEditMode }) {
         ref={datePickerRef}
         className="custom-calendar"
         format={'YYYY-MM-DD'}
-        value={isEditMode ? values.selectedDate : new moment().format('YYYY-MM-DD')}
+        value={
+          isEditMode
+            ? moment(values.selectedDate).format('YYYY-MM-DD')
+            : new moment().format('YYYY-MM-DD')
+        }
         onChange={(value) => setFieldValue('selectedDate', value)}
       />
       <Icon

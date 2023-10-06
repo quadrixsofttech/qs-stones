@@ -51,7 +51,7 @@ const PickTimeAndRoom = ({
     return <Spinner />;
   }
 
-  console.log(values);
+  // console.log(values);
 
   const floors = ['Upper Floor', 'Lower Floor'];
 
@@ -59,7 +59,7 @@ const PickTimeAndRoom = ({
     setFieldValue('floor', e.target.value);
   };
 
-  console.log(values);
+  // console.log(values);
 
   const filteredConferenceRooms =
     values.floor === 'Upper Floor'
@@ -116,6 +116,7 @@ const PickTimeAndRoom = ({
       </Box>
       <CustomDatePicker
         name="date-picker"
+        isEditMode={isEditMode}
       />
       <Box mb={2} mt={3}>
         Select meeting time:
