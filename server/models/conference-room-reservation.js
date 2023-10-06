@@ -18,10 +18,6 @@ const ConferenceRoomReservationSchema = new Schema({
     type: String,
     required: true,
   },
-  repeatReservation: {
-    type: Boolean,
-    default: false,
-  },
   selectedDaysInTheWeek: {
     type: String,
   },

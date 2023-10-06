@@ -1,4 +1,5 @@
 const ConferenceRoomReservation = require('../../models/conference-room-reservation');
+const MeetingEnds = require('../../constants/repeatReservation');
 
 const createReservation = async ({
   enabled,
@@ -39,22 +40,23 @@ const createRepeatReservations = async ({
   description,
   color,
   userId,
-  repeatReservation,
   selectedDaysInTheWeek,
-  everyDay,
   endReservation,
 }) => {
   try {
     const reservations = [];
     const startDate = moment(date);
-    
+
     switch (endReservation) {
-      case 'Never':
+      case MeetingEnds.NEVER:
         while (startDate.year() === moment().year()) {
-          if (!selectedDaysInTheWeek || selectedDaysInTheWeek.includes(startDate.format('dddd'))) {
+          if (
+            !selectedDaysInTheWeek ||
+            selectedDaysInTheWeek.includes(startDate.format('dddd'))
+          ) {
             const reservation = new ConferenceRoomReservation({
               conferenceRoom,
-              date: startDate.toDate(),
+              date: moment(startDate),
               startTime,
               endTime,
               title,
@@ -68,14 +70,15 @@ const createRepeatReservations = async ({
         }
         break;
 
-      case 'After n occurrences':
-        const n = parseInt(repeatReservation, 10); //ove treba value od onog chakrinog inputa
+      case MeetingEnds.AFTER_N_OCCURENCES:
+        const n = parseInt(repeatReservation, 10); //ovo se vraca tako sto kada saljes axios request na front posalji kroz body value
         for (let i = 0; i < n; i++) {
           const reservation = new ConferenceRoomReservation({
             conferenceRoom,
-            date: startDate.toDate(),
+            date: moment(startDate),
             startTime,
             endTime,
+            selectedDaysInTheWeek,
             title,
             description,
             color,
@@ -86,15 +89,19 @@ const createRepeatReservations = async ({
         }
         break;
 
-      case 'On selected date':
-        const endDate = moment(endReservationDate);
+      case MeetingEnds.ON_SPECFIC_DATE:
+        const endDate = moment(endReservation);
         while (startDate.isSameOrBefore(endDate)) {
-          if (!selectedDaysInTheWeek || selectedDaysInTheWeek.includes(startDate.format('dddd'))) {
+          if (
+            !selectedDaysInTheWeek ||
+            selectedDaysInTheWeek.includes(startDate.format('dddd'))
+          ) {
             const reservation = new ConferenceRoomReservation({
               conferenceRoom,
               date: startDate.toDate(),
               startTime,
               endTime,
+              selectedDaysInTheWeek,
               title,
               description,
               color,
@@ -107,7 +114,9 @@ const createRepeatReservations = async ({
         break;
     }
 
-    const savedReservations = await ConferenceRoomReservation.insertMany(reservations);
+    const savedReservations = await ConferenceRoomReservation.insertMany(
+      reservations
+    );
     return savedReservations;
   } catch (err) {
     throw new Error(err);

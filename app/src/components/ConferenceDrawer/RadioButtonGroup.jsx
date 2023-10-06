@@ -21,10 +21,12 @@ export default function RadioButtonGroup({ f_option, s_option, t_option }) {
   const datePickerRef = React.useRef(null);
   const [meetingRepetition, setMeetingRepetiotion] = React.useState('never');
   const { values } = useFormikContext();
+  const [value, setValue] = React.useState('1');
 
   const handleRadioChange = (newValue) => {
     setMeetingRepetiotion(newValue);
   };
+
 
   return (
     <RadioGroup onChange={handleRadioChange} value={meetingRepetition}>
@@ -50,14 +52,21 @@ export default function RadioButtonGroup({ f_option, s_option, t_option }) {
               maxW={16}
               defaultValue={1}
               min={1}
+              value={value}
               max={40}
               clampValueOnBlur={false}
               isDisabled={meetingRepetition === 'after' ? false : true}
+              onChange={(value) => setValue(value)}
             >
+              {console.log(value)}
               <NumberInputField />
               <NumberInputStepper>
-                <NumberIncrementStepper />
-                <NumberDecrementStepper />
+                <NumberIncrementStepper
+                  onChange={(newValue) => setValue(newValue + 1)}
+                />
+                <NumberDecrementStepper
+                  onChange={(newValue) => setValue(newValue - 1)}
+                />
               </NumberInputStepper>
             </NumberInput>
             <Text fontSize="sm">occurences</Text>
@@ -129,3 +138,4 @@ export default function RadioButtonGroup({ f_option, s_option, t_option }) {
     </RadioGroup>
   );
 }
+
