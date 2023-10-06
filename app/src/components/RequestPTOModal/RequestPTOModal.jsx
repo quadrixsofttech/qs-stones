@@ -86,11 +86,13 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
           'You have submitted a request to the Admin for scheduling vacation and remote work',
         position: 'top-right',
         status: 'success',
-        isClosable: false,
+        isClosable: true,
         colorScheme: 'green',
         variant: 'subtle',
       });
-
+      setRemoteDates([]);
+      setVacationDates([]);
+      setIsCurrentPageRemote(true);
       onClose();
     } catch (err) {
       console.log(err);
