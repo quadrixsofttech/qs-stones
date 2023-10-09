@@ -25,6 +25,8 @@ const Conference = () => {
   const [modalData, setModalData] = useState(null);
   const [date, setDate] = useState(moment());
   const [floor, setFloor] = useState('Upper Floor');
+  const [reservationData, setReservationData] = useState('');
+  const [isEditMode, setIsEditMode] = useState(false);
 
   const { conferenceRooms, conferenceLoading, conferenceError } =
     useConference();
@@ -36,12 +38,11 @@ const Conference = () => {
     reservationsLoading,
     reservationsError,
   } = useReservations(date);
+  const btnRef = React.useRef();
 
   useEffect(() => {
     refetchReservations();
   }, [date, refetchReservations]);
-
-  const btnRef = React.useRef();
 
   if (
     reservationsLoading ||
@@ -59,12 +60,15 @@ const Conference = () => {
     );
   }
 
-  const selectedFloorConferenceRooms = conferenceRooms.filter(
+  const selectedFloorConferenceRooms = conferenceRooms?.filter(
     (x) => x.floor === floor
   );
 
   const handleEdit = (id) => {
-    console.log('Edit' + id);
+    const reservation = reservationsData?.find((room) => room._id === id);
+    setIsEditMode(true);
+    setReservationData(reservation);
+    drawerDisclosure.onOpen();
   };
   const handleDelete = (id) => {
     setIdToDelete(id);
@@ -119,13 +123,18 @@ const Conference = () => {
       <Flex
         {...styles.buttonModal}
         ref={btnRef}
-        onClick={drawerDisclosure.onOpen}
+        onClick={() => {
+          setIsEditMode(false);
+          drawerDisclosure.onOpen();
+        }}
       >
         <Flex mb={'1'}>+</Flex>
         <ConferenceDrawer
           btnRef={btnRef}
           isOpen={drawerDisclosure.isOpen}
           onClose={drawerDisclosure.onClose}
+          reservationData={reservationData}
+          isEditMode={isEditMode}
         />
       </Flex>
     </DashboardLayout>

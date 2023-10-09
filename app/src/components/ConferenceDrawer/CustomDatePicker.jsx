@@ -5,9 +5,7 @@ import React from 'react';
 import moment from 'moment';
 import { useFormikContext } from 'formik';
 
-export default function CustomDatePicker({
-  name,
-}) {
+export default function CustomDatePicker({ name, isEditMode }) {
   const datePickerRef = React.useRef(null);
   const { values, setFieldValue } = useFormikContext();
 
@@ -19,7 +17,11 @@ export default function CustomDatePicker({
         ref={datePickerRef}
         className="custom-calendar"
         format={'YYYY-MM-DD'}
-        value={values.selectedDate.format('YYYY-MM-DD')}
+        value={
+          isEditMode
+            ? moment(values.selectedDate).format('YYYY-MM-DD')
+            : new moment().format('YYYY-MM-DD')
+        }
         onChange={(value) => setFieldValue('selectedDate', value)}
       />
       <Icon
