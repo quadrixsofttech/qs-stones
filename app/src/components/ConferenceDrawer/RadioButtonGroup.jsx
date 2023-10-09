@@ -58,7 +58,6 @@ export default function RadioButtonGroup({ f_option, s_option, t_option }) {
               isDisabled={meetingRepetition === 'after' ? false : true}
               onChange={(value) => setValue(value)}
             >
-              {console.log(value)}
               <NumberInputField />
               <NumberInputStepper>
                 <NumberIncrementStepper

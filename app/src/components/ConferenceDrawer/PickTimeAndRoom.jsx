@@ -5,10 +5,7 @@ import CustomDatePicker from './CustomDatePicker';
 import TimePicker from './CustomTimePicker';
 import useConference from '../../hooks/useConference';
 
-const PickTimeAndRoom = ({
-  isEditMode,
-  reservationData,
-}) => {
+const PickTimeAndRoom = ({ isEditMode, reservationData }) => {
   const { conferenceRooms, conferenceLoading } = useConference();
 
   const { values, setFieldValue } = useFormikContext();
@@ -18,6 +15,7 @@ const PickTimeAndRoom = ({
     description,
     startTime,
     endTime,
+    // selectedDaysInTheWeek,
     column,
     floor,
     date,
@@ -34,6 +32,7 @@ const PickTimeAndRoom = ({
       setFieldValue('title', title);
       setFieldValue('description', description);
       setFieldValue('markerColor', markerColor);
+      // setFieldValue('selectedDaysInTheWeek', selectedDaysInTheWeek);
     }
   }, [
     isEditMode,
@@ -46,6 +45,7 @@ const PickTimeAndRoom = ({
     description,
     markerColor,
     setFieldValue,
+    // selectedDaysInTheWeek,
   ]);
   if (conferenceLoading || !conferenceRooms) {
     return <Spinner />;
@@ -114,10 +114,7 @@ const PickTimeAndRoom = ({
       <Box mb={2} mt={3}>
         Select date:
       </Box>
-      <CustomDatePicker
-        name="date-picker"
-        isEditMode={isEditMode}
-      />
+      <CustomDatePicker name="date-picker" isEditMode={isEditMode} />
       <Box mb={2} mt={3}>
         Select meeting time:
       </Box>

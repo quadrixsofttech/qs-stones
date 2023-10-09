@@ -41,7 +41,7 @@ const createRepeatReservations = async ({
   color,
   userId,
   selectedDaysInTheWeek,
-  endReservation,
+  endReservation, 
 }) => {
   try {
     const reservations = [];
@@ -213,6 +213,7 @@ const deleteReservation = async (id) => {
 
 module.exports = {
   createReservation,
+  createRepeatReservations,
   getReservations,
   updateReservation,
   deleteReservation,

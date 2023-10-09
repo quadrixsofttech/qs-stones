@@ -3,7 +3,7 @@ import { Field, useFormikContext } from 'formik';
 
 const CustomCheckBox = ({ checkBox_text, isEditMode }) => {
   const { values, setFieldValue } = useFormikContext();
-
+  
   return (
     <>
       <Field type="checkbox" name="everyDay">
@@ -11,7 +11,7 @@ const CustomCheckBox = ({ checkBox_text, isEditMode }) => {
           <Checkbox
             colorScheme="purple"
             isDisabled={values.repeatReservation ? false : true}
-            isChecked={isEditMode ? values.everyDay : false}
+            isChecked={values.everyDay ? true : false}
             onChange={() => {
               const checked = values.everyDay;
               setFieldValue('everyDay', !checked);
