@@ -1,11 +1,11 @@
 import React from 'react';
 import DashboardLayout from '../../layout/DashboardLayout';
-import { Box } from '@chakra-ui/react';
+import ListOfEmployees from '../../components/ListOfEmployees/ListOfEmployees';
 
 const AdminPanel = () => {
   return (
     <DashboardLayout>
-      <Box>Admin Panel</Box>
+      <ListOfEmployees />
     </DashboardLayout>
   );
 };
