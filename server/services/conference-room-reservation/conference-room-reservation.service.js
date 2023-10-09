@@ -59,6 +59,7 @@ const createRepeatReservations = async ({
               date: moment(startDate),
               startTime,
               endTime,
+              selectedDaysInTheWeek,
               title,
               description,
               color,
@@ -98,7 +99,7 @@ const createRepeatReservations = async ({
           ) {
             const reservation = new ConferenceRoomReservation({
               conferenceRoom,
-              date: startDate.toDate(),
+              date: moment(startDate),
               startTime,
               endTime,
               selectedDaysInTheWeek,
