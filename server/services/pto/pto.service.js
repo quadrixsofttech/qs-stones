@@ -87,28 +87,22 @@ const createPTO = async ({
     }, []);
     const user = await User.findById(userId);
 
-    let maxDate = new Date(days[0]);
+    let maxDate = moment(days[0]);
 
     for (let date of days) {
-      const currentDate = new Date(date);
-      if (currentDate > maxDate) {
+      const currentDate = moment(date);
+      if (currentDate.isAfter(maxDate)) {
         maxDate = currentDate;
       }
     }
     var totalNumberOfVacationDays;
-    if (maxDate.getMonth() >= 0 && maxDate.getMonth() > 6) {
-      let currentYear = user.vacation.find(
-        (v) => v.year === maxDate.getFullYear()
-      );
-      let lastYear = user.vacation.find(
-        (v) => v.year === maxDate.getFullYear() - 1
-      );
+    if (maxDate.month() >= 0 && maxDate.month() < 6) {
+      let currentYear = user.vacation.find((v) => v.year === maxDate.year());
+      let lastYear = user.vacation.find((v) => v.year === maxDate.year() - 1);
       totalNumberOfVacationDays =
         (currentYear?.vacationDays ?? 0) + (lastYear?.vacationDays ?? 0);
     } else {
-      let currentYear = user.vacation.find(
-        (v) => v.year === maxDate.getFullYear()
-      );
+      let currentYear = user.vacation.find((v) => v.year === maxDate.year());
       totalNumberOfVacationDays = currentYear?.vacationDays ?? 0;
     }
 
