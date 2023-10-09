@@ -10,40 +10,6 @@ export default function GenerateDayOfTheWeek() {
   const { values, setFieldValue } = useFormikContext();
   const [selectedDatesArray, setSelectedDatesArray] = useState([]);
 
-  // console.log(values.selectedDate.format('YYYY-MM-DD'));
-  // const parsedDate = values.selectedDate.format('YYYY-MM-DD');
-  // const currentDayOfTheWeek = moment(values.selectedDate).day();
-  // let formattedNextWednesday;
-
-  // selectedColorIndices.forEach((index) => {
-  //   const daysUntilNextDate = (index - currentDayOfTheWeek + 7) % 7;
-
-  //   const nextWednesdayDate = parsedDate.clone().add(daysUntilNextDate, 'days');
-
-  //   formattedNextWednesday = nextWednesdayDate.format('MM-DD-YYYY');
-  //   selectedDatesArray.push(formattedNextWednesday);
-  // });
-
-  // let selectedDatesArray = [];
-
-  // selectedColorIndices.forEach((index) => {
-  //   const parsedDate = moment(values.selectedDate);
-  //   const currentDayOfTheWeek = parsedDate.isoWeekday();
-  //   let daysUntilNextDate = (index - currentDayOfTheWeek + 7) % 7;
-  //   console.log('daysUntilNextDate', daysUntilNextDate);
-
-  //   // If the current day is included in the selected days, don't wait until the next week
-  //   if (daysUntilNextDate < 0) {
-  //     daysUntilNextDate += 7;
-  //   }
-
-  //   // Clone the parsedDate to avoid mutating it
-  //   const nextSelectedDate = parsedDate.clone().add(daysUntilNextDate, 'days');
-  //   const formattedNextSelectedDay = nextSelectedDate.format('YYYY-MM-DD');
-  //   selectedDatesArray.push(formattedNextSelectedDay);
-  // });
-
-  // console.log(selectedDatesArray);
   useEffect(() => {
     if (!values.selectedDate || selectedColorIndices.length === 0) {
       setSelectedDatesArray([]);
@@ -58,11 +24,10 @@ export default function GenerateDayOfTheWeek() {
       let daysUntilNextDate = (index - currentDayOfTheWeek + 7) % 7;
 
       // If the current day is included in the selected days, don't wait until the next week
-      if (daysUntilNextDate < 0) {
+      if (daysUntilNextDate <= 0) {
         daysUntilNextDate += 7;
       }
 
-      // Clone the parsedDate to avoid mutating it
       const nextSelectedDate = parsedDate
         .clone()
         .add(daysUntilNextDate, 'days');
