@@ -87,8 +87,30 @@ const createPTO = async ({
     }, []);
     const user = await User.findById(userId);
 
-    const totalNumberOfVacationDays =
-      user.vacation[0].vacationDays + user.vacation[1].vacationDays;
+    let maxDate = new Date(days[0]);
+
+    for (let date of days) {
+      const currentDate = new Date(date);
+      if (currentDate > maxDate) {
+        maxDate = currentDate;
+      }
+    }
+    var totalNumberOfVacationDays;
+    if (maxDate.getMonth() >= 0 && maxDate.getMonth() > 6) {
+      let currentYear = user.vacation.find(
+        (v) => v.year === maxDate.getFullYear()
+      );
+      let lastYear = user.vacation.find(
+        (v) => v.year === maxDate.getFullYear() - 1
+      );
+      totalNumberOfVacationDays =
+        (currentYear?.vacationDays ?? 0) + (lastYear?.vacationDays ?? 0);
+    } else {
+      let currentYear = user.vacation.find(
+        (v) => v.year === maxDate.getFullYear()
+      );
+      totalNumberOfVacationDays = currentYear?.vacationDays ?? 0;
+    }
 
     if (type === 'remote' || totalNumberOfVacationDays > days.length) {
       var pto = new PayedTimeOff({
