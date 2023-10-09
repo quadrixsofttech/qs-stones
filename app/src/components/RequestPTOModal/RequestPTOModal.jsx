@@ -47,7 +47,7 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
   const { user, admins, adminsLoading } = useUser();
   const { createPTO } = useEmployees();
 
-  const [selectedAdmin, setSelectedAdmin] = useState();
+  const [selectedAdmin, setSelectedAdmin] = useState(null);
   const toast = useToast();
 
   if (adminsLoading) {
@@ -56,7 +56,7 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
 
   const submitPTORequest = async () => {
     try {
-      if (selectedAdmin === undefined) {
+      if (selectedAdmin === null) {
         alert('Pleast select administrator');
         return false;
       }
@@ -86,11 +86,14 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
           'You have submitted a request to the Admin for scheduling vacation and remote work',
         position: 'top-right',
         status: 'success',
-        isClosable: false,
+        isClosable: true,
         colorScheme: 'green',
         variant: 'subtle',
       });
-
+      setRemoteDates([]);
+      setVacationDates([]);
+      setIsCurrentPageRemote(true);
+      setSelectedAdmin(null);
       onClose();
     } catch (err) {
       console.log(err);
@@ -105,6 +108,7 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
         setRemoteDates([]);
         setVacationDates([]);
         setIsCurrentPageRemote(true);
+        setSelectedAdmin(null);
         onClose();
       }}
       motionPreset="slideInBottom"

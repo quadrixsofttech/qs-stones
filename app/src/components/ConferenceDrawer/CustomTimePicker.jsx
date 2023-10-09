@@ -3,33 +3,45 @@ import { Flex, Select } from '@chakra-ui/react';
 import moment from 'moment';
 import { ErrorMessage, Field, useFormikContext } from 'formik';
 
-const TimePicker = () => {
+const TimePicker = ({ isEditMode }) => {
   const { values, setFieldValue } = useFormikContext();
+
   useEffect(() => {
     const start = moment(values.selectedDate).startOf('day').add(8, 'hours');
     const end = moment(values.selectedDate).startOf('day').add(17, 'hours');
 
-    if (
-      values.selectedDate.format('YYYY-MM-DD') !== moment().format('YYYY-MM-DD')
-    ) {
-      start.set('date', moment(values.selectedDate).date());
-      end.set('date', moment(values.selectedDate).date());
-      const times = calculateTimes(start, end, 15);
-      setFieldValue('startAtArray', times);
+    if (isEditMode) {
+      const startAtArray = calculateTimes(start, end, 15);
+      setFieldValue('startAtArray', startAtArray);
+      const endAtArray = calculateTimes(start, end, 15);
+      setFieldValue('endAtArray', endAtArray);
     } else {
-      const times = calculateTimes(start, end, 15);
+      if (
+        values.selectedDate.format('YYYY-MM-DD') !==
+        moment().format('YYYY-MM-DD')
+      ) {
+        start.set('date', moment(values.selectedDate).date());
+        end.set('date', moment(values.selectedDate).date());
+        const times = calculateTimes(start, end, 15);
+        setFieldValue('startAtArray', times);
+      } else {
+        const times = calculateTimes(start, end, 15);
 
-      const currentTime = moment();
-      const nearestTimes = times.filter((time) =>
-        moment(time, 'HH:mm').isSameOrAfter(currentTime, 'minute')
-      );
-      setFieldValue('startAtArray', nearestTimes);
+        const currentTime = moment();
+        const nearestTimes = times.filter((time) =>
+          moment(time, 'HH:mm').isSameOrAfter(currentTime, 'minute')
+        );
+        setFieldValue('startAtArray', nearestTimes);
+
+        setFieldValue('startTime', '');
+        setFieldValue('endTime', '');
+      }
     }
-  }, [values.selectedDate, setFieldValue]);
+  }, [values.selectedDate, setFieldValue, isEditMode]);
 
   useEffect(() => {
-    if (values.startAt) {
-      const startTimeMoment = moment(values.startAt, 'HH:mm');
+    if (values.startTime) {
+      const startTimeMoment = moment(values.startTime, 'HH:mm');
 
       const nextHour = moment(startTimeMoment).startOf('hour').add(1, 'hour');
       const timesWith15MinIncrement = calculateTimes(
@@ -48,7 +60,7 @@ const TimePicker = () => {
       const uniqueTimes = [...new Set(times)];
       setFieldValue('endAtArray', uniqueTimes.slice(1));
     }
-  }, [values.startAt, setFieldValue]);
+  }, [values.startTime, setFieldValue, isEditMode, values.selectedDate]);
 
   const calculateTimes = (start, end, interval) => {
     const times = [];
@@ -61,47 +73,55 @@ const TimePicker = () => {
   };
 
   const handleStartTimeSelection = (e) => {
-    setFieldValue('startAt', e.target.value);
+    const selectedStartTime = e.target.value;
+    setFieldValue('startTime', selectedStartTime);
   };
 
   const handleEndTimeSelection = (e) => {
-    setFieldValue('endAt', e.target.value);
+    const selectedEndTime = e.target.value;
+    setFieldValue('endTime', selectedEndTime);
   };
 
   return (
     <Flex flexDir={'column'} justifyContent={'flex-start'} gap={'3'}>
-      <Field name="startAt">
+      <Field name="startTime">
         {({ field }) => (
           <Select
             placeholder="Select Start Time"
-            value={values.startAt}
+            value={isEditMode ? values.startTime : ''}
             onChange={handleStartTimeSelection}
           >
-            {Object.values(values.startAtArray).map((time) => (
-              <option key={time} value={time}>
-                {time}
-              </option>
-            ))}
+            {values.startAtArray &&
+              Array.isArray(values.startAtArray) &&
+              values.startAtArray.length > 0 &&
+              values.startAtArray.map((time) => (
+                <option key={time} value={time}>
+                  {time}
+                </option>
+              ))}
           </Select>
         )}
       </Field>
-      <ErrorMessage name="startAt" component="div" className="error" />
-      <Field name="endAt">
+      <ErrorMessage name="startTime" component="div" className="error" />
+      <Field name="endTime">
         {({ field }) => (
           <Select
             placeholder="Select End Time"
-            value={values.endAt}
+            value={isEditMode ? values.endTime : ''}
             onChange={handleEndTimeSelection}
           >
-            {Object.values(values.endAtArray).map((time) => (
-              <option key={time} value={time}>
-                {time}
-              </option>
-            ))}
+            {values.startAtArray &&
+              Array.isArray(values.startAtArray) &&
+              values.startAtArray.length > 0 &&
+              values.startAtArray.map((time) => (
+                <option key={time} value={time}>
+                  {time}
+                </option>
+              ))}
           </Select>
         )}
       </Field>
-      <ErrorMessage name="endAt" component="div" className="error" />
+      <ErrorMessage name="endTime" component="div" className="error" />
     </Flex>
   );
 };
