@@ -3,7 +3,7 @@ const mainBox = {
   border: '1px',
   borderColor: 'gray.200',
   flexDirection: 'column',
-  width: '35%', //privremena sirina
+  width: '35%',
   height: '100%',
 };
 const header = {
@@ -11,10 +11,18 @@ const header = {
   color: 'gray.700',
   p: '4',
   alignItems: 'center',
+  size: 'sm',
+  fontWeight: 'bold',
+};
+const iconBox = {
+  justify: 'flex-end',
+  gap: '2',
+  alignItems: 'center',
 };
 const styles = {
   mainBox,
   header,
+  iconBox,
 };
 
 export default styles;

@@ -17,11 +17,9 @@ import NotificationIcon from './notificationIcon';
 const ListOfEmployees = () => {
   return (
     <Flex {...styles.mainBox}>
-      <Flex {...styles.header}>
-        <Heading as="h2" size="sm" fontWeight={'bold'}>
-          List of Employees
-        </Heading>
-      </Flex>
+      <Heading as="h2" {...styles.header}>
+        List of Employees
+      </Heading>
       <TableContainer overflowY={'auto'}>
         <Table variant="simple">
           <Tbody>
@@ -33,35 +31,7 @@ const ListOfEmployees = () => {
                 <Text>Ivan Srejic</Text>
               </Td>
               <Td>
-                <Flex justify={'flex-end'} gap="2" alignItems={'center'}>
-                  <NotificationIcon number="1" />
-                  <BiRightArrowAlt size="20" />
-                </Flex>
-              </Td>
-            </Tr>
-            <Tr>
-              <Td width={'56px'}>
-                <Avatar size={'xs'} />
-              </Td>
-              <Td>
-                <Text>Ivan Srejic</Text>
-              </Td>
-              <Td>
-                <Flex justify={'flex-end'} gap="2" alignItems={'center'}>
-                  <NotificationIcon number="1" />
-                  <BiRightArrowAlt size="20" />
-                </Flex>
-              </Td>
-            </Tr>
-            <Tr>
-              <Td width={'56px'}>
-                <Avatar size={'xs'} />
-              </Td>
-              <Td>
-                <Text>Ivan Srejic</Text>
-              </Td>
-              <Td>
-                <Flex justify={'flex-end'} gap="2" alignItems={'center'}>
+                <Flex {...styles.iconBox}>
                   <NotificationIcon number="1" />
                   <BiRightArrowAlt size="20" />
                 </Flex>
