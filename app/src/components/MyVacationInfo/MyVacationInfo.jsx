@@ -4,9 +4,11 @@ import MyVacationInfoBox from './MyVacationInfoBox';
 import useVacation from '../../hooks/useVacation';
 import useUser from '../../hooks/useUser';
 
-export const MyVacationInfo = () => {
+export const MyVacationInfo = ({ myInfo = true, userid = '' }) => {
   const { user } = useUser();
-  const { vacationInfo, isLoading } = useVacation(user._id);
+  let userId;
+  myInfo ? (userId = user._id) : (userId = userid);
+  const { vacationInfo, isLoading } = useVacation(userId);
 
   if (isLoading || !vacationInfo) {
     return <Spinner />;
@@ -20,12 +22,20 @@ export const MyVacationInfo = () => {
   );
 
   return (
-    <Flex {...styles.mainBox}>
-      <Box {...styles.header}>
-        <Heading {...styles.mainHeading} as="h2">
-          My Vacation Info
-        </Heading>
-      </Box>
+    <Flex
+      {...styles.mainBox}
+      rounded={myInfo ? 'md' : ''}
+      border={myInfo ? '1px' : '0px'}
+      borderTop={'1px'}
+      borderColor={'gray.200'}
+    >
+      {myInfo && (
+        <Box {...styles.header}>
+          <Heading {...styles.mainHeading} as="h2">
+            My Vacation Info
+          </Heading>
+        </Box>
+      )}
       <Flex {...styles.infoBox}>
         <MyVacationInfoBox
           heading={

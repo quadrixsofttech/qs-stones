@@ -10,8 +10,8 @@ const EmployeeComponent = ({ name = 'Quadrix Soft' }) => {
       <Heading as="h2" {...styles.header}>
         {name}
       </Heading>
-      <EmptyEmployeeComponent />
-      {/* <SelectedEmployeeComponent /> */}
+      {/* <EmptyEmployeeComponent /> */}
+      <SelectedEmployeeComponent />
     </Flex>
   );
 };
