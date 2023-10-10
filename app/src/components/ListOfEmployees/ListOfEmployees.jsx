@@ -49,11 +49,10 @@ const ListOfEmployees = () => {
                 key={index}
                 onMouseEnter={() => setHoveredRowIndex(index)}
                 onMouseLeave={() => setHoveredRowIndex(null)}
-                backgroundColor={index === clickedRowIndex ? 'gray.100' : ''}
-                _hover={
-                  hoveredRowIndex === index
-                    ? { backgroundColor: 'gray.100' }
-                    : 'null'
+                backgroundColor={
+                  hoveredRowIndex === index || index === clickedRowIndex
+                    ? 'gray.100'
+                    : ''
                 }
                 boxShadow={
                   index === clickedRowIndex
