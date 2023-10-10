@@ -76,7 +76,7 @@ const ListOfEmployees = () => {
                   <Avatar size={'xs'} />
                 </Td>
                 <Td>
-                  <Text>{employee.name}</Text>
+                  <Text color="gray.700">{employee.name}</Text>
                 </Td>
                 <Td>
                   <Flex {...styles.iconBox}>
