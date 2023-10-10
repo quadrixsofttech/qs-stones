@@ -31,6 +31,17 @@ const ListOfEmployees = () => {
     { name: 'Ivan Srejic' },
     { name: 'Martini Martini' },
     { name: 'Pera Peric' },
+    { name: 'Zika Zikic' },
+    { name: 'Milan Milic' },
+    { name: 'Luka Lukic' },
+    { name: 'Selena Selenovic' },
+    { name: 'Ivan Ivanovic' },
+    { name: 'Ana Anic' },
+    { name: 'Mira Miric' },
+    { name: 'Nina Ninic' },
+    { name: 'Stefan Stefanovic' },
+    { name: 'Marko Markovic' },
+    { name: 'Jelena Jelic' },
   ];
 
   const theme = useTheme();
