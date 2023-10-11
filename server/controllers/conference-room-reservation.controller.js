@@ -33,43 +33,6 @@ const createReservation = async (req, res) => {
   }
 };
 
-const createRepeatReservation = async (req, res) => {
-  try {
-    const {
-      conferenceRoom,
-      date,
-      startTime,
-      endTime,
-      selectedDaysInTheWeek,
-      title,
-      description,
-      color,
-      userId,
-      numberOfOccurences,
-    } = req.body;
-
-    const reservation = await ConferenceRoomReservation.createRepeatReservation(
-      {
-        conferenceRoom,
-        date,
-        startTime,
-        endTime,
-        selectedDaysInTheWeek,
-        title,
-        description,
-        color,
-        userId,
-        numberOfOccurences,
-      }
-    );
-    return res.send(reservation);
-  } catch (err) {
-    res.status(StatusCodes.BAD_REQUEST).json({
-      success: false,
-      message: err.message,
-    });
-  }
-};
 
 const getReservations = async (req, res) => {
   try {

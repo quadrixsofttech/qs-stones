@@ -1,5 +1,4 @@
 const ConferenceRoomReservation = require('../../models/conference-room-reservation');
-const MeetingEnds = require('../../constants/repeatReservation');
 
 const createReservation = async ({
   enabled,
@@ -31,98 +30,6 @@ const createReservation = async ({
   }
 };
 
-const createRepeatReservations = async ({
-  conferenceRoom,
-  date,
-  startTime,
-  endTime,
-  title,
-  description,
-  color,
-  userId,
-  selectedDaysInTheWeek,
-  endReservation, 
-}) => {
-  try {
-    const reservations = [];
-    const startDate = moment(date);
-
-    switch (endReservation) {
-      case MeetingEnds.NEVER:
-        while (startDate.year() === moment().year()) {
-          if (
-            !selectedDaysInTheWeek ||
-            selectedDaysInTheWeek.includes(startDate.format('dddd'))
-          ) {
-            const reservation = new ConferenceRoomReservation({
-              conferenceRoom,
-              date: moment(startDate),
-              startTime,
-              endTime,
-              selectedDaysInTheWeek,
-              title,
-              description,
-              color,
-              userId,
-            });
-            reservations.push(reservation);
-          }
-          startDate.add(1, 'weeks');
-        }
-        break;
-
-      case MeetingEnds.AFTER_N_OCCURENCES:
-        const n = parseInt(repeatReservation, 10); //ovo se vraca tako sto kada saljes axios request na front posalji kroz body value
-        for (let i = 0; i < n; i++) {
-          const reservation = new ConferenceRoomReservation({
-            conferenceRoom,
-            date: moment(startDate),
-            startTime,
-            endTime,
-            selectedDaysInTheWeek,
-            title,
-            description,
-            color,
-            userId,
-          });
-          reservations.push(reservation);
-          startDate.add(1, 'weeks');
-        }
-        break;
-
-      case MeetingEnds.ON_SPECFIC_DATE:
-        const endDate = moment(endReservation);
-        while (startDate.isSameOrBefore(endDate)) {
-          if (
-            !selectedDaysInTheWeek ||
-            selectedDaysInTheWeek.includes(startDate.format('dddd'))
-          ) {
-            const reservation = new ConferenceRoomReservation({
-              conferenceRoom,
-              date: moment(startDate),
-              startTime,
-              endTime,
-              selectedDaysInTheWeek,
-              title,
-              description,
-              color,
-              userId,
-            });
-            reservations.push(reservation);
-          }
-          startDate.add(1, 'weeks');
-        }
-        break;
-    }
-
-    const savedReservations = await ConferenceRoomReservation.insertMany(
-      reservations
-    );
-    return savedReservations;
-  } catch (err) {
-    throw new Error(err);
-  }
-};
 
 const getReservations = async (date) => {
   try {
@@ -213,7 +120,6 @@ const deleteReservation = async (id) => {
 
 module.exports = {
   createReservation,
-  createRepeatReservations,
   getReservations,
   updateReservation,
   deleteReservation,

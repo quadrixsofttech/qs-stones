@@ -22,10 +22,6 @@ const ConferenceRoomReservationSchema = new Schema({
     type: Boolean,
     default: false,
   },
-  endReservation: {
-    type: String,
-    enum: ['Never', 'After n occurences', 'On selected date'],
-  },
   title: {
     type: String,
     required: true,
@@ -41,6 +37,14 @@ const ConferenceRoomReservationSchema = new Schema({
   userId: {
     type: Schema.Types.ObjectId,
     required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now(),
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now(),
   },
 });
 
