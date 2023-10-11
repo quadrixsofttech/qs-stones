@@ -17,7 +17,13 @@ import { AiTwotoneCalendar } from 'react-icons/ai';
 import { useFormikContext } from 'formik';
 import moment from 'moment';
 
-export default function RadioButtonGroup({ f_option, s_option, t_option }) {
+export default function RadioButtonGroup({
+  f_option,
+  s_option,
+  t_option,
+  selectedDatesArray,
+  setSelectedDatesArray,
+}) {
   const datePickerRef = React.useRef(null);
   const [meetingRepetition, setMeetingRepetiotion] = React.useState('never');
   const { values } = useFormikContext();
@@ -26,7 +32,6 @@ export default function RadioButtonGroup({ f_option, s_option, t_option }) {
   const handleRadioChange = (newValue) => {
     setMeetingRepetiotion(newValue);
   };
-
 
   return (
     <RadioGroup onChange={handleRadioChange} value={meetingRepetition}>
@@ -137,4 +142,3 @@ export default function RadioButtonGroup({ f_option, s_option, t_option }) {
     </RadioGroup>
   );
 }
-

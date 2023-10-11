@@ -23,6 +23,7 @@ import CustomCheckBox from './CustomCheckBox';
 import CardInfo from './CardInfo';
 import { reservationSchema, initialValues } from './formikConfig';
 import { useConferenceRoomReservation } from '../../hooks/useConferenceRoomReservation';
+import { useState } from 'react';
 
 export default function ConferenceDrawer({
   btnRef,
@@ -34,6 +35,7 @@ export default function ConferenceDrawer({
   const toast = useToast();
 
   const { isLoading, updateReservation } = useConferenceRoomReservation();
+  const [selectedDatesArray, setSelectedDatesArray] = useState([]);
 
   if (isLoading) {
     return <Spinner />;
@@ -105,7 +107,10 @@ export default function ConferenceDrawer({
                           switch_text={'Repeat reservation'}
                           isEditMode={isEditMode}
                         />
-                        <GenerateDayOfTheWeek />
+                        <GenerateDayOfTheWeek
+                          selectedDatesArray={selectedDatesArray}
+                          setSelectedDatesArray={setSelectedDatesArray}
+                        />
                         <Box mt={3}>
                           <CustomCheckBox
                             checkBox_text={'Every day'}
@@ -125,6 +130,8 @@ export default function ConferenceDrawer({
                           f_option="Never"
                           s_option="After"
                           t_option="On specific date"
+                          selectedDatesArray={selectedDatesArray}
+                          setSelectedDatesArray={setSelectedDatesArray}
                         />
                       </Box>
                     </>

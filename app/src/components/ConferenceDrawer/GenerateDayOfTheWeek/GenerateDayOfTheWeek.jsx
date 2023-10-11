@@ -5,10 +5,12 @@ import React, { useState, useEffect } from 'react';
 import { useFormikContext } from 'formik';
 import moment from 'moment';
 
-export default function GenerateDayOfTheWeek() {
+export default function GenerateDayOfTheWeek({
+  selectedDatesArray,
+  setSelectedDatesArray,
+}) {
   const [selectedColorIndices, setSelectedColorIndices] = useState([]);
   const { values, setFieldValue } = useFormikContext();
-  const [selectedDatesArray, setSelectedDatesArray] = useState([]);
 
   useEffect(() => {
     if (!values.selectedDate || selectedColorIndices.length === 0) {
@@ -16,8 +18,7 @@ export default function GenerateDayOfTheWeek() {
       return;
     }
 
-    let parsedDate = moment(values.selectedDate);
-    let currentDayOfTheWeek = parsedDate.isoWeekday();
+    let currentDayOfTheWeek = values.selectedDate.format('d');
     let calculatedDatesArray = [];
 
     selectedColorIndices.forEach((index) => {
@@ -28,17 +29,17 @@ export default function GenerateDayOfTheWeek() {
         daysUntilNextDate += 7;
       }
 
-      const nextSelectedDate = parsedDate
-        .clone()
-        .add(daysUntilNextDate, 'days');
+      let newDate = moment(new Date(values.selectedDate));
+
+      const nextSelectedDate = newDate.clone().add(daysUntilNextDate, 'days');
       const formattedNextSelectedDay = nextSelectedDate.format('YYYY-MM-DD');
       calculatedDatesArray.push(formattedNextSelectedDay);
     });
 
     setSelectedDatesArray(calculatedDatesArray);
-  }, [values.selectedDate, selectedColorIndices]);
+  }, [values.selectedDate, selectedColorIndices, setSelectedDatesArray]);
 
-  console.log(selectedDatesArray);
+  // console.log(selectedDatesArray);
 
   useEffect(() => {
     if (values.everyDay) {
@@ -72,17 +73,17 @@ export default function GenerateDayOfTheWeek() {
           color={
             !values.repeatReservation
               ? 'gray.200'
-              : values.everyDay || selectedColorIndices.includes(index + 1)
+              : values.everyDay || selectedColorIndices.includes(index + 2)
               ? 'white'
               : 'black'
           }
           bgColor={
-            selectedColorIndices.includes(index + 1) || values.everyDay
+            selectedColorIndices.includes(index + 2) || values.everyDay
               ? 'purple.400'
               : 'white'
           }
           borderColor={values.repeatReservation ? 'gray.200' : 'gray.100'}
-          onClick={() => handleColorClick(index + 1)}
+          onClick={() => handleColorClick(index + 2)}
         >
           {day}
         </Flex>
