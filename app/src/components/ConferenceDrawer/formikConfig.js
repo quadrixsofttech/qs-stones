@@ -18,9 +18,12 @@ const initialValues = {
   startAtArray: '',
   endAtArray: '',
   repeatReservation: false,
+  meetingRepetition: 'Never',
+  numberOfOccurences: 1,
   everyDay: false,
   title: '',
   description: '',
+  selectedDateFromInput: moment().add(1, 'day'),
   markerColor: 'white',
 };
 export { reservationSchema, initialValues };

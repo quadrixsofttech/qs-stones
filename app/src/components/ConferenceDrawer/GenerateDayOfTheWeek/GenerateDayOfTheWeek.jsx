@@ -6,7 +6,7 @@ import {
 import styles from './GenerateDayOfTheWeek.styles';
 import React, { useState, useEffect } from 'react';
 import { useFormikContext } from 'formik';
-import moment from 'moment';
+import { useDatesBasedOnPickedDays } from '../useDatesBasedOnPickedDays';
 
 export default function GenerateDayOfTheWeek({
   selectedDatesArray,
@@ -14,36 +14,6 @@ export default function GenerateDayOfTheWeek({
 }) {
   const [selectedColorIndices, setSelectedColorIndices] = useState([]);
   const { values, setFieldValue } = useFormikContext();
-
-  // Monday starts on 2 and goes to 6 which is Friday(that is done because of moment)
-  useEffect(() => {
-    if (!values.selectedDate || selectedColorIndices.length === 0) {
-      setSelectedDatesArray([]);
-      return;
-    }
-
-    let currentDayOfTheWeek = values.selectedDate.format('d');
-    let calculatedDatesArray = [];
-
-    selectedColorIndices.forEach((index) => {
-      let daysUntilNextDate = (index - currentDayOfTheWeek + 7) % 7;
-
-      // If the current day is included in the selected days, don't wait until the next week
-      if (daysUntilNextDate <= 0) {
-        daysUntilNextDate += 7;
-      }
-
-      let newDate = moment(new Date(values.selectedDate));
-
-      const nextSelectedDate = newDate.clone().add(daysUntilNextDate, 'days');
-      const formattedNextSelectedDay = nextSelectedDate.format('YYYY-MM-DD');
-      calculatedDatesArray.push(formattedNextSelectedDay);
-    });
-
-    setSelectedDatesArray(calculatedDatesArray);
-  }, [values.selectedDate, selectedColorIndices, setSelectedDatesArray]);
-
-  console.log(selectedDatesArray);
 
   useEffect(() => {
     if (values.everyDay) {
@@ -69,6 +39,9 @@ export default function GenerateDayOfTheWeek({
       }
     }
   };
+
+  useDatesBasedOnPickedDays(selectedColorIndices, setSelectedDatesArray);
+  // console.log(selectedDatesArray);
 
   return (
     <Flex alignItems="center" justifyContent="space-around" mt={4}>

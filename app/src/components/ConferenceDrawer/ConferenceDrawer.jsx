@@ -130,8 +130,6 @@ export default function ConferenceDrawer({
                           f_option="Never"
                           s_option="After"
                           t_option="On specific date"
-                          selectedDatesArray={selectedDatesArray}
-                          setSelectedDatesArray={setSelectedDatesArray}
                         />
                       </Box>
                     </>

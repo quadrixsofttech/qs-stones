@@ -15,10 +15,12 @@ const PickTimeAndRoom = ({ isEditMode, reservationData }) => {
     description,
     startTime,
     endTime,
-    // selectedDaysInTheWeek,
+    meetingRepetition,
+    numberOfOccurences,
     column,
     floor,
     date,
+    selectedDateFromInput,
     markerColor,
   } = reservationData;
 
@@ -32,7 +34,6 @@ const PickTimeAndRoom = ({ isEditMode, reservationData }) => {
       setFieldValue('title', title);
       setFieldValue('description', description);
       setFieldValue('markerColor', markerColor);
-      // setFieldValue('selectedDaysInTheWeek', selectedDaysInTheWeek);
     }
   }, [
     isEditMode,
@@ -41,11 +42,13 @@ const PickTimeAndRoom = ({ isEditMode, reservationData }) => {
     date,
     startTime,
     endTime,
+    meetingRepetition,
+    numberOfOccurences,
     title,
     description,
+    selectedDateFromInput,
     markerColor,
     setFieldValue,
-    // selectedDaysInTheWeek,
   ]);
   if (conferenceLoading || !conferenceRooms) {
     return <Spinner />;
