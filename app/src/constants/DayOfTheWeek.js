@@ -6,4 +6,12 @@ const DayOfTheWeek = {
   FRIDAY: 'F',
 };
 
-export default DayOfTheWeek;
+const DayOfTheWeekInMoment = {
+  MONDAY: 2,
+  TUESDAY: 3,
+  WEDNESDAY: 4,
+  THURSTDAY: 5,
+  FRIDAY: 6,
+};
+
+export { DayOfTheWeek, DayOfTheWeekInMoment };

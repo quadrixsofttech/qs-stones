@@ -1,5 +1,8 @@
 import { Flex } from '@chakra-ui/react';
-import DayOfTheWeek from '../../../constants/DayOfTheWeek';
+import {
+  DayOfTheWeek,
+  DayOfTheWeekInMoment,
+} from '../../../constants/DayOfTheWeek';
 import styles from './GenerateDayOfTheWeek.styles';
 import React, { useState, useEffect } from 'react';
 import { useFormikContext } from 'formik';
@@ -12,6 +15,7 @@ export default function GenerateDayOfTheWeek({
   const [selectedColorIndices, setSelectedColorIndices] = useState([]);
   const { values, setFieldValue } = useFormikContext();
 
+  // Monday starts on 2 and goes to 6 which is Friday(that is done because of moment)
   useEffect(() => {
     if (!values.selectedDate || selectedColorIndices.length === 0) {
       setSelectedDatesArray([]);
@@ -39,11 +43,13 @@ export default function GenerateDayOfTheWeek({
     setSelectedDatesArray(calculatedDatesArray);
   }, [values.selectedDate, selectedColorIndices, setSelectedDatesArray]);
 
-  // console.log(selectedDatesArray);
+  console.log(selectedDatesArray);
 
   useEffect(() => {
     if (values.everyDay) {
-      setSelectedColorIndices(Object.keys(DayOfTheWeek));
+      setSelectedColorIndices(
+        Object.values(DayOfTheWeekInMoment).map((day) => day)
+      );
     } else {
       setSelectedColorIndices([]);
     }
