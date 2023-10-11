@@ -5,9 +5,38 @@ const pendingRequestBox = {
   overflowY: 'auto',
   height: '100%',
 };
+const requestBox = {
+  border: '1px',
+  borderColor: 'gray.200',
+  rounded: 'md',
+  mb: '2',
+  p: '2',
+  flexDir: 'column',
+};
+const infoBox = {
+  flex: '1',
+  justify: 'space-between',
+  p: '2',
+};
+const approveButton = {
+  width: '100px',
+  height: '40px',
+  rounded: 'md',
+  backgroundColor: 'green',
+};
+const rejectButton = {
+  width: '100px',
+  height: '40px',
+  rounded: 'md',
+  backgroundColor: 'red',
+};
 
 const styles = {
   pendingRequestBox,
+  requestBox,
+  infoBox,
+  approveButton,
+  rejectButton,
 };
 
 export default styles;

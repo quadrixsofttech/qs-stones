@@ -11,7 +11,7 @@ const EmployeeComponent = ({ name = 'Quadrix Soft' }) => {
         {name}
       </Heading>
       {/* <EmptyEmployeeComponent /> */}
-      <SelectedEmployeeComponent />
+      <SelectedEmployeeComponent data={true} />
     </Flex>
   );
 };

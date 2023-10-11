@@ -50,6 +50,7 @@ const RenderDates = ({
                 key={Math.random()}
                 handleClose={handleClose}
                 removable={false}
+                showClose={false}
               />
             );
           })}

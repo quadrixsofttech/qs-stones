@@ -7,16 +7,19 @@ import EmptyRequest from './EmptyRequest';
 import PendingRequests from './PendingRequests/PendingRequests';
 import RequestHistory from './RequestHistory/RequestHistory';
 
-const SelectedEmployeeComponent = () => {
+const SelectedEmployeeComponent = ({ data }) => {
   return (
     <Flex flexDir={'column'} height={'100%'} overflow={'hidden'}>
-      {/* <EmptyRequest
+      {data ? (
+        <PendingRequests />
+      ) : (
+        <EmptyRequest
           image={EmptyInbox}
           label={'Your request list is empty'}
           description={'All incoming requests will be listed in this folder'}
-        /> */}
-      <PendingRequests />
-      <Flex flexDir={'column'} overflow={'auto'} height={'64'}>
+        />
+      )}
+      <Flex flexDir={'column'} overflow={'auto'} height={'37%'}>
         <Flex {...styles.requestHistoryBox}>
           <Text {...styles.text}>Request History</Text>
           <Select {...styles.select}>
