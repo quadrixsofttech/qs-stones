@@ -10,13 +10,15 @@ const requestBox = {
   borderColor: 'gray.200',
   rounded: 'md',
   mb: '2',
-  p: '2',
+  pt: '2',
+  pl: 4,
+  pr: 4,
   flexDir: 'column',
 };
 const infoBox = {
   flex: '1',
   justify: 'space-between',
-  p: '2',
+  p: '0',
 };
 const approveButton = {
   width: '100px',

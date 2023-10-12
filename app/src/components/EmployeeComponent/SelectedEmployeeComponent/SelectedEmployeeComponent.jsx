@@ -19,7 +19,7 @@ const SelectedEmployeeComponent = ({ data }) => {
           description={'All incoming requests will be listed in this folder'}
         />
       )}
-      <Flex flexDir={'column'} overflow={'auto'} height={'37%'}>
+      <Flex flexDir={'column'} overflow={'auto'} height={'30%'}>
         <Flex {...styles.requestHistoryBox}>
           <Text {...styles.text}>Request History</Text>
           <Select {...styles.select}>

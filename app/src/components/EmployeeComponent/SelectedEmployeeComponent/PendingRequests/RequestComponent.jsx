@@ -7,7 +7,7 @@ const RequestComponent = ({ type, range, createdAt, id }) => {
   return (
     <Flex {...styles.requestBox}>
       <Flex {...styles.infoBox}>
-        <Flex flexDir={'column'} gap="2">
+        <Flex flexDir={'column'} gap="1">
           <Text fontWeight={'600'} color={'gray.700'}>
             {type}
           </Text>
