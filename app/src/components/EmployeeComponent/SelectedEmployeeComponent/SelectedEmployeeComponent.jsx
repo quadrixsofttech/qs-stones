@@ -31,13 +31,16 @@ const SelectedEmployeeComponent = ({ data }) => {
             </option>
           </Select>
         </Flex>
-        {/* <EmptyRequest
-          label={'Your requests history list is empty'}
-          description={
-            'All approved/rejected requests will be listed in this folder'
-          }
-        /> */}
-        <RequestHistory />
+        {data ? (
+          <RequestHistory />
+        ) : (
+          <EmptyRequest
+            label={'Your requests history list is empty'}
+            description={
+              'All approved/rejected requests will be listed in this folder'
+            }
+          />
+        )}
       </Flex>
       <MyVacationInfo myInfo={false} userid="6454b8dad869b30bf6bad405" />
     </Flex>

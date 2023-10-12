@@ -22,13 +22,14 @@ const approveButton = {
   width: '100px',
   height: '40px',
   rounded: 'md',
-  backgroundColor: 'green.500',
+  // backgroundColor: 'green.500',
+  colorScheme: 'green',
 };
 const rejectButton = {
   width: '100px',
   height: '40px',
   rounded: 'md',
-  backgroundColor: 'red.500',
+  colorScheme: 'red',
 };
 
 const styles = {
