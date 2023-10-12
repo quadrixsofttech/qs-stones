@@ -22,7 +22,6 @@ const approveButton = {
   width: '100px',
   height: '40px',
   rounded: 'md',
-  // backgroundColor: 'green.500',
   colorScheme: 'green',
 };
 const rejectButton = {
