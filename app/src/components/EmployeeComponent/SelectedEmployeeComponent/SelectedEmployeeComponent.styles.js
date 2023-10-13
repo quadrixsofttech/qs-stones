@@ -6,7 +6,7 @@ const mainBox = {
 const messageBox = {
   flexDir: 'column',
   align: 'center',
-  width: '310px',
+  width: '80',
 };
 const textBox = {
   align: 'center',
@@ -29,8 +29,8 @@ const text = {
   color: 'gray.700',
 };
 const select = {
-  width: '130px',
-  height: '20px',
+  width: '32',
+  height: '6',
   fontSize: 'sm',
   borderColor: 'gray.200',
   color: 'gray.700',

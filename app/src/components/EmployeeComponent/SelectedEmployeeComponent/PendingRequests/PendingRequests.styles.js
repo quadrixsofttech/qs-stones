@@ -21,14 +21,14 @@ const infoBox = {
   p: '0',
 };
 const approveButton = {
-  width: '100px',
-  height: '40px',
+  width: '24',
+  height: '10',
   rounded: 'md',
   colorScheme: 'green',
 };
 const rejectButton = {
-  width: '100px',
-  height: '40px',
+  width: '24',
+  height: '10',
   rounded: 'md',
   colorScheme: 'red',
 };
