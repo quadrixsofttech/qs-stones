@@ -2,7 +2,6 @@ import {
   Avatar,
   Flex,
   Heading,
-  Spinner,
   Table,
   TableContainer,
   Tbody,
@@ -15,26 +14,12 @@ import styles from './ListOfEmployees.styles';
 import { BiRightArrowAlt } from 'react-icons/bi';
 import NotificationIcon from './notificationIcon';
 import { useTheme } from '@emotion/react';
-import useUser from '../../hooks/useUser';
 
-const ListOfEmployees = () => {
-  const { employees, employeesLoading, employeesError } = useUser();
+const ListOfEmployees = ({ employees, handleRowClick, clickedRowIndex }) => {
   const [hoveredRowIndex, setHoveredRowIndex] = useState(null);
-  const [clickedRowIndex, setClickedRowIndex] = useState(null);
+
   const theme = useTheme();
   const purple400 = theme.colors.purple[400];
-
-  const handleRowClick = (rowIndex) => {
-    if (rowIndex === clickedRowIndex) {
-      setClickedRowIndex(null);
-    } else {
-      setClickedRowIndex(rowIndex);
-    }
-  };
-
-  if (employeesLoading || employeesError || !employees) {
-    return <Spinner />;
-  }
 
   return (
     <Flex {...styles.mainBox}>
