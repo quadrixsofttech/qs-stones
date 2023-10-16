@@ -85,19 +85,42 @@ const createPTO = async ({
 
       return [...acc, ...filteredDates];
     }, []);
-    const pto = new PayedTimeOff({
-      type,
-      status,
-      userId,
-      reviewerId,
-      days,
-      dates,
-      comment,
-    });
+    const user = await User.findById(userId);
+
+    let maxDate = moment(days[0]);
+
+    for (let date of days) {
+      const currentDate = moment(date);
+      if (currentDate.isAfter(maxDate)) {
+        maxDate = currentDate;
+      }
+    }
+    var totalNumberOfVacationDays;
+    if (maxDate.month() >= 0 && maxDate.month() < 6) {
+      let currentYear = user.vacation.find((v) => v.year === maxDate.year());
+      let lastYear = user.vacation.find((v) => v.year === maxDate.year() - 1);
+      totalNumberOfVacationDays =
+        (currentYear?.vacationDays ?? 0) + (lastYear?.vacationDays ?? 0);
+    } else {
+      let currentYear = user.vacation.find((v) => v.year === maxDate.year());
+      totalNumberOfVacationDays = currentYear?.vacationDays ?? 0;
+    }
+
+    if (type === 'remote' || totalNumberOfVacationDays > days.length) {
+      var pto = new PayedTimeOff({
+        type,
+        status,
+        userId,
+        reviewerId,
+        days,
+        dates,
+        comment,
+      });
+    }
     await pto.save();
     return pto;
   } catch (err) {
-    throw new Error({ success: false, message: 'Problem in creating pto' });
+    throw new Error('Not enough vacation days');
   }
 };
 
