@@ -15,10 +15,13 @@ const PtoSchema = new Schema({
   userId: {
     type: Schema.Types.ObjectId,
     required: true,
+    ref: 'user',
   },
   reviewerId: {
     type: Schema.Types.ObjectId,
+    ref: 'user',
   },
+
   dates: {
     type: [[String, String]],
     required: true,
