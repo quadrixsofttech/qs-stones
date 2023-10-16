@@ -1,25 +1,65 @@
 import { Box, Select, Spinner } from '@chakra-ui/react';
 import { ErrorMessage, Field, useFormikContext } from 'formik';
-import React from 'react';
+import React, { useEffect } from 'react';
 import CustomDatePicker from './CustomDatePicker';
 import TimePicker from './CustomTimePicker';
 import useConference from '../../hooks/useConference';
 
-const PickTimeAndRoom = () => {
+const PickTimeAndRoom = ({
+  isEditMode,
+  reservationData,
+}) => {
   const { conferenceRooms, conferenceLoading } = useConference();
 
   const { values, setFieldValue } = useFormikContext();
 
+  const {
+    title,
+    description,
+    startTime,
+    endTime,
+    column,
+    floor,
+    date,
+    markerColor,
+  } = reservationData;
 
+  useEffect(() => {
+    if (isEditMode) {
+      setFieldValue('floor', floor);
+      setFieldValue('column', column);
+      setFieldValue('selectedDate', date);
+      setFieldValue('startTime', startTime);
+      setFieldValue('endTime', endTime);
+      setFieldValue('title', title);
+      setFieldValue('description', description);
+      setFieldValue('markerColor', markerColor);
+    }
+  }, [
+    isEditMode,
+    floor,
+    column,
+    date,
+    startTime,
+    endTime,
+    title,
+    description,
+    markerColor,
+    setFieldValue,
+  ]);
   if (conferenceLoading || !conferenceRooms) {
     return <Spinner />;
   }
+
+  // console.log(values);
 
   const floors = ['Upper Floor', 'Lower Floor'];
 
   const handleFloorChange = (e) => {
     setFieldValue('floor', e.target.value);
   };
+
+  // console.log(values);
 
   const filteredConferenceRooms =
     values.floor === 'Upper Floor'
@@ -35,7 +75,7 @@ const PickTimeAndRoom = () => {
             size="md"
             {...field}
             onChange={handleFloorChange}
-            value={values.selectedFloor}
+            value={isEditMode ? values.floor : 'Upper Floor'}
           >
             {floors.map((floor) => (
               <option key={floor} value={floor}>
@@ -55,10 +95,11 @@ const PickTimeAndRoom = () => {
           <Select
             size="md"
             {...field}
-            value={values.conferenceRoom}
+            value={isEditMode ? values.column : 'Collaboration Room'}
             onChange={(e) => {
+              const newValue = e.target.value;
               field.onChange(e);
-              setFieldValue('conferenceRoom', e.target.value);
+              setFieldValue('column', newValue);
             }}
           >
             {filteredConferenceRooms.map((room) => (
@@ -73,11 +114,14 @@ const PickTimeAndRoom = () => {
       <Box mb={2} mt={3}>
         Select date:
       </Box>
-      <CustomDatePicker name="date-picker" />
+      <CustomDatePicker
+        name="date-picker"
+        isEditMode={isEditMode}
+      />
       <Box mb={2} mt={3}>
         Select meeting time:
       </Box>
-      <TimePicker />
+      <TimePicker isEditMode={isEditMode} />
     </>
   );
 };
