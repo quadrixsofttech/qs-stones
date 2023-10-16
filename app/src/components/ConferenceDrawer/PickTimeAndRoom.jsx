@@ -54,7 +54,7 @@ const PickTimeAndRoom = ({ isEditMode, reservationData }) => {
     return <Spinner />;
   }
 
-  // console.log(values);
+  console.log(values);
 
   const floors = ['Upper Floor', 'Lower Floor'];
 

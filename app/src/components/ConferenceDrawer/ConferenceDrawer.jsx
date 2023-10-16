@@ -34,7 +34,8 @@ export default function ConferenceDrawer({
 }) {
   const toast = useToast();
 
-  const { isLoading, updateReservation } = useConferenceRoomReservation();
+  const { isLoading, updateReservation, createReservation } =
+    useConferenceRoomReservation();
   const [selectedDatesArray, setSelectedDatesArray] = useState([]);
 
   if (isLoading) {
@@ -62,7 +63,7 @@ export default function ConferenceDrawer({
       if (isEditMode) {
         await updateReservation(reservationData.id, values);
       } else {
-        // await createReservation(values);
+        await createReservation(values);
         handleSubmit();
       }
       onClose();

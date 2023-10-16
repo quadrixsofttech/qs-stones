@@ -6,13 +6,14 @@ export const useDatesBasedOnPickedDays = (
   selectedColorIndices,
   setSelectedDatesArray
 ) => {
-  const { values } = useFormikContext();
+  const { values, setFieldValue } = useFormikContext();
 
   useEffect(() => {
     switch (values.meetingRepetition) {
       case 'Never':
         if (!values.selectedDate || selectedColorIndices.length === 0) {
-          setSelectedDatesArray([]);
+          // setSelectedDatesArray([]);
+          setFieldValue('selectedDatesInDays', []);
           return;
         }
 
@@ -42,11 +43,14 @@ export const useDatesBasedOnPickedDays = (
           calculatedDatesArray.push(datesForThisWeek);
         }
 
-        setSelectedDatesArray(calculatedDatesArray);
+        // setSelectedDatesArray(calculatedDatesArray);
+        setFieldValue('selectedDatesInDays', calculatedDatesArray);
+
         break;
       case 'After n occurences':
         if (!values.selectedDate || selectedColorIndices.length === 0) {
-          setSelectedDatesArray([]);
+          // setSelectedDatesArray([]);
+          setFieldValue('selectedDatesInDays', []);
           return;
         }
 
@@ -76,7 +80,8 @@ export const useDatesBasedOnPickedDays = (
           calculatedDatesArrayForOccureces.push(datesForThisWeek);
         }
 
-        setSelectedDatesArray(calculatedDatesArrayForOccureces);
+        // setSelectedDatesArray(calculatedDatesArrayForOccureces);
+        setFieldValue('selectedDatesInDays', calculatedDatesArrayForOccureces);
         break;
       case 'On specific date':
         if (
@@ -84,7 +89,8 @@ export const useDatesBasedOnPickedDays = (
           !values.selectedDateFromInput ||
           selectedColorIndices.length === 0
         ) {
-          setSelectedDatesArray([]);
+          // setSelectedDatesArray([]);
+          setFieldValue('selectedDatesInDays', []);
           return;
         }
 
@@ -116,7 +122,8 @@ export const useDatesBasedOnPickedDays = (
           currentDate.add(7, 'days');
         }
 
-        setSelectedDatesArray(calculatedDatesArrayForDate);
+        // setSelectedDatesArray(calculatedDatesArrayForDate);
+        setFieldValue('selectedDatesInDays', calculatedDatesArrayForDate);
         break;
       default:
         break;
@@ -124,9 +131,10 @@ export const useDatesBasedOnPickedDays = (
   }, [
     values.selectedDate,
     selectedColorIndices,
-    setSelectedDatesArray,
     values.meetingRepetition,
     values.numberOfOccurences,
     values.selectedDateFromInput,
+    setFieldValue,
+    setSelectedDatesArray,
   ]);
 };
