@@ -35,10 +35,8 @@ export const MyVacationInfo = () => {
               to date
             </>
           }
-          numberInfo={currentYear?.vacationDays}
-          footer={`${String(
-            currentYear?.vacationDays - currentYear?.usedDays
-          )} days left`}
+          numberInfo={currentYear?.usedDays}
+          footer={`${String(currentYear?.vacationDays)} days left`}
         />
         <Divider orientation="vertical" height={'100px'} />
         <MyVacationInfoBox
