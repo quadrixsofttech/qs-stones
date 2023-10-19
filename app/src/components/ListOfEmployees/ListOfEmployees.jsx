@@ -15,34 +15,8 @@ import { BiRightArrowAlt } from 'react-icons/bi';
 import NotificationIcon from './notificationIcon';
 import { useTheme } from '@emotion/react';
 
-const ListOfEmployees = () => {
+const ListOfEmployees = ({ employees, handleRowClick, clickedRowIndex }) => {
   const [hoveredRowIndex, setHoveredRowIndex] = useState(null);
-  const [clickedRowIndex, setClickedRowIndex] = useState(null);
-
-  const handleRowClick = (rowIndex) => {
-    if (rowIndex === clickedRowIndex) {
-      setClickedRowIndex(null);
-    } else {
-      setClickedRowIndex(rowIndex);
-    }
-  };
-
-  const employeeData = [
-    { name: 'Ivan Srejic' },
-    { name: 'Martini Martini' },
-    { name: 'Pera Peric' },
-    { name: 'Zika Zikic' },
-    { name: 'Milan Milic' },
-    { name: 'Luka Lukic' },
-    { name: 'Selena Selenovic' },
-    { name: 'Ivan Ivanovic' },
-    { name: 'Ana Anic' },
-    { name: 'Mira Miric' },
-    { name: 'Nina Ninic' },
-    { name: 'Stefan Stefanovic' },
-    { name: 'Marko Markovic' },
-    { name: 'Jelena Jelic' },
-  ];
 
   const theme = useTheme();
   const purple400 = theme.colors.purple[400];
@@ -55,7 +29,7 @@ const ListOfEmployees = () => {
       <TableContainer overflowY={'auto'}>
         <Table variant="simple">
           <Tbody>
-            {employeeData.map((employee, index) => (
+            {employees.map((employee, index) => (
               <Tr
                 key={index}
                 onMouseEnter={() => setHoveredRowIndex(index)}
@@ -76,7 +50,9 @@ const ListOfEmployees = () => {
                   <Avatar size={'xs'} />
                 </Td>
                 <Td>
-                  <Text color="gray.700">{employee.name}</Text>
+                  <Text color="gray.700">
+                    {employee.firstName} {employee.lastName}
+                  </Text>
                 </Td>
                 <Td>
                   <Flex {...styles.iconBox}>

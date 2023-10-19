@@ -58,11 +58,22 @@ const useUser = () => {
     return data;
   };
 
+  const getEmployees = async () => {
+    const { data } = await axios.get('/api/v1/employees');
+    return data;
+  };
+
   const {
     data: admins,
     isLoading: adminsLoading,
     error: adminsError,
   } = useQuery('admins', getAdmins);
+
+  const {
+    data: employees,
+    isLoading: employeesLoading,
+    error: employeesError,
+  } = useQuery('employees', getEmployees);
 
   return {
     user,
@@ -74,6 +85,9 @@ const useUser = () => {
     admins,
     adminsLoading,
     adminsError,
+    employees,
+    employeesLoading,
+    employeesError,
   };
 };
 
