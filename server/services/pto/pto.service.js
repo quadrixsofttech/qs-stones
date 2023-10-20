@@ -2,7 +2,6 @@ const PayedTimeOff = require('../../models/pto.model');
 const moment = require('moment');
 const User = require('../../models/user.model');
 
-
 const holidays = [
   '2023-01-01',
   '2023-01-02',
@@ -33,49 +32,28 @@ const getAllPTO = async () => {
 
 const getPTO = async (type) => {
   try {
-    const pto = await PayedTimeOff.aggregate([
-      {
-        $match: {
-          type: type,
-          status: 'approved',
-        },
-      },
-      {
-        $lookup: {
-          from: 'users',
-          let: { userId: '$userId' },
-          pipeline: [
-            {
-              $match: {
-                $expr: { $eq: ['$_id', '$$userId'] },
-              },
-            },
-            {
-              $project: {
-                _id: 0,
-                firstName: 1,
-                lastName: 1,
-                src: 1,
-              },
-            },
-          ],
-          as: 'userArray',
-        },
-      },
-      {
-        $addFields: {
-          user: { $arrayElemAt: ['$userArray', 0] },
-        },
-      },
-      {
-        $project: {
-          userArray: 0,
-        },
-      },
-    ]);
+    const paidTimeOff = await PayedTimeOff.find({ type: type })
+      .populate('userId')
+      .populate('reviewerId');
 
+    const formattedPaidTimeOff = paidTimeOff.map((paidtimeoff) => ({
+      _id: paidtimeoff._id,
+      dates: paidtimeoff.dates,
+      days: paidtimeoff.days,
+      createdAt: paidtimeoff.createdAt,
+      updatedAt: paidtimeoff.updatedAt,
+      type: paidtimeoff.type,
+      status: paidtimeoff.status,
+      userId: paidtimeoff.userId,
+      reviewerId: paidtimeoff.reviewerId,
+      comment: paidtimeoff.comment,
+      user: {
+        firstName: paidtimeoff.userId.firstName,
+        lastName: paidtimeoff.userId.lastName,
+      },
+    }));
     return {
-      pto: pto,
+      pto: formattedPaidTimeOff,
     };
   } catch (err) {
     throw new Error(err);
@@ -107,19 +85,42 @@ const createPTO = async ({
 
       return [...acc, ...filteredDates];
     }, []);
-    const pto = new PayedTimeOff({
-      type,
-      status,
-      userId,
-      reviewerId,
-      days,
-      dates,
-      comment,
-    });
+    const user = await User.findById(userId);
+
+    let maxDate = moment(days[0]);
+
+    for (let date of days) {
+      const currentDate = moment(date);
+      if (currentDate.isAfter(maxDate)) {
+        maxDate = currentDate;
+      }
+    }
+    var totalNumberOfVacationDays;
+    if (maxDate.month() >= 0 && maxDate.month() < 6) {
+      let currentYear = user.vacation.find((v) => v.year === maxDate.year());
+      let lastYear = user.vacation.find((v) => v.year === maxDate.year() - 1);
+      totalNumberOfVacationDays =
+        (currentYear?.vacationDays ?? 0) + (lastYear?.vacationDays ?? 0);
+    } else {
+      let currentYear = user.vacation.find((v) => v.year === maxDate.year());
+      totalNumberOfVacationDays = currentYear?.vacationDays ?? 0;
+    }
+
+    if (type === 'remote' || totalNumberOfVacationDays > days.length) {
+      var pto = new PayedTimeOff({
+        type,
+        status,
+        userId,
+        reviewerId,
+        days,
+        dates,
+        comment,
+      });
+    }
     await pto.save();
     return pto;
   } catch (err) {
-    throw new Error({ success: false, message: 'Problem in creating pto' });
+    throw new Error('Not enough vacation days');
   }
 };
 

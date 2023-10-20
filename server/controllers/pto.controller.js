@@ -22,6 +22,26 @@ const createPaidTimeOff = async (req, res) => {
   }
 };
 
+const updatePaidTimeOff = async (req, res) => {
+  try {
+    const { id, status } = req.body;
+    const updatedPTO = await PtoService.updatePTO(id, { status });
+
+    if (!updatedPTO) {
+      return res
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ success: false, message: 'PTO not found' });
+    }
+    res
+      .status(StatusCodes.OK)
+      .json({ success: true, message: 'PTO updated successfully', updatedPTO });
+  } catch (err) {
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ success: false, message: err.message });
+  }
+};
+
 const getUserHistory = async (req, res) => {
   try {
     const userId = req.params.userId;
@@ -50,4 +70,5 @@ module.exports = {
   createPaidTimeOff,
   getUserHistory,
   getPaidTimeOff,
+  updatePaidTimeOff,
 };
