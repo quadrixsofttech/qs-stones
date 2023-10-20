@@ -24,8 +24,8 @@ const createPaidTimeOff = async (req, res) => {
 
 const updatePaidTimeOff = async (req, res) => {
   try {
-    const { id, status } = req.body;
-    const updatedPTO = await PtoService.updatePTO(id, { status });
+    const { id, status, comment } = req.body;
+    const updatedPTO = await PtoService.updatePTO(id, { status, comment });
 
     if (!updatedPTO) {
       return res
