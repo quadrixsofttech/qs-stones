@@ -1,5 +1,4 @@
 import React from 'react';
-import RequestHistory from '../RequestHistory/RequestHistory';
 import {
   Flex,
   Modal,
@@ -15,6 +14,7 @@ import RequestStatusWrapper from '../../../RequestPTO/RequestStatus/RequestStatu
 import { RenderRangeTags } from '../../../RequestPTOModal/RenderRangeTags';
 import moment from 'moment';
 import { capitalizeFirstLetter } from '../../../../util';
+import styles from './RequestHistoryModal.styles';
 
 const RequestHistoryModal = ({
   isOpen,
@@ -35,7 +35,7 @@ const RequestHistoryModal = ({
               <Text color="gray.700">{capitalizeFirstLetter(type)}</Text>
               <RequestStatusWrapper status={status} />
             </Flex>
-            <Text fontSize={'xs'} color="gray.700" fontWeight={'400'}>
+            <Text {...styles.createdAtText}>
               {moment(createdAt).format('YYYY/MM/DD hh:mm')}
             </Text>
           </Flex>
