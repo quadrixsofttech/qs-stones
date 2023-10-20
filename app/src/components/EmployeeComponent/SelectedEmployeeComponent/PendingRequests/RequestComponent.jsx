@@ -14,11 +14,14 @@ const RequestComponent = ({ type, range, createdAt, id, refetchPTO }) => {
     refetchPTO();
     toast({
       position: 'top-right',
-      status: 'success',
+      status: status === 'approved' ? 'success' : 'warning',
       variant: 'subtle',
-      description: 'You have successfully approved a remote/vacation request',
+      description:
+        status === 'approved'
+          ? 'You have successfully approved a remote/vacation request'
+          : 'You have rejected a remote/vacation request',
       isClosable: true,
-      colorScheme: 'green',
+      colorScheme: status === 'approved' ? 'green' : 'yellow',
     });
   };
 
