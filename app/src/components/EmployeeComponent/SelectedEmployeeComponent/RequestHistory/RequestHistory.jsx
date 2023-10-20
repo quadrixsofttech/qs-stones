@@ -6,7 +6,6 @@ import RequestHistoryComponent from './RequestHistoryComponent';
 const RequestHistory = ({ requestHistory }) => {
   return (
     <Box {...styles.mainBox}>
-      {/* Izmapiraj podatke koji su approved i rejected */}
       {requestHistory.map((request) => {
         return (
           <RequestHistoryComponent
@@ -14,7 +13,7 @@ const RequestHistory = ({ requestHistory }) => {
             createdAt={request.createdAt}
             dates={request.dates}
             status={request.status}
-            comment={'Komentar ima'}
+            comment={request.comment}
           />
         );
       })}

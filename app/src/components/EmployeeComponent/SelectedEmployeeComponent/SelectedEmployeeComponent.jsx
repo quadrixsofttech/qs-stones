@@ -10,7 +10,7 @@ import RequestHistory from './RequestHistory/RequestHistory';
 const SelectedEmployeeComponent = ({ data, refetchPTO }) => {
   const [ptoType, setPtoType] = useState('vacation');
   const [requestHistoryData, setRequestHistoryData] = useState(
-    data.filter((x) => x.type === ptoType)
+    data.filter((x) => x.status === 'approved' || x.status === 'rejected')
   );
 
   const handlePtoTypeChange = (event) => {
@@ -18,7 +18,13 @@ const SelectedEmployeeComponent = ({ data, refetchPTO }) => {
   };
 
   useEffect(() => {
-    setRequestHistoryData(data.filter((x) => x.type === ptoType));
+    setRequestHistoryData(
+      data.filter(
+        (x) =>
+          x.type === ptoType &&
+          (x.status === 'approved' || x.status === 'rejected')
+      )
+    );
   }, [ptoType, data]);
 
   const pendingRequests = data.filter((x) => x.status === 'pending');

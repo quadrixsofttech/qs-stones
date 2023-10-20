@@ -9,7 +9,7 @@ export const usePaidTimeOff = (employeeId) => {
 
   const paidTimeOffCallback = async () => {
     const response = await axios.get(`api/v1/paid-time-off/history/${userId}`);
-    return response.data;
+    return response.data.reverse();
   };
   const {
     data: paidTimeOffHistory = [],
