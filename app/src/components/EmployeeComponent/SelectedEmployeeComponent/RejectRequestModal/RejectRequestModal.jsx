@@ -31,7 +31,7 @@ const RejectRequestModal = ({
 
   console.log(comment);
   return (
-    <Modal isOpen={isOpen} onClose={onClose} isCentered>
+    <Modal isOpen={isOpen} onClose={onClose} isCentered size="xl">
       <ModalOverlay />
       <ModalContent>
         <Flex flexDir={'column'}>
@@ -60,6 +60,7 @@ const RejectRequestModal = ({
                 size="sm"
                 value={comment}
                 onChange={handleInputChange}
+                rounded={'md'}
               />
             </Flex>
           </ModalBody>
