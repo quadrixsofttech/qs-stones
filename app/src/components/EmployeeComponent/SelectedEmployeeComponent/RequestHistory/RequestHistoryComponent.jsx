@@ -10,6 +10,7 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
+  Textarea,
   useDisclosure,
 } from '@chakra-ui/react';
 import React from 'react';
@@ -17,9 +18,19 @@ import styles from './RequestHistory.styles';
 import RequestStatusWrapper from '../../../RequestPTO/RequestStatus/RequestStatus';
 import { BiCommentDetail } from 'react-icons/bi';
 import moment from 'moment';
-import { showDateRangesAsString } from '../../../../util/index';
+import {
+  capitalizeFirstLetter,
+  showDateRangesAsString,
+} from '../../../../util/index';
+import { RenderRangeTags } from '../../../RequestPTOModal/RenderRangeTags';
 
-const RequestHistoryComponent = ({ createdAt, dates, comment, status }) => {
+const RequestHistoryComponent = ({
+  createdAt,
+  dates,
+  comment,
+  status,
+  type,
+}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -35,8 +46,6 @@ const RequestHistoryComponent = ({ createdAt, dates, comment, status }) => {
           </Text>
           <Divider {...styles.divider} />
           <Text {...styles.dates}>{showDateRangesAsString(dates)} </Text>
-
-          {/* Ovde izmapiraj dates, i formatiraj YYYY/MM/DD */}
         </Flex>
         <Flex {...styles.statusBox}>
           {comment && <BiCommentDetail size="20" />}
@@ -44,19 +53,36 @@ const RequestHistoryComponent = ({ createdAt, dates, comment, status }) => {
           <RequestStatusWrapper status={status} />
         </Flex>
       </Flex>
-      {/* Ovaj modal je cisto tu radi funckionalnosti, kasnije se kreiraju modali za rejected i za approved */}
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} size="xl" isCentered>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
+          <ModalHeader>
+            <Flex flexDir={'column'} gap="1">
+              <Flex align={'center'} gap="1">
+                <Text color="gray.700">{capitalizeFirstLetter(type)}</Text>
+                <RequestStatusWrapper status={status} />
+              </Flex>
+              <Text fontSize={'xs'} color="gray.700" fontWeight={'400'}>
+                {moment(createdAt).format('YYYY/MM/DD hh:mm')}
+              </Text>
+            </Flex>
+            <Flex flexWrap={'wrap'} pt="4" pb="4">
+              {dates.map((range) => {
+                return (
+                  <RenderRangeTags
+                    range={range}
+                    key={Math.random()}
+                    showClose={false}
+                  />
+                );
+              })}
+            </Flex>
+            <Flex>
+              {comment && <Textarea isDisabled placeholder={comment} />}
+            </Flex>
+          </ModalHeader>
           <ModalCloseButton />
           <ModalBody></ModalBody>
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
-              Close
-            </Button>
-            <Button variant="ghost">Secondary Action</Button>
-          </ModalFooter>
         </ModalContent>
       </Modal>
     </>
