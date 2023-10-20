@@ -25,7 +25,7 @@ router.post('/', kitchenController.createMeal);
 router.post('/upload', upload.single('file'), kitchenController.uploadImage);
 router.get('/get-meal-image', kitchenController.getMealImage);
 router.get('/', kitchenController.getMeals);
-router.put('/meals/:id');
-router.delete('/meals/:id');
+router.patch('/meals/:id', kitchenController.updateMeal);
+router.delete('/meals/:id', kitchenController.deleteMeal);
 
 module.exports = router;
