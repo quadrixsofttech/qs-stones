@@ -1,4 +1,4 @@
-import { Button, Flex, Text } from '@chakra-ui/react';
+import { Button, Flex, Text, useToast } from '@chakra-ui/react';
 import React from 'react';
 import { RenderRangeTags } from '../../../RequestPTOModal/RenderRangeTags';
 import styles from './PendingRequests.styles';
@@ -8,9 +8,18 @@ import useEmployees from '../../../../hooks/useEmployees';
 
 const RequestComponent = ({ type, range, createdAt, id, refetchPTO }) => {
   const { updatePaidTimeOff } = useEmployees();
+  const toast = useToast();
   const handleRequst = async (id, status) => {
     await updatePaidTimeOff(id, status);
     refetchPTO();
+    toast({
+      position: 'top-right',
+      status: 'success',
+      variant: 'subtle',
+      description: 'You have successfully approved a remote/vacation request',
+      isClosable: true,
+      colorScheme: 'green',
+    });
   };
 
   return (
