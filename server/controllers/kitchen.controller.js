@@ -46,8 +46,14 @@ const getMeals = async (req, res) => {
 const updateMeal = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, update } = req.body;
-    const meal = await KitchenService.updateMeal(id, { update });
+    const { name, ingridients, type, desc, image } = req.body;
+    const meal = await KitchenService.updateMeal(id, {
+      name,
+      ingridients,
+      type,
+      desc,
+      image,
+    });
     return res.json(meal);
   } catch (err) {
     res
