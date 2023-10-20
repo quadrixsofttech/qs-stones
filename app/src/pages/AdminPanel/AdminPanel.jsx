@@ -33,7 +33,6 @@ const AdminPanel = () => {
   const handleRowClick = (rowIndex) => {
     if (rowIndex === clickedRowIndex) {
       setClickedRowIndex(null);
-      setEmployeeId(null);
     } else {
       setClickedRowIndex(rowIndex);
       setName(
@@ -54,6 +53,7 @@ const AdminPanel = () => {
           isClicked={clickedRowIndex !== null}
           name={name}
           paidTimeOff={paidTimeOffHistory}
+          refetchPTO={refetchPTO}
         />
       </Flex>
     </DashboardLayout>

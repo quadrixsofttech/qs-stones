@@ -37,12 +37,24 @@ const useEmployees = (type = 'vacation') => {
       return error.response?.data || 'An unknown error occurred';
     },
   });
+  const updatePaidTimeOff = async (id, status) => {
+    try {
+      const response = await axios.patch(`api/v1/paid-time-off`, {
+        id,
+        status,
+      });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  };
 
   return {
     data,
     createPTO,
     isLoading,
     refetchPTO,
+    updatePaidTimeOff,
   };
 };
 export default useEmployees;
