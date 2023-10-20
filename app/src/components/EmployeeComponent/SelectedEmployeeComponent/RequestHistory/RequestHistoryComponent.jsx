@@ -23,6 +23,7 @@ import {
   showDateRangesAsString,
 } from '../../../../util/index';
 import { RenderRangeTags } from '../../../RequestPTOModal/RenderRangeTags';
+import RequestHistoryModal from '../RequestHistoryModal/RequestHistoryModal';
 
 const RequestHistoryComponent = ({
   createdAt,
@@ -53,38 +54,15 @@ const RequestHistoryComponent = ({
           <RequestStatusWrapper status={status} />
         </Flex>
       </Flex>
-      <Modal isOpen={isOpen} onClose={onClose} size="xl" isCentered>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>
-            <Flex flexDir={'column'} gap="1">
-              <Flex align={'center'} gap="1">
-                <Text color="gray.700">{capitalizeFirstLetter(type)}</Text>
-                <RequestStatusWrapper status={status} />
-              </Flex>
-              <Text fontSize={'xs'} color="gray.700" fontWeight={'400'}>
-                {moment(createdAt).format('YYYY/MM/DD hh:mm')}
-              </Text>
-            </Flex>
-            <Flex flexWrap={'wrap'} pt="4" pb="4">
-              {dates.map((range) => {
-                return (
-                  <RenderRangeTags
-                    range={range}
-                    key={Math.random()}
-                    showClose={false}
-                  />
-                );
-              })}
-            </Flex>
-            <Flex>
-              {comment && <Textarea isDisabled placeholder={comment} />}
-            </Flex>
-          </ModalHeader>
-          <ModalCloseButton />
-          <ModalBody></ModalBody>
-        </ModalContent>
-      </Modal>
+      <RequestHistoryModal
+        isOpen={isOpen}
+        onClose={onClose}
+        type={type}
+        status={status}
+        createdAt={createdAt}
+        dates={dates}
+        comment={comment}
+      />
     </>
   );
 };
