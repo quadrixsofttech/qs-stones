@@ -35,11 +35,11 @@ const RejectRequestModal = ({
       <ModalOverlay />
       <ModalContent>
         <Flex flexDir={'column'}>
-          <ModalHeader>Reject Request?</ModalHeader>
+          <ModalHeader color="gray.700">Reject Request?</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Flex flexDir={'column'} gap="4">
-              <Text>
+              <Text color="gray.700">
                 {`Are you sure you want to reject the ${type} request for:`}
               </Text>
               <Flex flexWrap={'wrap'} gap="1">
