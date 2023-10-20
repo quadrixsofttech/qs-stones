@@ -41,7 +41,7 @@ const RequestComponent = ({ type, range, createdAt, id, refetchPTO }) => {
           </Button>
           <Button
             {...styles.rejectButton}
-            onClick={() => handleRequst(id, 'reject')}
+            onClick={() => handleRequst(id, 'rejected')}
           >
             <Text color="white">Reject</Text>
           </Button>
