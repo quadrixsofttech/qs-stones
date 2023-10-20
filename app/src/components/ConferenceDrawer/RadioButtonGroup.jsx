@@ -16,6 +16,7 @@ import DatePicker from 'react-multi-date-picker';
 import { AiTwotoneCalendar } from 'react-icons/ai';
 import { useFormikContext } from 'formik';
 import moment from 'moment';
+import MeetingRepetition from '../../constants/MeetingRepetition';
 
 const RadioButtonGroup = React.memo(({ f_option, s_option, t_option }) => {
   const datePickerRef = React.useRef(null);
@@ -54,7 +55,7 @@ const RadioButtonGroup = React.memo(({ f_option, s_option, t_option }) => {
       <Stack mt={1}>
         <Radio
           size="sm"
-          value="Never"
+          value={MeetingRepetition.NEVER}
           colorScheme="purple"
           isDisabled={values.repeatReservation ? false : true}
         >
@@ -62,7 +63,7 @@ const RadioButtonGroup = React.memo(({ f_option, s_option, t_option }) => {
         </Radio>
         <Radio
           size="sm"
-          value="After n occurences"
+          value={MeetingRepetition.AFTER_N_OCCURENCES}
           colorScheme="purple"
           isDisabled={values.repeatReservation ? false : true}
         >
@@ -77,7 +78,10 @@ const RadioButtonGroup = React.memo(({ f_option, s_option, t_option }) => {
               max={40}
               clampValueOnBlur={false}
               isDisabled={
-                values.meetingRepetition === 'After n occurences' ? false : true
+                values.meetingRepetition ===
+                MeetingRepetition.AFTER_N_OCCURENCES
+                  ? false
+                  : true
               }
               onChange={handleNumberOfOccurences}
             >
@@ -96,7 +100,7 @@ const RadioButtonGroup = React.memo(({ f_option, s_option, t_option }) => {
         </Radio>
         <Radio
           size="sm"
-          value="On specific date"
+          value={MeetingRepetition.ON_SPECIFIC_DATE}
           colorScheme="purple"
           isDisabled={values.repeatReservation ? false : true}
         >
@@ -106,8 +110,8 @@ const RadioButtonGroup = React.memo(({ f_option, s_option, t_option }) => {
           fontSize="sm"
           color={
             values.repeatReservation &&
-            values.meetingRepetition !== 'Never' &&
-            values.meetingRepetition !== 'After n occurences'
+            values.meetingRepetition !== MeetingRepetition.NEVER &&
+            values.meetingRepetition !== MeetingRepetition.AFTER_N_OCCURENCES
               ? 'gray.700'
               : 'gray.200'
           }
@@ -119,8 +123,8 @@ const RadioButtonGroup = React.memo(({ f_option, s_option, t_option }) => {
           minDate={new moment().format('YYYY-MM-DD')}
           disabled={
             values.repeatReservation &&
-            values.meetingRepetition !== 'Never' &&
-            values.meetingRepetition !== 'After n occurences'
+            values.meetingRepetition !== MeetingRepetition.NEVER &&
+            values.meetingRepetition !== MeetingRepetition.AFTER_N_OCCURENCES
               ? false
               : true
           }
@@ -129,8 +133,8 @@ const RadioButtonGroup = React.memo(({ f_option, s_option, t_option }) => {
           onChange={(value) => setFieldValue('selectedDateFromInput', value)}
         />
         {values.repeatReservation &&
-        values.meetingRepetition !== 'Never' &&
-        values.meetingRepetition !== 'After n occurences' ? (
+        values.meetingRepetition !== MeetingRepetition.NEVER &&
+        values.meetingRepetition !== MeetingRepetition.AFTER_N_OCCURENCES ? (
           <Icon
             as={AiTwotoneCalendar}
             onClick={() => {

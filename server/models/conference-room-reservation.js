@@ -18,10 +18,6 @@ const ConferenceRoomReservationSchema = new Schema({
     type: String,
     required: true,
   },
-  everyDay: {
-    type: Boolean,
-    default: false,
-  },
   title: {
     type: String,
     required: true,

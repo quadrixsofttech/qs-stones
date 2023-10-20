@@ -54,7 +54,6 @@ const PickTimeAndRoom = ({ isEditMode, reservationData }) => {
     return <Spinner />;
   }
 
-  console.log(values);
 
   const floors = ['Upper Floor', 'Lower Floor'];
 
@@ -62,7 +61,7 @@ const PickTimeAndRoom = ({ isEditMode, reservationData }) => {
     setFieldValue('floor', e.target.value);
   };
 
-  // console.log(values);
+ 
 
   const filteredConferenceRooms =
     values.floor === 'Upper Floor'
