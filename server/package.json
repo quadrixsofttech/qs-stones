@@ -23,7 +23,8 @@
     "jwt-decode": "^2.2.0",
     "moment": "^2.29.4",
     "mongoose": "^5.9.13",
-    "node-cron": "^3.0.2"
+    "node-cron": "^3.0.2",
+    "yarn": "^1.22.19"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"

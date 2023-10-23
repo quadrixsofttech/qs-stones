@@ -23,7 +23,7 @@ const DashboardSidebar = () => {
           <BiChalkboard size={20} />
           <Text>Conference</Text>
         </Flex>
-        <Flex {...styles.sideBarButton} as={NavLink} to="/">
+        <Flex {...styles.sideBarButton} as={NavLink} to="/kitchen">
           <BiDish size={20} />
           <Text>Kitchen</Text>
         </Flex>

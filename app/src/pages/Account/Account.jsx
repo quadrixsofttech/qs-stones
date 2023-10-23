@@ -1,58 +1,32 @@
 import React, { useState } from 'react';
 import DashboardLayout from '../../layout/DashboardLayout';
-import {
-  Alert,
-  AlertIcon,
-  Box,
-  FormControl,
-  FormHelperText,
-  FormLabel,
-  Heading,
-  Select,
-} from '@chakra-ui/react';
+import KitchenOverview from '../../components/KitchenOverview/KitchenOverview';
+import MealStepper from '../../components/MealStepper';
 import styles from './Account.styles';
-import useUser from '../../hooks/useUser';
+import { Flex, Heading , Button, Spacer, Checkbox} from '@chakra-ui/react';
 
 const Account = () => {
-  const { user, setUserRole } = useUser();
-  const [successMessage, setSuccessMessage] = useState();
-  const [errorMessage, setErrorMessage] = useState();
 
   return (
     <DashboardLayout>
-      <Heading>Account Settings</Heading>
-      <Box {...styles.card}>
-        <FormControl>
-          <FormLabel>User Role</FormLabel>
-          <Select
-            placeholder="Select user role"
-            defaultValue={user.role}
-            onChange={(e) =>
-              setUserRole(
-                e.target.value,
-                ({ message }) => setSuccessMessage(message),
-                ({ message }) => setErrorMessage(message)
-              )
-            }
-          >
-            <option value="user">User</option>
-            <option value="admin">Admin</option>
-          </Select>
-          <FormHelperText>Select a role for yourself.</FormHelperText>
-        </FormControl>
-        {successMessage && (
-          <Alert status="success" mt={3}>
-            <AlertIcon />
-            {successMessage}
-          </Alert>
-        )}
-        {errorMessage && (
-          <Alert status="error" mt={3}>
-            <AlertIcon />
-            {errorMessage}
-          </Alert>
-        )}
-      </Box>
+    <MealStepper />
+     <Flex>
+        <Heading size="2xl" ml="14px">
+          Choose dish
+        </Heading>
+        <Spacer />
+        <Button
+         {...styles.buttonChooseDay}
+        >
+          Choose day
+        </Button>
+      </Flex>
+      <KitchenOverview/>
+      <Flex>
+        <Checkbox colorScheme='purple' ml="17px" size="lg">
+          Bread
+        </Checkbox>
+      </Flex>
     </DashboardLayout>
   );
 };
