@@ -28,7 +28,10 @@ export default function GenerateMarkerColor() {
             selectedColor === color ? '3px solid' : '3px solid transparent'
           }
           borderColor={selectedColor === color ? 'purple.500' : 'transparent'}
-          onClick={() => handleColorClick(color)}
+          onClick={() => {
+            handleColorClick(color);
+            setFieldValue('markerColor', color);
+          }}
         ></Box>
       ))}
     </Flex>

@@ -24,6 +24,7 @@ import CardInfo from './CardInfo';
 import { reservationSchema, initialValues } from './formikConfig';
 import { useConferenceRoomReservation } from '../../hooks/useConferenceRoomReservation';
 import { useState } from 'react';
+import moment from 'moment';
 
 export default function ConferenceDrawer({
   btnRef,
@@ -34,45 +35,29 @@ export default function ConferenceDrawer({
 }) {
   const toast = useToast();
 
-  const { isLoading, updateReservation, createReservation } =
-    useConferenceRoomReservation();
+  const { isLoading, createReservation } = useConferenceRoomReservation();
   const [selectedDatesArray, setSelectedDatesArray] = useState([]);
+  const [valuesForBE, setValuesForBE] = useState([]);
 
   if (isLoading) {
     return <Spinner />;
   }
 
-  const handleSubmit = (values, errors) => {
-    onClose();
-    console.log(errors);
+  const handleSubmit = (values) => {
     toast({
       position: 'top-right',
       status: 'success',
       variant: 'subtle',
-      description: `You have successfully reserved ${
-        values.conferenceRoom
-      } for the date
-      ${values.selectedDate.format('YYYY/MM/DD')} from ${values.startTime} to ${
-        values.endTime
-      }`,
+      description: `You have successfully reserved ${values.column} for the date
+        ${values.selectedDate.format('YYYY/MM/DD')} from ${
+        values.startTime
+      } to ${values.endTime}`,
     });
+    onClose();
+    createReservation(valuesForBE);
   };
 
-  const handleFormikOnSubmit = async (values) => {
-    try {
-      if (isEditMode) {
-        await updateReservation(reservationData.id, values);
-      } else {
-        if (values.endTime > values.startTime) {
-          await createReservation(values);
-          handleSubmit();
-        }
-        onClose();
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  console.log(valuesForBE);
 
   return (
     <>
@@ -91,7 +76,7 @@ export default function ConferenceDrawer({
           <Formik
             initialValues={initialValues}
             validationSchema={reservationSchema}
-            onSubmit={handleFormikOnSubmit}
+            onSubmit={(values) => handleSubmit(values)}
           >
             {({ values }) => (
               <Form>
@@ -100,6 +85,7 @@ export default function ConferenceDrawer({
                     <PickTimeAndRoom
                       isEditMode={isEditMode}
                       reservationData={reservationData}
+                      setValuesForBE={setValuesForBE}
                     />
                   </Box>
                   {!isEditMode && (
@@ -139,7 +125,7 @@ export default function ConferenceDrawer({
                   )}
                   <Divider />
                   <Box p={6}>
-                    <CardInfo isEditMode={isEditMode} />
+                    <CardInfo />
                   </Box>
                 </DrawerBody>
 

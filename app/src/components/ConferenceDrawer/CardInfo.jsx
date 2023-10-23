@@ -2,7 +2,7 @@ import { Input, Text, Textarea } from '@chakra-ui/react';
 import { ErrorMessage, Field, useFormikContext } from 'formik';
 import GenerateMarkerColor from './GenerateMarkerColor/GenerateMarkerColor';
 
-const CardInfo = ({ isEditMode }) => {
+const CardInfo = () => {
   const { values, setFieldValue } = useFormikContext();
 
   const handleTitleChange = (e) => {

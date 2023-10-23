@@ -82,6 +82,14 @@ const TimePicker = ({ isEditMode }) => {
     setFieldValue('endTime', selectedEndTime);
   };
 
+  const validateEndTime = () => {
+    let error;
+    if (!moment(values.endTime, 'HH:mm') > moment(values.startTime, 'HH:mm')) {
+      error = 'End time must be greater than start time';
+    }
+    return error;
+  };
+
   return (
     <Flex flexDir={'column'} justifyContent={'flex-start'} gap={'3'}>
       <Field name="startTime">
@@ -103,7 +111,7 @@ const TimePicker = ({ isEditMode }) => {
         )}
       </Field>
       <ErrorMessage name="startTime" component="div" className="error" />
-      <Field name="endTime">
+      <Field name="endTime" validate={validateEndTime}>
         {({ field }) => (
           <Select
             placeholder="Select End Time"
