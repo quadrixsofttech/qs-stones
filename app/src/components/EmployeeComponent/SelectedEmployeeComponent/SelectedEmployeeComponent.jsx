@@ -1,5 +1,5 @@
 import { Flex, Select, Text } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import EmptyInbox from '../../../images/EmptyInbox.png';
 import styles from './SelectedEmployeeComponent.styles';
 import { MyVacationInfo } from '../../MyVacationInfo/MyVacationInfo';
@@ -17,10 +17,25 @@ const SelectedEmployeeComponent = ({ data, refetchPTO }) => {
     setPtoType(event.target.value);
   };
 
+  useEffect(() => {
+    setRequestHistoryData(
+      data.filter(
+        (x) =>
+          x.type === ptoType &&
+          (x.status === 'approved' || x.status === 'rejected')
+      )
+    );
+  }, [ptoType, data]);
+
+  const pendingRequests = data.filter((x) => x.status === 'pending');
+
   return (
     <Flex flexDir={'column'} height={'100%'} overflow={'hidden'}>
-      {data?.length > 0 ? (
-        <PendingRequests />
+      {pendingRequests?.length > 0 ? (
+        <PendingRequests
+          pendingRequests={pendingRequests}
+          refetchPTO={refetchPTO}
+        />
       ) : (
         <EmptyRequest
           image={EmptyInbox}
@@ -45,7 +60,7 @@ const SelectedEmployeeComponent = ({ data, refetchPTO }) => {
           </Select>
         </Flex>
         {data?.length > 0 ? (
-          <RequestHistory />
+          <RequestHistory requestHistory={requestHistoryData} />
         ) : (
           <EmptyRequest
             label={'Your requests history list is empty'}
