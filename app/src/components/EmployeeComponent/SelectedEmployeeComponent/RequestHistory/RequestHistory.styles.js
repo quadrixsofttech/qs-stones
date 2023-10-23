@@ -9,10 +9,12 @@ const mainBox = {
 const requestHistoryBox = {
   borderBottom: '1px ',
   borderTop: '1px ',
-  borderColor: 'gray.200',
   alignItems: 'center',
   justifyContent: 'space-between',
   height: 8,
+  _hover: {
+    backgroundColor: 'gray.100',
+  },
 };
 const createdAt = {
   fontSize: 'sm',
