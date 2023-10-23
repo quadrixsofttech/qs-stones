@@ -16,7 +16,7 @@ const SelectedEmployeeComponent = ({ data }) => {
 
   return (
     <Flex flexDir={'column'} height={'100%'} overflow={'hidden'}>
-      {data.length > 0 ? (
+      {data?.length > 0 ? (
         <PendingRequests />
       ) : (
         <EmptyRequest
@@ -41,7 +41,7 @@ const SelectedEmployeeComponent = ({ data }) => {
             </option>
           </Select>
         </Flex>
-        {data.length > 0 ? (
+        {data?.length > 0 ? (
           <RequestHistory />
         ) : (
           <EmptyRequest
