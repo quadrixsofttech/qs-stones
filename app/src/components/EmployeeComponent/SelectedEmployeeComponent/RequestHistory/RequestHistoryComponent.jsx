@@ -1,28 +1,10 @@
-import {
-  Button,
-  Divider,
-  Flex,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  Text,
-  Textarea,
-  useDisclosure,
-} from '@chakra-ui/react';
+import { Divider, Flex, Text, useDisclosure } from '@chakra-ui/react';
 import React from 'react';
 import styles from './RequestHistory.styles';
 import RequestStatusWrapper from '../../../RequestPTO/RequestStatus/RequestStatus';
 import { BiCommentDetail } from 'react-icons/bi';
 import moment from 'moment';
-import {
-  capitalizeFirstLetter,
-  showDateRangesAsString,
-} from '../../../../util/index';
-import { RenderRangeTags } from '../../../RequestPTOModal/RenderRangeTags';
+import { showDateRangesAsString } from '../../../../util/index';
 import RequestHistoryModal from '../RequestHistoryModal/RequestHistoryModal';
 
 const RequestHistoryComponent = ({
