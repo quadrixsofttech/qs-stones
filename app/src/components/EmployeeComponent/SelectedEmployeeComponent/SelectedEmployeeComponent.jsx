@@ -14,7 +14,6 @@ const SelectedEmployeeComponent = ({ data }) => {
     setPtoType(event.target.value);
   };
 
-  console.log(ptoType);
   return (
     <Flex flexDir={'column'} height={'100%'} overflow={'hidden'}>
       {data.length > 0 ? (
