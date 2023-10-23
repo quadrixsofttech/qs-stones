@@ -54,14 +54,12 @@ const PickTimeAndRoom = ({ isEditMode, reservationData }) => {
     return <Spinner />;
   }
 
-
   const floors = ['Upper Floor', 'Lower Floor'];
 
   const handleFloorChange = (e) => {
     setFieldValue('floor', e.target.value);
   };
 
- 
 
   const filteredConferenceRooms =
     values.floor === 'Upper Floor'
@@ -77,7 +75,7 @@ const PickTimeAndRoom = ({ isEditMode, reservationData }) => {
             size="md"
             {...field}
             onChange={handleFloorChange}
-            value={isEditMode ? values.floor : 'Upper Floor'}
+            value={values.floor}
           >
             {floors.map((floor) => (
               <option key={floor} value={floor}>
@@ -97,7 +95,7 @@ const PickTimeAndRoom = ({ isEditMode, reservationData }) => {
           <Select
             size="md"
             {...field}
-            value={isEditMode ? values.column : 'Collaboration Room'}
+            value={values.column}
             onChange={(e) => {
               const newValue = e.target.value;
               field.onChange(e);

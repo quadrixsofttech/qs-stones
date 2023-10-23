@@ -88,7 +88,7 @@ const TimePicker = ({ isEditMode }) => {
         {({ field }) => (
           <Select
             placeholder="Select Start Time"
-            value={isEditMode ? values.startTime : ''}
+            value={values.startTime}
             onChange={handleStartTimeSelection}
           >
             {values.startAtArray &&
@@ -107,7 +107,7 @@ const TimePicker = ({ isEditMode }) => {
         {({ field }) => (
           <Select
             placeholder="Select End Time"
-            value={isEditMode ? values.endTime : ''}
+            value={values.endTime}
             onChange={handleEndTimeSelection}
           >
             {values.startAtArray &&
