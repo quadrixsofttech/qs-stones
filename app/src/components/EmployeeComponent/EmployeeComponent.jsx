@@ -1,4 +1,4 @@
-import { Flex, Heading, Spinner } from '@chakra-ui/react';
+import { Flex, Heading } from '@chakra-ui/react';
 import React from 'react';
 import styles from './EmployeeComponent.styles';
 import EmptyEmployeeComponent from './EmptyEmployeeComponent/EmptyEmployeeComponent';
