@@ -23,7 +23,7 @@ const CardInfo = ({ isEditMode }) => {
           <Input
             {...field}
             placeholder="Please enter a title..."
-            defaultValue={isEditMode ? values.title : ''}
+            value={values.title}
             onChange={handleTitleChange}
           />
         )}
@@ -35,7 +35,7 @@ const CardInfo = ({ isEditMode }) => {
       <Textarea
         placeholder="Please enter a description..."
         h={'20'}
-        defaultValue={isEditMode ? values.description : ''}
+        value={values.description}
         onChange={handleDescriptionChange}
         resize="none"
       />

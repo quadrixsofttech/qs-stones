@@ -63,10 +63,12 @@ export default function ConferenceDrawer({
       if (isEditMode) {
         await updateReservation(reservationData.id, values);
       } else {
-        await createReservation(values);
-        handleSubmit();
+        if (values.endTime > values.startTime) {
+          await createReservation(values);
+          handleSubmit();
+        }
+        onClose();
       }
-      onClose();
     } catch (error) {
       console.error(error);
     }
