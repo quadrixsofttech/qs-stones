@@ -52,7 +52,7 @@ import {
                     <Text fontSize={'sm'} color="black">
                       Ingredients:
                     </Text>
-                    <Text {...styles.mealInfoBold}> {ingredients.join(", ")} </Text>
+                    <Text {...styles.mealInfoBold}> {ingredients} </Text>
                     <Text fontSize={'sm'} color="black">
                       Description:
                     </Text>

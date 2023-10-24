@@ -16,6 +16,7 @@ const buttonChooseDay = {
   paddingLeft: 6,
   paddingRight: 6,
   overflow: 'hidden',
+  mr: '17px'
 };
 
 const styles = {

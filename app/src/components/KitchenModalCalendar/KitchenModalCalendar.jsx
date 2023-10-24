@@ -33,13 +33,13 @@ const KitchenModalCalendar = ({
           </ModalBody>
           <ModalFooter>
             <Button 
+              variant='outline' 
               colorScheme='purple' 
               mr={3} 
               onClick={onClose}>
               Close
             </Button>
             <Button 
-              variant='outline' 
               colorScheme='purple' 
               onClick={() => {
               setChooseDateValue(selectDate);

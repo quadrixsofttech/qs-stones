@@ -2,42 +2,31 @@ import React, { useState } from 'react';
 import DashboardLayout from '../../layout/DashboardLayout';
 import KitchenOverview from '../../components/KitchenOverview/KitchenOverview';
 import MealStepper from '../../components/MealStepper';
-import styles from './Account.styles';
-import {
-  Flex,
-  Heading,
-  Button,
-  Spacer,
-  Checkbox,
-  Container,
-  Stack,
-} from '@chakra-ui/react';
+import KitchenFooter from '../../components/KitchenFooter';
+import styles from './Kitchen.styles';
+import KitchenHeader from '../../components/KitchenHeader';
+import { Flex, Heading, Button, Spacer, useSteps } from '@chakra-ui/react';
 import { useDisclosure, Text } from '@chakra-ui/react';
 import KitchenModalCalendar from '../../components/KitchenModalCalendar/KitchenModalCalendar';
 import moment from 'moment';
 
-const Account = () => {
+const Kitchen = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectDate, setSelectDate] = useState(
     String(new moment().format('YYYY/MM/DD'))
   );
   const [chooseDateValue, setChooseDateValue] = useState('');
+  
+  const steps = [{ title: 'Meal' }, { title: 'Salad' }, { title: 'Review' }];
+  const { activeStep, setActiveStep } = useSteps({
+    index: 0,
+    count: steps.length,
+  });
 
   return (
     <DashboardLayout>
-      <MealStepper />
-      <Flex>
-        <Heading size="2xl" ml="14px" positon="fixed">
-          Choose dish
-        </Heading>
-        <Spacer />
-        <Text mr="12px" fontWeight="bold" fontSize="30px">
-          {chooseDateValue}
-        </Text>
-        <Button {...styles.buttonChooseDay} onClick={onOpen}>
-          Choose day
-        </Button>
-      </Flex>
+      <MealStepper steps={steps} activeStep={activeStep} />
+      <KitchenHeader onOpen={onOpen} chooseDateValue={chooseDateValue} />
       <KitchenModalCalendar
         isOpen={isOpen}
         onClose={onClose}
@@ -46,16 +35,9 @@ const Account = () => {
         setSelectDate={setSelectDate}
       />
       <KitchenOverview />
-
-      <Flex as="footer" py={{ md: '6' }} w="100%">
-        <Checkbox colorScheme="purple" ml="17px" size="lg">
-          Bread
-        </Checkbox>
-        <Spacer />
-        <Button colorScheme="purple">Next</Button>
-      </Flex>
+      <KitchenFooter activeStep={activeStep} setActiveStep={setActiveStep} />
     </DashboardLayout>
   );
 };
 
-export default Account;
+export default Kitchen;

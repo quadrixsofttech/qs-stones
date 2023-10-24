@@ -2,8 +2,7 @@ import { lazy } from 'react';
 import { Route } from 'react-router-dom';
 
 const PayedTimeOff = lazy(() => import('./../../pages/PayedTimeOff'));
-const Account = lazy(() => import('../../pages/Account'));
-//const Kitchen = lazy(() => import('../../components/KitchenOverview/KitchenMealModal'));
+const Kitchen = lazy(() => import('../../pages/Kitchen'));
 const Conference = lazy(() => import('../../pages/Conference'));
 const ConferenceOverviewPage = lazy(() =>
   import('../../pages/ConferenceOverviewPage')
@@ -11,7 +10,7 @@ const ConferenceOverviewPage = lazy(() =>
 
 const AuthenticatedRoutes = [
   <Route key="dashboard" path="/dashboard" element={<PayedTimeOff />} />,
-  <Route key="kitchen" path="/kitchen" element={<Account />} />,
+  <Route key="kitchen" path="/kitchen" element={<Kitchen />} />,
   <Route key="conference" path="/conference" element={<Conference />} />,
   <Route
     key="conference-overview"
