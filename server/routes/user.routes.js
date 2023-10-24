@@ -5,6 +5,7 @@ const UserController = require('../controllers/user.controller');
 const router = express.Router();
 
 router.get('/users', UserController.getUsers);
+router.get('/employees', UserController.getEmployees);
 router.get('/admins', UserController.getAdministrators);
 router.get('/vacations/:id', UserController.getVacations);
 router.patch('/user-role', UserController.updateRole);

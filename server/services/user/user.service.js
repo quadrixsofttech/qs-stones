@@ -1,7 +1,6 @@
 const User = require('../../models/user.model');
 const moment = require('moment');
 
-
 const getAllUsers = async () => {
   try {
     const users = await User.find()
@@ -19,6 +18,17 @@ const getAdmins = async () => {
       .select('_id firstName lastName')
       .lean();
     return admins;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
+const getEmployees = async () => {
+  try {
+    const employees = await User.find({ role: 'user' })
+      .select('_id firstName lastName avatar email')
+      .lean();
+    return employees;
   } catch (err) {
     throw new Error(err);
   }
@@ -59,4 +69,5 @@ module.exports = {
   getAdmins,
   getUserVacation,
   getTotalUsersWorkingToday,
+  getEmployees,
 };

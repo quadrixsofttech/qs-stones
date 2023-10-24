@@ -1,5 +1,5 @@
 import { Flex, Select, Text } from '@chakra-ui/react';
-import React from 'react';
+import React, { useState } from 'react';
 import EmptyInbox from '../../../images/EmptyInbox.png';
 import styles from './SelectedEmployeeComponent.styles';
 import { MyVacationInfo } from '../../MyVacationInfo/MyVacationInfo';
@@ -8,9 +8,15 @@ import PendingRequests from './PendingRequests/PendingRequests';
 import RequestHistory from './RequestHistory/RequestHistory';
 
 const SelectedEmployeeComponent = ({ data }) => {
+  const [ptoType, setPtoType] = useState('Vacation');
+
+  const handlePtoTypeChange = (event) => {
+    setPtoType(event.target.value);
+  };
+
   return (
     <Flex flexDir={'column'} height={'100%'} overflow={'hidden'}>
-      {data ? (
+      {data?.length > 0 ? (
         <PendingRequests />
       ) : (
         <EmptyRequest
@@ -22,7 +28,11 @@ const SelectedEmployeeComponent = ({ data }) => {
       <Flex flexDir={'column'} overflow={'auto'} height={'30%'}>
         <Flex {...styles.requestHistoryBox}>
           <Text {...styles.text}>Request History</Text>
-          <Select {...styles.select}>
+          <Select
+            {...styles.select}
+            value={ptoType}
+            onChange={handlePtoTypeChange}
+          >
             <option key={'Vacation'} value={'Vacation'}>
               Vacation
             </option>
@@ -31,7 +41,7 @@ const SelectedEmployeeComponent = ({ data }) => {
             </option>
           </Select>
         </Flex>
-        {data ? (
+        {data?.length > 0 ? (
           <RequestHistory />
         ) : (
           <EmptyRequest
