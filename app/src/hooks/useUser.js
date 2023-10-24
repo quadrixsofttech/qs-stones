@@ -73,6 +73,7 @@ const useUser = () => {
     data: employees,
     isLoading: employeesLoading,
     error: employeesError,
+    refetch: refetchEmployees,
   } = useQuery('employees', getEmployees);
 
   return {
@@ -88,6 +89,7 @@ const useUser = () => {
     employees,
     employeesLoading,
     employeesError,
+    refetchEmployees,
   };
 };
 
