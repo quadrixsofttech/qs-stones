@@ -56,6 +56,15 @@ const updateUserRole = async (role, userId) => {
   }
 };
 
+const removeEmployee = async (id) => {
+  try {
+    const employee = await User.deleteOne({ _id: id });
+    return employee;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
 async function getTotalUsersWorkingToday() {
   const currentDate = moment().format('YYYY/MM/DD');
   const activeUsers = await User.find({ active: true, days: currentDate });
@@ -70,4 +79,5 @@ module.exports = {
   getUserVacation,
   getTotalUsersWorkingToday,
   getEmployees,
+  removeEmployee,
 };
