@@ -67,7 +67,7 @@ const updateRole = async (req, res) => {
 
 const deleteEmployee = async (req, res) => {
   try {
-    const { id } = req.body;
+    const { id } = req.params;
     const employee = await UserService.removeEmployee(id);
     res.send(employee);
   } catch (err) {

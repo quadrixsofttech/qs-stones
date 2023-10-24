@@ -63,6 +63,11 @@ const useUser = () => {
     return data;
   };
 
+  const deleteEmployeeCallback = async (id) => {
+    const { data } = await axios.delete(`/api/v1/employees/${id}`);
+    return data;
+  };
+
   const {
     data: admins,
     isLoading: adminsLoading,
@@ -75,6 +80,8 @@ const useUser = () => {
     error: employeesError,
     refetch: refetchEmployees,
   } = useQuery('employees', getEmployees);
+
+  const deleteEmployee = useMutation(deleteEmployeeCallback);
 
   return {
     user,
@@ -90,6 +97,7 @@ const useUser = () => {
     employeesLoading,
     employeesError,
     refetchEmployees,
+    deleteEmployee,
   };
 };
 
