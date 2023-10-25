@@ -11,16 +11,36 @@ import styles from './KitchenOverview.styles';
 import { useTheme, Button } from '@chakra-ui/react';
 import KitchenMealModal from './KitchenMealModal';
 import { GiMeal } from 'react-icons/gi';
+import { useState } from 'react';
 
-const KitchenMeal = ({ id, name, img, type, ingredients, desc }) => {
+const KitchenMeal = ({
+  meal,
+  isSelected,
+  setLclSelectedMeal,
+  isSelectedSalad,
+  setLclSelectedSalad,
+}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const theme = useTheme();
-  const gray400 = theme.colors.gray[400];
+  const { _id, name, image, type, ingridients, desc } = meal;
+
+  const chooseMeal = () => {
+    if (meal.type === 'main dish') {
+      setLclSelectedMeal(meal);
+      window.localStorage.setItem('meal', JSON.stringify(meal));
+    } else {
+      setLclSelectedSalad(meal);
+      window.localStorage.setItem('salad', JSON.stringify(meal));
+    }
+  };
 
   return (
-    <Flex {...styles.mealCard} onClick={onOpen}>
-      <Box overflow={'hidden'} sx={{ aspectRatio: '16/6' }}>
-        <Image {...styles.mealImage} src={img} />
+    <Flex
+      {...styles.mealCard}
+      borderColor={isSelected || isSelectedSalad ? '#48BB78' : 'white'}
+      borderWidth={3}
+    >
+      <Box overflow={'hidden'} sx={{ aspectRatio: '16/6' }} onClick={onOpen}>
+        <Image {...styles.mealImage} src={image} />
       </Box>
       <Flex {...styles.mealInfo}>
         <Flex flexDir={'column'} gap="2">
@@ -37,19 +57,22 @@ const KitchenMeal = ({ id, name, img, type, ingredients, desc }) => {
             </Text>
           </Text>
         </Flex>
-        <Button {...styles.buttonChooseMeal} onClick={onOpen}>
-          Choose meal
+        <Button
+          colorScheme={isSelected || isSelectedSalad ? 'green' : 'purple'}
+          {...styles.buttonChooseMeal}
+          onClick={() => chooseMeal()}
+        >
+          {isSelected || isSelectedSalad ? 'Selected' : 'Choose meal'}
         </Button>
       </Flex>
       <KitchenMealModal
         isOpen={isOpen}
         onClose={onClose}
-        id={id}
-        name={name}
-        type={type}
-        img={img}
-        ingredients={ingredients}
-        desc={desc}
+        isSelected={isSelected}
+        setLclSelectedMeal={setLclSelectedMeal}
+        isSelectedSalad={isSelectedSalad}
+        setLclSelectedSalad={setLclSelectedSalad}
+        meal={meal}
       />
     </Flex>
   );

@@ -4,32 +4,34 @@ import styles from './KitchenOverview.styles';
 import KitchenMeal from './KitchenMeal';
 import useMeal from '../../hooks/useMeal';
 
-const KitchenOverview = () => {
-
+const KitchenOverview = ({ type, lclSelectedMeal, setLclSelectedMeal, lclSelectedSalad, setLclSelectedSalad }) => {
   const { meals, mealLoading } = useMeal();
 
   if (mealLoading || !meals) {
     return <Spinner />;
   }
 
-  console.log(meals)
+  const filteredMeals = meals.filter((meal) => meal.type === type);
 
   return (
     <Flex flexDir={'column'} position={'relative'}>
-      <Flex justifyContent={'flex-end'} mt="4">
-      </Flex>
+      <Flex justifyContent={'flex-end'} mt="4"></Flex>
       <Grid {...styles.mealGrid}>
-        {meals.map((meal) => {
+        {filteredMeals.map((meal) => {
           return (
-            <GridItem key={meal.id}>
+            <GridItem key={meal._id}>
               <KitchenMeal
-                key={meal.id}
-                id={meal.id}
-                name={meal.name}
-                img={meal.image}
-                type={meal.type}
-                ingredients={meal.ingridients}
-                desc={meal.desc}
+                meal={meal}
+                isSelected={
+                  !!lclSelectedMeal &&
+                  lclSelectedMeal?._id?.toString() === meal?._id?.toString()
+                }
+                setLclSelectedMeal={setLclSelectedMeal}
+                isSelectedSalad={
+                  !!lclSelectedSalad &&
+                  lclSelectedSalad?._id?.toString() === meal?._id?.toString()
+                }
+                setLclSelectedSalad={setLclSelectedSalad}
               />
             </GridItem>
           );

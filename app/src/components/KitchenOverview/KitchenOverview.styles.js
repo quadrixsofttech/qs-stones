@@ -164,7 +164,6 @@ const conferenceNumber = {
 };
 
 const buttonChooseMeal = {
-  colorScheme: 'purple',
   lineHeight: '28',
   fontSize: '18',
   size: 'lg',

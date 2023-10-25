@@ -43,6 +43,7 @@ const KitchenModalCalendar = ({
               colorScheme='purple' 
               onClick={() => {
               setChooseDateValue(selectDate);
+              window.localStorage.setItem('selectDate', JSON.stringify(selectDate));
               onClose();}}>Choose</Button>
           </ModalFooter>
         </ModalContent>

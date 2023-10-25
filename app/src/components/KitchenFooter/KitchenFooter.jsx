@@ -1,22 +1,33 @@
 import { Flex, Button, Spacer, Checkbox } from '@chakra-ui/react';
 import styles from './KitchenFooter.styles';
 
-const KitchenFooter = ({ activeStep, setActiveStep }) => {
-
+const KitchenFooter = ({ activeStep, setActiveStep, bread, setBread }) => {
   const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1)
-  }
+    window.localStorage.setItem('step', activeStep - 1);
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
 
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1)
-  }
+    window.localStorage.setItem('step', activeStep + 1);
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
+
+  const handleChange = () => {
+    setBread(!bread);
+    window.localStorage.setItem('bread', !bread);
+  };
 
   return (
     <Flex {...styles.flexFooter}>
-      <Checkbox {...styles.cbxFooter}>Bread</Checkbox>
+      {activeStep == 0 && (
+        <Checkbox {...styles.cbxFooter} onChange={handleChange}>
+          Bread
+        </Checkbox>
+      )}
       <Spacer />
       <Button
         {...styles.btnFooter}
+        variant="outline"
         isDisabled={activeStep === 0}
         onClick={handleBack}
       >
@@ -27,7 +38,7 @@ const KitchenFooter = ({ activeStep, setActiveStep }) => {
         isDisabled={activeStep === 3}
         onClick={handleNext}
       >
-        {activeStep >= 2 ? "Submit" : "Next"}
+        {activeStep >= 2 ? 'Confirm' : 'Next'}
       </Button>
     </Flex>
   );
