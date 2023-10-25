@@ -32,7 +32,10 @@ const getAllPTO = async () => {
 
 const getPTO = async (type) => {
   try {
-    const paidTimeOff = await PayedTimeOff.find({ type: type })
+    const paidTimeOff = await PayedTimeOff.find({
+      type: type,
+      status: 'approved',
+    })
       .populate('userId')
       .populate('reviewerId');
 
@@ -134,6 +137,35 @@ const updatePTO = async (id, updates) => {
     return pto;
   } catch (err) {
     throw new Error({ success: false, message: 'Problem in updateing pto' });
+  }
+};
+
+const approvePTO = async (id) => {
+  try {
+    const pto = await PayedTimeOff.findByIdAndUpdate(id, {
+      status: 'approved',
+    });
+    return pto;
+  } catch (err) {
+    throw new Error({
+      success: false,
+      message: 'Problem with approving payed time off',
+    });
+  }
+};
+
+const rejectPTO = async (id, comment) => {
+  try {
+    const pto = await PayedTimeOff.findByIdAndUpdate(id, {
+      status: 'rejected',
+      comment: comment,
+    });
+    return pto;
+  } catch (err) {
+    throw new Error({
+      success: false,
+      message: 'Problem with rejecting payed time off',
+    });
   }
 };
 
@@ -277,4 +309,6 @@ module.exports = {
   calculateVacationPercentage,
   getUsersOnVacation,
   getUserDates,
+  rejectPTO,
+  approvePTO,
 };

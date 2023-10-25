@@ -8,23 +8,33 @@ import useEmployees from '../../../../hooks/useEmployees';
 import RejectRequestModal from '../RejectRequestModal/RejectRequestModal';
 
 const RequestComponent = ({ type, range, createdAt, id, refetchPTO }) => {
-  const { updatePaidTimeOff } = useEmployees();
+  const { approvePaidTimeOff, rejectPaidTimeOff } = useEmployees();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
 
-  const handleRequst = async (id, status, comment) => {
-    await updatePaidTimeOff(id, status, comment);
+  const handleApproveRequst = async (id) => {
+    await approvePaidTimeOff(id);
     refetchPTO();
     toast({
       position: 'top-right',
-      status: status === 'approved' ? 'success' : 'warning',
+      status: 'success',
       variant: 'subtle',
-      description:
-        status === 'approved'
-          ? 'You have successfully approved a remote/vacation request'
-          : 'You have rejected a remote/vacation request',
+      description: 'You have successfully approved a remote/vacation request',
       isClosable: true,
-      colorScheme: status === 'approved' ? 'green' : 'yellow',
+      colorScheme: 'green',
+    });
+  };
+
+  const handleRejectRequst = async (id, comment) => {
+    await rejectPaidTimeOff(id, comment);
+    refetchPTO();
+    toast({
+      position: 'top-right',
+      status: 'warning',
+      variant: 'subtle',
+      description: 'You have rejected a remote/vacation request',
+      isClosable: true,
+      colorScheme: 'yellow',
     });
   };
 
@@ -50,7 +60,7 @@ const RequestComponent = ({ type, range, createdAt, id, refetchPTO }) => {
         <Flex gap="4">
           <Button
             {...styles.approveButton}
-            onClick={() => handleRequst(id, 'approved')}
+            onClick={() => handleApproveRequst(id)}
           >
             <Text color="white">Approve</Text>
           </Button>
@@ -58,7 +68,7 @@ const RequestComponent = ({ type, range, createdAt, id, refetchPTO }) => {
             <RejectRequestModal
               isOpen={isOpen}
               onClose={onClose}
-              handleRequst={handleRequst}
+              handleRequst={handleRejectRequst}
               range={range}
               id={id}
               type={type}
