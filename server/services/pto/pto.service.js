@@ -147,7 +147,7 @@ const approvePTO = async (id) => {
 
     if (pto.type === 'remote') {
       pto.status = 'approved';
-      pto.save();
+      await pto.save();
     } else {
       const vacationDays = pto.days.length;
 
@@ -206,8 +206,7 @@ const approvePTO = async (id) => {
 
       pto.status = 'approved';
 
-      await pto.save();
-      await user.save();
+      await Promise.all([pto.save(), user.save()]);
     }
     return pto;
   } catch (err) {
