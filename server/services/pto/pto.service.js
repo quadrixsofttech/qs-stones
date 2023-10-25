@@ -109,7 +109,7 @@ const createPTO = async ({
       totalNumberOfVacationDays = currentYear?.vacationDays ?? 0;
     }
 
-    if (type === 'remote' || totalNumberOfVacationDays > days.length) {
+    if (type === 'remote' || totalNumberOfVacationDays >= days.length) {
       var pto = new PayedTimeOff({
         type,
         status,
@@ -142,9 +142,73 @@ const updatePTO = async (id, updates) => {
 
 const approvePTO = async (id) => {
   try {
-    const pto = await PayedTimeOff.findByIdAndUpdate(id, {
-      status: 'approved',
-    });
+    const pto = await PayedTimeOff.findById(id);
+    const user = await User.findById(pto.userId);
+
+    if (pto.type === 'remote') {
+      pto.status = 'approved';
+      pto.save();
+    } else {
+      const vacationDays = pto.days.length;
+
+      let maxDate = moment(pto.days[0]);
+
+      for (let date of pto.days) {
+        const currentDate = moment(date);
+        if (currentDate.isAfter(maxDate)) {
+          maxDate = currentDate;
+        }
+      }
+
+      let currentYear = user.vacation.find((v) => v.year === maxDate.year());
+      let lastYear = user.vacation.find((v) => v.year === maxDate.year() - 1);
+
+      var currentYearVacationDays = currentYear.vacationDays;
+      var currentYearUsedDays = currentYear.usedDays;
+
+      var lastYearVacationDays;
+      var lastYearUsedDays;
+
+      if (!lastYear) {
+        lastYearVacationDays = 0;
+        lastYearUsedDays = 20;
+      } else {
+        lastYearVacationDays = lastYear.vacationDays;
+        lastYearUsedDays = lastYear.usedDays;
+      }
+
+      if (maxDate.month() >= 0 && maxDate.month() < 6) {
+        if (lastYearVacationDays >= vacationDays) {
+          lastYearVacationDays -= vacationDays;
+          lastYearUsedDays = 20 - lastYearVacationDays;
+        } else {
+          vacationDays -= lastYearVacationDays;
+          lastYearVacationDays = 0;
+          lastYearUsedDays = 20;
+          currentYearVacationDays -= vacationDays;
+          currentYearUsedDays = 20 - currentYearVacationDays;
+        }
+      } else {
+        if (currentYearVacationDays >= vacationDays) {
+          currentYearVacationDays -= vacationDays;
+          currentYearUsedDays = 20 - currentYearVacationDays;
+        } else {
+          throw new Error('Nemas dovoljno slobodnih dana');
+        }
+      }
+
+      if (lastYear) {
+        lastYear.vacationDays = lastYearVacationDays;
+        lastYear.usedDays = lastYearUsedDays;
+      }
+      currentYear.vacationDays = currentYearVacationDays;
+      currentYear.usedDays = currentYearUsedDays;
+
+      pto.status = 'approved';
+
+      await pto.save();
+      await user.save();
+    }
     return pto;
   } catch (err) {
     throw new Error({
