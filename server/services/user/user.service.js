@@ -1,4 +1,6 @@
 const User = require('../../models/user.model');
+const PaidTimeOff = require('../../models/pto.model');
+const ConferenceRoomReservation = require('../../models/conference-room-reservation');
 const moment = require('moment');
 
 const getAllUsers = async () => {
@@ -59,6 +61,8 @@ const updateUserRole = async (role, userId) => {
 const removeEmployee = async (id) => {
   try {
     const employee = await User.deleteOne({ _id: id });
+    await PaidTimeOff.deleteMany({ userId: id });
+    await ConferenceRoomReservation.deleteMany({ userId: id });
     return employee;
   } catch (err) {
     throw new Error(err);
