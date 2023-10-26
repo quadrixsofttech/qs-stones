@@ -72,7 +72,11 @@ const EmployeeComponent = ({
       )}
 
       {isClicked ? (
-        <SelectedEmployeeComponent data={paidTimeOff} refetchPTO={refetchPTO} />
+        <SelectedEmployeeComponent
+          data={paidTimeOff}
+          refetchPTO={refetchPTO}
+          refetchEmployees={refetchEmployees}
+        />
       ) : (
         <EmptyEmployeeComponent />
       )}

@@ -7,7 +7,14 @@ import { capitalizeFirstLetter } from '../../../../util';
 import useEmployees from '../../../../hooks/useEmployees';
 import RejectRequestModal from '../RejectRequestModal/RejectRequestModal';
 
-const RequestComponent = ({ type, range, createdAt, id, refetchPTO }) => {
+const RequestComponent = ({
+  type,
+  range,
+  createdAt,
+  id,
+  refetchPTO,
+  refetchEmployees,
+}) => {
   const { updatePaidTimeOff } = useEmployees();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
@@ -15,6 +22,7 @@ const RequestComponent = ({ type, range, createdAt, id, refetchPTO }) => {
   const handleRequst = async (id, status, comment) => {
     await updatePaidTimeOff(id, status, comment);
     refetchPTO();
+    refetchEmployees();
     toast({
       position: 'top-right',
       status: status === 'approved' ? 'success' : 'warning',
