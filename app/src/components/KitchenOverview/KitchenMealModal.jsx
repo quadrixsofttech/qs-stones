@@ -18,8 +18,6 @@ const KitchenMealModal = ({
   meal,
   isSelected,
   setLclSelectedMeal,
-  isSelectedSalad,
-  setLclSelectedSalad,
   isOpen,
   onClose,
 }) => {
@@ -62,19 +60,17 @@ const KitchenMealModal = ({
           <Flex justifyContent={'flex-end'} m="8">
             <Button
               variant="outline"
-              colorScheme={isSelected || isSelectedSalad ? 'green' : 'purple'}
+              colorScheme={isSelected ? 'green' : 'purple'}
               onClick={() => {
                 chooseMeal(
                   meal,
                   isSelected,
                   setLclSelectedMeal,
-                  isSelectedSalad,
-                  setLclSelectedSalad
                 );
                 onClose();
               }}
             >
-              {isSelected || isSelectedSalad ? 'Selected' : 'Choose meal'}
+              {isSelected ? 'Selected' : 'Choose meal'}
             </Button>
           </Flex>
         </Flex>

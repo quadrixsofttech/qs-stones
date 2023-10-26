@@ -8,8 +8,6 @@ const StepByStep = ({
   setLclSelectedMeal,
   lclSelectSalad,
   setLclSelectSalad,
-  meal,
-  salad,
   date,
   bread,
 }) => {
@@ -19,18 +17,14 @@ const StepByStep = ({
         <MainDishStep
           lclSelectedMeal={lclSelectedMeal}
           setLclSelectedMeal={setLclSelectedMeal}
-          lclSelectedSalad={lclSelectSalad}
-          setLclSelectedSalad={setLclSelectSalad}
         />
       ) : activeStep == 1 ? (
         <SaladStep
-          lclSelectedMeal={lclSelectedMeal}
-          setLclSelectedMeal={setLclSelectedMeal}
           lclSelectedSalad={lclSelectSalad}
           setLclSelectedSalad={setLclSelectSalad}
         />
       ) : (
-        <ReviewStep meal={meal} salad={salad} date={date} bread={bread} />
+        <ReviewStep meal={lclSelectedMeal} salad={lclSelectSalad} date={date} bread={bread} />
       )}
     </>
   );

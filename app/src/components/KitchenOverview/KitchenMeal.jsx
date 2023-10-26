@@ -17,8 +17,6 @@ const KitchenMeal = ({
   meal,
   isSelected,
   setLclSelectedMeal,
-  isSelectedSalad,
-  setLclSelectedSalad,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { name, image, type } = meal;
@@ -26,7 +24,7 @@ const KitchenMeal = ({
   return (
     <Flex
       {...styles.mealCard}
-      borderColor={isSelected || isSelectedSalad ? '#48BB78' : 'white'}
+      borderColor={isSelected ? '#48BB78' : 'white'}
       borderWidth={3}
     >
       <Box overflow={'hidden'} sx={{ aspectRatio: '16/6' }} onClick={onOpen}>
@@ -48,19 +46,17 @@ const KitchenMeal = ({
           </Text>
         </Flex>
         <Button
-          colorScheme={isSelected || isSelectedSalad ? 'green' : 'purple'}
+          colorScheme={isSelected ? 'green' : 'purple'}
           {...styles.buttonChooseMeal}
           onClick={() =>
             chooseMeal(
               meal,
               isSelected,
               setLclSelectedMeal,
-              isSelectedSalad,
-              setLclSelectedSalad
             )
           }
         >
-          {isSelected || isSelectedSalad ? 'Selected' : 'Choose meal'}
+          {isSelected ? 'Selected' : 'Choose meal'}
         </Button>
       </Flex>
       <KitchenMealModal
@@ -68,8 +64,6 @@ const KitchenMeal = ({
         onClose={onClose}
         isSelected={isSelected}
         setLclSelectedMeal={setLclSelectedMeal}
-        isSelectedSalad={isSelectedSalad}
-        setLclSelectedSalad={setLclSelectedSalad}
         meal={meal}
       />
     </Flex>

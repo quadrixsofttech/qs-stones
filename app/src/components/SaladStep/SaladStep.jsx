@@ -1,8 +1,6 @@
 import KitchenOverview from '../../components/KitchenOverview';
 
 const SaladStep = ({
-  lclSelectedMeal,
-  setLclSelectedMeal,
   lclSelectedSalad,
   setLclSelectedSalad,
 }) => {
@@ -10,10 +8,8 @@ const SaladStep = ({
     <>
       <KitchenOverview
         type={'salad'}
-        lclSelectedMeal={lclSelectedMeal}
-        setLclSelectedMeal={setLclSelectedMeal}
-        lclSelectedSalad={lclSelectedSalad}
-        setLclSelectedSalad={setLclSelectedSalad}
+        lclSelectedMeal={lclSelectedSalad}
+        setLclSelectedMeal={setLclSelectedSalad}
       />
     </>
   );

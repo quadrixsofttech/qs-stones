@@ -68,8 +68,6 @@ const Kitchen = () => {
             setLclSelectedMeal={setLclSelectedMeal}
             lclSelectSalad={lclSelectedSalad}
             setLclSelectSalad={setLclSelectedSalad}
-            meal={lclSelectedMeal}
-            salad={lclSelectedSalad}
             date={chooseDateValue}
             bread={bread}
           />
@@ -79,8 +77,9 @@ const Kitchen = () => {
           setActiveStep={setActiveStep}
           bread={bread}
           setBread={setBread}
-          meal={lclSelectedMeal}
+          disabled={activeStep === 3 || lclSelectedMeal === ''}
           date={chooseDateValue}
+
         />
       </Flex>
     </DashboardLayout>

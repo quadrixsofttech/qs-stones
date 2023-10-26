@@ -7,8 +7,6 @@ const KitchenOverview = ({
   type,
   lclSelectedMeal,
   setLclSelectedMeal,
-  lclSelectedSalad,
-  setLclSelectedSalad,
 }) => {
   const { meals, mealLoading } = useMeal();
 
@@ -32,11 +30,6 @@ const KitchenOverview = ({
                   lclSelectedMeal?._id?.toString() === meal?._id?.toString()
                 }
                 setLclSelectedMeal={setLclSelectedMeal}
-                isSelectedSalad={
-                  !!lclSelectedSalad &&
-                  lclSelectedSalad?._id?.toString() === meal?._id?.toString()
-                }
-                setLclSelectedSalad={setLclSelectedSalad}
               />
             </GridItem>
           );

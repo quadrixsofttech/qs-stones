@@ -6,7 +6,7 @@ const KitchenFooter = ({
   setActiveStep,
   bread,
   setBread,
-  meal,
+  disabled,
   date,
 }) => {
   const toast = useToast();
@@ -56,7 +56,7 @@ const KitchenFooter = ({
       </Button>
       <Button
         {...styles.btnFooter}
-        isDisabled={activeStep === 3 || meal === ''}
+        isDisabled={disabled}
         onClick={handleNext}
       >
         {activeStep >= 2 ? 'Confirm' : 'Next'}
