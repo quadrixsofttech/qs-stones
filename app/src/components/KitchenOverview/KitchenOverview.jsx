@@ -1,10 +1,15 @@
-import { Flex, Grid, GridItem, Select, Spinner } from '@chakra-ui/react';
-import { useState } from 'react';
+import { Flex, Grid, GridItem, Spinner } from '@chakra-ui/react';
 import styles from './KitchenOverview.styles';
 import KitchenMeal from './KitchenMeal';
 import useMeal from '../../hooks/useMeal';
 
-const KitchenOverview = ({ type, lclSelectedMeal, setLclSelectedMeal, lclSelectedSalad, setLclSelectedSalad }) => {
+const KitchenOverview = ({
+  type,
+  lclSelectedMeal,
+  setLclSelectedMeal,
+  lclSelectedSalad,
+  setLclSelectedSalad,
+}) => {
   const { meals, mealLoading } = useMeal();
 
   if (mealLoading || !meals) {
@@ -14,7 +19,7 @@ const KitchenOverview = ({ type, lclSelectedMeal, setLclSelectedMeal, lclSelecte
   const filteredMeals = meals.filter((meal) => meal.type === type);
 
   return (
-    <Flex flexDir={'column'} position={'relative'}>
+    <Flex flexDir={'column'}>
       <Flex justifyContent={'flex-end'} mt="4"></Flex>
       <Grid {...styles.mealGrid}>
         {filteredMeals.map((meal) => {

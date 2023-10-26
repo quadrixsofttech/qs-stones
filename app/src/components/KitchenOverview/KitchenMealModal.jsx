@@ -9,10 +9,10 @@ import {
   ModalOverlay,
   Tag,
   Text,
-  Icon,
 } from '@chakra-ui/react';
 import styles from './KitchenOverview.styles';
 import { GiMeal } from 'react-icons/gi';
+import chooseMeal from './funcChooseMeal';
 
 const KitchenMealModal = ({
   meal,
@@ -21,19 +21,9 @@ const KitchenMealModal = ({
   isSelectedSalad,
   setLclSelectedSalad,
   isOpen,
-  onClose
+  onClose,
 }) => {
-  const { _id, name, image, type, ingridients, desc } = meal;
-
-  const chooseMeal = () => {
-    if (meal.type === 'main dish') {
-      setLclSelectedMeal(meal);
-      window.localStorage.setItem('meal', JSON.stringify(meal));
-    } else {
-      setLclSelectedSalad(meal);
-      window.localStorage.setItem('salad', JSON.stringify(meal));
-    }
-  };
+  const { name, image, type, ingridients, desc } = meal;
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -56,7 +46,7 @@ const KitchenMealModal = ({
                     {name}
                   </Heading>
                 </Flex>
-                <Flex gap="1" {...styles.mealInfoBox}>
+                <Flex {...styles.mealInfoBox}>
                   <Text fontSize={'sm'} color="black">
                     Ingredients:
                   </Text>
@@ -74,11 +64,17 @@ const KitchenMealModal = ({
               variant="outline"
               colorScheme={isSelected || isSelectedSalad ? 'green' : 'purple'}
               onClick={() => {
-                chooseMeal();
+                chooseMeal(
+                  meal,
+                  isSelected,
+                  setLclSelectedMeal,
+                  isSelectedSalad,
+                  setLclSelectedSalad
+                );
                 onClose();
               }}
             >
-              {isSelected ? 'Selected' : 'Choose meal'}
+              {isSelected || isSelectedSalad ? 'Selected' : 'Choose meal'}
             </Button>
           </Flex>
         </Flex>

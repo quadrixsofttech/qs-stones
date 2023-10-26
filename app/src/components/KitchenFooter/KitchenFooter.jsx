@@ -1,7 +1,15 @@
-import { Flex, Button, Spacer, Checkbox } from '@chakra-ui/react';
+import { Flex, Button, Spacer, Checkbox, useToast } from '@chakra-ui/react';
 import styles from './KitchenFooter.styles';
 
-const KitchenFooter = ({ activeStep, setActiveStep, bread, setBread }) => {
+const KitchenFooter = ({
+  activeStep,
+  setActiveStep,
+  bread,
+  setBread,
+  meal,
+  date,
+}) => {
+  const toast = useToast();
   const handleBack = () => {
     window.localStorage.setItem('step', activeStep - 1);
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -10,6 +18,15 @@ const KitchenFooter = ({ activeStep, setActiveStep, bread, setBread }) => {
   const handleNext = () => {
     window.localStorage.setItem('step', activeStep + 1);
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    if (activeStep == 2) {
+      toast({
+        position: 'top-right',
+        status: 'success',
+        variant: 'subtle',
+        duration: 3000,
+        description: `You have successfully added dishes for the date ${date}`,
+      });
+    }
   };
 
   const handleChange = () => {
@@ -20,7 +37,11 @@ const KitchenFooter = ({ activeStep, setActiveStep, bread, setBread }) => {
   return (
     <Flex {...styles.flexFooter}>
       {activeStep == 0 && (
-        <Checkbox {...styles.cbxFooter} onChange={handleChange}>
+        <Checkbox
+          {...styles.cbxFooter}
+          onChange={handleChange}
+          isChecked={bread}
+        >
           Bread
         </Checkbox>
       )}
@@ -35,7 +56,7 @@ const KitchenFooter = ({ activeStep, setActiveStep, bread, setBread }) => {
       </Button>
       <Button
         {...styles.btnFooter}
-        isDisabled={activeStep === 3}
+        isDisabled={activeStep === 3 || meal === ''}
         onClick={handleNext}
       >
         {activeStep >= 2 ? 'Confirm' : 'Next'}

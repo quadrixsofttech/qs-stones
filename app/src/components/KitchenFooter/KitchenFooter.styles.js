@@ -2,18 +2,19 @@ const flexFooter = {
     as: 'footer',
     py: [{ md: '6' }],
     width: '100%',
-    height: '50px'
+    height: '50',
+    pt:'2'
   };
 
   const cbxFooter = {
     colorScheme: "purple",
-    ml: "17px",
+    ml: "4.25",
     size: "lg"
   };
 
   const btnFooter = {
     colorScheme:"purple",
-    mr:"16px"
+    mr:"4"
   };
 
   const styles = {

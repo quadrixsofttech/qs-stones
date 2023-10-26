@@ -1,19 +1,30 @@
-import { Flex, Heading, Button, Spacer, Text } from '@chakra-ui/react';
+import { Flex, Heading, Button, Spacer, Tag } from '@chakra-ui/react';
 import styles from './KitchenHeader.styles';
+import moment from 'moment';
 
-const KitchenHeader = ({ onOpen, chooseDateValue }) => {
+const KitchenHeader = ({ onOpen, chooseDateValue, activeStep }) => {
   return (
-    <Flex>
-      <Heading size="2xl" ml="14px" positon="fixed">
-        Choose dish
+    <Flex pb={'2'}>
+      <Heading size="2xl" ml="3.5">
+        {activeStep == 0
+          ? 'Choose main dish'
+          : activeStep == 1
+          ? 'Choose salad'
+          : 'Review'}
       </Heading>
       <Spacer />
-      <Text mr="12px" fontWeight="bold" fontSize="30px">
-        {chooseDateValue}
-      </Text>
-      <Button {...styles.buttonChooseDay} onClick={onOpen}>
-        Choose day
-      </Button>
+      {activeStep < 2 && (
+        <Flex>
+          <Tag {...styles.rangeTag}>
+            {chooseDateValue === ''
+              ? new moment().format('YYYY/MM/DD')
+              : chooseDateValue}
+          </Tag>
+          <Button {...styles.buttonChooseDay} onClick={onOpen}>
+            Choose day
+          </Button>
+        </Flex>
+      )}
     </Flex>
   );
 };

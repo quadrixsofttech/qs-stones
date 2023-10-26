@@ -123,6 +123,7 @@ const mealInfoBox = {
   mt: '8',
   ml: '20',
   flexDir: 'column',
+  gap: '1'
 };
 
 const seeChooseBoxButton = {

@@ -8,10 +8,10 @@ import {
   Icon,
 } from '@chakra-ui/react';
 import styles from './KitchenOverview.styles';
-import { useTheme, Button } from '@chakra-ui/react';
+import { Button } from '@chakra-ui/react';
 import KitchenMealModal from './KitchenMealModal';
 import { GiMeal } from 'react-icons/gi';
-import { useState } from 'react';
+import chooseMeal from './funcChooseMeal';
 
 const KitchenMeal = ({
   meal,
@@ -21,17 +21,7 @@ const KitchenMeal = ({
   setLclSelectedSalad,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { _id, name, image, type, ingridients, desc } = meal;
-
-  const chooseMeal = () => {
-    if (meal.type === 'main dish') {
-      setLclSelectedMeal(meal);
-      window.localStorage.setItem('meal', JSON.stringify(meal));
-    } else {
-      setLclSelectedSalad(meal);
-      window.localStorage.setItem('salad', JSON.stringify(meal));
-    }
-  };
+  const { name, image, type } = meal;
 
   return (
     <Flex
@@ -60,7 +50,15 @@ const KitchenMeal = ({
         <Button
           colorScheme={isSelected || isSelectedSalad ? 'green' : 'purple'}
           {...styles.buttonChooseMeal}
-          onClick={() => chooseMeal()}
+          onClick={() =>
+            chooseMeal(
+              meal,
+              isSelected,
+              setLclSelectedMeal,
+              isSelectedSalad,
+              setLclSelectedSalad
+            )
+          }
         >
           {isSelected || isSelectedSalad ? 'Selected' : 'Choose meal'}
         </Button>

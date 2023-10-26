@@ -7,21 +7,13 @@ import {
   StepStatus,
   StepTitle,
   Stepper,
-  useSteps,
   Box,
 } from '@chakra-ui/react';
+import styles from './MealStepper.styles';
 
 const MealStepper = ({ steps, activeStep }) => {
-
   return (
-    <Stepper
-      size="lg"
-      colorScheme="purple"
-      index={activeStep}
-      mb="25px"
-      mr="22px"
-      ml="14px"
-    >
+    <Stepper {...styles.stepperStyle} index={activeStep}>
       {steps.map((step, index) => (
         <Step key={index}>
           <StepIndicator>

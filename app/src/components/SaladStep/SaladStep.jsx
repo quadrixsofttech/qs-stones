@@ -7,7 +7,7 @@ const SaladStep = ({
   setLclSelectedSalad,
 }) => {
   return (
-    <div>
+    <>
       <KitchenOverview
         type={'salad'}
         lclSelectedMeal={lclSelectedMeal}
@@ -15,7 +15,7 @@ const SaladStep = ({
         lclSelectedSalad={lclSelectedSalad}
         setLclSelectedSalad={setLclSelectedSalad}
       />
-    </div>
+    </>
   );
 };
 

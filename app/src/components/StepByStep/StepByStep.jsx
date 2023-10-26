@@ -8,9 +8,13 @@ const StepByStep = ({
   setLclSelectedMeal,
   lclSelectSalad,
   setLclSelectSalad,
+  meal,
+  salad,
+  date,
+  bread,
 }) => {
   return (
-    <div>
+    <>
       {activeStep == 0 ? (
         <MainDishStep
           lclSelectedMeal={lclSelectedMeal}
@@ -26,9 +30,9 @@ const StepByStep = ({
           setLclSelectedSalad={setLclSelectSalad}
         />
       ) : (
-        <ReviewStep />
+        <ReviewStep meal={meal} salad={salad} date={date} bread={bread} />
       )}
-    </div>
+    </>
   );
 };
 
