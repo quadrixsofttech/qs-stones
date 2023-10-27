@@ -29,7 +29,6 @@ const RejectRequestModal = ({
     setComment(inputValue);
   };
 
-  console.log(comment);
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered size="xl">
       <ModalOverlay />
@@ -68,10 +67,7 @@ const RejectRequestModal = ({
             <Button colorScheme="gray" mr={3} onClick={onClose}>
               Close
             </Button>
-            <Button
-              colorScheme="red"
-              onClick={() => handleRequst(id, 'rejected', comment)}
-            >
+            <Button colorScheme="red" onClick={() => handleRequst(id, comment)}>
               Reject
             </Button>
           </ModalFooter>
