@@ -76,6 +76,7 @@ const EmployeeComponent = ({
           data={paidTimeOff}
           refetchPTO={refetchPTO}
           refetchEmployees={refetchEmployees}
+          employeeId={employeeId}
         />
       ) : (
         <EmptyEmployeeComponent />
