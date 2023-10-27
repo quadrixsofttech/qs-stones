@@ -5,7 +5,7 @@ import moment from 'moment';
 const KitchenHeader = ({ onOpen, chooseDateValue, activeStep }) => {
   return (
     <Flex pb={'2'}>
-      <Heading size="2xl" ml="3.5">
+      <Heading size="xl" ml="3.5">
         {activeStep == 0
           ? 'Choose main dish'
           : activeStep == 1

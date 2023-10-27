@@ -39,12 +39,12 @@ const Kitchen = () => {
   );
 
   const order = {
-    lclSelectedMeal,
-    lclSelectedSalad,
-    bread,
-    chooseDateValue,
+    'main dish': lclSelectedMeal,
+    'salad': lclSelectedSalad,
+    'bread': bread,
+    'date': chooseDateValue,
   };
-
+  
   return (
     <DashboardLayout>
       <Flex flexDir="column" flexGrow={1} height={'100%'}>
@@ -79,7 +79,6 @@ const Kitchen = () => {
           setBread={setBread}
           disabled={activeStep === 3 || lclSelectedMeal === ''}
           date={chooseDateValue}
-
         />
       </Flex>
     </DashboardLayout>

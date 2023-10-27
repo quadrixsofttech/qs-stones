@@ -29,6 +29,7 @@ const KitchenModalCalendar = ({
           <Calendar
             className="custom-calendar-history"
             minDate={new moment().format('YYYY-MM-DD')}
+            value={moment(window.localStorage.getItem('selectDate')).format('YYYY-MM-DD')}
             onChange={(date) => setSelectDate(String(date))}
           />
         </ModalBody>
