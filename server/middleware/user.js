@@ -2,6 +2,7 @@ const jwt = require('express-jwt');
 const jwtDecode = require('jwt-decode');
 const { StatusCodes } = require('http-status-codes');
 
+
 const attachUser = (req, res, next) => {
   const token = req.cookies.token;
   if (!token) {
