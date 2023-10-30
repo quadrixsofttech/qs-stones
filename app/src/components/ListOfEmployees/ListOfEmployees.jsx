@@ -29,7 +29,7 @@ const ListOfEmployees = ({ employees, handleRowClick, clickedRowIndex }) => {
       <TableContainer overflowY={'auto'}>
         <Table variant="simple">
           <Tbody>
-            {employees.map((employee, index) => (
+            {employees?.map((employee, index) => (
               <Tr
                 key={index}
                 onMouseEnter={() => setHoveredRowIndex(index)}
