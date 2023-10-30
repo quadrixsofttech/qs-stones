@@ -36,8 +36,8 @@ const getPTO = async (type) => {
       type: type,
       status: 'approved',
     })
-      .populate('userId')
-      .populate('reviewerId');
+      .populate({ path: 'userId', select: '-password' })
+      .populate({ path: 'reviewerId', select: '-password' });
 
     const formattedPaidTimeOff = paidTimeOff.map((paidtimeoff) => ({
       _id: paidtimeoff._id,
