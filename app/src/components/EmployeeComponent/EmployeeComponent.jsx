@@ -8,6 +8,7 @@ const EmployeeComponent = ({
   isClicked,
   name = 'Quadrix Soft',
   paidTimeOff,
+  refetchPTO,
 }) => {
   return (
     <Flex {...styles.mainBox}>
@@ -18,7 +19,7 @@ const EmployeeComponent = ({
       )}
 
       {isClicked ? (
-        <SelectedEmployeeComponent data={paidTimeOff} />
+        <SelectedEmployeeComponent data={paidTimeOff} refetchPTO={refetchPTO} />
       ) : (
         <EmptyEmployeeComponent />
       )}

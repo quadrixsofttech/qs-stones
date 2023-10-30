@@ -1,15 +1,16 @@
 import { useQuery } from 'react-query';
 import axios from 'axios';
-import useUser from '../hooks/useUser';
 
 export const usePaidTimeOff = (employeeId) => {
-  const { user } = useUser();
-
-  const userId = employeeId || user._id;
-
   const paidTimeOffCallback = async () => {
-    const response = await axios.get(`api/v1/paid-time-off/history/${userId}`);
-    return response.data;
+    if (employeeId) {
+      const response = await axios.get(
+        `api/v1/paid-time-off/history/${employeeId}`
+      );
+      return response.data.reverse();
+    } else {
+      return [];
+    }
   };
   const {
     data: paidTimeOffHistory = [],

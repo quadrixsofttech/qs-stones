@@ -1,5 +1,5 @@
 import { Flex, Select, Text } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import EmptyInbox from '../../../images/EmptyInbox.png';
 import styles from './SelectedEmployeeComponent.styles';
 import { MyVacationInfo } from '../../MyVacationInfo/MyVacationInfo';
@@ -7,17 +7,35 @@ import EmptyRequest from './EmptyRequest';
 import PendingRequests from './PendingRequests/PendingRequests';
 import RequestHistory from './RequestHistory/RequestHistory';
 
-const SelectedEmployeeComponent = ({ data }) => {
-  const [ptoType, setPtoType] = useState('Vacation');
+const SelectedEmployeeComponent = ({ data, refetchPTO }) => {
+  const [ptoType, setPtoType] = useState('vacation');
+  const [requestHistoryData, setRequestHistoryData] = useState(
+    data.filter((x) => x.status === 'approved' || x.status === 'rejected')
+  );
 
   const handlePtoTypeChange = (event) => {
     setPtoType(event.target.value);
   };
 
+  useEffect(() => {
+    setRequestHistoryData(
+      data.filter(
+        (x) =>
+          x.type === ptoType &&
+          (x.status === 'approved' || x.status === 'rejected')
+      )
+    );
+  }, [ptoType, data]);
+
+  const pendingRequests = data.filter((x) => x.status === 'pending');
+
   return (
     <Flex flexDir={'column'} height={'100%'} overflow={'hidden'}>
-      {data?.length > 0 ? (
-        <PendingRequests />
+      {pendingRequests?.length > 0 ? (
+        <PendingRequests
+          pendingRequests={pendingRequests}
+          refetchPTO={refetchPTO}
+        />
       ) : (
         <EmptyRequest
           image={EmptyInbox}
@@ -33,16 +51,16 @@ const SelectedEmployeeComponent = ({ data }) => {
             value={ptoType}
             onChange={handlePtoTypeChange}
           >
-            <option key={'Vacation'} value={'Vacation'}>
+            <option key={'Vacation'} value={'vacation'}>
               Vacation
             </option>
-            <option key={'Remote'} value={'Remote'}>
+            <option key={'Remote'} value={'remote'}>
               Remote
             </option>
           </Select>
         </Flex>
         {data?.length > 0 ? (
-          <RequestHistory />
+          <RequestHistory requestHistory={requestHistoryData} />
         ) : (
           <EmptyRequest
             label={'Your requests history list is empty'}
