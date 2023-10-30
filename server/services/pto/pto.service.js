@@ -212,7 +212,7 @@ const approvePTO = async (id) => {
   } catch (err) {
     throw new Error({
       success: false,
-      message: 'Problem with approving payed time off',
+      message: 'Problem with approving paid time off',
     });
   }
 };
@@ -227,7 +227,7 @@ const rejectPTO = async (id, comment) => {
   } catch (err) {
     throw new Error({
       success: false,
-      message: 'Problem with rejecting payed time off',
+      message: 'Problem with rejecting paid time off',
     });
   }
 };
