@@ -1,5 +1,5 @@
 import { Flex, Select, Text } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import EmptyInbox from '../../../images/EmptyInbox.png';
 import styles from './SelectedEmployeeComponent.styles';
 import { MyVacationInfo } from '../../MyVacationInfo/MyVacationInfo';
