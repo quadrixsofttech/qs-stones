@@ -14,6 +14,7 @@ const RequestHistory = ({ requestHistory }) => {
             dates={request.dates}
             status={request.status}
             comment={request.comment}
+            type={request.type}
           />
         );
       })}
