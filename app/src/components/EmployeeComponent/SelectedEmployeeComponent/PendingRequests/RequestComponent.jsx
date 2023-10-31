@@ -36,6 +36,7 @@ const RequestComponent = ({
   const handleRejectRequst = async (id, comment) => {
     await rejectPaidTimeOff(id, comment);
     refetchPTO();
+    refetchEmployees();
     toast({
       position: 'top-right',
       status: 'warning',
