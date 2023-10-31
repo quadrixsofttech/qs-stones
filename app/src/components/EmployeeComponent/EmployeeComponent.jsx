@@ -14,6 +14,7 @@ import EmptyEmployeeComponent from './EmptyEmployeeComponent/EmptyEmployeeCompon
 import SelectedEmployeeComponent from './SelectedEmployeeComponent/SelectedEmployeeComponent';
 import { BiEditAlt, BiTrash } from 'react-icons/bi';
 import DeleteEmployeeDialog from './SelectedEmployeeComponent/DeleteEmployeeDialog/DeleteEmployeeDialog';
+import useUser from '../../hooks/useUser';
 
 const EmployeeComponent = ({
   isClicked,
@@ -21,11 +22,19 @@ const EmployeeComponent = ({
   paidTimeOff,
   refetchPTO,
   refetchEmployees,
+  employeeId,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { deleteEmployee } = useUser();
 
-  const deleteEmployee = () => {
-    alert('employee deleted');
+  const handleDeleteEmployee = async () => {
+    try {
+      await deleteEmployee.mutateAsync(employeeId);
+      onClose();
+      refetchEmployees();
+    } catch (err) {
+      throw new Error(err);
+    }
   };
 
   return (
@@ -57,7 +66,7 @@ const EmployeeComponent = ({
           <DeleteEmployeeDialog
             isOpen={isOpen}
             onClose={onClose}
-            deleteFn={deleteEmployee}
+            deleteFn={handleDeleteEmployee}
           />
         </>
       )}

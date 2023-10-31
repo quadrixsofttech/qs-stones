@@ -65,10 +65,23 @@ const updateRole = async (req, res) => {
   }
 };
 
+const deleteEmployee = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const employee = await UserService.removeEmployee(id);
+    res.send(employee);
+  } catch (err) {
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      message: 'There was a problem deleting employee',
+    });
+  }
+};
+
 module.exports = {
   getUsers,
   updateRole,
   getAdministrators,
   getVacations,
   getEmployees,
+  deleteEmployee,
 };
