@@ -1,4 +1,4 @@
-const PayedTimeOff = require('../../models/pto.model');
+const PaidTimeOff = require('../../models/pto.model');
 const moment = require('moment');
 const User = require('../../models/user.model');
 
@@ -23,7 +23,7 @@ const weekendDays = [6, 0];
 
 const getAllPTO = async () => {
   try {
-    const pto = await PayedTimeOff.find().lean();
+    const pto = await PaidTimeOff.find().lean();
     return pto;
   } catch (err) {
     throw new Error(err);
@@ -32,7 +32,7 @@ const getAllPTO = async () => {
 
 const getPTO = async (type) => {
   try {
-    const paidTimeOff = await PayedTimeOff.find({
+    const paidTimeOff = await PaidTimeOff.find({
       type: type,
       status: 'approved',
     })
@@ -110,7 +110,7 @@ const createPTO = async ({
     }
 
     if (type === 'remote' || totalNumberOfVacationDays >= days.length) {
-      var pto = new PayedTimeOff({
+      var pto = new PaidTimeOff({
         type,
         status,
         userId,
@@ -129,7 +129,7 @@ const createPTO = async ({
 
 const updatePTO = async (id, updates) => {
   try {
-    const pto = await PayedTimeOff.findByIdAndUpdate(
+    const pto = await PaidTimeOff.findByIdAndUpdate(
       id,
       { $set: updates },
       { new: true }
@@ -142,7 +142,7 @@ const updatePTO = async (id, updates) => {
 
 const approvePTO = async (id) => {
   try {
-    const pto = await PayedTimeOff.findById(id);
+    const pto = await PaidTimeOff.findById(id);
     const user = await User.findById(pto.userId);
 
     if (pto.type === 'remote') {
@@ -215,14 +215,14 @@ const approvePTO = async (id) => {
   } catch (err) {
     throw new Error({
       success: false,
-      message: 'Problem with approving payed time off',
+      message: 'Problem with approving paid time off',
     });
   }
 };
 
 const rejectPTO = async (id, comment) => {
   try {
-    const pto = await PayedTimeOff.findByIdAndUpdate(id, {
+    const pto = await PaidTimeOff.findByIdAndUpdate(id, {
       status: 'rejected',
       comment: comment,
     });
@@ -230,14 +230,14 @@ const rejectPTO = async (id, comment) => {
   } catch (err) {
     throw new Error({
       success: false,
-      message: 'Problem with rejecting payed time off',
+      message: 'Problem with rejecting paid time off',
     });
   }
 };
 
 const deletePTO = async (id) => {
   try {
-    const pto = await PayedTimeOff.findByIdAndDelete(id);
+    const pto = await PaidTimeOff.findByIdAndDelete(id);
     return pto;
   } catch (err) {
     throw new Error({ success: false, message: 'Problem in deleting pto' });
@@ -248,7 +248,7 @@ const deletePTO = async (id) => {
 
 const getUserHistory = async (userId) => {
   try {
-    const ptoHistory = await PayedTimeOff.find({ userId }).lean();
+    const ptoHistory = await PaidTimeOff.find({ userId }).lean();
 
     const reviewerIds = ptoHistory.map((pto) => pto.reviewerId);
 
@@ -292,7 +292,7 @@ async function calculateVacationPercentage() {
   const currentDate = moment();
   const lastYearDate = moment().subtract(1, 'year');
 
-  const currentYearVacationUsers = await PayedTimeOff.aggregate([
+  const currentYearVacationUsers = await PaidTimeOff.aggregate([
     {
       $match: {
         type: 'vacation',
@@ -313,7 +313,7 @@ async function calculateVacationPercentage() {
     },
   ]);
 
-  const lastYearVacationUsers = await PayedTimeOff.aggregate([
+  const lastYearVacationUsers = await PaidTimeOff.aggregate([
     {
       $match: {
         type: 'vacation',
@@ -354,7 +354,7 @@ async function calculateVacationPercentage() {
 
 const getUserDates = async (userId) => {
   try {
-    const ptoDates = await PayedTimeOff.find({ userId }, { dates: 1 }).lean();
+    const ptoDates = await PaidTimeOff.find({ userId }, { dates: 1 }).lean();
     const allDates = ptoDates.reduce((acc, pto) => {
       acc.push(...pto.dates);
       return acc;
