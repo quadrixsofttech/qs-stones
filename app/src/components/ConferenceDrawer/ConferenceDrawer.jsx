@@ -24,7 +24,6 @@ import CardInfo from './CardInfo';
 import { reservationSchema, initialValues } from './formikConfig';
 import { useConferenceRoomReservation } from '../../hooks/useConferenceRoomReservation';
 import { useState } from 'react';
-import moment from 'moment';
 
 export default function ConferenceDrawer({
   btnRef,
@@ -48,7 +47,9 @@ export default function ConferenceDrawer({
       position: 'top-right',
       status: 'success',
       variant: 'subtle',
-      description: `You have successfully reserved ${values.column} for the date
+      description: `You have successfully reserved ${
+        values.confRoomName
+      } for the date
         ${values.selectedDate.format('YYYY/MM/DD')} from ${
         values.startTime
       } to ${values.endTime}`,
@@ -56,8 +57,6 @@ export default function ConferenceDrawer({
     onClose();
     createReservation(valuesForBE);
   };
-
-  console.log(valuesForBE);
 
   return (
     <>

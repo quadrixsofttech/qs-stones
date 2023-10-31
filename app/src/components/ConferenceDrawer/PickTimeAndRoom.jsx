@@ -31,7 +31,7 @@ const PickTimeAndRoom = ({ isEditMode, reservationData, setValuesForBE }) => {
     setFieldValue('userId', user._id);
     setValuesForBE({
       conferenceRoom: values.column,
-      date: moment(values.selectedDate).format('YYYY/MM/DD'),
+      date: moment(values.selectedDate).format('YYYY-MM-DD'),
       startTime: values.startTime,
       endTime: values.endTime,
       selectedDatesInDays: values.selectedDatesInDays,
@@ -87,6 +87,8 @@ const PickTimeAndRoom = ({ isEditMode, reservationData, setValuesForBE }) => {
     return <Spinner />;
   }
 
+  console.log(values);
+
   const floors = ['Upper Floor', 'Lower Floor'];
 
   const handleFloorChange = (e) => {
@@ -127,11 +129,16 @@ const PickTimeAndRoom = ({ isEditMode, reservationData, setValuesForBE }) => {
           <Select
             size="md"
             {...field}
-            value={values.column}
+            value={values.conferenceRoom}
             onChange={(e) => {
-              const newValue = e.target.value;
+              const selectedRoomId = e.target.value;
+              const selectedRoom = filteredConferenceRooms.find(
+                (room) => room._id === selectedRoomId
+              );
+              const roomName = selectedRoom ? selectedRoom.name : '';
               field.onChange(e);
-              setFieldValue('column', newValue);
+              setFieldValue('confRoomName', roomName);
+              setFieldValue('column', selectedRoomId);
             }}
           >
             {filteredConferenceRooms.map((room) => (

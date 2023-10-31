@@ -1,5 +1,5 @@
-import moment from 'moment';
 import * as Yup from 'yup';
+import moment from 'moment';
 
 const reservationSchema = Yup.object().shape({
   title: Yup.string().required('Title is required'),
@@ -7,7 +7,8 @@ const reservationSchema = Yup.object().shape({
 
 const initialValues = {
   floor: 'Upper Floor',
-  column: 'Collaboration Room',
+  column: '64a8185c62c2382ff77231ca',
+  confRoomName: 'Brainstorm Room',
   selectedDate: moment(),
   startTime: '',
   endTime: '',
