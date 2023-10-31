@@ -30,7 +30,21 @@ const getEmployees = async () => {
     const employees = await User.find({ role: 'user' })
       .select('_id firstName lastName avatar email')
       .lean();
-    return employees;
+
+    const employeeWithPendingRequests = await Promise.all(
+      employees.map(async (employee) => {
+        const pendingRequests = await PaidTimeOff.countDocuments({
+          status: 'pending',
+          userId: employee._id,
+        });
+        return {
+          ...employee,
+          pendingRequests,
+        };
+      })
+    );
+
+    return employeeWithPendingRequests;
   } catch (err) {
     throw new Error(err);
   }

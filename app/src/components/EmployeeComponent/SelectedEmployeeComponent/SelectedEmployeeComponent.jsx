@@ -7,7 +7,12 @@ import EmptyRequest from './EmptyRequest';
 import PendingRequests from './PendingRequests/PendingRequests';
 import RequestHistory from './RequestHistory/RequestHistory';
 
-const SelectedEmployeeComponent = ({ data, refetchPTO }) => {
+const SelectedEmployeeComponent = ({
+  data,
+  refetchPTO,
+  refetchEmployees,
+  employeeId,
+}) => {
   const [ptoType, setPtoType] = useState('vacation');
   const [requestHistoryData, setRequestHistoryData] = useState(
     data.filter((x) => x.status === 'approved' || x.status === 'rejected')
@@ -35,6 +40,7 @@ const SelectedEmployeeComponent = ({ data, refetchPTO }) => {
         <PendingRequests
           pendingRequests={pendingRequests}
           refetchPTO={refetchPTO}
+          refetchEmployees={refetchEmployees}
         />
       ) : (
         <EmptyRequest
@@ -70,7 +76,7 @@ const SelectedEmployeeComponent = ({ data, refetchPTO }) => {
           />
         )}
       </Flex>
-      <MyVacationInfo myInfo={false} userid="6454b8dad869b30bf6bad405" />
+      <MyVacationInfo myInfo={false} userid={employeeId} />
     </Flex>
   );
 };
