@@ -7,7 +7,8 @@ import useUser from '../../hooks/useUser';
 import { usePaidTimeOff } from '../../hooks/usePTO';
 
 const AdminPanel = () => {
-  const { employees, employeesLoading, employeesError } = useUser();
+  const { employees, employeesLoading, employeesError, refetchEmployees } =
+    useUser();
   const [clickedRowIndex, setClickedRowIndex] = useState(null);
   const [employeeId, setEmployeeId] = useState(null);
   const [name, setName] = useState();
@@ -52,8 +53,10 @@ const AdminPanel = () => {
         <EmployeeComponent
           isClicked={clickedRowIndex !== null}
           name={name}
+          employeeId={employeeId}
           paidTimeOff={paidTimeOffHistory}
           refetchPTO={refetchPTO}
+          refetchEmployees={refetchEmployees}
         />
       </Flex>
     </DashboardLayout>
