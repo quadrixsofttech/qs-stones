@@ -38,8 +38,7 @@ const ConferenceNavbar = ({
   } = useDates(new Date());
 
   useEffect(() => {
-    const newDate = moment(currentDate).format('YYYY-MM-DD');
-    setDate(newDate);
+    setDate(moment(currentDate).format('YYYY-MM-DD'));
   }, [currentDate, setDate]);
 
   return (
