@@ -1,13 +1,13 @@
 import { Button, Heading, Flex, useDisclosure } from '@chakra-ui/react';
 import DashboardLayout from '../../layout/DashboardLayout/DashboardLayout';
-import styles from './PayedTimeOff.styles';
+import styles from './PaidTimeOff.styles';
 import MyHistory from '../../components/MyHistory/MyHistory';
-import { MyVacationInfo } from './../../components/MyVacationInfo/MyVacationInfo';
+import { MyVacationInfo } from '../../components/MyVacationInfo/MyVacationInfo';
 import { RequestPTOModal } from '../../components/RequestPTOModal/RequestPTOModal';
 import PTOCalendar from '../../components/PTOCalendar/PTOCalendar';
 import { FaRegCalendarPlus } from 'react-icons/fa';
 
-const PayedTimeOff = () => {
+const PaidTimeOff = () => {
   const { onClose, isOpen, onOpen } = useDisclosure();
 
   return (
@@ -35,4 +35,4 @@ const PayedTimeOff = () => {
     </DashboardLayout>
   );
 };
-export default PayedTimeOff;
+export default PaidTimeOff;
