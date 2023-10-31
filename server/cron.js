@@ -20,6 +20,7 @@ const cronUpdateVacation = cron.schedule('0 0 1 7 *', async () => {
             year: currentYear + 1,
             vacationDays: 20,
             usedDays: 0,
+            initialVacationDays: 20,
           },
         },
       }

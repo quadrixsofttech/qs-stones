@@ -36,8 +36,8 @@ const getPTO = async (type) => {
       type: type,
       status: 'approved',
     })
-      .populate('userId')
-      .populate('reviewerId');
+      .populate({ path: 'userId', select: '-password' })
+      .populate({ path: 'reviewerId', select: '-password' });
 
     const formattedPaidTimeOff = paidTimeOff.map((paidtimeoff) => ({
       _id: paidtimeoff._id,
@@ -180,18 +180,21 @@ const approvePTO = async (id) => {
       if (maxDate.month() >= 0 && maxDate.month() < 6) {
         if (lastYearVacationDays >= vacationDays) {
           lastYearVacationDays -= vacationDays;
-          lastYearUsedDays = 20 - lastYearVacationDays;
+          lastYearUsedDays =
+            lastYear.initialVacationDays - lastYearVacationDays;
         } else {
           vacationDays -= lastYearVacationDays;
           lastYearVacationDays = 0;
-          lastYearUsedDays = 20;
+          lastYearUsedDays = lastYear.initialVacationDays;
           currentYearVacationDays -= vacationDays;
-          currentYearUsedDays = 20 - currentYearVacationDays;
+          currentYearUsedDays =
+            currentYear.initialVacationDays - currentYearVacationDays;
         }
       } else {
         if (currentYearVacationDays >= vacationDays) {
           currentYearVacationDays -= vacationDays;
-          currentYearUsedDays = 20 - currentYearVacationDays;
+          currentYearUsedDays =
+            currentYear.initialVacationDays - currentYearVacationDays;
         } else {
           throw new Error('Nemas dovoljno slobodnih dana');
         }

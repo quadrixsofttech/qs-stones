@@ -1,4 +1,6 @@
 const User = require('../../models/user.model');
+const PaidTimeOff = require('../../models/pto.model');
+const ConferenceRoomReservation = require('../../models/conference-room-reservation');
 const moment = require('moment');
 
 const getAllUsers = async () => {
@@ -28,7 +30,21 @@ const getEmployees = async () => {
     const employees = await User.find({ role: 'user' })
       .select('_id firstName lastName avatar email')
       .lean();
-    return employees;
+
+    const employeeWithPendingRequests = await Promise.all(
+      employees.map(async (employee) => {
+        const pendingRequests = await PaidTimeOff.countDocuments({
+          status: 'pending',
+          userId: employee._id,
+        });
+        return {
+          ...employee,
+          pendingRequests,
+        };
+      })
+    );
+
+    return employeeWithPendingRequests;
   } catch (err) {
     throw new Error(err);
   }
@@ -59,6 +75,8 @@ const updateUserRole = async (role, userId) => {
 const removeEmployee = async (id) => {
   try {
     const employee = await User.deleteOne({ _id: id });
+    await PaidTimeOff.deleteMany({ userId: id });
+    await ConferenceRoomReservation.deleteMany({ userId: id });
     return employee;
   } catch (err) {
     throw new Error(err);
