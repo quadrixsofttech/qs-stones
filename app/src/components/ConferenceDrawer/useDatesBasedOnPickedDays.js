@@ -18,13 +18,14 @@ export const useDatesBasedOnPickedDays = (
         }
 
         let calculatedDatesArray = [];
+        // calculatedDatesArray.push(values.selectedDate);
+        let datesForThisWeek = [];
 
         for (let week = 0; week < 52; week++) {
           let currentDayOfTheWeek = values.selectedDate.format('d');
-          let datesForThisWeek = [];
 
           selectedColorIndices.forEach((index) => {
-            let daysUntilNextDate = (index - currentDayOfTheWeek + 7) % 7;
+            let daysUntilNextDate = (index - currentDayOfTheWeek + 6) % 7;
 
             if (daysUntilNextDate <= 0) {
               daysUntilNextDate += 7;
@@ -37,11 +38,11 @@ export const useDatesBasedOnPickedDays = (
               .add(week * 7 + daysUntilNextDate, 'days');
             const formattedNextSelectedDay =
               nextSelectedDate.format('YYYY-MM-DD');
-            datesForThisWeek.push(formattedNextSelectedDay);
+            datesForThisWeek.push([formattedNextSelectedDay]);
+            console.log(datesForThisWeek);
           });
-
-          calculatedDatesArray.push(datesForThisWeek);
         }
+        calculatedDatesArray = [[values.selectedDate], ...datesForThisWeek];
 
         // setSelectedDatesArray(calculatedDatesArray);
         setFieldValue('selectedDatesInDays', calculatedDatesArray);
@@ -55,13 +56,13 @@ export const useDatesBasedOnPickedDays = (
         }
 
         let calculatedDatesArrayForOccureces = [];
+        let datesForThisWeekOccurences = [];
 
         for (let week = 0; week < values.numberOfOccurences; week++) {
           let currentDayOfTheWeek = values.selectedDate.format('d');
-          let datesForThisWeek = [];
 
           selectedColorIndices.forEach((index) => {
-            let daysUntilNextDate = (index - currentDayOfTheWeek + 7) % 7;
+            let daysUntilNextDate = (index - currentDayOfTheWeek + 6) % 7;
 
             if (daysUntilNextDate <= 0) {
               daysUntilNextDate += 7;
@@ -74,11 +75,14 @@ export const useDatesBasedOnPickedDays = (
               .add(week * 7 + daysUntilNextDate, 'days');
             const formattedNextSelectedDay =
               nextSelectedDate.format('YYYY-MM-DD');
-            datesForThisWeek.push(formattedNextSelectedDay);
+            datesForThisWeekOccurences.push([formattedNextSelectedDay]);
           });
-
-          calculatedDatesArrayForOccureces.push(datesForThisWeek);
         }
+
+        calculatedDatesArrayForOccureces = [
+          [values.selectedDate],
+          ...datesForThisWeekOccurences,
+        ];
 
         // setSelectedDatesArray(calculatedDatesArrayForOccureces);
         setFieldValue('selectedDatesInDays', calculatedDatesArrayForOccureces);
@@ -95,16 +99,17 @@ export const useDatesBasedOnPickedDays = (
         }
 
         let calculatedDatesArrayForDate = [];
+        let datesForThisWeekSelectedDate = [];
+
         let currentDate = moment(new Date(values.selectedDate));
 
         while (
           currentDate.isSameOrBefore(values.selectedDateFromInput, 'day')
         ) {
           let currentDayOfTheWeek = currentDate.format('d');
-          let datesForThisWeek = [];
 
           selectedColorIndices.forEach((index) => {
-            let daysUntilNextDate = (index - currentDayOfTheWeek + 7) % 7;
+            let daysUntilNextDate = (index - currentDayOfTheWeek + 6) % 7;
 
             if (daysUntilNextDate <= 0) {
               daysUntilNextDate += 7;
@@ -115,14 +120,17 @@ export const useDatesBasedOnPickedDays = (
               .add(daysUntilNextDate, 'days');
             const formattedNextSelectedDay =
               nextSelectedDate.format('YYYY-MM-DD');
-            datesForThisWeek.push(formattedNextSelectedDay);
+            datesForThisWeekSelectedDate.push([formattedNextSelectedDay]);
           });
 
-          calculatedDatesArrayForDate.push(datesForThisWeek);
           currentDate.add(7, 'days');
         }
 
-        // setSelectedDatesArray(calculatedDatesArrayForDate);
+        calculatedDatesArrayForDate = [
+          [values.selectedDate],
+          ...datesForThisWeekSelectedDate,
+        ];
+
         setFieldValue('selectedDatesInDays', calculatedDatesArrayForDate);
         break;
       default:

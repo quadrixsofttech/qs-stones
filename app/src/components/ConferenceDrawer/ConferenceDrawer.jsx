@@ -43,19 +43,34 @@ export default function ConferenceDrawer({
   }
 
   const handleSubmit = (values) => {
-    toast({
-      position: 'top-right',
-      status: 'success',
-      variant: 'subtle',
-      description: `You have successfully reserved ${
-        values.confRoomName
-      } for the date
-        ${values.selectedDate.format('YYYY/MM/DD')} from ${
-        values.startTime
-      } to ${values.endTime}`,
-    });
-    onClose();
-    createReservation(valuesForBE);
+    if (
+      values.startTime > values.endTime ||
+      !values.title ||
+      !values.description ||
+      !values.startTime ||
+      !values.endTime
+    ) {
+      toast({
+        position: 'top-right',
+        status: 'error',
+        variant: 'subtle',
+        description: `There was a problem regarding your reservation. Some parametars are missing`,
+      });
+    } else {
+      toast({
+        position: 'top-right',
+        status: 'success',
+        variant: 'subtle',
+        description: `You have successfully reserved ${
+          values.confRoomName
+        } for the date
+          ${values.selectedDate.format('YYYY/MM/DD')} from ${
+          values.startTime
+        } to ${values.endTime}`,
+      });
+      createReservation(valuesForBE);
+      onClose();
+    }
   };
 
   return (
