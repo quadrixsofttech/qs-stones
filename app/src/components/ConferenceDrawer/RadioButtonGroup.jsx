@@ -130,7 +130,10 @@ const RadioButtonGroup = React.memo(({ f_option, s_option, t_option }) => {
           }
           className="custom-calendar"
           value={moment(values.selectedDateFromInput).format('YYYY-MM-DD')}
-          onChange={(value) => setFieldValue('selectedDateFromInput', value)}
+          onChange={(value) => {
+            let newValue = moment(new Date(value));
+            setFieldValue('selectedDateFromInput', newValue);
+          }}
         />
         {values.repeatReservation &&
         values.meetingRepetition !== MeetingRepetition.NEVER &&

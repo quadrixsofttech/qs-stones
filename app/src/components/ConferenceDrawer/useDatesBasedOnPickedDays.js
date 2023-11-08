@@ -104,7 +104,7 @@ export const useDatesBasedOnPickedDays = (
         let currentDate = moment(new Date(values.selectedDate));
 
         while (
-          currentDate.isSameOrBefore(values.selectedDateFromInput, 'day')
+          currentDate.isBefore(values.selectedDateFromInput, 'day')
         ) {
           let currentDayOfTheWeek = currentDate.format('d');
 

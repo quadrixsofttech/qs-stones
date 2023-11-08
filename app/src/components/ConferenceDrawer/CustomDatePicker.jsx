@@ -22,7 +22,10 @@ export default function CustomDatePicker({ name, isEditMode }) {
             ? moment(values.selectedDate).format('YYYY-MM-DD')
             : new moment().format('YYYY-MM-DD')
         }
-        onChange={(value) => setFieldValue('selectedDate', value)}
+        onChange={(value) => {
+          let newValue = moment(new Date(value));
+          setFieldValue('selectedDate', newValue);
+        }}
       />
       <Icon
         as={AiTwotoneCalendar}
