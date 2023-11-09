@@ -1,20 +1,23 @@
 import { useQuery } from 'react-query';
 import axios from 'axios';
-import useUser from '../hooks/useUser';
 
-export const usePaidTimeOff = () => {
-  const { user } = useUser();
-  const userId = user._id;
-
+export const usePaidTimeOff = (employeeId) => {
   const paidTimeOffCallback = async () => {
-    const response = await axios.get(`api/v1/paid-time-off/history/${userId}`);
-    return response.data;
+    if (employeeId) {
+      const response = await axios.get(
+        `api/v1/paid-time-off/history/${employeeId}`
+      );
+      return response.data.reverse();
+    } else {
+      return [];
+    }
   };
   const {
     data: paidTimeOffHistory = [],
     isError,
     isLoading,
+    refetch: refetchPTO,
   } = useQuery('paidTimeOffHistory', paidTimeOffCallback);
 
-  return { paidTimeOffHistory, isError, isLoading };
+  return { paidTimeOffHistory, isError, isLoading, refetchPTO };
 };

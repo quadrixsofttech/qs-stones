@@ -22,10 +22,12 @@ import { LeaveTypes, headerOrder } from './constants/constants';
 import Scrollbars from 'react-custom-scrollbars-2';
 import { usePaidTimeOff } from '../../hooks/usePTO';
 import moment from 'moment';
+import useUser from '../../hooks/useUser';
 
 const MyHistory = () => {
   const [selectedOption, setSelectedOption] = useState(LeaveTypes.Vacation);
-  const { paidTimeOffHistory, isError, isLoading } = usePaidTimeOff();
+  const { user } = useUser();
+  const { paidTimeOffHistory, isError, isLoading } = usePaidTimeOff(user._id);
   const [dates, setDates] = useState([]);
 
   const handleSelectChange = (event) => {

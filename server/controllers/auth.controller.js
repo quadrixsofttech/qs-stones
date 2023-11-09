@@ -61,7 +61,7 @@ const signUp = async (req, res) => {
       firstName,
       lastName,
       password: hashedPassword,
-      role: 'admin',
+      role: 'user',
       vacation: [{}],
     };
 

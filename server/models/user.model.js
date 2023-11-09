@@ -13,6 +13,7 @@ const UserSchema = new Schema({
       year: { type: Number, required: true, default: new Date().getFullYear() },
       vacationDays: { type: Number, default: 20 },
       usedDays: { type: Number, default: 0 },
+      initialVacationDays: { type: Number, default: 20 },
     },
   ],
   active: { type: Boolean, required: true, default: true },
