@@ -57,7 +57,7 @@ const RadioButtonGroup = React.memo(({ f_option, s_option, t_option }) => {
           size="sm"
           value={MeetingRepetition.NEVER}
           colorScheme="purple"
-          isDisabled={values.repeatReservation ? false : true}
+          isDisabled={values.reccuring ? false : true}
         >
           <Text fontSize="sm">{f_option}</Text>
         </Radio>
@@ -65,7 +65,7 @@ const RadioButtonGroup = React.memo(({ f_option, s_option, t_option }) => {
           size="sm"
           value={MeetingRepetition.AFTER_N_OCCURENCES}
           colorScheme="purple"
-          isDisabled={values.repeatReservation ? false : true}
+          isDisabled={values.reccuring ? false : true}
         >
           <Flex alignItems={'center'} gap={3}>
             <Text fontSize="sm">{s_option}</Text>
@@ -102,14 +102,14 @@ const RadioButtonGroup = React.memo(({ f_option, s_option, t_option }) => {
           size="sm"
           value={MeetingRepetition.ON_SPECIFIC_DATE}
           colorScheme="purple"
-          isDisabled={values.repeatReservation ? false : true}
+          isDisabled={values.reccuring ? false : true}
         >
           <Text fontSize="sm">{t_option}</Text>
         </Radio>
         <Text
           fontSize="sm"
           color={
-            values.repeatReservation &&
+            values.reccuring &&
             values.meetingRepetition !== MeetingRepetition.NEVER &&
             values.meetingRepetition !== MeetingRepetition.AFTER_N_OCCURENCES
               ? 'gray.700'
@@ -122,7 +122,7 @@ const RadioButtonGroup = React.memo(({ f_option, s_option, t_option }) => {
           ref={datePickerRef}
           minDate={new moment().format('YYYY-MM-DD')}
           disabled={
-            values.repeatReservation &&
+            values.reccuring &&
             values.meetingRepetition !== MeetingRepetition.NEVER &&
             values.meetingRepetition !== MeetingRepetition.AFTER_N_OCCURENCES
               ? false
@@ -135,7 +135,7 @@ const RadioButtonGroup = React.memo(({ f_option, s_option, t_option }) => {
             setFieldValue('selectedDateFromInput', newValue);
           }}
         />
-        {values.repeatReservation &&
+        {values.reccuring &&
         values.meetingRepetition !== MeetingRepetition.NEVER &&
         values.meetingRepetition !== MeetingRepetition.AFTER_N_OCCURENCES ? (
           <Icon

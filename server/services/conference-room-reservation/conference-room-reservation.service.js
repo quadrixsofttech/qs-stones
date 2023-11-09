@@ -1,4 +1,3 @@
-const conferenceRoom = require('../../models/conference-room');
 const ConferenceRoomReservation = require('../../models/conference-room-reservation');
 
 const createReservation = async ({
@@ -13,6 +12,36 @@ const createReservation = async ({
   userId,
 }) => {
   try {
+    const existingReservation = await ConferenceRoomReservation.findOne({
+      conferenceRoom,
+      date,
+      $or: [
+        {
+          $and: [
+            { startTime: { $lte: startTime } },
+            { endTime: { $gt: startTime } },
+          ],
+        },
+        {
+          $and: [
+            { startTime: { $lt: endTime } },
+            { endTime: { $gte: endTime } },
+          ],
+        },
+        {
+          $and: [
+            { startTime: { $gte: startTime } },
+            { endTime: { $lte: endTime } },
+          ],
+        },
+      ],
+    });
+
+    if (existingReservation) {
+      throw new Error(
+        'A conference room cannot be reserved for that time because it is taken.'
+      );
+    }
     const reservation = new ConferenceRoomReservation({
       conferenceRoom,
       date,
@@ -65,14 +94,76 @@ const getReservations = async (date) => {
 
 const updateReservation = async (id, update) => {
   try {
-    const updateReservation = await ConferenceRoomReservation.findByIdAndUpdate(
-      id,
-      { $set: update },
-      { new: true }
-    );
-    return updateReservation;
+    const existingReservation = await ConferenceRoomReservation.findOne({
+      _id: { $ne: id }, // Exclude the current reservation being updated
+      conferenceRoom: update.conferenceRoom,
+      date: update.date,
+      $or: [
+        {
+          $and: [
+            { startTime: { $lte: update.startTime } },
+            { endTime: { $gt: update.startTime } },
+          ],
+        },
+        {
+          $and: [
+            { startTime: { $lt: update.endTime } },
+            { endTime: { $gte: update.endTime } },
+          ],
+        },
+        {
+          $and: [
+            { startTime: { $gte: update.startTime } },
+            { endTime: { $lte: update.endTime } },
+          ],
+        },
+      ],
+    });
+
+    if (existingReservation) {
+      throw new Error(
+        'A conference room cannot be reserved for that time because it is taken.'
+      );
+    }
+
+    const reservation = await ConferenceRoomReservation.findById(id);
+
+    if (reservation.recurring) {
+      // Find all instances of the recurring reservation with the same title, description, time, and conference room
+      const recurringReservations = await ConferenceRoomReservation.find({
+        _id: { $ne: id },
+        title: reservation.title,
+        description: reservation.description,
+        startTime: reservation.startTime,
+        endTime: reservation.endTime,
+        conferenceRoom: reservation.conferenceRoom,
+        recurring: true,
+      });
+
+      // Update all matching recurring reservations
+      await Promise.all(
+        recurringReservations.map(async (recurringReservation) => {
+          const updatedReservation =
+            await ConferenceRoomReservation.findByIdAndUpdate(
+              recurringReservation._id,
+              { $set: update },
+              { new: true }
+            );
+          return updatedReservation;
+        })
+      );
+    } else {
+      // If the reservation is not recurring, update only the current reservation
+      const updatedReservation =
+        await ConferenceRoomReservation.findByIdAndUpdate(
+          id,
+          { $set: update },
+          { new: true }
+        );
+      return updatedReservation;
+    }
   } catch (err) {
-    throw new Error(err);
+    throw new Error(err.message);
   }
 };
 

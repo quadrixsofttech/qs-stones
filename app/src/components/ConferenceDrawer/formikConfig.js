@@ -17,6 +17,7 @@ const initialValues = {
   selectedDatesInDays: [],
   repeatReservation: false,
   meetingRepetition: 'Never',
+  reccuring: false,
   numberOfOccurences: 1,
   everyDay: false,
   title: '',

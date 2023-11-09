@@ -131,6 +131,7 @@ const Conference = () => {
         <Flex mb={'1'}>+</Flex>
         <ConferenceDrawer
           btnRef={btnRef}
+          data={modalData}
           isOpen={drawerDisclosure.isOpen}
           onClose={drawerDisclosure.onClose}
           reservationData={reservationData}

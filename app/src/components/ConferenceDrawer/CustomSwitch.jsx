@@ -11,10 +11,12 @@ const CustomSwitch = ({ switch_text, isEditMode }) => {
             <Switch
               {...field}
               colorScheme="purple"
-              isChecked={values.repeatReservation ? true : false}
+              isChecked={
+                values.reccuring ? true : false
+              }
               onChange={() => {
-                const checked = values.repeatReservation;
-                setFieldValue('repeatReservation', !checked);
+                const checked = values.reccuring;
+                setFieldValue('reccuring', !checked);
               }}
             />
             <FormLabel htmlFor="reservation" mb="0" ml={3}>

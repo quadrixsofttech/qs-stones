@@ -20,6 +20,7 @@ const PickTimeAndRoom = ({ isEditMode, reservationData, setValuesForBE }) => {
     endTime,
     meetingRepetition,
     numberOfOccurences,
+    reccuring,
     column,
     floor,
     date,
@@ -35,6 +36,7 @@ const PickTimeAndRoom = ({ isEditMode, reservationData, setValuesForBE }) => {
       startTime: values.startTime,
       endTime: values.endTime,
       selectedDatesInDays: values.selectedDatesInDays,
+      reccuring: values.reccuring,
       title: values.title,
       description: values.description,
       color: values.markerColor,
@@ -50,6 +52,7 @@ const PickTimeAndRoom = ({ isEditMode, reservationData, setValuesForBE }) => {
     values.selectedDatesInDays,
     values.endTime,
     values.title,
+    values.reccuring,
     values.markerColor,
     values.userId,
     values.description,
@@ -77,6 +80,7 @@ const PickTimeAndRoom = ({ isEditMode, reservationData, setValuesForBE }) => {
     numberOfOccurences,
     title,
     description,
+    reccuring,
     selectedDateFromInput,
     markerColor,
     user._id,
@@ -87,6 +91,7 @@ const PickTimeAndRoom = ({ isEditMode, reservationData, setValuesForBE }) => {
     return <Spinner />;
   }
 
+  console.log(values);
 
   const floors = ['Upper Floor', 'Lower Floor'];
 

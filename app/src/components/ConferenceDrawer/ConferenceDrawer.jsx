@@ -28,13 +28,15 @@ import { useState } from 'react';
 export default function ConferenceDrawer({
   btnRef,
   isOpen,
+  data,
   onClose,
   isEditMode,
   reservationData,
 }) {
   const toast = useToast();
 
-  const { isLoading, createReservation } = useConferenceRoomReservation();
+  const { isLoading, createReservation, updateReservation } =
+    useConferenceRoomReservation();
   const [selectedDatesArray, setSelectedDatesArray] = useState([]);
   const [valuesForBE, setValuesForBE] = useState([]);
 
@@ -68,7 +70,11 @@ export default function ConferenceDrawer({
           values.startTime
         } to ${values.endTime}`,
       });
-      createReservation(valuesForBE);
+      if (isEditMode) {
+        updateReservation(data._id, valuesForBE);
+      } else {
+        createReservation(valuesForBE);
+      }
       onClose();
     }
   };
@@ -123,9 +129,7 @@ export default function ConferenceDrawer({
                         <Text
                           fontSize="md"
                           mt={3}
-                          color={
-                            values.repeatReservation ? 'gray.700' : 'gray.200'
-                          }
+                          color={values.reccuring ? 'gray.700' : 'gray.200'}
                         >
                           Ends
                         </Text>
