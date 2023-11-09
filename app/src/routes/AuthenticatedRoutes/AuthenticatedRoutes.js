@@ -1,7 +1,7 @@
 import { lazy } from 'react';
 import { Route } from 'react-router-dom';
 
-const PayedTimeOff = lazy(() => import('./../../pages/PayedTimeOff'));
+const PaidTimeOff = lazy(() => import('./../../pages/PaidTimeOff'));
 const Account = lazy(() => import('../../pages/Account'));
 const Conference = lazy(() => import('../../pages/Conference'));
 const ConferenceOverviewPage = lazy(() =>
@@ -9,7 +9,7 @@ const ConferenceOverviewPage = lazy(() =>
 );
 
 const AuthenticatedRoutes = [
-  <Route key="dashboard" path="/dashboard" element={<PayedTimeOff />} />,
+  <Route key="dashboard" path="/dashboard" element={<PaidTimeOff />} />,
   <Route key="account" path="/account" element={<Account />} />,
   <Route key="conference" path="/conference" element={<Conference />} />,
   <Route

@@ -1,6 +1,7 @@
 const User = require('../../models/user.model');
+const PaidTimeOff = require('../../models/pto.model');
+const ConferenceRoomReservation = require('../../models/conference-room-reservation');
 const moment = require('moment');
-
 
 const getAllUsers = async () => {
   try {
@@ -19,6 +20,31 @@ const getAdmins = async () => {
       .select('_id firstName lastName')
       .lean();
     return admins;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
+const getEmployees = async () => {
+  try {
+    const employees = await User.find({ role: 'user' })
+      .select('_id firstName lastName avatar email')
+      .lean();
+
+    const employeeWithPendingRequests = await Promise.all(
+      employees.map(async (employee) => {
+        const pendingRequests = await PaidTimeOff.countDocuments({
+          status: 'pending',
+          userId: employee._id,
+        });
+        return {
+          ...employee,
+          pendingRequests,
+        };
+      })
+    );
+
+    return employeeWithPendingRequests;
   } catch (err) {
     throw new Error(err);
   }
@@ -46,6 +72,17 @@ const updateUserRole = async (role, userId) => {
   }
 };
 
+const removeEmployee = async (id) => {
+  try {
+    const employee = await User.deleteOne({ _id: id });
+    await PaidTimeOff.deleteMany({ userId: id });
+    await ConferenceRoomReservation.deleteMany({ userId: id });
+    return employee;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
 async function getTotalUsersWorkingToday() {
   const currentDate = moment().format('YYYY/MM/DD');
   const activeUsers = await User.find({ active: true, days: currentDate });
@@ -59,4 +96,6 @@ module.exports = {
   getAdmins,
   getUserVacation,
   getTotalUsersWorkingToday,
+  getEmployees,
+  removeEmployee,
 };

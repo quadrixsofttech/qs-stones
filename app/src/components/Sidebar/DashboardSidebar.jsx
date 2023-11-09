@@ -17,7 +17,7 @@ const DashboardSidebar = () => {
         </Box>
         <Flex {...styles.sideBarButton} as={NavLink} to="/dashboard">
           <BiSwim size={20} />
-          <Text>PTO</Text>
+          <Text>Paid Time Off</Text>
         </Flex>
         <Flex {...styles.sideBarButton} as={NavLink} to="/conference">
           <BiChalkboard size={20} />

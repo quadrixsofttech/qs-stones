@@ -3,33 +3,22 @@ import React from 'react';
 import styles from './PendingRequests.styles';
 import RequestComponent from './RequestComponent';
 
-const PendingRequests = () => {
-  const range = [
-    ['1688983401117', '1689156201117'],
-    ['1688983401117', '1689156201117'],
-  ];
+const PendingRequests = ({ pendingRequests, refetchPTO, refetchEmployees }) => {
   return (
     <Box {...styles.pendingRequestBox}>
-      <RequestComponent
-        type="Remote"
-        range={range}
-        createdAt="2022/10/10 15:15"
-      />
-      <RequestComponent
-        type="Remote"
-        range={range}
-        createdAt="2022/10/10 15:15"
-      />
-      <RequestComponent
-        type="Remote"
-        range={range}
-        createdAt="2022/10/10 15:15"
-      />
-      <RequestComponent
-        type="Remote"
-        range={range}
-        createdAt="2022/10/10 15:15"
-      />
+      {pendingRequests?.map((request) => {
+        return (
+          <RequestComponent
+            key={request._id}
+            type={request.type}
+            range={request.dates}
+            createdAt={request.createdAt}
+            id={request._id}
+            refetchPTO={refetchPTO}
+            refetchEmployees={refetchEmployees}
+          />
+        );
+      })}
     </Box>
   );
 };

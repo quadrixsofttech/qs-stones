@@ -1,5 +1,5 @@
 import { Flex, Select, Text } from '@chakra-ui/react';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import EmptyInbox from '../../../images/EmptyInbox.png';
 import styles from './SelectedEmployeeComponent.styles';
 import { MyVacationInfo } from '../../MyVacationInfo/MyVacationInfo';
@@ -7,11 +7,41 @@ import EmptyRequest from './EmptyRequest';
 import PendingRequests from './PendingRequests/PendingRequests';
 import RequestHistory from './RequestHistory/RequestHistory';
 
-const SelectedEmployeeComponent = ({ data }) => {
+const SelectedEmployeeComponent = ({
+  data,
+  refetchPTO,
+  refetchEmployees,
+  employeeId,
+}) => {
+  const [ptoType, setPtoType] = useState('vacation');
+  const [requestHistoryData, setRequestHistoryData] = useState(
+    data.filter((x) => x.status === 'approved' || x.status === 'rejected')
+  );
+
+  const handlePtoTypeChange = (event) => {
+    setPtoType(event.target.value);
+  };
+
+  useEffect(() => {
+    setRequestHistoryData(
+      data.filter(
+        (x) =>
+          x.type === ptoType &&
+          (x.status === 'approved' || x.status === 'rejected')
+      )
+    );
+  }, [ptoType, data]);
+
+  const pendingRequests = data.filter((x) => x.status === 'pending');
+
   return (
     <Flex flexDir={'column'} height={'100%'} overflow={'hidden'}>
-      {data ? (
-        <PendingRequests />
+      {pendingRequests?.length > 0 ? (
+        <PendingRequests
+          pendingRequests={pendingRequests}
+          refetchPTO={refetchPTO}
+          refetchEmployees={refetchEmployees}
+        />
       ) : (
         <EmptyRequest
           image={EmptyInbox}
@@ -22,17 +52,21 @@ const SelectedEmployeeComponent = ({ data }) => {
       <Flex flexDir={'column'} overflow={'auto'} height={'30%'}>
         <Flex {...styles.requestHistoryBox}>
           <Text {...styles.text}>Request History</Text>
-          <Select {...styles.select}>
-            <option key={'Vacation'} value={'Vacation'}>
+          <Select
+            {...styles.select}
+            value={ptoType}
+            onChange={handlePtoTypeChange}
+          >
+            <option key={'Vacation'} value={'vacation'}>
               Vacation
             </option>
-            <option key={'Remote'} value={'Remote'}>
+            <option key={'Remote'} value={'remote'}>
               Remote
             </option>
           </Select>
         </Flex>
-        {data ? (
-          <RequestHistory />
+        {data?.length > 0 ? (
+          <RequestHistory requestHistory={requestHistoryData} />
         ) : (
           <EmptyRequest
             label={'Your requests history list is empty'}
@@ -42,7 +76,7 @@ const SelectedEmployeeComponent = ({ data }) => {
           />
         )}
       </Flex>
-      <MyVacationInfo myInfo={false} userid="6454b8dad869b30bf6bad405" />
+      <MyVacationInfo myInfo={false} userid={employeeId} />
     </Flex>
   );
 };
