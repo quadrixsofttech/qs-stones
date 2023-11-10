@@ -15,7 +15,6 @@ export default function GenerateDayOfTheWeek({
   const [selectedColorIndices, setSelectedColorIndices] = useState([]);
   const { values, setFieldValue } = useFormikContext();
 
-  // console.log(selectedColorIndices);
 
   useEffect(() => {
     if (values.everyDay) {
@@ -43,7 +42,6 @@ export default function GenerateDayOfTheWeek({
   };
 
   useDatesBasedOnPickedDays(selectedColorIndices, setSelectedDatesArray);
-  // console.log(selectedDatesArray);
 
   return (
     <Flex alignItems="center" justifyContent="space-around" mt={4}>

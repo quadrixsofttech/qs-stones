@@ -19,7 +19,7 @@ export default function CustomDatePicker({ name, isEditMode }) {
         format={'YYYY-MM-DD'}
         value={
           isEditMode
-            ? moment(values.selectedDate).format('YYYY-MM-DD')
+            ? values.selectedDate.format('YYYY-MM-DD')
             : new moment().format('YYYY-MM-DD')
         }
         onChange={(value) => {
@@ -27,6 +27,7 @@ export default function CustomDatePicker({ name, isEditMode }) {
           setFieldValue('selectedDate', newValue);
         }}
       />
+      {/* {console.log(values.selectedDate)} */}
       <Icon
         as={AiTwotoneCalendar}
         onClick={() => {
