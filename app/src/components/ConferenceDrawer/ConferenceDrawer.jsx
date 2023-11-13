@@ -27,6 +27,7 @@ import { useConferenceRoomReservation } from '../../hooks/useConferenceRoomReser
 import { useState } from 'react';
 import { InfoIcon } from '@chakra-ui/icons';
 import moment from 'moment';
+import { getToastConfig } from './CustomToastMessage';
 
 export default function ConferenceDrawer({
   btnRef,
@@ -37,8 +38,13 @@ export default function ConferenceDrawer({
 }) {
   const toast = useToast();
 
-  const { isLoading, createReservation, updateReservation } =
-    useConferenceRoomReservation();
+  const {
+    isLoading,
+    createReservation,
+    updateReservation,
+    errorForCreate,
+    errorForUpdate,
+  } = useConferenceRoomReservation();
   const [selectedDatesArray, setSelectedDatesArray] = useState([]);
   const [valuesForBE, setValuesForBE] = useState([]);
 
@@ -55,37 +61,48 @@ export default function ConferenceDrawer({
       !values.startTime ||
       !values.endTime
     ) {
-      toast({
-        position: 'top-right',
+      const toastConfig = getToastConfig({
         status: 'error',
-        variant: 'subtle',
-        duration: 2000,
-        isClosable: true,
-        description: `There was a problem regarding your reservation. Some parametars are missing`,
+        description:
+          'There was a problem regarding your reservation. Some parameters are missing or are incorrect',
       });
+      toast(toastConfig);
     } else {
-      toast({
-        position: 'top-right',
-        status: 'success',
-        variant: 'subtle',
-        duration: 3000,
-        description: `You have successfully reserved ${
-          values.confRoomName
-        } for the date
-          ${moment(values.selectedDate).format('YYYY-MM-DD')} from ${
-          values.startTime
-        } to ${values.endTime}`,
-      });
-      createReservation(valuesForBE);
-    }
-    if (isEditMode) {
-      if (!reservationData) {
-        return <></>;
+      if (errorForCreate) {
+        const toastConfig = getToastConfig({
+          status: 'error',
+          description: `${errorForCreate.response.data.message}`,
+        });
+        toast(toastConfig);
       } else {
-        updateReservation(reservationData._id, valuesForBE);
+        const toastConfig = getToastConfig({
+          status: 'success',
+          description: `You have successfully reserved ${
+            values.confRoomName
+          } for the date
+          ${moment(values.selectedDate).format('YYYY-MM-DD')} from ${
+            values.startTime
+          } to ${values.endTime}`,
+        });
+        toast(toastConfig);
+        createReservation(valuesForBE);
       }
+      if (isEditMode) {
+        if (!reservationData) {
+          return <></>;
+        }
+        if (errorForUpdate) {
+          const toastConfig = getToastConfig({
+            status: 'error',
+            description: `${errorForUpdate.response.data.message}`,
+          });
+          toast(toastConfig);
+        } else {
+          updateReservation(reservationData._id, valuesForBE);
+        }
+      }
+      onClose();
     }
-    onClose();
   };
 
   return (

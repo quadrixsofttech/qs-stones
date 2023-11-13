@@ -80,7 +80,6 @@ const Conference = () => {
     modalDisclosure.onOpen();
   };
 
-  console.log(reservationData);
 
 
 
