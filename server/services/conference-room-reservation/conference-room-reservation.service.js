@@ -95,7 +95,7 @@ const getReservations = async (date) => {
 const updateReservation = async (id, update) => {
   try {
     const existingReservation = await ConferenceRoomReservation.findOne({
-      _id: { $ne: id }, // Exclude the current reservation being updated
+      _id: { $ne: id },
       conferenceRoom: update.conferenceRoom,
       date: update.date,
       $or: [
@@ -129,7 +129,6 @@ const updateReservation = async (id, update) => {
     const reservation = await ConferenceRoomReservation.findById(id);
 
     if (reservation.recurring) {
-      // Find all instances of the recurring reservation with the same title, description, time, and conference room
       const recurringReservations = await ConferenceRoomReservation.find({
         _id: { $ne: id },
         title: reservation.title,
@@ -140,7 +139,6 @@ const updateReservation = async (id, update) => {
         recurring: true,
       });
 
-      // Update all matching recurring reservations
       await Promise.all(
         recurringReservations.map(async (recurringReservation) => {
           const updatedReservation =
@@ -153,7 +151,6 @@ const updateReservation = async (id, update) => {
         })
       );
     } else {
-      // If the reservation is not recurring, update only the current reservation
       const updatedReservation =
         await ConferenceRoomReservation.findByIdAndUpdate(
           id,

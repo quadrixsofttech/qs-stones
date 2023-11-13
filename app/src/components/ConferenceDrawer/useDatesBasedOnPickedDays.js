@@ -12,13 +12,11 @@ export const useDatesBasedOnPickedDays = (
     switch (values.meetingRepetition) {
       case 'Never':
         if (!values.selectedDate || selectedColorIndices.length === 0) {
-          // setSelectedDatesArray([]);
           setFieldValue('selectedDatesInDays', []);
           return;
         }
 
         let calculatedDatesArray = [];
-        // calculatedDatesArray.push(values.selectedDate);
         let datesForThisWeek = [];
 
         for (let week = 0; week < 52; week++) {
@@ -39,18 +37,15 @@ export const useDatesBasedOnPickedDays = (
             const formattedNextSelectedDay =
               nextSelectedDate.format('YYYY-MM-DD');
             datesForThisWeek.push([formattedNextSelectedDay]);
-            console.log(datesForThisWeek);
           });
         }
         calculatedDatesArray = [[values.selectedDate], ...datesForThisWeek];
 
-        // setSelectedDatesArray(calculatedDatesArray);
         setFieldValue('selectedDatesInDays', calculatedDatesArray);
 
         break;
       case 'After n occurences':
         if (!values.selectedDate || selectedColorIndices.length === 0) {
-          // setSelectedDatesArray([]);
           setFieldValue('selectedDatesInDays', []);
           return;
         }
@@ -84,7 +79,6 @@ export const useDatesBasedOnPickedDays = (
           ...datesForThisWeekOccurences,
         ];
 
-        // setSelectedDatesArray(calculatedDatesArrayForOccureces);
         setFieldValue('selectedDatesInDays', calculatedDatesArrayForOccureces);
         break;
       case 'On specific date':
@@ -93,7 +87,6 @@ export const useDatesBasedOnPickedDays = (
           !values.selectedDateFromInput ||
           selectedColorIndices.length === 0
         ) {
-          // setSelectedDatesArray([]);
           setFieldValue('selectedDatesInDays', []);
           return;
         }

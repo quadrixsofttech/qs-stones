@@ -47,6 +47,7 @@ export default function ConferenceDrawer({
   const handleSubmit = (values) => {
     if (
       values.startTime > values.endTime ||
+      values.startTime === values.endTime ||
       !values.title ||
       !values.description ||
       !values.startTime ||
@@ -56,6 +57,8 @@ export default function ConferenceDrawer({
         position: 'top-right',
         status: 'error',
         variant: 'subtle',
+        duration: 2000,
+        isClosable: true,
         description: `There was a problem regarding your reservation. Some parametars are missing`,
       });
     } else {
@@ -63,6 +66,7 @@ export default function ConferenceDrawer({
         position: 'top-right',
         status: 'success',
         variant: 'subtle',
+        duration: 3000,
         description: `You have successfully reserved ${
           values.confRoomName
         } for the date
