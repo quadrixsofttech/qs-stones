@@ -79,6 +79,8 @@ const Conference = () => {
     setModalData(filteredData);
     modalDisclosure.onOpen();
   };
+
+
   return (
     <DashboardLayout Padding="0">
       <ConferenceNavbar />
@@ -131,7 +133,6 @@ const Conference = () => {
         <Flex mb={'1'}>+</Flex>
         <ConferenceDrawer
           btnRef={btnRef}
-          data={modalData}
           isOpen={drawerDisclosure.isOpen}
           onClose={drawerDisclosure.onClose}
           reservationData={reservationData}

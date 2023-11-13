@@ -26,11 +26,11 @@ import { reservationSchema, initialValues } from './formikConfig';
 import { useConferenceRoomReservation } from '../../hooks/useConferenceRoomReservation';
 import { useState } from 'react';
 import { InfoIcon } from '@chakra-ui/icons';
+import moment from 'moment';
 
 export default function ConferenceDrawer({
   btnRef,
   isOpen,
-  data,
   onClose,
   isEditMode,
   reservationData,
@@ -72,12 +72,15 @@ export default function ConferenceDrawer({
         description: `You have successfully reserved ${
           values.confRoomName
         } for the date
-          ${values.selectedDate.format('YYYY/MM/DD')} from ${
+          ${moment(values.selectedDate).format('YYYY-MM-DD')} from ${
           values.startTime
         } to ${values.endTime}`,
       });
       if (isEditMode) {
-        updateReservation(data._id, valuesForBE);
+        if (!reservationData) {
+          return <></>;
+        }
+        updateReservation(reservationData._id, valuesForBE);
       } else {
         createReservation(valuesForBE);
       }
