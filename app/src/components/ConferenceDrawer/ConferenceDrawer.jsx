@@ -11,6 +11,7 @@ import {
   DrawerOverlay,
   Spinner,
   Text,
+  Tooltip,
   useToast,
 } from '@chakra-ui/react';
 
@@ -24,6 +25,7 @@ import CardInfo from './CardInfo';
 import { reservationSchema, initialValues } from './formikConfig';
 import { useConferenceRoomReservation } from '../../hooks/useConferenceRoomReservation';
 import { useState } from 'react';
+import { InfoIcon } from '@chakra-ui/icons';
 
 export default function ConferenceDrawer({
   btnRef,
@@ -95,7 +97,22 @@ export default function ConferenceDrawer({
         <DrawerOverlay />
         <DrawerContent overflowY={'auto'}>
           <DrawerCloseButton />
-          <DrawerHeader>Reserve Conference Room</DrawerHeader>
+          <DrawerHeader>
+            {isEditMode ? (
+              <>
+                Edit Conference Room
+                <Tooltip
+                  label="*If you want to update all instances, first you must delete the card and then create a new reservation."
+                  hasArrow
+                  placement="bottom"
+                >
+                  <InfoIcon color={'gray.400'} ml={2} mb={1} />
+                </Tooltip>
+              </>
+            ) : (
+              <>Reserve Conference Room</>
+            )}
+          </DrawerHeader>
           <Divider />
           <Formik
             initialValues={initialValues}
@@ -157,7 +174,7 @@ export default function ConferenceDrawer({
                     Cancel
                   </Button>
                   <Button colorScheme="purple" type="submit">
-                    Submit
+                    {isEditMode ? <>Update</> : <>Submit</>}
                   </Button>
                 </DrawerFooter>
               </Form>

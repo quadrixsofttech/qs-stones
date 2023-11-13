@@ -95,9 +95,9 @@ const getReservations = async (date) => {
 const updateReservation = async (id, update) => {
   try {
     const existingReservation = await ConferenceRoomReservation.findOne({
-      _id: { $ne: id },
+      _id: update._id,
       conferenceRoom: update.conferenceRoom,
-      date: update.date,
+      selectedDate: update.selectedDate,
       $or: [
         {
           $and: [
@@ -126,39 +126,13 @@ const updateReservation = async (id, update) => {
       );
     }
 
-    const reservation = await ConferenceRoomReservation.findById(id);
-
-    if (reservation.recurring) {
-      const recurringReservations = await ConferenceRoomReservation.find({
-        _id: { $ne: id },
-        title: reservation.title,
-        description: reservation.description,
-        startTime: reservation.startTime,
-        endTime: reservation.endTime,
-        conferenceRoom: reservation.conferenceRoom,
-        recurring: true,
-      });
-
-      await Promise.all(
-        recurringReservations.map(async (recurringReservation) => {
-          const updatedReservation =
-            await ConferenceRoomReservation.findByIdAndUpdate(
-              recurringReservation._id,
-              { $set: update },
-              { new: true }
-            );
-          return updatedReservation;
-        })
+    const updatedReservation =
+      await ConferenceRoomReservation.findByIdAndUpdate(
+        id,
+        { $set: update },
+        { new: true }
       );
-    } else {
-      const updatedReservation =
-        await ConferenceRoomReservation.findByIdAndUpdate(
-          id,
-          { $set: update },
-          { new: true }
-        );
-      return updatedReservation;
-    }
+    return updatedReservation;
   } catch (err) {
     throw new Error(err.message);
   }
