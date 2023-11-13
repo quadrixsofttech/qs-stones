@@ -76,16 +76,16 @@ export default function ConferenceDrawer({
           values.startTime
         } to ${values.endTime}`,
       });
-      if (isEditMode) {
-        if (!reservationData) {
-          return <></>;
-        }
-        updateReservation(reservationData._id, valuesForBE);
-      } else {
-        createReservation(valuesForBE);
-      }
-      onClose();
+      createReservation(valuesForBE);
     }
+    if (isEditMode) {
+      if (!reservationData) {
+        return <></>;
+      } else {
+        updateReservation(reservationData._id, valuesForBE);
+      }
+    }
+    onClose();
   };
 
   return (

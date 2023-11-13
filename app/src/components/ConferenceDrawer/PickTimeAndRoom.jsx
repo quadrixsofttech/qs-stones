@@ -22,6 +22,7 @@ const PickTimeAndRoom = ({ isEditMode, reservationData, setValuesForBE }) => {
     numberOfOccurences,
     column,
     floor,
+    conferenceRoomName,
     date,
     selectedDateFromInput,
     markerColor,
@@ -59,6 +60,7 @@ const PickTimeAndRoom = ({ isEditMode, reservationData, setValuesForBE }) => {
     if (isEditMode) {
       setFieldValue('floor', floor);
       setFieldValue('column', column);
+      setFieldValue('conferenceRoomName',conferenceRoomName);
       setFieldValue('selectedDate', date);
       setFieldValue('startTime', startTime);
       setFieldValue('endTime', endTime);
@@ -70,6 +72,7 @@ const PickTimeAndRoom = ({ isEditMode, reservationData, setValuesForBE }) => {
     isEditMode,
     floor,
     column,
+    conferenceRoomName,
     date,
     startTime,
     endTime,
@@ -118,7 +121,7 @@ const PickTimeAndRoom = ({ isEditMode, reservationData, setValuesForBE }) => {
         )}
       </Field>
       <ErrorMessage name="selectedFloor" component="div" className="error" />
-
+      {/* {console.log(values)} */}
       <Box mb={2} mt={3}>
         Choose a conference room
       </Box>
@@ -127,7 +130,7 @@ const PickTimeAndRoom = ({ isEditMode, reservationData, setValuesForBE }) => {
           <Select
             size="md"
             {...field}
-            value={values.conferenceRoom}
+            value={values.column}
             onChange={(e) => {
               const selectedRoomId = e.target.value;
               const selectedRoom = filteredConferenceRooms.find(

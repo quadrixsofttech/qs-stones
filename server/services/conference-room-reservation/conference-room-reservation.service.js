@@ -78,7 +78,8 @@ const getReservations = async (date) => {
       description: reservation.description,
       color: reservation.color,
       floor: reservation.conferenceRoom.floor,
-      column: reservation.conferenceRoom.name,
+      column: reservation.conferenceRoom._id,
+      conferenceRoomName:reservation.conferenceRoom.name,
       id: reservation.conferenceRoom.id,
       user: {
         firstName: reservation.userId.firstName,

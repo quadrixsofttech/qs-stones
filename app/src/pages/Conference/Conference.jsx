@@ -80,6 +80,9 @@ const Conference = () => {
     modalDisclosure.onOpen();
   };
 
+  console.log(reservationData);
+
+
 
   return (
     <DashboardLayout Padding="0">
