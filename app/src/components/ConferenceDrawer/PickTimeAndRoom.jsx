@@ -121,7 +121,6 @@ const PickTimeAndRoom = ({ isEditMode, reservationData, setValuesForBE }) => {
         )}
       </Field>
       <ErrorMessage name="selectedFloor" component="div" className="error" />
-      {/* {console.log(values)} */}
       <Box mb={2} mt={3}>
         Choose a conference room
       </Box>

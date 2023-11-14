@@ -101,7 +101,6 @@ export default function ConferenceDrawer({
         );
       }
     } catch (error) {
-      console.error('Error during reservation:', error);
       showToast('error', error.response?.data?.message || 'An error occurred.');
     } finally {
       onClose();
