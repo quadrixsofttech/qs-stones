@@ -58,20 +58,6 @@ export default function ConferenceDrawer({
   };
 
   const handleSubmit = async (values) => {
-    if (
-      values.startTime > values.endTime ||
-      values.startTime === values.endTime ||
-      !values.title ||
-      !values.description ||
-      !values.startTime ||
-      !values.endTime
-    ) {
-      showToast(
-        'error',
-        'There was a problem regarding your reservation. Some parameters are missing or are incorrect.'
-      );
-      return;
-    }
     try {
       let reservationId;
       if (isEditMode) {
@@ -84,22 +70,14 @@ export default function ConferenceDrawer({
       } else {
         reservationId = await createReservation(valuesForBE);
       }
-
-      if (reservationId && reservationId.success === false) {
-        showToast(
-          'error',
-          'Reservation already exists. Please try a different time or conference room.'
-        );
-      } else {
-        showToast(
-          'success',
-          `You have successfully reserved ${
-            values.confRoomName
-          } for the date ${moment(values.selectedDate).format(
-            'YYYY-MM-DD'
-          )} from ${values.startTime} to ${values.endTime}`
-        );
-      }
+      showToast(
+        'success',
+        `You have successfully reserved ${
+          values.confRoomName
+        } for the date ${moment(values.selectedDate).format(
+          'YYYY-MM-DD'
+        )} from ${values.startTime} to ${values.endTime}`
+      );
     } catch (error) {
       showToast('error', error.response?.data?.message || 'An error occurred.');
     } finally {
