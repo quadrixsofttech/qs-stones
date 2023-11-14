@@ -46,6 +46,17 @@ export default function ConferenceDrawer({
     return <Spinner />;
   }
 
+  const showToast = (status, description) => {
+    toast({
+      position: 'top-right',
+      status,
+      variant: 'subtle',
+      duration: 3000,
+      isClosable: true,
+      description,
+    });
+  };
+
   const handleSubmit = async (values) => {
     if (
       values.startTime > values.endTime ||
@@ -55,69 +66,45 @@ export default function ConferenceDrawer({
       !values.startTime ||
       !values.endTime
     ) {
-      toast({
-        position: 'top-right',
-        status: 'error',
-        variant: 'subtle',
-        duration: 2000,
-        isClosable: true,
-        description: `There was a problem regarding your reservation. Some parameters are missing or are incorrect.`,
-      });
-    } else {
-      try {
-        let reservationId;
-        if (isEditMode) {
-          if (!reservationData) {
-            return;
-          }
-          reservationId = reservationData._id;
-          await updateReservation(reservationId, valuesForBE);
-          toast({
-            position: 'top-right',
-            status: 'success',
-            variant: 'subtle',
-            duration: 2000,
-            isClosable: true,
-            description: `Reservation updated successfully.`,
-          });
-        } else {
-          reservationId = await createReservation(valuesForBE);
+      showToast(
+        'error',
+        'There was a problem regarding your reservation. Some parameters are missing or are incorrect.'
+      );
+      return;
+    }
+    try {
+      let reservationId;
+      if (isEditMode) {
+        if (!reservationData) {
+          return;
         }
-
-        if (reservationId && reservationId.success === false) {
-          toast({
-            position: 'top-right',
-            status: 'error',
-            variant: 'subtle',
-            duration: 3000,
-            description: `Reservation already exists. Please try a different time or conference room.`,
-          });
-        } else {
-          toast({
-            position: 'top-right',
-            status: 'success',
-            variant: 'subtle',
-            duration: 3000,
-            description: `You have successfully reserved ${
-              values.confRoomName
-            } for the date
-            ${moment(values.selectedDate).format('YYYY-MM-DD')} from ${
-              values.startTime
-            } to ${values.endTime}`,
-          });
-        }
-      } catch (error) {
-        console.error('Error during reservation:', error);
-        toast({
-          position: 'top-right',
-          status: 'error',
-          variant: 'subtle',
-          duration: 3000,
-          description: `${error.response.data.message}`,
-        });
-      } finally {
-        onClose();
+        reservationId = reservationData._id;
+        await updateReservation(reservationId, valuesForBE);
+        showToast('success', 'Reservation updated successfully.');
+      } else {
+        reservationId = await createReservation(valuesForBE);
       }
+
+      if (reservationId && reservationId.success === false) {
+        showToast(
+          'error',
+          'Reservation already exists. Please try a different time or conference room.'
+        );
+      } else {
+        showToast(
+          'success',
+          `You have successfully reserved ${
+            values.confRoomName
+          } for the date ${moment(values.selectedDate).format(
+            'YYYY-MM-DD'
+          )} from ${values.startTime} to ${values.endTime}`
+        );
+      }
+    } catch (error) {
+      console.error('Error during reservation:', error);
+      showToast('error', error.response?.data?.message || 'An error occurred.');
+    } finally {
+      onClose();
     }
   };
 
