@@ -52,7 +52,58 @@ export default function ConferenceDrawer({
     return <Spinner />;
   }
 
-  const handleSubmit = (values) => {
+  // const handleSubmit = async (values) => {
+  //   if (
+  //     values.startTime > values.endTime ||
+  //     values.startTime === values.endTime ||
+  //     !values.title ||
+  //     !values.description ||
+  //     !values.startTime ||
+  //     !values.endTime
+  //   ) {
+  //     toast({
+  //       position: 'top-right',
+  //       status: 'error',
+  //       variant: 'subtle',
+  //       duration: 2000,
+  //       isClosable: true,
+  //       description: `There was a problem regarding your reservation. Some parametars are missing or are incorrect.`,
+  //     });
+  //   } else {
+  //     if (errorForCreate && !errorForCreate.success) {
+  //       toast({
+  //         position: 'top-right',
+  //         status: 'error',
+  //         variant: 'subtle',
+  //         duration: 3000,
+  //         description: `Reservation already exists. Please try a different time or conference room.`,
+  //       });
+  //     } else {
+  //       toast({
+  //         position: 'top-right',
+  //         status: 'success',
+  //         variant: 'subtle',
+  //         duration: 3000,
+  //         description: `You have successfully reserved ${
+  //           values.confRoomName
+  //         } for the date
+  //         ${moment(values.selectedDate).format('YYYY-MM-DD')} from ${
+  //           values.startTime
+  //         } to ${values.endTime}`,
+  //       });
+  //       await createReservation(valuesForBE);
+  //       onClose();
+  //     }
+  //     if (isEditMode) {
+  //       if (!reservationData) {
+  //         return <></>;
+  //       }
+  //       await updateReservation(reservationData._id, valuesForBE);
+  //     }
+  //     onClose();
+  //   }
+  // };
+  const handleSubmit = async (values) => {
     if (
       values.startTime > values.endTime ||
       values.startTime === values.endTime ||
@@ -61,47 +112,69 @@ export default function ConferenceDrawer({
       !values.startTime ||
       !values.endTime
     ) {
-      const toastConfig = getToastConfig({
+      toast({
+        position: 'top-right',
         status: 'error',
-        description:
-          'There was a problem regarding your reservation. Some parameters are missing or are incorrect',
+        variant: 'subtle',
+        duration: 2000,
+        isClosable: true,
+        description: `There was a problem regarding your reservation. Some parameters are missing or are incorrect.`,
       });
-      toast(toastConfig);
     } else {
-      if (errorForCreate) {
-        const toastConfig = getToastConfig({
-          status: 'error',
-          description: `${errorForCreate.response.data.message}`,
-        });
-        toast(toastConfig);
-      } else {
-        const toastConfig = getToastConfig({
-          status: 'success',
-          description: `You have successfully reserved ${
-            values.confRoomName
-          } for the date
-          ${moment(values.selectedDate).format('YYYY-MM-DD')} from ${
-            values.startTime
-          } to ${values.endTime}`,
-        });
-        toast(toastConfig);
-        createReservation(valuesForBE);
-      }
-      if (isEditMode) {
-        if (!reservationData) {
-          return <></>;
-        }
-        if (errorForUpdate) {
-          const toastConfig = getToastConfig({
-            status: 'error',
-            description: `${errorForUpdate.response.data.message}`,
+      try {
+        let reservationId;
+        if (isEditMode) {
+          if (!reservationData) {
+            return;
+          }
+          reservationId = reservationData._id;
+          await updateReservation(reservationId, valuesForBE);
+          toast({
+            position: 'top-right',
+            status: 'success',
+            variant: 'subtle',
+            duration: 2000,
+            isClosable: true,
+            description: `Reservation updated successfully.`,
           });
-          toast(toastConfig);
         } else {
-          updateReservation(reservationData._id, valuesForBE);
+          reservationId = await createReservation(valuesForBE);
         }
+
+        if (reservationId && reservationId.success === false) {
+          toast({
+            position: 'top-right',
+            status: 'error',
+            variant: 'subtle',
+            duration: 3000,
+            description: `Reservation already exists. Please try a different time or conference room.`,
+          });
+        } else {
+          toast({
+            position: 'top-right',
+            status: 'success',
+            variant: 'subtle',
+            duration: 3000,
+            description: `You have successfully reserved ${
+              values.confRoomName
+            } for the date
+            ${moment(values.selectedDate).format('YYYY-MM-DD')} from ${
+              values.startTime
+            } to ${values.endTime}`,
+          });
+        }
+      } catch (error) {
+        console.error('Error during reservation:', error);
+        toast({
+          position: 'top-right',
+          status: 'error',
+          variant: 'subtle',
+          duration: 3000,
+          description: `${error.response.data.message}`,
+        });
+      } finally {
+        onClose();
       }
-      onClose();
     }
   };
 
