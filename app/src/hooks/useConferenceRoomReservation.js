@@ -3,8 +3,7 @@ import axios from 'axios';
 
 export const useConferenceRoomReservation = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [errorForCreate, setErrorForCreate] = useState(null);
-  const [errorForUpdate, setErrorForUpdate] = useState(null);
+ 
 
   const createReservation = async (reservationData) => {
     setIsLoading(true);
@@ -17,7 +16,6 @@ export const useConferenceRoomReservation = () => {
       return response.data;
     } catch (error) {
       setIsLoading(false);
-      setErrorForCreate(error);
       throw error;
     }
   };
@@ -33,7 +31,6 @@ export const useConferenceRoomReservation = () => {
       return response.data;
     } catch (error) {
       setIsLoading(false);
-      setErrorForUpdate(error);
       throw error;
     }
   };
@@ -42,7 +39,5 @@ export const useConferenceRoomReservation = () => {
     createReservation,
     updateReservation,
     isLoading,
-    errorForCreate,
-    errorForUpdate,
   };
 };

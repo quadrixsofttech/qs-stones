@@ -27,7 +27,6 @@ import { useConferenceRoomReservation } from '../../hooks/useConferenceRoomReser
 import { useState } from 'react';
 import { InfoIcon } from '@chakra-ui/icons';
 import moment from 'moment';
-import { getToastConfig } from './CustomToastMessage';
 
 export default function ConferenceDrawer({
   btnRef,
@@ -38,13 +37,8 @@ export default function ConferenceDrawer({
 }) {
   const toast = useToast();
 
-  const {
-    isLoading,
-    createReservation,
-    updateReservation,
-    errorForCreate,
-    errorForUpdate,
-  } = useConferenceRoomReservation();
+  const { isLoading, createReservation, updateReservation } =
+    useConferenceRoomReservation();
   const [selectedDatesArray, setSelectedDatesArray] = useState([]);
   const [valuesForBE, setValuesForBE] = useState([]);
 
@@ -52,57 +46,6 @@ export default function ConferenceDrawer({
     return <Spinner />;
   }
 
-  // const handleSubmit = async (values) => {
-  //   if (
-  //     values.startTime > values.endTime ||
-  //     values.startTime === values.endTime ||
-  //     !values.title ||
-  //     !values.description ||
-  //     !values.startTime ||
-  //     !values.endTime
-  //   ) {
-  //     toast({
-  //       position: 'top-right',
-  //       status: 'error',
-  //       variant: 'subtle',
-  //       duration: 2000,
-  //       isClosable: true,
-  //       description: `There was a problem regarding your reservation. Some parametars are missing or are incorrect.`,
-  //     });
-  //   } else {
-  //     if (errorForCreate && !errorForCreate.success) {
-  //       toast({
-  //         position: 'top-right',
-  //         status: 'error',
-  //         variant: 'subtle',
-  //         duration: 3000,
-  //         description: `Reservation already exists. Please try a different time or conference room.`,
-  //       });
-  //     } else {
-  //       toast({
-  //         position: 'top-right',
-  //         status: 'success',
-  //         variant: 'subtle',
-  //         duration: 3000,
-  //         description: `You have successfully reserved ${
-  //           values.confRoomName
-  //         } for the date
-  //         ${moment(values.selectedDate).format('YYYY-MM-DD')} from ${
-  //           values.startTime
-  //         } to ${values.endTime}`,
-  //       });
-  //       await createReservation(valuesForBE);
-  //       onClose();
-  //     }
-  //     if (isEditMode) {
-  //       if (!reservationData) {
-  //         return <></>;
-  //       }
-  //       await updateReservation(reservationData._id, valuesForBE);
-  //     }
-  //     onClose();
-  //   }
-  // };
   const handleSubmit = async (values) => {
     if (
       values.startTime > values.endTime ||
