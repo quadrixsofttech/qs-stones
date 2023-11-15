@@ -34,6 +34,7 @@ export default function ConferenceDrawer({
   onClose,
   isEditMode,
   reservationData,
+  refetchReservations,
 }) {
   const toast = useToast();
 
@@ -82,6 +83,7 @@ export default function ConferenceDrawer({
       showToast('error', error.response?.data?.message || 'An error occurred.');
     } finally {
       onClose();
+      refetchReservations();
     }
   };
 

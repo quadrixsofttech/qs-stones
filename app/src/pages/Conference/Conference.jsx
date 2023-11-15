@@ -80,9 +80,6 @@ const Conference = () => {
     modalDisclosure.onOpen();
   };
 
-
-
-
   return (
     <DashboardLayout Padding="0">
       <ConferenceNavbar />
@@ -139,6 +136,7 @@ const Conference = () => {
           onClose={drawerDisclosure.onClose}
           reservationData={reservationData}
           isEditMode={isEditMode}
+          refetchReservations={refetchReservations}
         />
       </Flex>
     </DashboardLayout>
