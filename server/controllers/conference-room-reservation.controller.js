@@ -1,6 +1,6 @@
+const { forEach } = require('../middleware/admin');
 const ConferenceRoomReservation = require('../services/conference-room-reservation/conference-room-reservation.service');
 const { StatusCodes } = require('http-status-codes');
-
 const createReservation = async (req, res) => {
   try {
     const {
@@ -8,23 +8,50 @@ const createReservation = async (req, res) => {
       date,
       startTime,
       endTime,
+      selectedDatesInDays,
       title,
       description,
       color,
       userId,
     } = req.body;
 
-    const reservation = await ConferenceRoomReservation.createReservation({
-      conferenceRoom,
-      date,
-      startTime,
-      endTime,
-      title,
-      description,
-      color,
-      userId,
-    });
-    return res.send(reservation);
+    let reservations = [];
+
+    if (selectedDatesInDays.length > 0) {
+      const reservationPromises = selectedDatesInDays.map(
+        async (dateInArray) => {
+          const reservation = await ConferenceRoomReservation.createReservation(
+            {
+              conferenceRoom,
+              date: dateInArray,
+              startTime,
+              endTime,
+              title,
+              description,
+              color,
+              userId,
+            }
+          );
+          return reservation;
+        }
+      );
+
+      reservations = await Promise.all(reservationPromises);
+    } else {
+      const reservation = await ConferenceRoomReservation.createReservation({
+        conferenceRoom,
+        date,
+        startTime,
+        endTime,
+        title,
+        description,
+        color,
+        userId,
+      });
+      reservations.push(reservation);
+    }
+
+    return res.send(reservations);
   } catch (err) {
     res.status(StatusCodes.BAD_REQUEST).json({
       success: false,

@@ -11,7 +11,7 @@ const CustomSwitch = ({ switch_text, isEditMode }) => {
             <Switch
               {...field}
               colorScheme="purple"
-              isChecked={isEditMode ? values.repeatReservation : false}
+              isChecked={values.repeatReservation ? true : false}
               onChange={() => {
                 const checked = values.repeatReservation;
                 setFieldValue('repeatReservation', !checked);

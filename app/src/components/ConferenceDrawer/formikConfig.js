@@ -1,26 +1,28 @@
-import moment from 'moment';
 import * as Yup from 'yup';
+import moment from 'moment';
 
 const reservationSchema = Yup.object().shape({
-  floor: Yup.string().required('Floor is required'),
-  column: Yup.string().required('Conference room is required'),
-  startAt: Yup.string().required('Start time is required'),
-  endAt: Yup.string().required('End time is required'),
   title: Yup.string().required('Title is required'),
 });
 
 const initialValues = {
   floor: 'Upper Floor',
-  column: 'Collaboration Room',
+  column: '64a8185c62c2382ff77231ca',
+  confRoomName: 'Brainstorm Room',
   selectedDate: moment(),
   startTime: '',
   endTime: '',
   startAtArray: '',
   endAtArray: '',
+  selectedDatesInDays: [],
   repeatReservation: false,
+  meetingRepetition: 'Never',
+  numberOfOccurences: 1,
   everyDay: false,
   title: '',
   description: '',
+  selectedDateFromInput: moment().add(1, 'day'),
   markerColor: 'white',
+  userId: 'a',
 };
 export { reservationSchema, initialValues };

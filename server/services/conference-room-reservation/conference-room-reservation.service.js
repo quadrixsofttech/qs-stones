@@ -2,11 +2,11 @@ const conferenceRoom = require('../../models/conference-room');
 const ConferenceRoomReservation = require('../../models/conference-room-reservation');
 
 const createReservation = async ({
-  enabled,
   conferenceRoom,
   date,
   startTime,
   endTime,
+  selectedDatesInDays,
   title,
   description,
   color,
@@ -14,11 +14,11 @@ const createReservation = async ({
 }) => {
   try {
     const reservation = new ConferenceRoomReservation({
-      enabled,
       conferenceRoom,
       date,
       startTime,
       endTime,
+      selectedDatesInDays,
       title,
       description,
       color,

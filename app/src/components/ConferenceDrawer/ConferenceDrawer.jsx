@@ -23,6 +23,7 @@ import CustomCheckBox from './CustomCheckBox';
 import CardInfo from './CardInfo';
 import { reservationSchema, initialValues } from './formikConfig';
 import { useConferenceRoomReservation } from '../../hooks/useConferenceRoomReservation';
+import { useState } from 'react';
 
 export default function ConferenceDrawer({
   btnRef,
@@ -33,39 +34,42 @@ export default function ConferenceDrawer({
 }) {
   const toast = useToast();
 
-  const { isLoading, updateReservation } = useConferenceRoomReservation();
+  const { isLoading, createReservation } = useConferenceRoomReservation();
+  const [selectedDatesArray, setSelectedDatesArray] = useState([]);
+  const [valuesForBE, setValuesForBE] = useState([]);
 
   if (isLoading) {
     return <Spinner />;
   }
 
-  const handleSubmit = (values, errors) => {
-    onClose();
-    console.log(errors);
-    toast({
-      position: 'top-right',
-      status: 'success',
-      variant: 'subtle',
-      description: `You have successfully reserved ${
-        values.conferenceRoom
-      } for the date
-      ${values.selectedDate.format('YYYY/MM/DD')} from ${values.startTime} to ${
-        values.endTime
-      }`,
-    });
-  };
-
-  const handleFormikOnSubmit = async (values) => {
-    try {
-      if (isEditMode) {
-        await updateReservation(reservationData.id, values);
-      } else {
-        // await createReservation(values);
-        handleSubmit();
-      }
+  const handleSubmit = (values) => {
+    if (
+      values.startTime > values.endTime ||
+      !values.title ||
+      !values.description ||
+      !values.startTime ||
+      !values.endTime
+    ) {
+      toast({
+        position: 'top-right',
+        status: 'error',
+        variant: 'subtle',
+        description: `There was a problem regarding your reservation. Some parametars are missing`,
+      });
+    } else {
+      toast({
+        position: 'top-right',
+        status: 'success',
+        variant: 'subtle',
+        description: `You have successfully reserved ${
+          values.confRoomName
+        } for the date
+          ${values.selectedDate.format('YYYY/MM/DD')} from ${
+          values.startTime
+        } to ${values.endTime}`,
+      });
+      createReservation(valuesForBE);
       onClose();
-    } catch (error) {
-      console.error(error);
     }
   };
 
@@ -86,7 +90,7 @@ export default function ConferenceDrawer({
           <Formik
             initialValues={initialValues}
             validationSchema={reservationSchema}
-            onSubmit={handleFormikOnSubmit}
+            onSubmit={(values) => handleSubmit(values)}
           >
             {({ values }) => (
               <Form>
@@ -95,6 +99,7 @@ export default function ConferenceDrawer({
                     <PickTimeAndRoom
                       isEditMode={isEditMode}
                       reservationData={reservationData}
+                      setValuesForBE={setValuesForBE}
                     />
                   </Box>
                   {!isEditMode && (
@@ -105,7 +110,10 @@ export default function ConferenceDrawer({
                           switch_text={'Repeat reservation'}
                           isEditMode={isEditMode}
                         />
-                        <GenerateDayOfTheWeek />
+                        <GenerateDayOfTheWeek
+                          selectedDatesArray={selectedDatesArray}
+                          setSelectedDatesArray={setSelectedDatesArray}
+                        />
                         <Box mt={3}>
                           <CustomCheckBox
                             checkBox_text={'Every day'}
@@ -131,7 +139,7 @@ export default function ConferenceDrawer({
                   )}
                   <Divider />
                   <Box p={6}>
-                    <CardInfo isEditMode={isEditMode} />
+                    <CardInfo />
                   </Box>
                 </DrawerBody>
 

@@ -2,7 +2,7 @@ import { Input, Text, Textarea } from '@chakra-ui/react';
 import { ErrorMessage, Field, useFormikContext } from 'formik';
 import GenerateMarkerColor from './GenerateMarkerColor/GenerateMarkerColor';
 
-const CardInfo = ({ isEditMode }) => {
+const CardInfo = () => {
   const { values, setFieldValue } = useFormikContext();
 
   const handleTitleChange = (e) => {
@@ -23,7 +23,7 @@ const CardInfo = ({ isEditMode }) => {
           <Input
             {...field}
             placeholder="Please enter a title..."
-            value={isEditMode ? values.title : ''}
+            value={values.title}
             onChange={handleTitleChange}
           />
         )}
@@ -35,7 +35,7 @@ const CardInfo = ({ isEditMode }) => {
       <Textarea
         placeholder="Please enter a description..."
         h={'20'}
-        value={isEditMode ? values.description : ''}
+        value={values.description}
         onChange={handleDescriptionChange}
         resize="none"
       />

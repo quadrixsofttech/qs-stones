@@ -11,27 +11,51 @@ import {
   Stack,
   Text,
 } from '@chakra-ui/react';
-import React from 'react';
+import React, { useCallback } from 'react';
 import DatePicker from 'react-multi-date-picker';
 import { AiTwotoneCalendar } from 'react-icons/ai';
 import { useFormikContext } from 'formik';
 import moment from 'moment';
+import MeetingRepetition from '../../constants/MeetingRepetition';
 
-export default function RadioButtonGroup({ f_option, s_option, t_option }) {
+const RadioButtonGroup = React.memo(({ f_option, s_option, t_option }) => {
   const datePickerRef = React.useRef(null);
-  const [meetingRepetition, setMeetingRepetiotion] = React.useState('never');
-  const { values } = useFormikContext();
+  const { values, setFieldValue } = useFormikContext();
 
-  const handleRadioChange = (newValue) => {
-    setMeetingRepetiotion(newValue);
-  };
+  const handleRadioChange = useCallback(
+    (newValue) => {
+      setFieldValue('meetingRepetition', newValue);
+    },
+    [setFieldValue]
+  );
+
+  const handleNumberOfOccurences = useCallback(
+    (newValue) => {
+      setFieldValue('numberOfOccurences', newValue);
+    },
+    [setFieldValue]
+  );
+
+  const handleIncrementNumberOfOccurences = useCallback(
+    (newValue) => {
+      setFieldValue('numberOfOccurences', newValue + 1);
+    },
+    [setFieldValue]
+  );
+
+  const handleDecrementNumberOfOccurences = useCallback(
+    (newValue) => {
+      setFieldValue('numberOfOccurences', newValue - 1);
+    },
+    [setFieldValue]
+  );
 
   return (
-    <RadioGroup onChange={handleRadioChange} value={meetingRepetition}>
+    <RadioGroup onChange={handleRadioChange} value={values.meetingRepetition}>
       <Stack mt={1}>
         <Radio
           size="sm"
-          value="never"
+          value={MeetingRepetition.NEVER}
           colorScheme="purple"
           isDisabled={values.repeatReservation ? false : true}
         >
@@ -39,7 +63,7 @@ export default function RadioButtonGroup({ f_option, s_option, t_option }) {
         </Radio>
         <Radio
           size="sm"
-          value="after"
+          value={MeetingRepetition.AFTER_N_OCCURENCES}
           colorScheme="purple"
           isDisabled={values.repeatReservation ? false : true}
         >
@@ -50,14 +74,25 @@ export default function RadioButtonGroup({ f_option, s_option, t_option }) {
               maxW={16}
               defaultValue={1}
               min={1}
+              value={values.numberOfOccurences}
               max={40}
               clampValueOnBlur={false}
-              isDisabled={meetingRepetition === 'after' ? false : true}
+              isDisabled={
+                values.meetingRepetition ===
+                MeetingRepetition.AFTER_N_OCCURENCES
+                  ? false
+                  : true
+              }
+              onChange={handleNumberOfOccurences}
             >
               <NumberInputField />
               <NumberInputStepper>
-                <NumberIncrementStepper />
-                <NumberDecrementStepper />
+                <NumberIncrementStepper
+                  onChange={handleIncrementNumberOfOccurences}
+                />
+                <NumberDecrementStepper
+                  onChange={handleDecrementNumberOfOccurences}
+                />
               </NumberInputStepper>
             </NumberInput>
             <Text fontSize="sm">occurences</Text>
@@ -65,7 +100,7 @@ export default function RadioButtonGroup({ f_option, s_option, t_option }) {
         </Radio>
         <Radio
           size="sm"
-          value="on specific date"
+          value={MeetingRepetition.ON_SPECIFIC_DATE}
           colorScheme="purple"
           isDisabled={values.repeatReservation ? false : true}
         >
@@ -75,8 +110,8 @@ export default function RadioButtonGroup({ f_option, s_option, t_option }) {
           fontSize="sm"
           color={
             values.repeatReservation &&
-            meetingRepetition !== 'never' &&
-            meetingRepetition !== 'after'
+            values.meetingRepetition !== MeetingRepetition.NEVER &&
+            values.meetingRepetition !== MeetingRepetition.AFTER_N_OCCURENCES
               ? 'gray.700'
               : 'gray.200'
           }
@@ -88,17 +123,21 @@ export default function RadioButtonGroup({ f_option, s_option, t_option }) {
           minDate={new moment().format('YYYY-MM-DD')}
           disabled={
             values.repeatReservation &&
-            meetingRepetition !== 'never' &&
-            meetingRepetition !== 'after'
+            values.meetingRepetition !== MeetingRepetition.NEVER &&
+            values.meetingRepetition !== MeetingRepetition.AFTER_N_OCCURENCES
               ? false
               : true
           }
           className="custom-calendar"
-          format="MM/DD/YYYY"
+          value={moment(values.selectedDateFromInput).format('YYYY-MM-DD')}
+          onChange={(value) => {
+            let newValue = moment(new Date(value));
+            setFieldValue('selectedDateFromInput', newValue);
+          }}
         />
         {values.repeatReservation &&
-        meetingRepetition !== 'never' &&
-        meetingRepetition !== 'after' ? (
+        values.meetingRepetition !== MeetingRepetition.NEVER &&
+        values.meetingRepetition !== MeetingRepetition.AFTER_N_OCCURENCES ? (
           <Icon
             as={AiTwotoneCalendar}
             onClick={() => {
@@ -128,4 +167,6 @@ export default function RadioButtonGroup({ f_option, s_option, t_option }) {
       </Stack>
     </RadioGroup>
   );
-}
+});
+
+export default RadioButtonGroup;
