@@ -17,8 +17,8 @@ import NavbarButtons from './NavbarButtons';
 import FloorTypes from './constants/FloorTypes';
 import styles from './ConferenceCalendarNavbar.styles';
 import useDates from '../../hooks/useDates';
-import moment from 'moment';
 import { useEffect } from 'react';
+import moment from 'moment';
 
 const ConferenceNavbar = ({
   timelineOrientation,
@@ -35,10 +35,10 @@ const ConferenceNavbar = ({
     handleNextDay,
     handlePreviousDay,
     setCurrentDate,
-  } = useDates(moment());
+  } = useDates(new Date());
 
   useEffect(() => {
-    setDate(currentDate.format('YYYY-MM-DD'));
+    setDate(moment(currentDate).format('YYYY-MM-DD'));
   }, [currentDate, setDate]);
 
   return (

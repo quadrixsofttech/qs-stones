@@ -5,6 +5,7 @@ const ConferenceRoomReservationSchema = new Schema({
   conferenceRoom: {
     type: Schema.Types.ObjectId,
     required: true,
+    ref: 'conference-room-overview',
   },
   date: {
     type: Date,
@@ -33,6 +34,7 @@ const ConferenceRoomReservationSchema = new Schema({
   userId: {
     type: Schema.Types.ObjectId,
     required: true,
+    ref: 'user',
   },
   createdAt: {
     type: Date,

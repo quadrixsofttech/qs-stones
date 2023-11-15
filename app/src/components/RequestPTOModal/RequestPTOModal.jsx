@@ -96,7 +96,15 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
       setSelectedAdmin(null);
       onClose();
     } catch (err) {
-      console.log(err);
+      toast({
+        title: 'Something went wrong',
+        description: 'You do not have enouth vacation days',
+        position: 'top-right',
+        status: 'error',
+        isClosable: true,
+        colorScheme: 'red',
+        variant: 'subtle',
+      });
     }
   };
 

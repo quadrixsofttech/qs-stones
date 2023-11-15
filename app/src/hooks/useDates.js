@@ -1,23 +1,36 @@
-import moment from 'moment';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 
 const useDates = (initialDate) => {
-  const [currentDate, setCurrentDate] = useState(moment(initialDate));
+  const [currentDate, setCurrentDate] = useState(
+    initialDate ? new Date(initialDate) : new Date()
+  );
   const [formattedDate, setFormattedDate] = useState('');
+  const options = useMemo(
+    () => ({
+      month: 'long',
+      day: 'numeric',
+      weekday: 'long',
+    }),
+    []
+  );
 
   const handlePreviousDay = () => {
-    setCurrentDate(moment(currentDate).subtract(1, 'day'));
+    const prevDay = new Date(currentDate);
+    prevDay.setDate(prevDay.getDate() - 1);
+    setCurrentDate(prevDay);
   };
 
   const handleNextDay = () => {
-    setCurrentDate(moment(currentDate).add(1, 'day'));
+    const nextDay = new Date(currentDate);
+    nextDay.setDate(nextDay.getDate() + 1);
+    setCurrentDate(nextDay);
   };
 
   useEffect(() => {
     setFormattedDate(
-      `${currentDate.format('MMMM DD')}, ${currentDate.format('dddd')}`
+      new Intl.DateTimeFormat('en-US', options).format(currentDate)
     );
-  }, [currentDate]);
+  }, [currentDate, options]);
 
   return {
     currentDate,
