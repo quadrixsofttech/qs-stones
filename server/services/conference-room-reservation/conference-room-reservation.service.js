@@ -5,7 +5,6 @@ const createReservation = async ({
   date,
   startTime,
   endTime,
-  selectedDatesInDays,
   title,
   description,
   color,

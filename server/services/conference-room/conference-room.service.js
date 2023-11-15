@@ -27,7 +27,6 @@ const createConferenceRoom = async ({
 const getConferenceRoom = async () => {
   try {
     const rooms = await ConferenceRoom.find().lean();
-    console.log(rooms);
     return rooms;
   } catch (err) {
     throw new Error(err);

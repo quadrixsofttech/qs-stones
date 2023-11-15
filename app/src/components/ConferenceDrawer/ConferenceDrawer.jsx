@@ -112,7 +112,7 @@ export default function ConferenceDrawer({
                 </Tooltip>
               </>
             ) : (
-              <>Reserve Conference Room</>
+              'Reserve Conference Room'
             )}
           </DrawerHeader>
           <Divider />
@@ -176,7 +176,7 @@ export default function ConferenceDrawer({
                     Cancel
                   </Button>
                   <Button colorScheme="purple" type="submit">
-                    {isEditMode ? <>Update</> : <>Submit</>}
+                    {isEditMode ? 'Update' : 'Submit'}
                   </Button>
                 </DrawerFooter>
               </Form>

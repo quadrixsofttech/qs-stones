@@ -116,7 +116,6 @@ const TimelineHorizontal = ({
                         onDelete={onDelete}
                         onOpen={onOpen}
                       />
-                      {console.log(data)}
                     </GridItem>
                   );
                 } else {
