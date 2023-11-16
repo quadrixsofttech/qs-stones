@@ -28,7 +28,6 @@ const PickTimeAndRoom = ({ isEditMode, reservationData, setValuesForBE }) => {
     color,
   } = reservationData;
 
-  console.log(reservationData);
 
   useEffect(() => {
     setFieldValue('userId', user._id);

@@ -20,7 +20,6 @@ export default function GenerateMarkerColor() {
     setSelectedColor(values.markerColor);
   }, [values.markerColor]);
 
-  console.log(values.markerColor);
 
   return (
     <Flex justifyContent={'space-between'} alignItems={'center'} mt={3}>
