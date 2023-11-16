@@ -1,5 +1,31 @@
 const ConferenceRoomReservation = require('../../models/conference-room-reservation');
 
+const isDateTaken = async (conferenceRoom, date, startTime, endTime) => {
+  const existingReservation = await ConferenceRoomReservation.findOne({
+    conferenceRoom,
+    date,
+    $or: [
+      {
+        $and: [
+          { startTime: { $lte: startTime } },
+          { endTime: { $gt: startTime } },
+        ],
+      },
+      {
+        $and: [{ startTime: { $lt: endTime } }, { endTime: { $gte: endTime } }],
+      },
+      {
+        $and: [
+          { startTime: { $gte: startTime } },
+          { endTime: { $lte: endTime } },
+        ],
+      },
+    ],
+  });
+
+  return existingReservation !== null;
+};
+
 const createReservation = async ({
   conferenceRoom,
   date,
@@ -11,36 +37,14 @@ const createReservation = async ({
   userId,
 }) => {
   try {
-    const existingReservation = await ConferenceRoomReservation.findOne({
-      conferenceRoom,
-      date,
-      $or: [
-        {
-          $and: [
-            { startTime: { $lte: startTime } },
-            { endTime: { $gt: startTime } },
-          ],
-        },
-        {
-          $and: [
-            { startTime: { $lt: endTime } },
-            { endTime: { $gte: endTime } },
-          ],
-        },
-        {
-          $and: [
-            { startTime: { $gte: startTime } },
-            { endTime: { $lte: endTime } },
-          ],
-        },
-      ],
-    });
+    const isTaken = await isDateTaken(conferenceRoom, date, startTime, endTime);
 
-    if (existingReservation) {
+    if (isTaken) {
       throw new Error(
         'A conference room cannot be reserved for that time because it is taken.'
       );
     }
+
     const reservation = new ConferenceRoomReservation({
       conferenceRoom,
       date,
@@ -51,10 +55,12 @@ const createReservation = async ({
       color,
       userId,
     });
+
     await reservation.save();
-    return reservation;
+
+    return [reservation];
   } catch (err) {
-    throw new Error(err);
+    throw new Error(err.message);
   }
 };
 
@@ -77,7 +83,7 @@ const getReservations = async (date) => {
       color: reservation.color,
       floor: reservation.conferenceRoom.floor,
       column: reservation.conferenceRoom._id,
-      conferenceRoomName:reservation.conferenceRoom.name,
+      conferenceRoomName: reservation.conferenceRoom.name,
       id: reservation.conferenceRoom.id,
       user: {
         firstName: reservation.userId.firstName,
@@ -148,6 +154,7 @@ const deleteReservation = async (id) => {
 
 module.exports = {
   createReservation,
+  isDateTaken,
   getReservations,
   updateReservation,
   deleteReservation,

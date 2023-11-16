@@ -70,15 +70,15 @@ export default function ConferenceDrawer({
         showToast('success', 'Reservation updated successfully.');
       } else {
         reservationId = await createReservation(valuesForBE);
+        showToast(
+          'success',
+          `You have successfully reserved ${
+            values.confRoomName
+          } for the date ${moment(values.selectedDate).format(
+            'YYYY-MM-DD'
+          )} from ${values.startTime} to ${values.endTime}`
+        );
       }
-      showToast(
-        'success',
-        `You have successfully reserved ${
-          values.confRoomName
-        } for the date ${moment(values.selectedDate).format(
-          'YYYY-MM-DD'
-        )} from ${values.startTime} to ${values.endTime}`
-      );
     } catch (error) {
       showToast('error', error.response?.data?.message || 'An error occurred.');
     } finally {

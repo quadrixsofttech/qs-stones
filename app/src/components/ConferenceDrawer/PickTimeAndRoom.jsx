@@ -60,7 +60,7 @@ const PickTimeAndRoom = ({ isEditMode, reservationData, setValuesForBE }) => {
     if (isEditMode) {
       setFieldValue('floor', floor);
       setFieldValue('column', column);
-      setFieldValue('conferenceRoomName',conferenceRoomName);
+      setFieldValue('conferenceRoomName', conferenceRoomName);
       setFieldValue('selectedDate', date);
       setFieldValue('startTime', startTime);
       setFieldValue('endTime', endTime);
