@@ -14,6 +14,8 @@ const useDates = (initialDate) => {
     []
   );
 
+  console.log(currentDate);
+
   const handlePreviousDay = () => {
     const prevDay = new Date(currentDate);
     prevDay.setDate(prevDay.getDate() - 1);
