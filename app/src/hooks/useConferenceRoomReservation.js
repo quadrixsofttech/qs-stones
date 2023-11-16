@@ -23,7 +23,7 @@ export const useConferenceRoomReservation = () => {
   const updateReservation = async (reservationId, reservationData) => {
     setIsLoading(true);
     try {
-      const response = await axios.put(
+      const response = await axios.patch(
         `/api/v1/conference-rooms/reservations/${reservationId}`,
         reservationData
       );

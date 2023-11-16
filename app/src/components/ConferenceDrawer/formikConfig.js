@@ -26,7 +26,7 @@ const initialValues = {
   title: '',
   description: '',
   selectedDateFromInput: moment().add(1, 'day'),
-  markerColor: 'white',
+  markerColor: 'purple.400',
   userId: 'a',
 };
 export { reservationSchema, initialValues };

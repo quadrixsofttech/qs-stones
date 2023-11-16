@@ -25,8 +25,10 @@ const PickTimeAndRoom = ({ isEditMode, reservationData, setValuesForBE }) => {
     conferenceRoomName,
     date,
     selectedDateFromInput,
-    markerColor,
+    color,
   } = reservationData;
+
+  console.log(reservationData);
 
   useEffect(() => {
     setFieldValue('userId', user._id);
@@ -66,7 +68,7 @@ const PickTimeAndRoom = ({ isEditMode, reservationData, setValuesForBE }) => {
       setFieldValue('endTime', endTime);
       setFieldValue('title', title);
       setFieldValue('description', description);
-      setFieldValue('markerColor', markerColor);
+      setFieldValue('markerColor', color);
     }
   }, [
     isEditMode,
@@ -81,7 +83,7 @@ const PickTimeAndRoom = ({ isEditMode, reservationData, setValuesForBE }) => {
     title,
     description,
     selectedDateFromInput,
-    markerColor,
+    color,
     user._id,
     setFieldValue,
   ]);
