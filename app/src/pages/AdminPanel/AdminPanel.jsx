@@ -57,6 +57,7 @@ const AdminPanel = () => {
           paidTimeOff={paidTimeOffHistory}
           refetchPTO={refetchPTO}
           refetchEmployees={refetchEmployees}
+          refetchMyVacationInfo={employees}
         />
       </Flex>
     </DashboardLayout>

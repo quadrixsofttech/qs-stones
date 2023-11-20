@@ -23,6 +23,7 @@ const EmployeeComponent = ({
   refetchPTO,
   refetchEmployees,
   employeeId,
+  refetchMyVacationInfo,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { deleteEmployee } = useUser();
@@ -77,6 +78,7 @@ const EmployeeComponent = ({
           refetchPTO={refetchPTO}
           refetchEmployees={refetchEmployees}
           employeeId={employeeId}
+          refetchMyVacationInfo={refetchMyVacationInfo}
         />
       ) : (
         <EmptyEmployeeComponent />
