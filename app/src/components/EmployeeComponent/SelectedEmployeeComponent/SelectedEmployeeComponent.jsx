@@ -6,6 +6,7 @@ import { MyVacationInfo } from '../../MyVacationInfo/MyVacationInfo';
 import EmptyRequest from './EmptyRequest';
 import PendingRequests from './PendingRequests/PendingRequests';
 import RequestHistory from './RequestHistory/RequestHistory';
+import useUser from '../../../hooks/useUser';
 
 const SelectedEmployeeComponent = ({
   data,
@@ -18,6 +19,7 @@ const SelectedEmployeeComponent = ({
   const [requestHistoryData, setRequestHistoryData] = useState(
     data.filter((x) => x.status === 'approved' || x.status === 'rejected')
   );
+  const { user } = useUser();
 
   const handlePtoTypeChange = (event) => {
     setPtoType(event.target.value);
@@ -33,7 +35,9 @@ const SelectedEmployeeComponent = ({
     );
   }, [ptoType, data]);
 
-  const pendingRequests = data.filter((x) => x.status === 'pending');
+  const pendingRequests = data.filter(
+    (x) => x.status === 'pending' && x.reviewerId === user._id
+  );
 
   return (
     <Flex flexDir={'column'} height={'100%'} overflow={'hidden'}>
