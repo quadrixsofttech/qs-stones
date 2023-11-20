@@ -1,33 +1,66 @@
-const conferenceRoom = require('../../models/conference-room');
 const ConferenceRoomReservation = require('../../models/conference-room-reservation');
+
+const isDateTaken = async (conferenceRoom, date, startTime, endTime) => {
+  const existingReservation = await ConferenceRoomReservation.findOne({
+    conferenceRoom,
+    date,
+    $or: [
+      {
+        $and: [
+          { startTime: { $lte: startTime } },
+          { endTime: { $gt: startTime } },
+        ],
+      },
+      {
+        $and: [{ startTime: { $lt: endTime } }, { endTime: { $gte: endTime } }],
+      },
+      {
+        $and: [
+          { startTime: { $gte: startTime } },
+          { endTime: { $lte: endTime } },
+        ],
+      },
+    ],
+  });
+
+  return existingReservation !== null;
+};
 
 const createReservation = async ({
   conferenceRoom,
   date,
   startTime,
   endTime,
-  selectedDatesInDays,
   title,
   description,
   color,
   userId,
 }) => {
   try {
+    const isTaken = await isDateTaken(conferenceRoom, date, startTime, endTime);
+
+    if (isTaken) {
+      throw new Error(
+        'A conference room cannot be reserved for that time because it is taken.'
+      );
+    }
+
     const reservation = new ConferenceRoomReservation({
       conferenceRoom,
       date,
       startTime,
       endTime,
-      selectedDatesInDays,
       title,
       description,
       color,
       userId,
     });
+
     await reservation.save();
-    return reservation;
+
+    return [reservation];
   } catch (err) {
-    throw new Error(err);
+    throw new Error(err.message);
   }
 };
 
@@ -49,7 +82,8 @@ const getReservations = async (date) => {
       description: reservation.description,
       color: reservation.color,
       floor: reservation.conferenceRoom.floor,
-      column: reservation.conferenceRoom.name,
+      column: reservation.conferenceRoom._id,
+      conferenceRoomName: reservation.conferenceRoom.name,
       id: reservation.conferenceRoom.id,
       user: {
         firstName: reservation.userId.firstName,
@@ -65,14 +99,47 @@ const getReservations = async (date) => {
 
 const updateReservation = async (id, update) => {
   try {
-    const updateReservation = await ConferenceRoomReservation.findByIdAndUpdate(
-      id,
-      { $set: update },
-      { new: true }
-    );
-    return updateReservation;
+    const existingReservation = await ConferenceRoomReservation.findOne({
+      _id: update._id,
+      conferenceRoom: update.conferenceRoom,
+      selectedDate: update.selectedDate,
+      $or: [
+        {
+          $and: [
+            { startTime: { $lte: update.startTime } },
+            { endTime: { $gt: update.startTime } },
+          ],
+        },
+        {
+          $and: [
+            { startTime: { $lt: update.endTime } },
+            { endTime: { $gte: update.endTime } },
+          ],
+        },
+        {
+          $and: [
+            { startTime: { $gte: update.startTime } },
+            { endTime: { $lte: update.endTime } },
+          ],
+        },
+      ],
+    });
+
+    if (existingReservation) {
+      throw new Error(
+        'A conference room cannot be reserved for that time because it is taken.'
+      );
+    }
+
+    const updatedReservation =
+      await ConferenceRoomReservation.findByIdAndUpdate(
+        id,
+        { $set: update },
+        { new: true }
+      );
+    return updatedReservation;
   } catch (err) {
-    throw new Error(err);
+    throw new Error(err.message);
   }
 };
 
@@ -87,6 +154,7 @@ const deleteReservation = async (id) => {
 
 module.exports = {
   createReservation,
+  isDateTaken,
   getReservations,
   updateReservation,
   deleteReservation,

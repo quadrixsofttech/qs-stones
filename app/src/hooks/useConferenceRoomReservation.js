@@ -3,6 +3,7 @@ import axios from 'axios';
 
 export const useConferenceRoomReservation = () => {
   const [isLoading, setIsLoading] = useState(false);
+ 
 
   const createReservation = async (reservationData) => {
     setIsLoading(true);
@@ -22,7 +23,7 @@ export const useConferenceRoomReservation = () => {
   const updateReservation = async (reservationId, reservationData) => {
     setIsLoading(true);
     try {
-      const response = await axios.put(
+      const response = await axios.patch(
         `/api/v1/conference-rooms/reservations/${reservationId}`,
         reservationData
       );
@@ -34,5 +35,9 @@ export const useConferenceRoomReservation = () => {
     }
   };
 
-  return { createReservation, updateReservation, isLoading };
+  return {
+    createReservation,
+    updateReservation,
+    isLoading,
+  };
 };

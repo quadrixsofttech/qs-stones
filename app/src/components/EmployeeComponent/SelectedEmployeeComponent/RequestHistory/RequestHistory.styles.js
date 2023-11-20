@@ -8,7 +8,6 @@ const mainBox = {
 };
 const requestHistoryBox = {
   borderBottom: '1px ',
-  // borderTop: '1px ',
   alignItems: 'center',
   justifyContent: 'space-between',
   height: 8,
