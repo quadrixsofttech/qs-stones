@@ -33,7 +33,7 @@ const getEmployees = async () => {
 
     const employeeWithPendingRequests = await Promise.all(
       employees.map(async (employee) => {
-        const pendingRequests = await PaidTimeOff.countDocuments({
+        const pendingRequests = await PaidTimeOff.find({
           status: 'pending',
           userId: employee._id,
         });
