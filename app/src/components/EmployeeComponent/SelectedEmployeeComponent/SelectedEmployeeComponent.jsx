@@ -13,6 +13,7 @@ const SelectedEmployeeComponent = ({
   refetchPTO,
   refetchEmployees,
   employeeId,
+  refetchMyVacationInfo,
 }) => {
   const [ptoType, setPtoType] = useState('vacation');
   const [requestHistoryData, setRequestHistoryData] = useState(
@@ -80,7 +81,11 @@ const SelectedEmployeeComponent = ({
           />
         )}
       </Flex>
-      <MyVacationInfo myInfo={false} userid={employeeId} />
+      <MyVacationInfo
+        myInfo={false}
+        userid={employeeId}
+        refetchMyVacationInfo={refetchMyVacationInfo}
+      />
     </Flex>
   );
 };

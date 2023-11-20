@@ -9,7 +9,11 @@ const useVacation = (id) => {
     return data;
   };
 
-  const { isLoading, error } = useQuery('vacationInfo', getVacationInfo, {
+  const {
+    isLoading,
+    error,
+    refetch: refetchVacationInfo,
+  } = useQuery('vacationInfo', getVacationInfo, {
     onSuccess: (data) => setData(data),
   });
 
@@ -17,6 +21,7 @@ const useVacation = (id) => {
     vacationInfo: data,
     isLoading,
     error,
+    refetchVacationInfo,
   };
 };
 
