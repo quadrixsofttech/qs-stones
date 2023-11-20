@@ -27,7 +27,6 @@ export default function CustomDatePicker({ name, isEditMode }) {
           setFieldValue('selectedDate', newValue);
         }}
       />
-      {/* {console.log(values.selectedDate)} */}
       <Icon
         as={AiTwotoneCalendar}
         onClick={() => {

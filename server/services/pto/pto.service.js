@@ -244,7 +244,6 @@ const deletePTO = async (id) => {
   }
 };
 
-//MyHistoryService
 
 const getUserHistory = async (userId) => {
   try {

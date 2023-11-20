@@ -62,7 +62,10 @@ const ConferenceNavbar = ({
               />
             );
           }}
-          onChange={setCurrentDate}
+          onChange={(selectedDate) => {
+            let newDate = new Date(selectedDate);
+            setCurrentDate(newDate);
+          }}
           value={currentDate}
         />
       </Flex>

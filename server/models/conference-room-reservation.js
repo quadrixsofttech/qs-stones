@@ -19,6 +19,10 @@ const ConferenceRoomReservationSchema = new Schema({
     type: String,
     required: true,
   },
+  recurring: {
+    type: Boolean,
+    default: false,
+  },
   title: {
     type: String,
     required: true,

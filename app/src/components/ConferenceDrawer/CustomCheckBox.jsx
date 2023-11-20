@@ -10,7 +10,7 @@ const CustomCheckBox = ({ checkBox_text, isEditMode }) => {
         {({ field }) => (
           <Checkbox
             colorScheme="purple"
-            isDisabled={values.repeatReservation ? false : true}
+            isDisabled={values.reccuring ? false : true}
             isChecked={values.everyDay ? true : false}
             onChange={() => {
               const checked = values.everyDay;

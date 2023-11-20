@@ -27,7 +27,7 @@ export default function GenerateDayOfTheWeek({
   }, [values.everyDay, setFieldValue]);
 
   const handleColorClick = (index) => {
-    if (values.repeatReservation) {
+    if (values.reccuring) {
       if (values.everyDay) {
         setFieldValue('everyDay', false);
         setSelectedColorIndices([index]);
@@ -50,7 +50,7 @@ export default function GenerateDayOfTheWeek({
           {...styles.dayContainer}
           key={index}
           color={
-            !values.repeatReservation
+            !values.reccuring
               ? 'gray.200'
               : values.everyDay || selectedColorIndices.includes(index + 2)
               ? 'white'
@@ -61,7 +61,7 @@ export default function GenerateDayOfTheWeek({
               ? 'purple.400'
               : 'white'
           }
-          borderColor={values.repeatReservation ? 'gray.200' : 'gray.100'}
+          borderColor={values.reccuring ? 'gray.200' : 'gray.100'}
           onClick={() => handleColorClick(index + 2)}
         >
           {day}
