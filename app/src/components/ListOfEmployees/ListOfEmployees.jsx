@@ -14,9 +14,11 @@ import styles from './ListOfEmployees.styles';
 import { BiRightArrowAlt } from 'react-icons/bi';
 import NotificationIcon from './notificationIcon';
 import { useTheme } from '@emotion/react';
+import useUser from '../../hooks/useUser';
 
 const ListOfEmployees = ({ employees, handleRowClick, clickedRowIndex }) => {
   const [hoveredRowIndex, setHoveredRowIndex] = useState(null);
+  const { user } = useUser();
 
   const theme = useTheme();
   const purple400 = theme.colors.purple[400];
@@ -59,8 +61,16 @@ const ListOfEmployees = ({ employees, handleRowClick, clickedRowIndex }) => {
                 </Td>
                 <Td>
                   <Flex {...styles.iconBox}>
-                    {employee.pendingRequests > 0 && (
-                      <NotificationIcon number={employee.pendingRequests} />
+                    {employee.pendingRequests.filter(
+                      (x) => x.reviewerId === user._id
+                    ).length > 0 && (
+                      <NotificationIcon
+                        number={
+                          employee.pendingRequests.filter(
+                            (x) => x.reviewerId === user._id
+                          ).length
+                        }
+                      />
                     )}
 
                     <BiRightArrowAlt

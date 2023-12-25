@@ -22,10 +22,12 @@ const PickTimeAndRoom = ({ isEditMode, reservationData, setValuesForBE }) => {
     numberOfOccurences,
     column,
     floor,
+    conferenceRoomName,
     date,
     selectedDateFromInput,
-    markerColor,
+    color,
   } = reservationData;
+
 
   useEffect(() => {
     setFieldValue('userId', user._id);
@@ -59,17 +61,19 @@ const PickTimeAndRoom = ({ isEditMode, reservationData, setValuesForBE }) => {
     if (isEditMode) {
       setFieldValue('floor', floor);
       setFieldValue('column', column);
+      setFieldValue('conferenceRoomName', conferenceRoomName);
       setFieldValue('selectedDate', date);
       setFieldValue('startTime', startTime);
       setFieldValue('endTime', endTime);
       setFieldValue('title', title);
       setFieldValue('description', description);
-      setFieldValue('markerColor', markerColor);
+      setFieldValue('markerColor', color);
     }
   }, [
     isEditMode,
     floor,
     column,
+    conferenceRoomName,
     date,
     startTime,
     endTime,
@@ -78,7 +82,7 @@ const PickTimeAndRoom = ({ isEditMode, reservationData, setValuesForBE }) => {
     title,
     description,
     selectedDateFromInput,
-    markerColor,
+    color,
     user._id,
     setFieldValue,
   ]);
@@ -86,7 +90,6 @@ const PickTimeAndRoom = ({ isEditMode, reservationData, setValuesForBE }) => {
   if (conferenceLoading || !conferenceRooms) {
     return <Spinner />;
   }
-
 
   const floors = ['Upper Floor', 'Lower Floor'];
 
@@ -119,7 +122,6 @@ const PickTimeAndRoom = ({ isEditMode, reservationData, setValuesForBE }) => {
         )}
       </Field>
       <ErrorMessage name="selectedFloor" component="div" className="error" />
-
       <Box mb={2} mt={3}>
         Choose a conference room
       </Box>
@@ -128,7 +130,7 @@ const PickTimeAndRoom = ({ isEditMode, reservationData, setValuesForBE }) => {
           <Select
             size="md"
             {...field}
-            value={values.conferenceRoom}
+            value={values.column}
             onChange={(e) => {
               const selectedRoomId = e.target.value;
               const selectedRoom = filteredConferenceRooms.find(
