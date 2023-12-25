@@ -111,6 +111,17 @@ const getPaidTimeOff = async (req, res) => {
   }
 };
 
+const getRemoteUsersForToday = async (req, res) => {
+  try {
+    const remotePTOsToday = await PtoService.getApprovedRemotePTOForToday();
+    const count = remotePTOsToday.length;
+
+    res.json({ count });
+  } catch (err) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ err: err.message });
+  }
+};
+
 module.exports = {
   createPaidTimeOff,
   getUserHistory,
@@ -118,4 +129,5 @@ module.exports = {
   updatePaidTimeOff,
   approvePaidTimeOff,
   rejectPaidTimeOff,
+  getRemoteUsersForToday,
 };

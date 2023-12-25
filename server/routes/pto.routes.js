@@ -8,5 +8,6 @@ router.patch('/approve', PtoController.approvePaidTimeOff);
 router.patch('/reject', PtoController.rejectPaidTimeOff);
 router.get('/history/:userId', PtoController.getUserHistory);
 router.get('/:type', PtoController.getPaidTimeOff);
+router.get('/remote-ptos-today', PtoController.getRemoteUsersForToday);
 
 module.exports = router;

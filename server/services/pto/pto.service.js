@@ -283,74 +283,20 @@ const getUserHistory = async (userId) => {
   }
 };
 
-async function getUsersOnVacation() {
-  const vacationUsers = await Pto.countDocuments({ type: 'vacation' });
-  return vacationUsers;
-}
+const getApprovedRemotePTOForToday = async () => {
+  try {
+    const today = moment().format('YYYY-MM-DD');
+    const remotePTO = await PaidTimeOff.find({
+      type: 'remote',
+      status: 'approved',
+      dates: { $in: [today] },
+    }).lean();
 
-async function calculateVacationPercentage() {
-  const currentDate = moment();
-  const lastYearDate = moment().subtract(1, 'year');
-
-  const currentYearVacationUsers = await PaidTimeOff.aggregate([
-    {
-      $match: {
-        type: 'vacation',
-        createdAt: { $gte: currentDate.startOf('year').toDate() },
-      },
-    },
-    {
-      $group: {
-        _id: '$userId',
-        count: { $sum: 1 },
-      },
-    },
-    {
-      $group: {
-        _id: null,
-        total: { $sum: 1 },
-      },
-    },
-  ]);
-
-  const lastYearVacationUsers = await PaidTimeOff.aggregate([
-    {
-      $match: {
-        type: 'vacation',
-        createdAt: {
-          $gte: lastYearDate.startOf('year').toDate(),
-          $lte: lastYearDate.endOf('year').toDate(),
-        },
-      },
-    },
-    {
-      $group: {
-        _id: '$userId',
-        count: { $sum: 1 },
-      },
-    },
-    {
-      $group: {
-        _id: null,
-        total: { $sum: 1 },
-      },
-    },
-  ]);
-
-  const currentYearVacationCount =
-    currentYearVacationUsers.length > 0 ? currentYearVacationUsers[0].total : 0;
-  const lastYearVacationCount =
-    lastYearVacationUsers.length > 0 ? lastYearVacationUsers[0].total : 0;
-
-  const percentage =
-    lastYearVacationCount === 0
-      ? 0
-      : ((currentYearVacationCount - lastYearVacationCount) /
-          lastYearVacationCount) *
-        100;
-
-  return percentage.toFixed(2);
-}
+    return remotePTO;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
 
 const getUserDates = async (userId) => {
   try {
@@ -372,8 +318,7 @@ module.exports = {
   updatePTO,
   deletePTO,
   getUserHistory,
-  calculateVacationPercentage,
-  getUsersOnVacation,
+  getApprovedRemotePTOForToday,
   getUserDates,
   rejectPTO,
   approvePTO,
