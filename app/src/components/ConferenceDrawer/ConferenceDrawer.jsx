@@ -11,6 +11,7 @@ import {
   DrawerOverlay,
   Spinner,
   Text,
+  Tooltip,
   useToast,
 } from '@chakra-ui/react';
 
@@ -24,6 +25,8 @@ import CardInfo from './CardInfo';
 import { reservationSchema, initialValues } from './formikConfig';
 import { useConferenceRoomReservation } from '../../hooks/useConferenceRoomReservation';
 import { useState } from 'react';
+import { InfoIcon } from '@chakra-ui/icons';
+import moment from 'moment';
 
 export default function ConferenceDrawer({
   btnRef,
@@ -31,10 +34,12 @@ export default function ConferenceDrawer({
   onClose,
   isEditMode,
   reservationData,
+  refetchReservations,
 }) {
   const toast = useToast();
 
-  const { isLoading, createReservation } = useConferenceRoomReservation();
+  const { isLoading, createReservation, updateReservation } =
+    useConferenceRoomReservation();
   const [selectedDatesArray, setSelectedDatesArray] = useState([]);
   const [valuesForBE, setValuesForBE] = useState([]);
 
@@ -42,34 +47,43 @@ export default function ConferenceDrawer({
     return <Spinner />;
   }
 
-  const handleSubmit = (values) => {
-    if (
-      values.startTime > values.endTime ||
-      !values.title ||
-      !values.description ||
-      !values.startTime ||
-      !values.endTime
-    ) {
-      toast({
-        position: 'top-right',
-        status: 'error',
-        variant: 'subtle',
-        description: `There was a problem regarding your reservation. Some parametars are missing`,
-      });
-    } else {
-      toast({
-        position: 'top-right',
-        status: 'success',
-        variant: 'subtle',
-        description: `You have successfully reserved ${
-          values.confRoomName
-        } for the date
-          ${values.selectedDate.format('YYYY/MM/DD')} from ${
-          values.startTime
-        } to ${values.endTime}`,
-      });
-      createReservation(valuesForBE);
+  const showToast = (status, description) => {
+    toast({
+      position: 'top-right',
+      status,
+      variant: 'subtle',
+      duration: 3000,
+      isClosable: true,
+      description,
+    });
+  };
+
+  const handleSubmit = async (values) => {
+    try {
+      let reservationId;
+      if (isEditMode) {
+        if (!reservationData) {
+          return;
+        }
+        reservationId = reservationData._id;
+        await updateReservation(reservationId, valuesForBE);
+        showToast('success', 'Reservation updated successfully.');
+      } else {
+        reservationId = await createReservation(valuesForBE);
+        showToast(
+          'success',
+          `You have successfully reserved ${
+            values.confRoomName
+          } for the date ${moment(values.selectedDate).format(
+            'YYYY-MM-DD'
+          )} from ${values.startTime} to ${values.endTime}`
+        );
+      }
+    } catch (error) {
+      showToast('error', error.response?.data?.message || 'An error occurred.');
+    } finally {
       onClose();
+      refetchReservations();
     }
   };
 
@@ -85,7 +99,22 @@ export default function ConferenceDrawer({
         <DrawerOverlay />
         <DrawerContent overflowY={'auto'}>
           <DrawerCloseButton />
-          <DrawerHeader>Reserve Conference Room</DrawerHeader>
+          <DrawerHeader>
+            {isEditMode ? (
+              <>
+                Edit Conference Room
+                <Tooltip
+                  label="*If you want to update all instances, first you must delete the card and then create a new reservation."
+                  hasArrow
+                  placement="bottom"
+                >
+                  <InfoIcon color={'gray.400'} ml={2} mb={1} />
+                </Tooltip>
+              </>
+            ) : (
+              'Reserve Conference Room'
+            )}
+          </DrawerHeader>
           <Divider />
           <Formik
             initialValues={initialValues}
@@ -123,9 +152,7 @@ export default function ConferenceDrawer({
                         <Text
                           fontSize="md"
                           mt={3}
-                          color={
-                            values.repeatReservation ? 'gray.700' : 'gray.200'
-                          }
+                          color={values.reccuring ? 'gray.700' : 'gray.200'}
                         >
                           Ends
                         </Text>
@@ -149,7 +176,7 @@ export default function ConferenceDrawer({
                     Cancel
                   </Button>
                   <Button colorScheme="purple" type="submit">
-                    Submit
+                    {isEditMode ? 'Update' : 'Submit'}
                   </Button>
                 </DrawerFooter>
               </Form>

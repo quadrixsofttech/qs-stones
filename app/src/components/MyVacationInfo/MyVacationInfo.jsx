@@ -3,12 +3,21 @@ import { Box, Divider, Flex, Heading, Spinner } from '@chakra-ui/react';
 import MyVacationInfoBox from './MyVacationInfoBox';
 import useVacation from '../../hooks/useVacation';
 import useUser from '../../hooks/useUser';
+import { useEffect } from 'react';
 
-export const MyVacationInfo = ({ myInfo = true, userid = '' }) => {
+export const MyVacationInfo = ({
+  myInfo = true,
+  userid = '',
+  refetchMyVacationInfo,
+}) => {
   const { user } = useUser();
   let userId;
   myInfo ? (userId = user._id) : (userId = userid);
-  const { vacationInfo, isLoading } = useVacation(userId);
+  const { vacationInfo, isLoading, refetchVacationInfo } = useVacation(userId);
+
+  useEffect(() => {
+    refetchVacationInfo();
+  }, [refetchMyVacationInfo, refetchVacationInfo]);
 
   if (isLoading || !vacationInfo) {
     return <Spinner />;

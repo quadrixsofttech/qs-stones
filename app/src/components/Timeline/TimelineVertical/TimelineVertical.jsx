@@ -131,9 +131,8 @@ const TimelineVertical = ({
                 templateRows={`repeat(${timeSlotCount}, 1fr)`}
               >
                 {gridItems}
-
                 {data.map((data) => {
-                  if (data.column === x.name) {
+                  if (data.conferenceRoomName === x.name) {
                     const difference =
                       getRowIdentifier(data.endTime) -
                       getRowIdentifier(data.startTime);

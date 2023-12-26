@@ -42,14 +42,13 @@ const TimePicker = ({ isEditMode }) => {
   useEffect(() => {
     if (values.startTime) {
       const startTimeMoment = moment(values.startTime, 'HH:mm');
-
       const nextHour = moment(startTimeMoment).startOf('hour').add(1, 'hour');
+
       const timesWith15MinIncrement = calculateTimes(
         startTimeMoment,
         nextHour,
         15
       );
-
       const end = moment(startTimeMoment)
         .startOf('day')
         .add(17, 'hours')
@@ -72,32 +71,24 @@ const TimePicker = ({ isEditMode }) => {
     return times;
   };
 
-  const handleStartTimeSelection = (e) => {
-    const selectedStartTime = e.target.value;
-    setFieldValue('startTime', selectedStartTime);
+  const handleTimeSelection = (field, e) => {
+    const selectedTime = e.target.value;
+    setFieldValue(field, selectedTime);
   };
-
-  const handleEndTimeSelection = (e) => {
-    const selectedEndTime = e.target.value;
-    setFieldValue('endTime', selectedEndTime);
-  };
-
   const validateEndTime = () => {
-    let error;
-    if (!moment(values.endTime, 'HH:mm') > moment(values.startTime, 'HH:mm')) {
-      error = 'End time must be greater than start time';
-    }
-    return error;
+    return moment(values.endTime, 'HH:mm') > moment(values.startTime, 'HH:mm')
+      ? undefined
+      : 'End time must be greater than start time';
   };
-
   return (
     <Flex flexDir={'column'} justifyContent={'flex-start'} gap={'3'}>
       <Field name="startTime">
         {({ field }) => (
           <Select
+            {...field}
             placeholder="Select Start Time"
             value={values.startTime}
-            onChange={handleStartTimeSelection}
+            onChange={(e) => handleTimeSelection('startTime', e)}
           >
             {values.startAtArray &&
               Array.isArray(values.startAtArray) &&
@@ -114,9 +105,10 @@ const TimePicker = ({ isEditMode }) => {
       <Field name="endTime" validate={validateEndTime}>
         {({ field }) => (
           <Select
+            {...field}
             placeholder="Select End Time"
             value={values.endTime}
-            onChange={handleEndTimeSelection}
+            onChange={(e) => handleTimeSelection('endTime', e)}
           >
             {values.startAtArray &&
               Array.isArray(values.startAtArray) &&

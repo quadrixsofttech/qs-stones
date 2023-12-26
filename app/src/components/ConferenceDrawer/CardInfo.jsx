@@ -32,13 +32,19 @@ const CardInfo = () => {
       <Text fontSize="md" mb={1} fontWeight={'400'} mt={3}>
         Description
       </Text>
-      <Textarea
-        placeholder="Please enter a description..."
-        h={'20'}
-        value={values.description}
-        onChange={handleDescriptionChange}
-        resize="none"
-      />
+      <Field name="title">
+        {({ field }) => (
+          <Textarea
+            {...field}
+            placeholder="Please enter a description..."
+            h={'20'}
+            value={values.description}
+            onChange={handleDescriptionChange}
+            resize="none"
+          />
+        )}
+      </Field>
+      <ErrorMessage name="description" component="div" className="error" />
       <Text mt={3} fontSize="md">
         Choose marker color
       </Text>
