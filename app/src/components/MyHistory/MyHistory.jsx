@@ -32,6 +32,7 @@ const MyHistory = () => {
   const [dates, setDates] = useState([]);
   const { vacationInfo } = useUsersWorkingRemote();
 
+
   const handleSelectChange = (event) => {
     setSelectedOption(event.target.value);
   };
@@ -107,12 +108,12 @@ const MyHistory = () => {
               <Flex {...styles.statgroupFlex}>
                 <MyHistoryStats
                   label="The total number of employees on vacation"
-                  working={vacationInfo.pto.length}
+                  working={vacationInfo?.pto.length}
                 />
                 <Divider />
                 <MyHistoryStats
                   label="The total number of employees working from home"
-                  working={vacationInfo.pto.length}
+                  working={vacationInfo?.pto.length}
                 />
               </Flex>
             </StatGroup>
