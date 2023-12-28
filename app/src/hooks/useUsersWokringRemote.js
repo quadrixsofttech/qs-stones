@@ -2,7 +2,7 @@ import { useQuery } from 'react-query';
 import axios from 'axios';
 import { useState } from 'react';
 
-const useUsersWorkingRemote = (id) => {
+const useUsersWorkingRemote = () => {
   const [data, setData] = useState();
   const getRemoteUsers = async () => {
     const { data } = await axios.get(`/api/v1/paid-time-off/remote-ptos-today`);
@@ -14,7 +14,7 @@ const useUsersWorkingRemote = (id) => {
   });
 
   return {
-    vacationInfo: data,
+    remoteUsers: data,
     isLoading,
     error,
   };
