@@ -244,7 +244,6 @@ const deletePTO = async (id) => {
   }
 };
 
-
 const getUserHistory = async (userId) => {
   try {
     const ptoHistory = await PaidTimeOff.find({ userId }).lean();
@@ -282,16 +281,22 @@ const getUserHistory = async (userId) => {
   }
 };
 
-const getApprovedRemotePTOForToday = async () => {
+const getApprovedPTOForToday = async () => {
   try {
     const today = moment().format('YYYY-MM-DD');
-    const remotePTO = await PaidTimeOff.find({
+    const remote = await PaidTimeOff.countDocuments({
       type: 'remote',
       status: 'approved',
-      dates: { $in: [today] },
-    }).lean();
+      days: { $in: [today] },
+    });
 
-    return remotePTO;
+    const vacationPTO = await PaidTimeOff.countDocuments({
+      type: 'vacation',
+      status: 'approved',
+      days: { $in: [today] },
+    });
+
+    return { numberOfRemoteUsers: remote, numberOfVacationPTOs: vacationPTO };
   } catch (err) {
     throw new Error(err);
   }
@@ -317,7 +322,7 @@ module.exports = {
   updatePTO,
   deletePTO,
   getUserHistory,
-  getApprovedRemotePTOForToday,
+  getApprovedPTOForToday,
   getUserDates,
   rejectPTO,
   approvePTO,

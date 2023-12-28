@@ -2,22 +2,26 @@ import { useQuery } from 'react-query';
 import axios from 'axios';
 import { useState } from 'react';
 
-const useUsersWorkingRemote = (id) => {
+const useAwayUsersCount = () => {
   const [data, setData] = useState();
-  const getRemoteUsers = async () => {
-    const { data } = await axios.get(`/api/v1/paid-time-off/remote-ptos-today`);
+  const getRemoteAndVacationUsers = async () => {
+    const { data } = await axios.get(`/api/v1/paid-time-off/remote-and-vacation`);
     return data;
   };
 
-  const { isLoading, error } = useQuery('remoteUsers', getRemoteUsers, {
-    onSuccess: (data) => setData(data),
-  });
+  const { isLoading, error } = useQuery(
+    'awayUsers',
+    getRemoteAndVacationUsers,
+    {
+      onSuccess: (data) => setData(data),
+    }
+  );
 
   return {
-    vacationInfo: data,
+    awayUsers: data,
     isLoading,
     error,
   };
 };
 
-export default useUsersWorkingRemote;
+export default useAwayUsersCount;
