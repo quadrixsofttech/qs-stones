@@ -110,9 +110,9 @@ const getPaidTimeOff = async (req, res) => {
   }
 };
 
-const getRemoteUsersForToday = async (req, res) => {
+const getAwayUserCountForToday = async (req, res) => {
   try {
-    const remotePTOsToday = await PtoService.getApprovedRemotePTOForToday();
+    const remotePTOsToday = await PtoService.getApprovedPTOForToday();
     res.send(remotePTOsToday);
   } catch (err) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ err: err.message });
@@ -126,5 +126,5 @@ module.exports = {
   updatePaidTimeOff,
   approvePaidTimeOff,
   rejectPaidTimeOff,
-  getRemoteUsersForToday,
+  getAwayUserCountForToday,
 };

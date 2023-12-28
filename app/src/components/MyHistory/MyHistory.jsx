@@ -23,16 +23,14 @@ import Scrollbars from 'react-custom-scrollbars-2';
 import { usePaidTimeOff } from '../../hooks/usePTO';
 import moment from 'moment';
 import useUser from '../../hooks/useUser';
-import useUsersWorkingRemote from '../../hooks/useUsersWokringRemote';
+import useAwayUsersCount from '../../hooks/useUsersWokringRemote';
 
 const MyHistory = () => {
   const [selectedOption, setSelectedOption] = useState(LeaveTypes.Vacation);
   const { user } = useUser();
   const { paidTimeOffHistory, isError, isLoading } = usePaidTimeOff(user._id);
   const [dates, setDates] = useState([]);
-  const { remoteUsers } = useUsersWorkingRemote();
-
-  console.log(remoteUsers);
+  const { awayUsers } = useAwayUsersCount();
 
   const handleSelectChange = (event) => {
     setSelectedOption(event.target.value);
@@ -109,12 +107,12 @@ const MyHistory = () => {
               <Flex {...styles.statgroupFlex}>
                 <MyHistoryStats
                   label="The total number of employees on vacation"
-                  working={remoteUsers?.number}
+                  working={awayUsers?.numberOfVacationPTO}
                 />
                 <Divider />
                 <MyHistoryStats
                   label="The total number of employees working from home"
-                  working={remoteUsers?.number}
+                  working={awayUsers?.numberOfRemotePTO}
                 />
               </Flex>
             </StatGroup>
