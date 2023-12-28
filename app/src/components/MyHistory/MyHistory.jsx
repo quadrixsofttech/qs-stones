@@ -107,12 +107,12 @@ const MyHistory = () => {
               <Flex {...styles.statgroupFlex}>
                 <MyHistoryStats
                   label="The total number of employees on vacation"
-                  working={awayUsers?.numberOfVacationPTO}
+                  userCount={awayUsers?.numberOfVacationPTO}
                 />
                 <Divider />
                 <MyHistoryStats
                   label="The total number of employees working from home"
-                  working={awayUsers?.numberOfRemotePTO}
+                  userCount={awayUsers?.numberOfRemotePTO}
                 />
               </Flex>
             </StatGroup>
