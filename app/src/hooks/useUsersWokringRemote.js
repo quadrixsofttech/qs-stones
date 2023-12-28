@@ -5,7 +5,7 @@ import { useState } from 'react';
 const useAwayUsersCount = () => {
   const [data, setData] = useState();
   const getRemoteAndVacationUsers = async () => {
-    const { data } = await axios.get(`/api/v1/paid-time-off/remote-ptos-today`);
+    const { data } = await axios.get(`/api/v1/paid-time-off/remote-and-vacation`);
     return data;
   };
 

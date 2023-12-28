@@ -284,7 +284,7 @@ const getUserHistory = async (userId) => {
 const getApprovedPTOForToday = async () => {
   try {
     const today = moment().format('YYYY-MM-DD');
-    const remotePTO = await PaidTimeOff.countDocuments({
+    const remote = await PaidTimeOff.countDocuments({
       type: 'remote',
       status: 'approved',
       days: { $in: [today] },
@@ -296,7 +296,7 @@ const getApprovedPTOForToday = async () => {
       days: { $in: [today] },
     });
 
-    return { numberOfRemotePTO: remotePTO, numberOfVacationPTO: vacationPTO };
+    return { numberOfRemoteUsers: remote, numberOfVacationPTOs: vacationPTO };
   } catch (err) {
     throw new Error(err);
   }

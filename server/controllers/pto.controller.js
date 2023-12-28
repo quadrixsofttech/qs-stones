@@ -112,8 +112,8 @@ const getPaidTimeOff = async (req, res) => {
 
 const getAwayUserCountForToday = async (req, res) => {
   try {
-    const remotePTOsToday = await PtoService.getApprovedPTOForToday();
-    res.send(remotePTOsToday);
+    const remoteUsersToday = await PtoService.getApprovedPTOForToday();
+    res.send(remoteUsersToday);
   } catch (err) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ err: err.message });
   }
