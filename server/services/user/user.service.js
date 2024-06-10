@@ -27,7 +27,7 @@ const getAdmins = async () => {
 
 const getEmployees = async () => {
   try {
-    const employees = await User.find({ role: 'user' })
+    const employees = await User.find()
       .select('_id firstName lastName avatar email')
       .lean();
 
