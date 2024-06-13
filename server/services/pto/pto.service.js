@@ -149,7 +149,7 @@ const approvePTO = async (id) => {
       pto.status = 'approved';
       await pto.save();
     } else {
-      const vacationDays = pto.days.length;
+      let vacationDays = pto.days.length;
 
       let maxDate = moment(pto.days[0]);
 
