@@ -8,6 +8,8 @@ const UserSchema = new Schema({
   password: { type: String, required: true },
   role: { type: String, required: true, default: 'user' },
   bio: { type: String, required: false },
+  startingVacationDays: { type: Number,required: true, default: 20 },
+  employmentStartDate: {type: String, required: true, default: new Date().toISOString()},
   vacation: [
     {
       year: { type: Number, required: true, default: new Date().getFullYear() },
