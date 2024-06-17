@@ -1,7 +1,7 @@
 const pageWrapper = {
   minH: '100vh',
-  align: 'center',
-  justify: 'center',
+  alignItems: 'center',
+  justifyContent: 'center',
   bg: 'gray.50',
 };
 
