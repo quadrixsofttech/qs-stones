@@ -27,6 +27,22 @@ const useUser = () => {
     });
     return data;
   };
+
+  const changePasswordCallBack = async ({ oldPassword, newPassword }) => {
+    const { data } = await publicFetch.post('change-password', {
+      oldPassword,
+      newPassword,
+    });
+    return data;
+  };
+
+  const changePassword = useMutation(changePasswordCallBack, {
+    onSuccess: (data) => auth.setAuthState(data),
+    onError: (error) => {
+      return error.response?.data || 'Error in changeing the password';
+    },
+  });
+
   const authenticate = useMutation(authenticateCallback, {
     onSuccess: (data) => auth.setAuthState(data),
     onError: (error) => {
@@ -98,6 +114,7 @@ const useUser = () => {
     employeesError,
     refetchEmployees,
     deleteEmployee,
+    changePassword,
   };
 };
 
