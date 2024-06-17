@@ -49,17 +49,7 @@ const Login = () => {
   return (
     <>
       {redirectOnLogin && <Navigate to="/dashboard" />}
-      <SignupLayout
-        title="Sign in to your account"
-        subtitle={
-          <>
-            Don't have an account?
-            <Text as={Link} to="/signup" color={'blue.400'} ml={1}>
-              Sign up now
-            </Text>
-          </>
-        }
-      >
+      <SignupLayout title="Sign in to your account">
         <Formik
           initialValues={{
             email: '',

@@ -7,6 +7,7 @@ import {
   Alert,
   AlertIcon,
   Button,
+  Flex,
   FormControl,
   FormErrorMessage,
   FormLabel,
@@ -147,6 +148,9 @@ const Signup = () => {
                     isLoading={registerIsLoading}
                   >
                     Sign Up
+                  </Button>
+                  <Button type="submit" as={Link} to="/dashboard">
+                    Go back
                   </Button>
                 </Stack>
               </Stack>
