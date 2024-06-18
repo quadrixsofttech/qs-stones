@@ -49,6 +49,8 @@ function startCronJobs() {
 
 
 const increaseVacationDays = (vacationDays,date) => {
+
+  if(vacationDays == 25) return vacationDays;
   
   var today = new Date();
   var employmentStartDate = new Date(date);
@@ -57,13 +59,13 @@ const increaseVacationDays = (vacationDays,date) => {
 
   switch(true)
   {
-    case (yearDiff >= 10):
+    case (yearDiff >= 9):
             return vacationDays + 5;
-        case (yearDiff >= 7):
+        case (yearDiff >= 6):
             return vacationDays + 4;
-        case (yearDiff >= 5):
+        case (yearDiff >= 4):
             return vacationDays + 3;
-        case (yearDiff >= 3):
+        case (yearDiff >= 2):
             return vacationDays + 2;
         case (yearDiff >= 1):
             return vacationDays + 1;
