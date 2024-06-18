@@ -2,6 +2,7 @@ const User = require('../../models/user.model');
 const PaidTimeOff = require('../../models/pto.model');
 const ConferenceRoomReservation = require('../../models/conference-room-reservation');
 const moment = require('moment');
+const holidays = require('../../utils/utils.js');
 
 const getAllUsers = async () => {
   try {
@@ -88,7 +89,17 @@ async function getTotalUsersWorkingToday() {
   const activeUsers = await User.find({ active: true, days: currentDate });
   return activeUsers.length;
 }
-4;
+
+const getHolidays = async () => {
+  try
+  {
+    return holidays;
+  }
+  catch(err)
+  {
+    throw new Error(err);
+  }
+}
 
 module.exports = {
   getAllUsers,
@@ -98,4 +109,5 @@ module.exports = {
   getTotalUsersWorkingToday,
   getEmployees,
   removeEmployee,
+  getHolidays,
 };
