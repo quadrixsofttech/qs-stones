@@ -55,17 +55,17 @@ const increaseVacationDays = (vacationDays,date) => {
   var today = new Date();
   var employmentStartDate = new Date(date);
 
-  var yearDiff = today.getFullYear() - employmentStartDate.getFullYear();
+  var yearDiff = (today.getFullYear()+1) - employmentStartDate.getFullYear();
 
   switch(true)
   {
-    case (yearDiff >= 9):
+    case (yearDiff >= 10):
             return vacationDays + 5;
-        case (yearDiff >= 6):
+        case (yearDiff >= 7):
             return vacationDays + 4;
-        case (yearDiff >= 4):
+        case (yearDiff >= 5):
             return vacationDays + 3;
-        case (yearDiff >= 2):
+        case (yearDiff >= 3):
             return vacationDays + 2;
         case (yearDiff >= 1):
             return vacationDays + 1;
