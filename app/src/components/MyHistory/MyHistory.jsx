@@ -40,6 +40,7 @@ const MyHistory = () => {
     if (!isLoading) {
       const flattenedDates = paidTimeOffHistory
         .filter((select) => select.type === selectedOption)
+        .filter((select) => select.status === 'approved')
         .flatMap((obj) => obj.days);
       setDates(flattenedDates);
     }
