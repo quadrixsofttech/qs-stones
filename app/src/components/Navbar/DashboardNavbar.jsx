@@ -81,6 +81,9 @@ const DashboardNavbar = () => {
                     Users
                   </MenuItem>
                 )}
+                <MenuItem as={Link} to="/change-password">
+                  Change password
+                </MenuItem>
                 <MenuDivider />
                 <MenuItem onClick={() => auth?.logout()}>Sign Out</MenuItem>
               </MenuList>
