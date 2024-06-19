@@ -5,6 +5,7 @@ import CalendarBox from './CalendarBox';
 import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
 import useEmployees from '../../hooks/useEmployees';
 import moment from 'moment';
+import useUser from '../../hooks/useUser';
 
 const Calendar = () => {
   const [date, setDate] = useState(new Date());
@@ -13,12 +14,13 @@ const Calendar = () => {
   const [type, setType] = useState('vacation');
 
   const { data, isLoading, refetchPTO } = useEmployees(type);
+  const {holidays, holidaysLoading} = useUser();
 
   useEffect(() => {
     refetchPTO();
   }, [type, refetchPTO]);
 
-  if (isLoading) {
+  if (isLoading || holidaysLoading) {
     return <Spinner />;
   }
 
@@ -45,6 +47,7 @@ const Calendar = () => {
       return moment(date).date(i).format('YYYY-MM-DD');
     };
 
+
     const employeesToday = data
       ? data.pto.filter((x) => x.days.includes(getDate()))
       : [];
@@ -60,6 +63,7 @@ const Calendar = () => {
           date={getDate()}
           employeesToday={employeesToday}
           type={type}
+          holiday={holidays.holidays.find(obj => obj.date === getDate())}
         ></CalendarBox>
       );
     }

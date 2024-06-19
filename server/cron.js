@@ -2,6 +2,8 @@ const cron = require('node-cron');
 const mongoose = require('mongoose');
 const User = require('./models/user.model');
 
+
+
 const cronUpdateVacation = cron.schedule('0 0 1 7 *', async () => {
   try {
     const currentYear = new Date().getFullYear();
@@ -14,9 +16,13 @@ const cronUpdateVacation = cron.schedule('0 0 1 7 *', async () => {
       },
     });
 
+    if (usersToUpdate.length <= 0) {
+      console.error('No users found to update vacation days.');
+      return;
+    }
+
     for (const user of usersToUpdate) {
-      //Create function that will calculate newVacationDays based on rules of days increase
-      const newVacationDays = user.startingVacationDays + 1;
+      const newVacationDays = increaseVacationDays(user.startingVacationDays,user.employmentStartDate);
 
       await User.updateOne(
         { _id: user._id },
@@ -40,5 +46,32 @@ const cronUpdateVacation = cron.schedule('0 0 1 7 *', async () => {
 function startCronJobs() {
   cronUpdateVacation.start();
 }
+
+
+const increaseVacationDays = (vacationDays,date) => {
+
+  if(vacationDays == 25) return vacationDays;
+  
+  var today = new Date();
+  var employmentStartDate = new Date(date);
+
+  var yearDiff = (today.getFullYear()+1) - employmentStartDate.getFullYear();
+
+  switch(true)
+  {
+    case (yearDiff >= 10):
+            return vacationDays + 5;
+        case (yearDiff >= 7):
+            return vacationDays + 4;
+        case (yearDiff >= 5):
+            return vacationDays + 3;
+        case (yearDiff >= 3):
+            return vacationDays + 2;
+        case (yearDiff >= 1):
+            return vacationDays + 1;
+        default:
+            return vacationDays;
+    }
+  }
 
 module.exports = { startCronJobs };

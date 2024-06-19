@@ -18,6 +18,7 @@ const useUser = () => {
     return data;
   };
 
+
   const registerCallback = async ({ firstName, lastName, email, password }) => {
     const { data } = await publicFetch.post(`signup`, {
       firstName,
@@ -27,6 +28,23 @@ const useUser = () => {
     });
     return data;
   };
+
+  const changePasswordCallBack = async ({ oldPassword, newPassword }) => {
+    const { data } = await protectedFetch.patch('change-password', {
+      id: user?._id,
+      oldPassword,
+      newPassword,
+    });
+    return data;
+  };
+
+  const changePassword = useMutation(changePasswordCallBack, {
+    onSuccess: (data) => auth.setAuthState(data),
+    onError: (error) => {
+      return error.response?.data || 'Error in changeing the password';
+    },
+  });
+
   const authenticate = useMutation(authenticateCallback, {
     onSuccess: (data) => auth.setAuthState(data),
     onError: (error) => {
@@ -83,6 +101,18 @@ const useUser = () => {
 
   const deleteEmployee = useMutation(deleteEmployeeCallback);
 
+  const getHolidays = async() => {
+    const {data} = await axios.get('/api/v1/holidays');
+    return data;
+  }
+
+  const {
+    data: holidays,
+    isLoading: holidaysLoading,
+    error: holidaysError,
+    refetch:refetchHolidays
+  } = useQuery('holidays',getHolidays);
+
   return {
     user,
     register,
@@ -98,6 +128,11 @@ const useUser = () => {
     employeesError,
     refetchEmployees,
     deleteEmployee,
+    changePassword,
+    holidays,
+    holidaysLoading,
+    holidaysError,
+    refetchHolidays
   };
 };
 

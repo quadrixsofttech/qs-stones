@@ -1,24 +1,8 @@
 const PaidTimeOff = require('../../models/pto.model');
 const moment = require('moment');
 const User = require('../../models/user.model');
+const {holidays} = require('../../utils/utils.js')
 
-const holidays = [
-  '2023-01-01',
-  '2023-01-02',
-  '2023-01-06',
-  '2023-02-15',
-  '2023-04-07',
-  '2023-04-14',
-  '2023-05-01',
-  '2023-05-02',
-  '2023-05-09',
-  '2023-05-25',
-  '2023-06-15',
-  '2023-06-24',
-  '2023-11-11',
-  '2023-12-25',
-  '2023-12-26',
-];
 const weekendDays = [6, 0];
 
 const getAllPTO = async () => {
@@ -81,7 +65,7 @@ const createPTO = async ({
       );
 
       const filteredDates = generatedDates.filter((date) => {
-        const isHoliday = holidays.includes(date);
+        const isHoliday = holidays.some(holiday => holiday.date === date);
         const isWeekend = weekendDays.includes(moment(date).day());
         return !isHoliday && !isWeekend;
       });
@@ -314,6 +298,8 @@ const getUserDates = async (userId) => {
     return [];
   }
 };
+
+
 
 module.exports = {
   getAllPTO,
