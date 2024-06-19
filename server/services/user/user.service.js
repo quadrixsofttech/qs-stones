@@ -2,6 +2,7 @@ const User = require('../../models/user.model');
 const PaidTimeOff = require('../../models/pto.model');
 const ConferenceRoomReservation = require('../../models/conference-room-reservation');
 const moment = require('moment');
+const bcrypt = require('bcryptjs');
 
 const getAllUsers = async () => {
   try {
@@ -88,7 +89,32 @@ async function getTotalUsersWorkingToday() {
   const activeUsers = await User.find({ active: true, days: currentDate });
   return activeUsers.length;
 }
-4;
+
+const changePassword = async (userId, oldPassword, newPassword) => {
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    const isMatch = await bcrypt.compare(oldPassword, user.password);
+    if (!isMatch) {
+      throw new Error('Incorrect old password');
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+    user.password = hashedPassword;
+    await user.save();
+
+    return {
+      message: 'Password changed successfully',
+    };
+  } catch (error) {
+    throw new Error(error.message || 'Error in changing passsword');
+  }
+};
 
 module.exports = {
   getAllUsers,
@@ -98,4 +124,5 @@ module.exports = {
   getTotalUsersWorkingToday,
   getEmployees,
   removeEmployee,
+  changePassword,
 };

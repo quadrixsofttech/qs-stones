@@ -18,6 +18,7 @@ const useUser = () => {
     return data;
   };
 
+
   const registerCallback = async ({ firstName, lastName, email, password }) => {
     const { data } = await publicFetch.post(`signup`, {
       firstName,
@@ -29,7 +30,8 @@ const useUser = () => {
   };
 
   const changePasswordCallBack = async ({ oldPassword, newPassword }) => {
-    const { data } = await publicFetch.post('change-password', {
+    const { data } = await protectedFetch.patch('change-password', {
+      id: user?._id,
       oldPassword,
       newPassword,
     });
