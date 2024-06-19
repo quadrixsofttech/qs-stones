@@ -96,14 +96,6 @@ const changePassword = async (req, res) => {
         message: 'User not found',
       });
     }
-
-    const passwordValid = await verifyPassword(oldPassword, user.password);
-    if (!passwordValid) {
-      return res.status(StatusCodes.FORBIDDEN).json({
-        message: 'Old password is incorrect',
-      });
-    }
-
     const passwordChange = await UserService.changePassword(
       id,
       oldPassword,
@@ -138,16 +130,14 @@ const changePassword = async (req, res) => {
     });
   }
 };
-const getHolidays = async(req,res) => {
+const getHolidays = async (req, res) => {
   try {
     const holidays = await UserService.getHolidays();
     res.send(holidays);
-  }
-  catch(err)
-  {
+  } catch (err) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ err: err.message });
   }
-}
+};
 
 module.exports = {
   getUsers,
@@ -157,5 +147,5 @@ module.exports = {
   getEmployees,
   deleteEmployee,
   changePassword,
-  getHolidays
+  getHolidays,
 };

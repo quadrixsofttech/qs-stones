@@ -118,15 +118,12 @@ const changePassword = async (userId, oldPassword, newPassword) => {
 };
 
 const getHolidays = async () => {
-  try
-  {
+  try {
     return holidays;
-  }
-  catch(err)
-  {
+  } catch (err) {
     throw new Error(err);
   }
-}
+};
 
 module.exports = {
   getAllUsers,
