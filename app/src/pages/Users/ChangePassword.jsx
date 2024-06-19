@@ -10,7 +10,6 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
-  HStack,
   Input,
   Stack,
 } from '@chakra-ui/react';
@@ -100,10 +99,7 @@ const ChangePassword = () => {
                   ) : null}
                 </FormControl>
                 <Stack>
-                  <Button
-                    colorScheme="blue"
-                    type="submit"
-                  >
+                  <Button colorScheme="blue" type="submit">
                     Sign Up
                   </Button>
                   <Button type="submit" as={Link} to="/dashboard">
