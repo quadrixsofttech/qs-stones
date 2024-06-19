@@ -16,8 +16,8 @@ const csrfProtection = csrf({ cookie: true });
 
 router.use('/', authRouter);
 router.use(attachUser);
-router.use(csrfProtection);
-router.use('/csrf-token', csrfRouter);
+// router.use(csrfProtection);
+// router.use('/csrf-token', csrfRouter);
 router.use('/dashboard-data', dashboardRouter);
 router.use('/', userRouter);
 router.use('/bio', bioRouter);
