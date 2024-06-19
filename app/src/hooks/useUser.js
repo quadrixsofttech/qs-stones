@@ -83,6 +83,18 @@ const useUser = () => {
 
   const deleteEmployee = useMutation(deleteEmployeeCallback);
 
+  const getHolidays = async() => {
+    const {data} = await axios.get('/api/v1/holidays');
+    return data;
+  }
+
+  const {
+    data: holidays,
+    isLoading: holidaysLoading,
+    error: holidaysError,
+    refetch:refetchHolidays
+  } = useQuery('holidays',getHolidays);
+
   return {
     user,
     register,
@@ -98,6 +110,10 @@ const useUser = () => {
     employeesError,
     refetchEmployees,
     deleteEmployee,
+    holidays,
+    holidaysLoading,
+    holidaysError,
+    refetchHolidays
   };
 };
 

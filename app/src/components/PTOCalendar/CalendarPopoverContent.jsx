@@ -11,13 +11,13 @@ import {
 import React from 'react';
 import styles from './PTOCalendar.styles';
 
-const CalendarPopoverContent = ({ date, employeesToday, type }) => {
+const CalendarPopoverContent = ({ date, employeesToday, type,holiday }) => {
   return (
     <PopoverContent boxShadow={'md'}>
       <PopoverArrow />
       <PopoverCloseButton />
       <PopoverHeader {...styles.popoverHeader}>
-        {type.toUpperCase()} : {date}
+        {holiday ? holiday.name : type.toUpperCase()} : {date}
       </PopoverHeader>
       <PopoverBody maxH="300px" overflowY="auto">
         <Flex {...styles.popoverBox}>
