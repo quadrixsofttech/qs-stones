@@ -138,6 +138,16 @@ const changePassword = async (req, res) => {
     });
   }
 };
+const getHolidays = async(req,res) => {
+  try {
+    const holidays = await UserService.getHolidays();
+    res.send(holidays);
+  }
+  catch(err)
+  {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ err: err.message });
+  }
+}
 
 module.exports = {
   getUsers,
@@ -147,4 +157,5 @@ module.exports = {
   getEmployees,
   deleteEmployee,
   changePassword,
+  getHolidays
 };

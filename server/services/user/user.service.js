@@ -3,6 +3,7 @@ const PaidTimeOff = require('../../models/pto.model');
 const ConferenceRoomReservation = require('../../models/conference-room-reservation');
 const moment = require('moment');
 const bcrypt = require('bcryptjs');
+const holidays = require('../../utils/utils.js');
 
 const getAllUsers = async () => {
   try {
@@ -116,6 +117,17 @@ const changePassword = async (userId, oldPassword, newPassword) => {
   }
 };
 
+const getHolidays = async () => {
+  try
+  {
+    return holidays;
+  }
+  catch(err)
+  {
+    throw new Error(err);
+  }
+}
+
 module.exports = {
   getAllUsers,
   updateUserRole,
@@ -125,4 +137,5 @@ module.exports = {
   getEmployees,
   removeEmployee,
   changePassword,
+  getHolidays,
 };

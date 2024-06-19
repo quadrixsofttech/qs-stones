@@ -11,5 +11,6 @@ router.get('/admins', UserController.getAdministrators);
 router.get('/vacations/:id', UserController.getVacations);
 router.patch('/user-role', UserController.updateRole);
 router.patch('/change-password', UserController.changePassword);
+router.get('/holidays',UserController.getHolidays);
 
 module.exports = router;

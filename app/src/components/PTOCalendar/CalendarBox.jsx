@@ -13,7 +13,7 @@ import moment from 'moment';
 
 import { useTheme } from '@chakra-ui/react';
 
-const CalendarBox = ({ date, employeesToday, type }) => {
+const CalendarBox = ({ date, employeesToday, type, holiday }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const theme = useTheme();
@@ -39,7 +39,7 @@ const CalendarBox = ({ date, employeesToday, type }) => {
           boxShadow={isOpen ? `inset 0px 0px 0px 1px ${purple500}` : ''}
           _hover={isOpen ? '' : { backgroundColor: 'gray.50' }}
           backgroundColor={
-            isOpen ? 'gray.200' : isToday() ? 'purple.50' : 'white'
+            holiday ? 'red.100' : isOpen ? 'gray.200' : isToday() ? 'purple.50' : 'white'
           }
         >
           <Flex flexDirection={'column'}>
@@ -64,6 +64,7 @@ const CalendarBox = ({ date, employeesToday, type }) => {
         date={date}
         employeesToday={employeesToday}
         type={type}
+        holiday={holiday}
       />
     </Popover>
   );
