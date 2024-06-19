@@ -29,10 +29,6 @@ const DashboardSidebar = () => {
           <BiChalkboard size={20} />
           <Text>Conference</Text>
         </Flex>
-        <Flex {...styles.sideBarButton} as={NavLink} to="/">
-          <BiDish size={20} />
-          <Text>Kitchen</Text>
-        </Flex>
         {user.role === 'admin' && (
           <>
             <Flex {...styles.sideBarButton} as={NavLink} to="/admin">
