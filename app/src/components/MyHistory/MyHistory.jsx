@@ -27,7 +27,7 @@ import useAwayUsersCount from '../../hooks/useUsersWokringRemote';
 import { timeOffTypes } from '../../constants/TimeOffTypes';
 
 const MyHistory = () => {
-  const [selectedOption, setSelectedOption] = useState(LeaveTypes.Vacation);
+  const [selectedOption, setSelectedOption] = useState(LeaveTypes.vacation);
   const { user } = useUser();
   const { paidTimeOffHistory, isError, isLoading } = usePaidTimeOff(user._id);
   const [dates, setDates] = useState([]);
@@ -40,12 +40,13 @@ const MyHistory = () => {
   useEffect(() => {
     if (!isLoading) {
       const flattenedDates = paidTimeOffHistory
-        .filter((select) => select.type === selectedOption)
+        .filter((select) => select.type === selectedOption.toLowerCase())
         .filter((select) => select.status === 'approved')
         .flatMap((obj) => obj.days);
       setDates(flattenedDates);
     }
   }, [paidTimeOffHistory, selectedOption, isLoading]);
+
 
   if (isLoading) {
     return (
@@ -83,28 +84,18 @@ const MyHistory = () => {
         <TabPanels {...styles.tabPanels}>
           <TabPanel {...styles.tabPanelPTO}>
             <Select size="sm" mb={2} onChange={handleSelectChange}>
-              {Object.values(timeOffTypes).map((type) => (
+              {Object.values(LeaveTypes).map((type) => (
                 <option value={type} key={timeOffTypes.id + '-' + type}>
                   {type}
                 </option>
               ))}
             </Select>
-            {selectedOption === LeaveTypes.Remote && (
-              <Calendar
-                readOnly={true}
-                headerOrder={headerOrder}
-                className="custom-calendar-history"
-                value={dates}
-              />
-            )}
-            {selectedOption === LeaveTypes.Vacation && (
-              <Calendar
-                readOnly={true}
-                headerOrder={headerOrder}
-                className="custom-calendar-history"
-                value={dates}
-              />
-            )}
+            <Calendar
+              readOnly={true}
+              headerOrder={headerOrder}
+              className="custom-calendar-history"
+              value={dates}
+            />
             <StatGroup width={'100%'} height={'100%'}>
               <Flex {...styles.statgroupFlex}>
                 <MyHistoryStats
@@ -128,8 +119,8 @@ const MyHistory = () => {
                   type={pto.type}
                   time={moment(pto.createdAt).format('YYYY-MM-DD HH:mm:ss')}
                   user={{
-                    firstName: pto.reviewer?.firstName,
-                    lastName: pto.reviewer?.lastName,
+                    firstName: pto.reviewerId?.firstName,
+                    lastName: pto.reviewerId?.lastName,
                   }}
                   requestedDates={pto.dates.map(
                     ([startDate, endDate]) =>
