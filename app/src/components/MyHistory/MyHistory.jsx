@@ -47,6 +47,7 @@ const MyHistory = () => {
     }
   }, [paidTimeOffHistory, selectedOption, isLoading]);
 
+
   if (isLoading) {
     return (
       <Flex justify="center" align="center" minHeight="200px">
@@ -118,8 +119,8 @@ const MyHistory = () => {
                   type={pto.type}
                   time={moment(pto.createdAt).format('YYYY-MM-DD HH:mm:ss')}
                   user={{
-                    firstName: pto.reviewer?.firstName,
-                    lastName: pto.reviewer?.lastName,
+                    firstName: pto.reviewerId?.firstName,
+                    lastName: pto.reviewerId?.lastName,
                   }}
                   requestedDates={pto.dates.map(
                     ([startDate, endDate]) =>
