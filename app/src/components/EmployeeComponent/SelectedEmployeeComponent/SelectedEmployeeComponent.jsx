@@ -6,7 +6,7 @@ import { MyVacationInfo } from '../../MyVacationInfo/MyVacationInfo';
 import EmptyRequest from './EmptyRequest';
 import PendingRequests from './PendingRequests/PendingRequests';
 import RequestHistory from './RequestHistory/RequestHistory';
-import useUser from '../../../hooks/useUser';
+import { timeOffTypes } from '../../../constants/TimeOffTypes';
 
 const SelectedEmployeeComponent = ({
   data,
@@ -19,11 +19,6 @@ const SelectedEmployeeComponent = ({
   const [requestHistoryData, setRequestHistoryData] = useState(
     data.filter((x) => x.status === 'approved' || x.status === 'rejected')
   );
-  const { user } = useUser();
-
-  const handlePtoTypeChange = (event) => {
-    setPtoType(event.target.value);
-  };
 
   useEffect(() => {
     setRequestHistoryData(
@@ -35,9 +30,7 @@ const SelectedEmployeeComponent = ({
     );
   }, [ptoType, data]);
 
-  const pendingRequests = data.filter(
-    (x) => x.status === 'pending' 
-  );
+  const pendingRequests = data.filter((x) => x.status === 'pending');
 
   return (
     <Flex flexDir={'column'} height={'100%'} overflow={'hidden'}>
@@ -59,15 +52,18 @@ const SelectedEmployeeComponent = ({
           <Text {...styles.text}>Request History</Text>
           <Select
             {...styles.select}
+            onChange={(e) => {
+              setPtoType(e.target.value.toLowerCase());
+            }}
             value={ptoType}
-            onChange={handlePtoTypeChange}
           >
-            <option key={'Vacation'} value={'vacation'}>
-              Vacation
-            </option>
-            <option key={'Remote'} value={'remote'}>
-              Remote
-            </option>
+            {Object.values(timeOffTypes).map((type) => {
+              return (
+                <option value={type} key={type}>
+                  {`${type}`}
+                </option>
+              );
+            })}
           </Select>
         </Flex>
         {data?.length > 0 ? (
