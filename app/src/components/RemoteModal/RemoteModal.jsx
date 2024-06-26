@@ -36,7 +36,6 @@ export const RemoteModal = ({ isOpen, onClose }) => {
   const toast = useToast();
 
   const submitRemote = async () => {
-    console.log('send');
     toast({
       title: 'Success',
       description: 'You have scheduled work from home',
@@ -106,20 +105,24 @@ export const RemoteModal = ({ isOpen, onClose }) => {
               <Divider marginTop="4" />
             </Box>
             <ModalFooter>
-              <>
-                <Button onClick={onClose} leftIcon={<FaArrowLeft size="12" />}>
-                  Back
-                </Button>
-                <Button
-                  onClick={() => {
-                    submitRemote();
-                  }}
-                  {...styles.button}
-                  leftIcon={<BiUserPin />}
-                >
-                  Submit
-                </Button>
-              </>
+              <Button
+                onClick={() => {
+                  setRemoteDates([]);
+                  onClose();
+                }}
+                leftIcon={<FaArrowLeft size="12" />}
+              >
+                Back
+              </Button>
+              <Button
+                onClick={() => {
+                  submitRemote();
+                }}
+                {...styles.button}
+                leftIcon={<BiUserPin />}
+              >
+                Submit
+              </Button>
             </ModalFooter>
           </ModalBody>
         </Scrollbars>
