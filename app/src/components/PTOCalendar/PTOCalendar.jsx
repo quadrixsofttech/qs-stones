@@ -6,15 +6,17 @@ import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
 import useEmployees from '../../hooks/useEmployees';
 import moment from 'moment';
 import useUser from '../../hooks/useUser';
+import { years, months, daysOfWeek } from './constants/calendarInfo';
+import { timeOffTypes } from '../../constants/TimeOffTypes';
 
 const Calendar = () => {
   const [date, setDate] = useState(new Date());
   const [showSaturday, setShowSaturday] = useState(false);
 
-  const [type, setType] = useState('vacation');
+  const [type, setType] = useState('Vacation');
 
   const { data, isLoading, refetchPTO } = useEmployees(type);
-  const {holidays, holidaysLoading} = useUser();
+  const { holidays, holidaysLoading } = useUser();
 
   useEffect(() => {
     refetchPTO();
@@ -24,13 +26,11 @@ const Calendar = () => {
     return <Spinner />;
   }
 
-  const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
   if (showSaturday) {
     daysOfWeek.push('Saturday');
   }
 
   const daysInMonth = moment(date).daysInMonth();
-
   const firstDayOfMonth = moment(date).startOf('month').day();
 
   const blanks = [];
@@ -47,7 +47,6 @@ const Calendar = () => {
       return moment(date).date(i).format('YYYY-MM-DD');
     };
 
-
     const employeesToday = data
       ? data.pto.filter((x) => x.days.includes(getDate()))
       : [];
@@ -63,7 +62,7 @@ const Calendar = () => {
           date={getDate()}
           employeesToday={employeesToday}
           type={type}
-          holiday={holidays.holidays.find(obj => obj.date === getDate())}
+          holiday={holidays.holidays.find((obj) => obj.date === getDate())}
         ></CalendarBox>
       );
     }
@@ -84,48 +83,25 @@ const Calendar = () => {
 
   const totalDays = [...blanks, ...days];
 
-  const months = [
-    { key: 'January', value: 0 },
-    { key: 'February', value: 1 },
-    { key: 'March', value: 2 },
-    { key: 'April', value: 3 },
-    { key: 'May', value: 4 },
-    { key: 'June', value: 5 },
-    { key: 'July', value: 6 },
-    { key: 'August', value: 7 },
-    { key: 'September', value: 8 },
-    { key: 'October', value: 9 },
-    { key: 'November', value: 10 },
-    { key: 'December', value: 11 },
-  ];
-
-  const years = [
-    '2018',
-    '2019',
-    '2020',
-    '2021',
-    '2022',
-    '2023',
-    '2024',
-    '2025',
-    '2026',
-  ];
-
   return (
     <Box {...styles.calendarContainerStyles}>
       <Flex {...styles.header}>
         <Heading {...styles.headingTitle} as={'h2'}>
-          PTO Category
+          Category
         </Heading>
         <Select
           {...styles.selectButton}
           onChange={(e) => {
             setType(e.target.value);
           }}
-          value={type}
         >
-          <option value="vacation">Vacation</option>
-          <option value="remote">Remote</option>
+          {Object.values(timeOffTypes).map((type) => {
+            return (
+              <option value={type} key={type}>
+                {`${type}`}
+              </option>
+            );
+          })}
         </Select>
       </Flex>
       <Flex {...styles.selectionBox}>
