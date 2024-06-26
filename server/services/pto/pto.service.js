@@ -81,7 +81,7 @@ const createPTO = async ({
         type,
         status,
         userId,
-        paidLeaveType,
+        paidLeaveType: paidLeaveType ? paidLeaveType : undefined,
         days,
         dates,
         reviewerId,
@@ -125,6 +125,10 @@ const createPTO = async ({
         });
         await pto.save();
         return pto;
+      }
+      else
+      {
+        return "Not enough vacation days left"
       }
     }
     else
@@ -263,18 +267,18 @@ const getUserHistory = async (userId) => {
 
     const reviewerIds = ptoHistory.map((pto) => pto.reviewerId);
 
-    // const reviewers = await User.find(
-    //   { _id: { $in: reviewerIds } },
-    //   'firstName lastName'
-    // ).lean();
+    const reviewers = await User.find(
+      { _id: { $in: reviewerIds } },
+      'firstName lastName'
+    ).lean();
 
-    // const reviewerMap = reviewers.reduce((map, reviewer) => {
-    //   map[reviewer._id] = reviewer;
-    //   return map;
-    // }, {});
+    const reviewerMap = reviewers.reduce((map, reviewer) => {
+      map[reviewer._id] = reviewer;
+      return map;
+    }, {});
 
     const ptoHistoryWithReviewers = ptoHistory.map((pto) => {
-      //const reviewer = reviewerMap[pto.reviewerId];
+      const reviewer = reviewerMap[pto.reviewerId];
       return {
         ...pto,
       };

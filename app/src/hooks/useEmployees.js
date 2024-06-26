@@ -19,7 +19,8 @@ const useEmployees = (type = 'vacation') => {
     status,
     userId,
     comment,
-    reviewerId
+    reviewerId,
+    paidLeaveType
   }) => {
     const { data } = await axios.post('/api/v1/paid-time-off/', {
       dates,
@@ -28,6 +29,7 @@ const useEmployees = (type = 'vacation') => {
       userId,
       comment,
       reviewerId,
+      paidLeaveType
     });
     return data;
   };

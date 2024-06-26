@@ -41,6 +41,9 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
   const { createPTO } = useEmployees();
 
   const [selectedTimeOffType, setSelectedTimeOff] = useState(null);
+  const [paidLeaveType, setpaidLeaveType] = useState(null);
+
+  console.log(selectedTimeOffType?.toLowerCase());
   const toast = useToast();
 
   if (adminsLoading) {
@@ -52,9 +55,10 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
       if (VacationDates.length > 0) {
         await createPTO.mutateAsync({
           dates: VacationDates,
-          type: 'vacation',
+          type: selectedTimeOffType?.toLowerCase(),
           status: 'pending',
           userId: user._id,
+          paidLeaveType: paidLeaveType || null,
           reviewerId: null,
           comment: '',
         });
