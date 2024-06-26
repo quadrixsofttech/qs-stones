@@ -24,6 +24,7 @@ import { usePaidTimeOff } from '../../hooks/usePTO';
 import moment from 'moment';
 import useUser from '../../hooks/useUser';
 import useAwayUsersCount from '../../hooks/useUsersWokringRemote';
+import { timeOffTypes } from '../../constants/TimeOffTypes';
 
 const MyHistory = () => {
   const [selectedOption, setSelectedOption] = useState(LeaveTypes.Vacation);
@@ -82,8 +83,8 @@ const MyHistory = () => {
         <TabPanels {...styles.tabPanels}>
           <TabPanel {...styles.tabPanelPTO}>
             <Select size="sm" mb={2} onChange={handleSelectChange}>
-              {Object.values(LeaveTypes).map((type) => (
-                <option value={type} key={LeaveTypes.id + '-' + type}>
+              {Object.values(timeOffTypes).map((type) => (
+                <option value={type} key={timeOffTypes.id + '-' + type}>
                   {type}
                 </option>
               ))}
@@ -127,8 +128,8 @@ const MyHistory = () => {
                   type={pto.type}
                   time={moment(pto.createdAt).format('YYYY-MM-DD HH:mm:ss')}
                   user={{
-                    firstName: pto.reviewer.firstName,
-                    lastName: pto.reviewer.lastName,
+                    firstName: pto.reviewer?.firstName,
+                    lastName: pto.reviewer?.lastName,
                   }}
                   requestedDates={pto.dates.map(
                     ([startDate, endDate]) =>
@@ -137,6 +138,7 @@ const MyHistory = () => {
                       )} to ${moment(endDate * 1).format('YYYY-MM-DD')}; `
                   )}
                   response={pto.comment}
+                  numberOfDays={pto.days.length}
                 />
               ))}
             </TabPanel>
