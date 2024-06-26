@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const PtoSchema = new Schema({
   type: {
     type: String,
-    enum: ['vacation', 'remote'],
+    enum: ['vacation', 'remote','unpaid time off','paid time off','sick leave'],
     required: true,
   },
   status: {
@@ -17,11 +17,14 @@ const PtoSchema = new Schema({
     required: true,
     ref: 'user',
   },
+  paidLeaveType: {
+    type: String,
+    enum: ['Leave for Birth of a child','Marriage leave','Leave for the death of a close family member','Leave for the hard illness of a close family member']
+  },
   reviewerId: {
     type: Schema.Types.ObjectId,
     ref: 'user',
   },
-
   dates: {
     type: [[String, String]],
     required: true,

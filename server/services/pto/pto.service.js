@@ -51,6 +51,7 @@ const createPTO = async ({
   type,
   status,
   userId,
+  paidLeaveType,
   reviewerId,
   dates,
   comment,
@@ -72,42 +73,66 @@ const createPTO = async ({
 
       return [...acc, ...filteredDates];
     }, []);
-    const user = await User.findById(userId);
 
-    let maxDate = moment(days[0]);
+    if(type==='paid time off' && days.length > 5) return "Number of days succeeds limit";
 
-    for (let date of days) {
-      const currentDate = moment(date);
-      if (currentDate.isAfter(maxDate)) {
-        maxDate = currentDate;
-      }
-    }
-    var totalNumberOfVacationDays;
-    if (maxDate.month() >= 0 && maxDate.month() < 6) {
-      let currentYear = user.vacation.find((v) => v.year === maxDate.year());
-      let lastYear = user.vacation.find((v) => v.year === maxDate.year() - 1);
-      totalNumberOfVacationDays =
-        (currentYear?.vacationDays ?? 0) + (lastYear?.vacationDays ?? 0);
-    } else {
-      let currentYear = user.vacation.find((v) => v.year === maxDate.year());
-      totalNumberOfVacationDays = currentYear?.vacationDays ?? 0;
-    }
-
-    if (type === 'remote' || totalNumberOfVacationDays >= days.length) {
+    if(type == 'remote' || type==='paid time off' || type === 'unpaid time off' || type==='sick leave'){
       var pto = new PaidTimeOff({
         type,
         status,
         userId,
         reviewerId,
+        paidLeaveType,
         days,
         dates,
         comment,
       });
+
+      await pto.save();
+      return pto;
     }
-    await pto.save();
-    return pto;
+    else if(type==='vacation'){
+      const user = await User.findById(userId);
+
+      let maxDate = moment(days[0]);
+  
+      for (let date of days) {
+        const currentDate = moment(date);
+        if (currentDate.isAfter(maxDate)) {
+          maxDate = currentDate;
+        }
+      }
+      var totalNumberOfVacationDays;
+      if (maxDate.month() >= 0 && maxDate.month() < 6) {
+        let currentYear = user.vacation.find((v) => v.year === maxDate.year());
+        let lastYear = user.vacation.find((v) => v.year === maxDate.year() - 1);
+        totalNumberOfVacationDays =
+          (currentYear?.vacationDays ?? 0) + (lastYear?.vacationDays ?? 0);
+      } else {
+        let currentYear = user.vacation.find((v) => v.year === maxDate.year());
+        totalNumberOfVacationDays = currentYear?.vacationDays ?? 0;
+      }
+  
+      if (totalNumberOfVacationDays >= days.length) {
+        var pto = new PaidTimeOff({
+          type,
+          status,
+          userId,
+          reviewerId,
+          days,
+          dates,
+          comment,
+        });
+        await pto.save();
+        return pto;
+      }
+    }
+    else
+    {
+      return "Type not valid";
+    }
   } catch (err) {
-    throw new Error('Not enough vacation days');
+    throw new Error('Something went wrong');
   }
 };
 
@@ -128,8 +153,9 @@ const approvePTO = async (id) => {
   try {
     const pto = await PaidTimeOff.findById(id);
     const user = await User.findById(pto.userId);
+    const ptoType = pto.type;
 
-    if (pto.type === 'remote') {
+    if (ptoType === 'remote' || ptoType === 'paid time off' || ptoType==='unpaid time off' || ptoType === 'sick leave' ) {
       pto.status = 'approved';
       await pto.save();
     } else {
