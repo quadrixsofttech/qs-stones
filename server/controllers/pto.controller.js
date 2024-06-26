@@ -44,8 +44,8 @@ const updatePaidTimeOff = async (req, res) => {
 
 const approvePaidTimeOff = async (req, res) => {
   try {
-    const { id } = req.body;
-    const updatedPTO = await PtoService.approvePTO(id);
+    const { id, reviewerId } = req.body;
+    const updatedPTO = await PtoService.approvePTO(id,reviewerId);
 
     if (!updatedPTO) {
       return res
@@ -66,7 +66,7 @@ const approvePaidTimeOff = async (req, res) => {
 
 const rejectPaidTimeOff = async (req, res) => {
   try {
-    const { id, comment } = req.body;
+    const { id, comment,reviewerId } = req.body;
     const updatedPTO = await PtoService.rejectPTO(id, comment);
 
     if (!updatedPTO) {
