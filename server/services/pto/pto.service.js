@@ -138,7 +138,7 @@ const createPTO = async ({
     }
     else
     {
-      return "Type not valid";
+      throw new Error({ success: false, message: 'Type not valid' });
     }
   } catch (err) {
     throw new Error('Something went wrong');
