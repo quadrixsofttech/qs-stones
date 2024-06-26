@@ -35,7 +35,7 @@ export const RemoteModal = ({ isOpen, onClose }) => {
 
   const toast = useToast();
 
-  const submitPTORequest = async () => {
+  const submitRemote = async () => {
     console.log('send');
     toast({
       title: 'Success',
@@ -112,7 +112,7 @@ export const RemoteModal = ({ isOpen, onClose }) => {
                 </Button>
                 <Button
                   onClick={() => {
-                    submitPTORequest();
+                    submitRemote();
                   }}
                   {...styles.button}
                   leftIcon={<BiUserPin />}

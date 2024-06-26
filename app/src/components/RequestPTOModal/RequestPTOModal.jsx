@@ -37,29 +37,25 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
     removeVacationTag,
   } = useCalendar();
 
-  const { user, admins, adminsLoading } = useUser();
+  const { user, adminsLoading } = useUser();
   const { createPTO } = useEmployees();
 
-  const [selectedAdmin, setSelectedAdmin] = useState(null);
+  const [selectedTimeOffType, setSelectedTimeOff] = useState(null);
   const toast = useToast();
 
   if (adminsLoading) {
     return <Spinner />;
   }
 
-  const submitPTORequest = async () => {
+  const submitTORequest = async () => {
     try {
-      if (selectedAdmin === null) {
-        alert('Pleast select administrator');
-        return false;
-      }
       if (VacationDates.length > 0) {
         await createPTO.mutateAsync({
           dates: VacationDates,
           type: 'vacation',
           status: 'pending',
           userId: user._id,
-          reviewerId: selectedAdmin,
+          reviewerId: null,
           comment: '',
         });
       }
@@ -74,7 +70,7 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
         variant: 'subtle',
       });
       setVacationDates([]);
-      setSelectedAdmin(null);
+      setSelectedTimeOff(null);
       onClose();
     } catch (err) {
       toast({
@@ -95,7 +91,7 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
       isOpen={isOpen}
       onClose={() => {
         setVacationDates([]);
-        setSelectedAdmin(null);
+        setSelectedTimeOff(null);
         onClose();
       }}
       motionPreset="slideInBottom"
@@ -123,7 +119,7 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
                 mt={2}
                 mb={2}
                 onChange={(e) => {
-                  setSelectedAdmin(e.target.value);
+                  setSelectedTimeOff(e.target.value);
                 }}
                 placeholder="Select type of time off"
               >
@@ -164,7 +160,7 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
                 <Button leftIcon={<FaArrowLeft size="12" />}>Back</Button>
                 <Button
                   onClick={() => {
-                    submitPTORequest();
+                    submitTORequest();
                   }}
                   {...styles.button}
                   leftIcon={<BiUserPin />}
