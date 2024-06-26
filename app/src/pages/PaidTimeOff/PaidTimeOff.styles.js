@@ -11,6 +11,7 @@ const button = {
   paddingLeft: 6,
   paddingRight: 6,
   overflow: 'hidden',
+  ml:'2'
 };
 
 const heading = {

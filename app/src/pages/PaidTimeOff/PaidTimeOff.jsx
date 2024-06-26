@@ -1,28 +1,39 @@
-import { Button, Heading, Flex, useDisclosure } from '@chakra-ui/react';
+import { Button, Heading, Flex, useDisclosure, Spacer } from '@chakra-ui/react';
 import DashboardLayout from '../../layout/DashboardLayout/DashboardLayout';
 import styles from './PaidTimeOff.styles';
 import MyHistory from '../../components/MyHistory/MyHistory';
 import { MyVacationInfo } from '../../components/MyVacationInfo/MyVacationInfo';
 import { RequestPTOModal } from '../../components/RequestPTOModal/RequestPTOModal';
 import PTOCalendar from '../../components/PTOCalendar/PTOCalendar';
-import { FaRegCalendarPlus } from 'react-icons/fa';
+import { RemoteModal } from '../../components/RemoteModal/RemoteModal';
 
 const PaidTimeOff = () => {
-  const { onClose, isOpen, onOpen } = useDisclosure();
+  const {
+    onClose: onCloseRemote,
+    isOpen: isOpenRemote,
+    onOpen: onOpenRemote,
+  } = useDisclosure();
+
+  const {
+    onClose: onCloseTimeOff,
+    isOpen: isOpenTimeOff,
+    onOpen: onOpenTImeOff,
+  } = useDisclosure();
 
   return (
     <DashboardLayout>
-      <Flex mb="4" justifyContent={'space-between'}>
+      <Flex mb="4">
         <Heading {...styles.heading}>Paid Time Off</Heading>
-        <Button
-          leftIcon={<FaRegCalendarPlus size={'12'} />}
-          {...styles.button}
-          onClick={onOpen}
-        >
-          Request PTO
+        <Spacer />
+        <Button {...styles.button} onClick={onOpenRemote}>
+          Remote
+        </Button>
+        <Button {...styles.button} onClick={onOpenTImeOff}>
+          Request Time off
         </Button>
       </Flex>
-      <RequestPTOModal isOpen={isOpen} onClose={onClose} />
+      <RemoteModal isOpen={isOpenRemote} onClose={onCloseRemote} />
+      <RequestPTOModal isOpen={isOpenTimeOff} onClose={onCloseTimeOff} />
       <Flex gap={4} pb={4}>
         <Flex flexDir={'column'}>
           <PTOCalendar />
