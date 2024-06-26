@@ -1,13 +1,7 @@
 import React from 'react';
 import { Box, Flex, Text } from '@chakra-ui/react';
 import { NavLink } from 'react-router-dom';
-import {
-  BiSwim,
-  BiDish,
-  BiChalkboard,
-  BiUser,
-  BiUserPlus,
-} from 'react-icons/bi';
+import { BiSwim, BiChalkboard, BiUser, BiUserPlus } from 'react-icons/bi';
 
 import styles from './DashboardSidebar.styles';
 import QuadrixSoftLogo from '../QuadrixSoftLogo/QuadrixSoftLogo';
