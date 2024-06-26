@@ -273,28 +273,10 @@ const deletePTO = async (id) => {
 
 const getUserHistory = async (userId) => {
   try {
-    const ptoHistory = await PaidTimeOff.find({ userId }).lean();
+    const ptoHistory = await PaidTimeOff.find({ userId })
+    .populate({ path: 'reviewerId', select: '-password' });
 
-    const reviewerIds = ptoHistory.map((pto) => pto.reviewerId);
-
-    const reviewers = await User.find(
-      { _id: { $in: reviewerIds } },
-      'firstName lastName'
-    ).lean();
-
-    const reviewerMap = reviewers.reduce((map, reviewer) => {
-      map[reviewer._id] = reviewer;
-      return map;
-    }, {});
-
-    const ptoHistoryWithReviewers = ptoHistory.map((pto) => {
-      const reviewer = reviewerMap[pto.reviewerId];
-      return {
-        ...pto,
-      };
-    });
-
-    return ptoHistoryWithReviewers;
+    return ptoHistory;
   } catch (err) {
     throw err;
   }

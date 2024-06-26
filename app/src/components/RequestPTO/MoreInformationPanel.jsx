@@ -11,7 +11,7 @@ export const MoreInformationPanel = ({
 }) => {
   const userText = (
     <Text fontWeight="bold">
-      {user.name} ({user.role}){' '}
+      {user?.firstName +" "+ user?.lastName + " "} 
       <Text fontWeight="normal" as="span" fontSize={'0.9rem'}>
         {status === 'approved' ? 'approved' : 'rejected'} your Request
         PTO/Remote
