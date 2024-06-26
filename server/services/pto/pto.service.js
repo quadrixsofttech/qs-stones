@@ -1,7 +1,7 @@
 const PaidTimeOff = require('../../models/pto.model');
 const moment = require('moment');
 const User = require('../../models/user.model');
-const {holidays} = require('../../utils/utils.js')
+const { holidays } = require('../../utils/utils.js');
 
 const weekendDays = [6, 0];
 
@@ -66,7 +66,7 @@ const createPTO = async ({
       );
 
       const filteredDates = generatedDates.filter((date) => {
-        const isHoliday = holidays.some(holiday => holiday.date === date);
+        const isHoliday = holidays.some((holiday) => holiday.date === date);
         const isWeekend = weekendDays.includes(moment(date).day());
         return !isHoliday && !isWeekend;
       });
@@ -74,9 +74,15 @@ const createPTO = async ({
       return [...acc, ...filteredDates];
     }, []);
 
-    if(type==='paid time off' && days.length > 5) return "Number of days succeeds limit";
+    if (type === 'paid time off' && days.length > 5)
+      return 'Number of days succeeds limit';
 
-    if(type == 'remote' || type==='paid time off' || type === 'unpaid time off' || type==='sick leave'){
+    if (
+      type == 'remote' ||
+      type === 'paid time off' ||
+      type === 'unpaid time off' ||
+      type === 'sick leave'
+    ) {
       var pto = new PaidTimeOff({
         type,
         status,
@@ -90,12 +96,11 @@ const createPTO = async ({
 
       await pto.save();
       return pto;
-    }
-    else if(type==='vacation'){
+    } else if (type === 'vacation') {
       const user = await User.findById(userId);
 
       let maxDate = moment(days[0]);
-  
+
       for (let date of days) {
         const currentDate = moment(date);
         if (currentDate.isAfter(maxDate)) {
@@ -112,7 +117,7 @@ const createPTO = async ({
         let currentYear = user.vacation.find((v) => v.year === maxDate.year());
         totalNumberOfVacationDays = currentYear?.vacationDays ?? 0;
       }
-  
+
       if (totalNumberOfVacationDays >= days.length) {
         var pto = new PaidTimeOff({
           type,
@@ -126,10 +131,8 @@ const createPTO = async ({
         await pto.save();
         return pto;
       }
-    }
-    else
-    {
-      return "Type not valid";
+    } else {
+      return 'Type not valid';
     }
   } catch (err) {
     throw new Error('Something went wrong');
@@ -149,13 +152,18 @@ const updatePTO = async (id, updates) => {
   }
 };
 
-const approvePTO = async (id,reviewerId) => {
+const approvePTO = async (id, reviewerId) => {
   try {
     const pto = await PaidTimeOff.findById(id);
     const user = await User.findById(pto.userId);
     const ptoType = pto.type;
 
-    if (ptoType === 'remote' || ptoType === 'paid time off' || ptoType==='unpaid time off' || ptoType === 'sick leave' ) {
+    if (
+      ptoType === 'remote' ||
+      ptoType === 'paid time off' ||
+      ptoType === 'unpaid time off' ||
+      ptoType === 'sick leave'
+    ) {
       pto.status = 'approved';
       pto.reviewerId = reviewerId;
       await pto.save();
@@ -232,11 +240,11 @@ const approvePTO = async (id,reviewerId) => {
   }
 };
 
-const rejectPTO = async (id, comment,reviewerId) => {
+const rejectPTO = async (id, comment, reviewerId) => {
   try {
     const pto = await PaidTimeOff.findByIdAndUpdate(id, {
       status: 'rejected',
-      reviewerId : reviewerId,
+      reviewerId: reviewerId,
       comment: comment,
     });
     return pto;
@@ -263,18 +271,18 @@ const getUserHistory = async (userId) => {
 
     const reviewerIds = ptoHistory.map((pto) => pto.reviewerId);
 
-    // const reviewers = await User.find(
-    //   { _id: { $in: reviewerIds } },
-    //   'firstName lastName'
-    // ).lean();
+    const reviewers = await User.find(
+      { _id: { $in: reviewerIds } },
+      'firstName lastName'
+    ).lean();
 
-    // const reviewerMap = reviewers.reduce((map, reviewer) => {
-    //   map[reviewer._id] = reviewer;
-    //   return map;
-    // }, {});
+    const reviewerMap = reviewers.reduce((map, reviewer) => {
+      map[reviewer._id] = reviewer;
+      return map;
+    }, {});
 
     const ptoHistoryWithReviewers = ptoHistory.map((pto) => {
-      //const reviewer = reviewerMap[pto.reviewerId];
+      const reviewer = reviewerMap[pto.reviewerId];
       return {
         ...pto,
       };
@@ -319,8 +327,6 @@ const getUserDates = async (userId) => {
     return [];
   }
 };
-
-
 
 module.exports = {
   getAllPTO,
