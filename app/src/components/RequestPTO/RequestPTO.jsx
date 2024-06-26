@@ -5,14 +5,17 @@ import {
   AccordionItem,
   Box,
   Flex,
+  Icon,
   Spacer,
   Text,
+  Tooltip,
 } from '@chakra-ui/react';
 import styles from './RequestPTO.styles';
 import { useState } from 'react';
 import RequestStatus from './RequestStatus/RequestStatus';
 import { MoreInformationPanel } from './MoreInformationPanel';
 import statusTypes from './status';
+import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 
 const RequestPTO = ({
   status = statusTypes.pending,
@@ -21,6 +24,7 @@ const RequestPTO = ({
   user,
   requestedDates,
   response,
+  numberOfDays,
 }) => {
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
 
@@ -32,18 +36,27 @@ const RequestPTO = ({
     <Box {...styles.box}>
       <Box as="span">
         <Text {...styles.grayText}>{time}</Text>
-        <Text {...styles.mainText}>
-          You sent request for {type} to
-          <Text {...styles.adminText} as="span">
-            {' '}{user.firstName}{' '} {user.lastName} (ADMIN)
-          </Text>
-        </Text>
-        <Text display={'inline'} {...styles.grayText}>
-          Requested Dates:
-          <Text display={'inline'} as="span">
-            {requestedDates.join('; ')}
-          </Text>
-        </Text>
+        {status === 'pending' ? (
+          <>
+            <Text {...styles.mainText}>You sent a request for {type}</Text>
+          </>
+        ) : (
+          <>
+            <Text {...styles.mainText}>
+              You sent request for {type} to
+              <Text {...styles.adminText} as="span">
+                {' '}
+                {user?.firstName} {user?.lastName} (ADMIN)
+              </Text>
+            </Text>
+          </>
+        )}
+        <Tooltip label={requestedDates} hasArrow placement="bottom">
+          <Flex alignItems={'center'}>
+            <Text fontWeight={'bold'}>{numberOfDays} days</Text>
+            <Icon as={MdOutlineKeyboardArrowDown} boxSize={3} ml={1} />
+          </Flex>
+        </Tooltip>
         <Box pt={2}>
           <RequestStatus status={status} />
         </Box>

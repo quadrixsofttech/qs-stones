@@ -28,6 +28,7 @@ import useEmployees from '../../hooks/useEmployees';
 import moment from 'moment';
 import { RenderRangeTags } from './RenderRangeTags';
 import { timeOffTypes } from '../../constants/TimeOffTypes';
+import { paidTimeOffTypes } from '../../constants/PaidTimeOffTypes';
 
 export const RequestPTOModal = ({ isOpen, onClose }) => {
   const {
@@ -41,6 +42,8 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
   const { createPTO } = useEmployees();
 
   const [selectedTimeOffType, setSelectedTimeOff] = useState(null);
+  const [selectedPaidTimeOffType, setSelectedPaidTimeOffType] =
+    useState(undefined);
   const toast = useToast();
 
   if (adminsLoading) {
@@ -52,7 +55,10 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
       if (VacationDates.length > 0) {
         await createPTO.mutateAsync({
           dates: VacationDates,
-          type: 'vacation',
+          type: selectedTimeOffType.toLowerCase(),
+          paidLeaveType: selectedPaidTimeOffType
+            ? selectedPaidTimeOffType
+            : undefined,
           status: 'pending',
           userId: user._id,
           reviewerId: null,
@@ -131,6 +137,26 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
                   );
                 })}
               </Select>
+              {selectedTimeOffType === 'Paid Time off' && (
+                <>
+                  <Select
+                    mt={2}
+                    mb={2}
+                    onChange={(e) => {
+                      setSelectedPaidTimeOffType(e.target.value);
+                    }}
+                    placeholder="Select type of time off"
+                  >
+                    {Object.values(paidTimeOffTypes).map((type) => {
+                      return (
+                        <option value={type} key={type}>
+                          {`${type}`}
+                        </option>
+                      );
+                    })}
+                  </Select>
+                </>
+              )}
             </Flex>
             <Flex alignItems="center" justifyContent="center">
               <Calendar
