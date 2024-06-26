@@ -52,8 +52,8 @@ const createPTO = async ({
   status,
   userId,
   paidLeaveType,
-  reviewerId,
   dates,
+  reviewerId,
   comment,
 }) => {
   try {
@@ -81,10 +81,10 @@ const createPTO = async ({
         type,
         status,
         userId,
-        reviewerId,
         paidLeaveType,
         days,
         dates,
+        reviewerId,
         comment,
       });
 
@@ -118,9 +118,9 @@ const createPTO = async ({
           type,
           status,
           userId,
-          reviewerId,
           days,
           dates,
+          reviewerId,
           comment,
         });
         await pto.save();
@@ -149,7 +149,7 @@ const updatePTO = async (id, updates) => {
   }
 };
 
-const approvePTO = async (id) => {
+const approvePTO = async (id,reviewerId) => {
   try {
     const pto = await PaidTimeOff.findById(id);
     const user = await User.findById(pto.userId);
@@ -157,6 +157,7 @@ const approvePTO = async (id) => {
 
     if (ptoType === 'remote' || ptoType === 'paid time off' || ptoType==='unpaid time off' || ptoType === 'sick leave' ) {
       pto.status = 'approved';
+      pto.reviewerId = reviewerId;
       await pto.save();
     } else {
       let vacationDays = pto.days.length;
@@ -218,6 +219,7 @@ const approvePTO = async (id) => {
       currentYear.usedDays = currentYearUsedDays;
 
       pto.status = 'approved';
+      pto.reviewerId = reviewerId;
 
       await Promise.all([pto.save(), user.save()]);
     }
@@ -230,10 +232,11 @@ const approvePTO = async (id) => {
   }
 };
 
-const rejectPTO = async (id, comment) => {
+const rejectPTO = async (id, comment,reviewerId) => {
   try {
     const pto = await PaidTimeOff.findByIdAndUpdate(id, {
       status: 'rejected',
+      reviewerId : reviewerId,
       comment: comment,
     });
     return pto;
@@ -260,28 +263,20 @@ const getUserHistory = async (userId) => {
 
     const reviewerIds = ptoHistory.map((pto) => pto.reviewerId);
 
-    if (reviewerIds === 0) {
-      return [];
-    }
+    // const reviewers = await User.find(
+    //   { _id: { $in: reviewerIds } },
+    //   'firstName lastName'
+    // ).lean();
 
-    const reviewers = await User.find(
-      { _id: { $in: reviewerIds } },
-      'firstName lastName'
-    ).lean();
-
-    const reviewerMap = reviewers.reduce((map, reviewer) => {
-      map[reviewer._id] = reviewer;
-      return map;
-    }, {});
+    // const reviewerMap = reviewers.reduce((map, reviewer) => {
+    //   map[reviewer._id] = reviewer;
+    //   return map;
+    // }, {});
 
     const ptoHistoryWithReviewers = ptoHistory.map((pto) => {
-      const reviewer = reviewerMap[pto.reviewerId];
+      //const reviewer = reviewerMap[pto.reviewerId];
       return {
         ...pto,
-        reviewer: {
-          firstName: reviewer.firstName,
-          lastName: reviewer.lastName,
-        },
       };
     });
 

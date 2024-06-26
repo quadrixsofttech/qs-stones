@@ -6,6 +6,7 @@ import moment from 'moment';
 import { capitalizeFirstLetter } from '../../../../util';
 import useEmployees from '../../../../hooks/useEmployees';
 import RejectRequestModal from '../RejectRequestModal/RejectRequestModal';
+import useUser from '../../../../hooks/useUser';
 
 const RequestComponent = ({
   type,
@@ -19,8 +20,10 @@ const RequestComponent = ({
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
 
+  const user = useUser();
+
   const handleApproveRequst = async (id) => {
-    await approvePaidTimeOff(id);
+    await approvePaidTimeOff(id,user._id);
     refetchPTO();
     refetchEmployees();
     toast({
@@ -34,7 +37,7 @@ const RequestComponent = ({
   };
 
   const handleRejectRequst = async (id, comment) => {
-    await rejectPaidTimeOff(id, comment);
+    await rejectPaidTimeOff(id, comment, user._id);
     refetchPTO();
     refetchEmployees();
     toast({

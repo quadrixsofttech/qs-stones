@@ -56,19 +56,15 @@ const ListOfEmployees = ({ employees, handleRowClick, clickedRowIndex }) => {
                 </Td>
                 <Td>
                   <Text color="gray.700">
-                    {employee.firstName} {employee.lastName}
+                    {employee?.firstName} {employee?.lastName}
                   </Text>
                 </Td>
                 <Td>
                   <Flex {...styles.iconBox}>
-                    {employee.pendingRequests.filter(
-                      (x) => x.reviewerId === user._id
-                    ).length > 0 && (
+                    {employee.pendingRequests.length > 0 && (
                       <NotificationIcon
                         number={
-                          employee.pendingRequests.filter(
-                            (x) => x.reviewerId === user._id
-                          ).length
+                          employee.pendingRequests.length
                         }
                       />
                     )}

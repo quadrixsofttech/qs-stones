@@ -36,7 +36,7 @@ const SelectedEmployeeComponent = ({
   }, [ptoType, data]);
 
   const pendingRequests = data.filter(
-    (x) => x.status === 'pending' && x.reviewerId === user._id
+    (x) => x.status === 'pending' 
   );
 
   return (

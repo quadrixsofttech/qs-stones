@@ -18,16 +18,16 @@ const useEmployees = (type = 'vacation') => {
     type,
     status,
     userId,
-    reviewerId,
     comment,
+    reviewerId
   }) => {
     const { data } = await axios.post('/api/v1/paid-time-off/', {
       dates,
       type,
       status,
       userId,
-      reviewerId,
       comment,
+      reviewerId,
     });
     return data;
   };
@@ -50,10 +50,11 @@ const useEmployees = (type = 'vacation') => {
     }
   };
 
-  const approvePaidTimeOff = async (id) => {
+  const approvePaidTimeOff = async (id,reviewerId) => {
     try {
       const response = await axios.patch(`api/v1/paid-time-off/approve`, {
         id,
+        reviewerId
       });
       return response.data;
     } catch (error) {
@@ -61,11 +62,12 @@ const useEmployees = (type = 'vacation') => {
     }
   };
 
-  const rejectPaidTimeOff = async (id, comment) => {
+  const rejectPaidTimeOff = async (id, comment, reviewerId) => {
     try {
       const response = await axios.patch(`api/v1/paid-time-off/reject`, {
         id,
         comment,
+        reviewerId
       });
       return response.data;
     } catch (error) {
