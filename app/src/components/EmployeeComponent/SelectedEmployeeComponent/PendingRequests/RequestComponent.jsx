@@ -22,8 +22,6 @@ const RequestComponent = ({
 
   const user = useUser();
 
-  console.log(user);
-
   const handleApproveRequst = async (id) => {
     await approvePaidTimeOff(id,user._id);
     refetchPTO();
