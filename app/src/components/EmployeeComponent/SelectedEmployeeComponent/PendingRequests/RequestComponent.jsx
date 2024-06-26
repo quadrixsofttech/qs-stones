@@ -20,7 +20,7 @@ const RequestComponent = ({
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
 
-  const user = useUser();
+  const {user} = useUser();
 
   const handleApproveRequst = async (id) => {
     await approvePaidTimeOff(id,user._id);

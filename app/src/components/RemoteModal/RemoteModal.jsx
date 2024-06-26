@@ -36,6 +36,14 @@ export const RemoteModal = ({ isOpen, onClose }) => {
   const toast = useToast();
 
   const submitRemote = async () => {
+    await createPTO.mutateAsync({
+      dates: RemoteDates,
+      type: 'remote',
+      status: 'approved',
+      userId: user._id,
+      reviewerId: null,
+      comment: '',
+    });
     toast({
       title: 'Success',
       description: 'You have scheduled work from home',

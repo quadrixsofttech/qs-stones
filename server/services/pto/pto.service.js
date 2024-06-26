@@ -87,7 +87,7 @@ const createPTO = async ({
         type,
         status,
         userId,
-        paidLeaveType,
+        paidLeaveType: paidLeaveType ? paidLeaveType : undefined,
         days,
         dates,
         reviewerId,
@@ -131,8 +131,14 @@ const createPTO = async ({
         await pto.save();
         return pto;
       }
-    } else {
-      return 'Type not valid';
+      else
+      {
+        throw new Error({ success: false, message: 'Not enough vacation days' });
+      }
+    }
+    else
+    {
+      throw new Error({ success: false, message: 'Type not valid' });
     }
   } catch (err) {
     throw new Error('Something went wrong');
