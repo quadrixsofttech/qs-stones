@@ -120,7 +120,7 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
                 <InfoIcon color={'gray.400'} mt="1" />
               </Tooltip>
             </Flex>
-            <Flex>
+            <Flex gap='4'>
               <Select
                 mt={2}
                 mb={2}
@@ -183,13 +183,12 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
             })}
             <ModalFooter>
               <>
-                <Button leftIcon={<FaArrowLeft size="12" />}>Back</Button>
+                <Button onClick={onClose} variant='outline'>Cancel</Button>
                 <Button
                   onClick={() => {
                     submitTORequest();
                   }}
                   {...styles.button}
-                  leftIcon={<BiUserPin />}
                 >
                   Submit Request
                 </Button>

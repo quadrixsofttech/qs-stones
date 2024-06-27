@@ -115,24 +115,19 @@ export const RemoteModal = ({ isOpen, onClose }) => {
               <Divider marginTop="4" />
             </Box>
             <ModalFooter>
-              <Button
-                onClick={() => {
-                  setRemoteDates([]);
-                  onClose();
-                }}
-                leftIcon={<FaArrowLeft size="12" />}
-              >
-                Back
-              </Button>
-              <Button
-                onClick={() => {
-                  submitRemote();
-                }}
-                {...styles.button}
-                leftIcon={<BiUserPin />}
-              >
-                Submit
-              </Button>
+              <>
+                <Button onClick={onClose} variant={"outline"}>
+                  Cancel
+                </Button>
+                <Button
+                  onClick={() => {
+                    submitRemote();
+                  }}
+                  {...styles.button}
+                >
+                  Submit
+                </Button>
+              </>
             </ModalFooter>
           </ModalBody>
         </Scrollbars>

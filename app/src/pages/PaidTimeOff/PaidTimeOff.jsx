@@ -25,11 +25,11 @@ const PaidTimeOff = () => {
       <Flex mb="4">
         <Heading {...styles.heading}>Paid Time Off</Heading>
         <Spacer />
-        <Button {...styles.button} onClick={onOpenRemote}>
-          Remote
-        </Button>
         <Button {...styles.button} onClick={onOpenTImeOff}>
           Request Time off
+        </Button>
+        <Button {...styles.button} variant={'outline'} onClick={onOpenRemote}>
+          Remote
         </Button>
       </Flex>
       <RemoteModal isOpen={isOpenRemote} onClose={onCloseRemote} />
