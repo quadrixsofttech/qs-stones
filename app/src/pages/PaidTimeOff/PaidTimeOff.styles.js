@@ -2,7 +2,6 @@ import { border } from '@chakra-ui/system';
 import { FaRegCalendarPlus } from 'react-icons/fa';
 
 const button = {
-  leftIcon: <FaRegCalendarPlus style={{ fontSize: '12' }} />,
   colorScheme: 'purple',
   lineHeight: '28',
   fontSize: '16',
