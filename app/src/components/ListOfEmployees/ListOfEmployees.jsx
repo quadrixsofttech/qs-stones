@@ -43,7 +43,7 @@ const ListOfEmployees = ({ employees, handleRowClick, clickedRowIndex }) => {
                 }
                 boxShadow={
                   index === clickedRowIndex
-                    ? `inset 0px 0px 0px 1px ${purple400}`
+                    ? `inset 0px 0px 5px 1px ${purple400}`
                     : ''
                 }
                 onClick={() => handleRowClick(index)}
