@@ -21,7 +21,8 @@ import { BiBell, BiChevronDown } from 'react-icons/bi';
 
 const DashboardNavbar = () => {
   const auth = useContext(AuthContext);
-  const { firstName, lastName, role } = auth?.authState.userInfo;
+  const { firstName, lastName, role, image } = auth?.authState.userInfo;
+  console.log(image);
   return (
     <Box>
       <Flex {...styles.wrapper}>
@@ -47,9 +48,7 @@ const DashboardNavbar = () => {
                     <Avatar
                       size={'sm'}
                       marginRight={'1'}
-                      src={
-                        'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
-                      }
+                      src={image}
                     />
                     <Flex
                       alignItems={'flex-start'}
@@ -73,9 +72,6 @@ const DashboardNavbar = () => {
                 </MenuButton>
               </Flex>
               <MenuList>
-                <MenuItem as={Link} to="/account">
-                  Account Settings
-                </MenuItem>
                 {auth?.isAdmin() && (
                   <MenuItem as={Link} to="/users">
                     Users
