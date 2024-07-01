@@ -22,7 +22,6 @@ import { BiBell, BiChevronDown } from 'react-icons/bi';
 const DashboardNavbar = () => {
   const auth = useContext(AuthContext);
   const { firstName, lastName, role, image } = auth?.authState.userInfo;
-  console.log(image);
   return (
     <Box>
       <Flex {...styles.wrapper}>
