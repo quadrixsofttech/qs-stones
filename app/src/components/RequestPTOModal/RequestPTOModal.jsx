@@ -19,8 +19,6 @@ import styles from './RequestPTOModal.styles';
 import { Scrollbars } from 'react-custom-scrollbars-2';
 import { Calendar } from 'react-multi-date-picker';
 import { useState } from 'react';
-import { FaArrowLeft } from 'react-icons/fa';
-import { BiUserPin } from 'react-icons/bi';
 import { useCalendar } from '../../hooks/useCalendar';
 import { InfoIcon } from '@chakra-ui/icons';
 import useUser from '../../hooks/useUser';

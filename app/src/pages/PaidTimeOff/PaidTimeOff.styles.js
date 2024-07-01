@@ -1,6 +1,3 @@
-import { border } from '@chakra-ui/system';
-import { FaRegCalendarPlus } from 'react-icons/fa';
-
 const button = {
   colorScheme: 'purple',
   lineHeight: '28',
