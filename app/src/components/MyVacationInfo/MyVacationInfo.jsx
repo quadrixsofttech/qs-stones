@@ -49,18 +49,6 @@ export const MyVacationInfo = ({
         <MyVacationInfoBox
           heading={
             <>
-              User Vacation Days
-              <br />
-              to date
-            </>
-          }
-          numberInfo={currentYear?.vacationDays}
-          footer={`${String(currentYear?.usedDays)} days used`}
-        />
-        <Divider orientation="vertical" height={'100px'} />
-        <MyVacationInfoBox
-          heading={
-            <>
               New Vacation Days
               <br />
               from this year
@@ -68,6 +56,18 @@ export const MyVacationInfo = ({
           }
           numberInfo={currentYear?.initialVacationDays}
           footer={'Usable until June next year'}
+        />
+        <Divider orientation="vertical" height={'100px'} />
+        <MyVacationInfoBox
+          heading={
+            <>
+              Unused Vacation Days
+              <br />
+              from current year
+            </>
+          }
+          numberInfo={currentYear?.vacationDays}
+          footer={`${String(currentYear?.usedDays)} days used`}
         />
         <Divider orientation="vertical" height={'100px'} />
         <MyVacationInfoBox
