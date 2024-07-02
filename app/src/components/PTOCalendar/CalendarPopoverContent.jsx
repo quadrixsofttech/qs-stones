@@ -28,7 +28,7 @@ const CalendarPopoverContent = ({ date, employeesToday, type,holiday }) => {
                 alignItems={'center'}
                 gap={'10px'}
               >
-                <Avatar name={x.user.firstName} src={x.src} />
+                <Avatar name={x.user.firstName} src={x.userId.image} />
                 <Text>{`${x.user.firstName}  ${x.user.lastName}`}</Text>
               </Flex>
             );
