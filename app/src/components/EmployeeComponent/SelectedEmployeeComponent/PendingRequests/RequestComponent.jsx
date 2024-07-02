@@ -15,15 +15,17 @@ const RequestComponent = ({
   id,
   refetchPTO,
   refetchEmployees,
+  paidLeaveType,
+  rangeInDays,
 }) => {
   const { approvePaidTimeOff, rejectPaidTimeOff } = useEmployees();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
 
-  const {user} = useUser();
+  const { user } = useUser();
 
   const handleApproveRequst = async (id) => {
-    await approvePaidTimeOff(id,user._id);
+    await approvePaidTimeOff(id, user._id);
     refetchPTO();
     refetchEmployees();
     toast({
@@ -54,9 +56,14 @@ const RequestComponent = ({
     <Flex {...styles.requestBox}>
       <Flex {...styles.infoBox}>
         <Flex flexDir={'column'} gap="1">
-          <Text fontWeight={'600'} color={'gray.700'}>
-            {capitalizeFirstLetter(type)}
-          </Text>
+          <Flex gap={2}>
+            <Text fontWeight={'600'} color={'gray.700'}>
+              {capitalizeFirstLetter(type)}
+            </Text>
+            <Text fontWeight={'500'} color={'purple.500'}>
+              {paidLeaveType}
+            </Text>
+          </Flex>
           <Flex flexWrap={'wrap'}>
             {range.map((x) => {
               return (
@@ -67,6 +74,7 @@ const RequestComponent = ({
                 />
               );
             })}
+            {rangeInDays} {rangeInDays === 1 ? 'day' : 'days'}
           </Flex>
         </Flex>
         <Flex gap="4">
