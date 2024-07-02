@@ -62,24 +62,34 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
           reviewerId: null,
           comment: '',
         });
+        toast({
+          title: 'Success',
+          description:
+            'You have submitted a request to the Admins for scheduling time off work',
+          position: 'top-right',
+          status: 'success',
+          isClosable: true,
+          colorScheme: 'green',
+          variant: 'subtle',
+        });
+        setVacationDates([]);
+        setSelectedTimeOff(null);
+        onClose();
+      } else {
+        toast({
+          title: 'Error',
+          description: 'You have to click on a date',
+          position: 'top-right',
+          status: 'error',
+          isClosable: true,
+          colorScheme: 'red',
+          variant: 'subtle',
+        });
       }
-      toast({
-        title: 'Success',
-        description:
-          'You have submitted a request to the Admin for scheduling vacation and remote work',
-        position: 'top-right',
-        status: 'success',
-        isClosable: true,
-        colorScheme: 'green',
-        variant: 'subtle',
-      });
-      setVacationDates([]);
-      setSelectedTimeOff(null);
-      onClose();
     } catch (err) {
       toast({
         title: 'Something went wrong',
-        description: 'You do not have enouth vacation days',
+        description: 'You do not have enough vacation days',
         position: 'top-right',
         status: 'error',
         isClosable: true,
@@ -118,7 +128,7 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
                 <InfoIcon color={'gray.400'} mt="1" />
               </Tooltip>
             </Flex>
-            <Flex gap='4'>
+            <Flex gap="4">
               <Select
                 mt={2}
                 mb={2}
@@ -181,7 +191,9 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
             })}
             <ModalFooter>
               <>
-                <Button onClick={onClose} variant='outline'>Cancel</Button>
+                <Button onClick={onClose} variant="outline">
+                  Cancel
+                </Button>
                 <Button
                   onClick={() => {
                     submitTORequest();

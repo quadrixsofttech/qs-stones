@@ -18,6 +18,9 @@ const Calendar = () => {
   const { data, isLoading, refetchPTO } = useEmployees(type);
   const { holidays, holidaysLoading } = useUser();
 
+  const ptoCalendarTypes = [{ ...timeOffTypes, remote: 'Remote' }];
+
+
   useEffect(() => {
     refetchPTO();
   }, [type, refetchPTO]);
@@ -95,7 +98,7 @@ const Calendar = () => {
             setType(e.target.value);
           }}
         >
-          {Object.values(timeOffTypes).map((type) => {
+          {Object.values(ptoCalendarTypes[0]).map((type) => {
             return (
               <option value={type} key={type}>
                 {`${type}`}

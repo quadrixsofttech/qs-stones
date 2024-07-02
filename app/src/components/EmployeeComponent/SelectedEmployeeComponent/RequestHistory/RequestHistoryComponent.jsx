@@ -4,7 +4,6 @@ import styles from './RequestHistory.styles';
 import RequestStatusWrapper from '../../../RequestPTO/RequestStatus/RequestStatus';
 import { BiCommentDetail } from 'react-icons/bi';
 import moment from 'moment';
-import { showDateRangesAsString } from '../../../../util/index';
 import RequestHistoryModal from '../RequestHistoryModal/RequestHistoryModal';
 
 const RequestHistoryComponent = ({
@@ -13,6 +12,7 @@ const RequestHistoryComponent = ({
   comment,
   status,
   type,
+  datesInDays,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -28,11 +28,12 @@ const RequestHistoryComponent = ({
             {moment(createdAt).format('YYYY-MM-DD hh:mm')}
           </Text>
           <Divider {...styles.divider} />
-          <Text {...styles.dates}>{showDateRangesAsString(dates)} </Text>
+          <Text {...styles.dates}>
+            {datesInDays} {datesInDays === 1 ? 'day' : 'days'}
+          </Text>
         </Flex>
         <Flex {...styles.statusBox}>
           {comment && <BiCommentDetail size="20" />}
-
           <RequestStatusWrapper status={status} />
         </Flex>
       </Flex>

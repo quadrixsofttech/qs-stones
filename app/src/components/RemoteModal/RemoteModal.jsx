@@ -52,8 +52,18 @@ export const RemoteModal = ({ isOpen, onClose }) => {
         colorScheme: 'green',
         variant: 'subtle',
       });
+      onClose();
+    } else {
+      toast({
+        title: 'Error',
+        description: 'You have to click on a date',
+        position: 'top-right',
+        status: 'error',
+        isClosable: true,
+        colorScheme: 'red',
+        variant: 'subtle',
+      });
     }
-    onClose();
   };
 
   return (
@@ -114,7 +124,7 @@ export const RemoteModal = ({ isOpen, onClose }) => {
             </Box>
             <ModalFooter>
               <>
-                <Button onClick={onClose} variant={"outline"}>
+                <Button onClick={onClose} variant={'outline'}>
                   Cancel
                 </Button>
                 <Button
