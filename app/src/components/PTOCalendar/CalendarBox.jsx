@@ -52,7 +52,7 @@ const CalendarBox = ({ date, employeesToday, type, holiday }) => {
                       src={x.userId.image}
                       key={x.id + Math.random().toString()}
                       name={x.user.firstName}
-                      bg={"black"}
+                      bg={"white"}
                     />
                   );
                 })}
