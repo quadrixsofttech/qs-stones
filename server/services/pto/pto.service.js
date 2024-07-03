@@ -293,12 +293,13 @@ const getApprovedPTOForToday = async () => {
     const today = moment().format('YYYY-MM-DD');
     const remote = await PaidTimeOff.countDocuments({
       type: 'remote',
-      status: 'approved',
       days: { $in: [today] },
     });
 
     const vacationPTO = await PaidTimeOff.countDocuments({
-      type: 'vacation',
+      type: {
+        $in: ['vacation', 'paid time off', 'unpaid time off', 'sick leave'],
+      },
       status: 'approved',
       days: { $in: [today] },
     });
