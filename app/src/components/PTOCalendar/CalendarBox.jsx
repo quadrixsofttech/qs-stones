@@ -49,9 +49,10 @@ const CalendarBox = ({ date, employeesToday, type, holiday }) => {
                 {employeesToday.map((x) => {
                   return (
                     <Avatar
+                      src={x.userId.image}
                       key={x.id + Math.random().toString()}
                       name={x.user.firstName}
-                      src={x.user.src}
+                      bg={"white"}
                     />
                   );
                 })}
