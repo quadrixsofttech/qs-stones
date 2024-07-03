@@ -2,6 +2,7 @@ const PaidTimeOff = require('../../models/pto.model');
 const moment = require('moment');
 const User = require('../../models/user.model');
 const { holidays } = require('../../utils/utils.js');
+const CustomError = require('../../utils/CustomError.js');
 
 const weekendDays = [6, 0];
 
@@ -75,10 +76,10 @@ const createPTO = async ({
     }, []);
 
     if (type === 'paid time off' && days.length > 5)
-      return 'Number of days succeeds limit';
+      throw new CustomError('Number of days exceeds limit', 422);
 
     if (
-      type == 'remote' ||
+      type === 'remote' ||
       type === 'paid time off' ||
       type === 'unpaid time off' ||
       type === 'sick leave'
@@ -130,18 +131,21 @@ const createPTO = async ({
         });
         await pto.save();
         return pto;
+      } else {
+        throw new Error({
+          success: false,
+          message: 'Not enough vacation days',
+        });
       }
-      else
-      {
-        throw new Error({ success: false, message: 'Not enough vacation days' });
-      }
-    }
-    else
-    {
+    } else {
       throw new Error({ success: false, message: 'Type not valid' });
     }
   } catch (err) {
-    throw new Error('Something went wrong');
+    if (err instanceof CustomError) {
+      throw err;
+    } else {
+      throw new CustomError('Something went wrong', 500);
+    }
   }
 };
 
@@ -273,8 +277,10 @@ const deletePTO = async (id) => {
 
 const getUserHistory = async (userId) => {
   try {
-    const ptoHistory = await PaidTimeOff.find({ userId })
-    .populate({ path: 'reviewerId', select: '-password' });
+    const ptoHistory = await PaidTimeOff.find({ userId }).populate({
+      path: 'reviewerId',
+      select: '-password',
+    });
 
     return ptoHistory;
   } catch (err) {

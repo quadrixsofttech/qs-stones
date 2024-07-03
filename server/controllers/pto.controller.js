@@ -3,7 +3,8 @@ const { StatusCodes } = require('http-status-codes');
 
 const createPaidTimeOff = async (req, res) => {
   try {
-    const { type, status, userId, paidLeaveType, reviewerId, dates, comment } = req.body;
+    const { type, status, userId, paidLeaveType, reviewerId, dates, comment } =
+      req.body;
 
     const pto = await PtoService.createPTO({
       type,
@@ -17,7 +18,7 @@ const createPaidTimeOff = async (req, res) => {
     res.send(pto);
   } catch (err) {
     res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .status(StatusCodes.BAD_REQUEST)
       .json({ success: false, message: err.message });
   }
 };
@@ -45,7 +46,7 @@ const updatePaidTimeOff = async (req, res) => {
 const approvePaidTimeOff = async (req, res) => {
   try {
     const { id, reviewerId } = req.body;
-    const updatedPTO = await PtoService.approvePTO(id,reviewerId);
+    const updatedPTO = await PtoService.approvePTO(id, reviewerId);
 
     if (!updatedPTO) {
       return res
@@ -66,7 +67,7 @@ const approvePaidTimeOff = async (req, res) => {
 
 const rejectPaidTimeOff = async (req, res) => {
   try {
-    const { id, comment,reviewerId } = req.body;
+    const { id, comment, reviewerId } = req.body;
     const updatedPTO = await PtoService.rejectPTO(id, comment);
 
     if (!updatedPTO) {

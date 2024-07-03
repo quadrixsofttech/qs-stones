@@ -59,7 +59,7 @@ const SelectedEmployeeComponent = ({
           >
             {Object.values(timeOffTypes).map((type) => {
               return (
-                <option value={type} key={type}>
+                <option value={type.toLowerCase()} key={type}>
                   {`${type}`}
                 </option>
               );

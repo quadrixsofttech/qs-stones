@@ -31,7 +31,7 @@ const RequestHistoryModal = ({
       <ModalContent>
         <ModalHeader>
           <Flex flexDir={'column'} gap="1">
-            <Flex align={'center'} gap="1">
+            <Flex align={'center'} gap={2.5}>
               <Text color="gray.700">{capitalizeFirstLetter(type)}</Text>
               <RequestStatusWrapper status={status} />
             </Flex>

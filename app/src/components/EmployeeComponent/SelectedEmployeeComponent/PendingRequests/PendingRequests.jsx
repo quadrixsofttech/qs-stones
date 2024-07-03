@@ -12,10 +12,12 @@ const PendingRequests = ({ pendingRequests, refetchPTO, refetchEmployees }) => {
             key={request._id}
             type={request.type}
             range={request.dates}
+            rangeInDays={request.days.length}
             createdAt={request.createdAt}
             id={request._id}
             refetchPTO={refetchPTO}
             refetchEmployees={refetchEmployees}
+            paidLeaveType={request.paidLeaveType}
           />
         );
       })}

@@ -4,7 +4,7 @@ const labelStatus = {
   fontWeight: 'bold',
   height: '6',
   fontSize: '0.9rem',
-  rounded: 'sm',
+  rounded: 'md',
 };
 
 const styles = {

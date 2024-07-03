@@ -51,6 +51,20 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
   const submitTORequest = async () => {
     try {
       if (VacationDates.length > 0) {
+        if (
+          VacationDates.length > 5 &&
+          selectedTimeOffType === 'Paid time off'
+        ) {
+          toast({
+            title: 'Something went wrong',
+            description: 'Number of paid time off days succeeds the limit',
+            position: 'top-right',
+            status: 'error',
+            isClosable: true,
+            colorScheme: 'red',
+            variant: 'subtle',
+          });
+        }
         await createPTO.mutateAsync({
           dates: VacationDates,
           type: selectedTimeOffType.toLowerCase(),
@@ -62,24 +76,34 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
           reviewerId: null,
           comment: '',
         });
+        toast({
+          title: 'Success',
+          description:
+            'You have submitted a request to the Admins for scheduling time off work',
+          position: 'top-right',
+          status: 'success',
+          isClosable: true,
+          colorScheme: 'green',
+          variant: 'subtle',
+        });
+        setVacationDates([]);
+        setSelectedTimeOff(null);
+        onClose();
+      } else {
+        toast({
+          title: 'Warning',
+          description: 'Please select a date',
+          position: 'top-right',
+          status: 'warning',
+          isClosable: true,
+          colorScheme: 'Yellow',
+          variant: 'subtle',
+        });
       }
-      toast({
-        title: 'Success',
-        description:
-          'You have submitted a request to the Admin for scheduling vacation and remote work',
-        position: 'top-right',
-        status: 'success',
-        isClosable: true,
-        colorScheme: 'green',
-        variant: 'subtle',
-      });
-      setVacationDates([]);
-      setSelectedTimeOff(null);
-      onClose();
     } catch (err) {
       toast({
         title: 'Something went wrong',
-        description: 'You do not have enouth vacation days',
+        description: err.message,
         position: 'top-right',
         status: 'error',
         isClosable: true,
@@ -118,7 +142,7 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
                 <InfoIcon color={'gray.400'} mt="1" />
               </Tooltip>
             </Flex>
-            <Flex gap='4'>
+            <Flex gap="4">
               <Select
                 mt={2}
                 mb={2}
@@ -181,7 +205,9 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
             })}
             <ModalFooter>
               <>
-                <Button onClick={onClose} variant='outline'>Cancel</Button>
+                <Button onClick={onClose} variant="outline">
+                  Cancel
+                </Button>
                 <Button
                   onClick={() => {
                     submitTORequest();

@@ -29,6 +29,7 @@ const dates = {
   noOfLines: '1',
   fontSize: 'sm',
   fontWeight: '600',
+  ml: '2',
 };
 const statusBox = {
   alignItems: 'center',
