@@ -51,6 +51,20 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
   const submitTORequest = async () => {
     try {
       if (VacationDates.length > 0) {
+        if (
+          VacationDates.length > 5 &&
+          selectedTimeOffType === 'Paid time off'
+        ) {
+          toast({
+            title: 'Something went wrong',
+            description: 'Number of paid time off days succeeds the limit',
+            position: 'top-right',
+            status: 'error',
+            isClosable: true,
+            colorScheme: 'red',
+            variant: 'subtle',
+          });
+        }
         await createPTO.mutateAsync({
           dates: VacationDates,
           type: selectedTimeOffType.toLowerCase(),
@@ -77,19 +91,19 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
         onClose();
       } else {
         toast({
-          title: 'Error',
-          description: 'You have to click on a date',
+          title: 'Warning',
+          description: 'Please select a date',
           position: 'top-right',
-          status: 'error',
+          status: 'warning',
           isClosable: true,
-          colorScheme: 'red',
+          colorScheme: 'Yellow',
           variant: 'subtle',
         });
       }
     } catch (err) {
       toast({
         title: 'Something went wrong',
-        description: 'You do not have enough vacation days',
+        description: err.message,
         position: 'top-right',
         status: 'error',
         isClosable: true,

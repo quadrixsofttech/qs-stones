@@ -11,7 +11,7 @@ const RequestHistory = ({ requestHistory }) => {
           <RequestHistoryComponent
             key={request._id}
             createdAt={request.createdAt}
-            datesInDays={request.dates.length}
+            datesInDays={request.days.length}
             dates={request.dates}
             status={request.status}
             comment={request.comment}
