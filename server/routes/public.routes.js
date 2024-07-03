@@ -1,5 +1,6 @@
 const express = require('express');
 const csrf = require('csurf');
+const cookieParser = require('cookie-parser');
 const authRouter = require('./auth.routes');
 const csrfRouter = require('./csrf-token.routes');
 const inventoryRouter = require('./inventory.routes');
@@ -14,9 +15,12 @@ const { attachUser } = require('../middleware/user');
 const router = express.Router();
 const csrfProtection = csrf({ cookie: true });
 
+router.use(cookieParser());
+
 router.use('/', authRouter);
 router.use(csrfProtection);
 router.use(attachUser);
+
 router.use('/csrf-token', csrfRouter);
 router.use('/dashboard-data', dashboardRouter);
 router.use('/', userRouter);
