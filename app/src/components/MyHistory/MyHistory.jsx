@@ -47,7 +47,6 @@ const MyHistory = () => {
     }
   }, [paidTimeOffHistory, selectedOption, isLoading]);
 
-
   if (isLoading) {
     return (
       <Flex justify="center" align="center" minHeight="200px">
@@ -99,12 +98,12 @@ const MyHistory = () => {
             <StatGroup width={'100%'} height={'100%'}>
               <Flex {...styles.statgroupFlex}>
                 <MyHistoryStats
-                  label="The total number of employees on vacation"
+                  label="The total number of employees that are not in the firm today"
                   userCount={awayUsers?.numberOfVacationPTOs}
                 />
                 <Divider />
                 <MyHistoryStats
-                  label="The total number of employees working from home"
+                  label="The total number of employees working from home today"
                   userCount={awayUsers?.numberOfRemoteUsers}
                 />
               </Flex>
