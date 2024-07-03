@@ -20,7 +20,6 @@ const Calendar = () => {
 
   const ptoCalendarTypes = [{ ...timeOffTypes, remote: 'Remote' }];
 
-
   useEffect(() => {
     refetchPTO();
   }, [type, refetchPTO]);
@@ -100,7 +99,7 @@ const Calendar = () => {
         >
           {Object.values(ptoCalendarTypes[0]).map((type) => {
             return (
-              <option value={type} key={type}>
+              <option value={type.toLowerCase()} key={type}>
                 {`${type}`}
               </option>
             );
