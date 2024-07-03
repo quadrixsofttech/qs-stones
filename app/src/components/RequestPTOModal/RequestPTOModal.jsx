@@ -27,6 +27,7 @@ import moment from 'moment';
 import { RenderRangeTags } from './RenderRangeTags';
 import { timeOffTypes } from '../../constants/TimeOffTypes';
 import { paidTimeOffTypes } from '../../constants/PaidTimeOffTypes';
+import useAdmins from '../../hooks/useAdmins';
 
 export const RequestPTOModal = ({ isOpen, onClose }) => {
   const {
@@ -36,7 +37,8 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
     removeVacationTag,
   } = useCalendar();
 
-  const { user, adminsLoading } = useUser();
+  const { user } = useUser();
+  const { adminsLoading } = useAdmins();
   const { createPTO } = useEmployees();
 
   const [selectedTimeOffType, setSelectedTimeOff] = useState(null);
