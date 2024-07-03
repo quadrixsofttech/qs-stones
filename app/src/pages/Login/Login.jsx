@@ -99,9 +99,6 @@ const Login = () => {
                     <FormErrorMessage>{errors.password}</FormErrorMessage>
                   ) : null}
                 </FormControl>
-                <Text as={Link} to="/forgot-password" color={'blue.400'}>
-                  Forgot password?
-                </Text>
                 <Stack>
                   <Button
                     {...styles.button}
