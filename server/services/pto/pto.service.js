@@ -165,7 +165,13 @@ const updatePTO = async (id, updates) => {
 const approvePTO = async (id, reviewerId) => {
   try {
     const pto = await PaidTimeOff.findById(id);
+    if (!pto) {
+      throw new Error('PTO request not found');
+    }
     const user = await User.findById(pto.userId);
+    if (!user) {
+      throw new Error('User not found');
+    }
     const ptoType = pto.type;
 
     if (
@@ -176,7 +182,7 @@ const approvePTO = async (id, reviewerId) => {
       pto.status = 'approved';
       pto.reviewerId = reviewerId;
       await pto.save();
-    } else {
+    } else if (ptoType === 'vacation') {
       let vacationDays = pto.days.length;
 
       let maxDate = moment(pto.days[0]);
@@ -224,7 +230,7 @@ const approvePTO = async (id, reviewerId) => {
           currentYearUsedDays =
             currentYear.initialVacationDays - currentYearVacationDays;
         } else {
-          throw new Error('Nemas dovoljno slobodnih dana');
+          throw new Error('You do not have enough vacation days');
         }
       }
 
