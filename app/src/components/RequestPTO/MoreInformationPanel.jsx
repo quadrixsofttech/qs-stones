@@ -8,6 +8,7 @@ export const MoreInformationPanel = ({
   status,
   response,
   time,
+  type,
 }) => {
   const userText = (
     <Text fontWeight="bold">

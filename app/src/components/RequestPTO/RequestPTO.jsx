@@ -33,52 +33,55 @@ const RequestPTO = ({
   };
 
   return (
-    <Box {...styles.box}>
-      <Box as="span">
-        <Text {...styles.grayText}>{time}</Text>
-        {status === 'pending' ? (
-          <>
-            <Text {...styles.mainText}>You sent a request for {type}</Text>
-          </>
-        ) : (
-          <>
-            <Text {...styles.mainText}>
-              You sent request for {type} to
-              <Text {...styles.adminText} as="span">
-                {' '}
-                {user?.firstName} {user?.lastName} (ADMIN)
+    type !== 'remote' && (
+      <Box {...styles.box}>
+        <Box as="span">
+          <Text {...styles.grayText}>{time}</Text>
+          {status === 'pending' ? (
+            <>
+              <Text {...styles.mainText}>You sent a request for {type}</Text>
+            </>
+          ) : (
+            <>
+              <Text {...styles.mainText}>
+                You sent request for {type} to
+                <Text {...styles.adminText} as="span">
+                  {' '}
+                  {user?.firstName} {user?.lastName} (ADMIN)
+                </Text>
               </Text>
-            </Text>
-          </>
-        )}
-        <Text fontWeight={'bold'}>{numberOfDays} days</Text>
-        <Box pt={2}>
-          <RequestStatus status={status} />
+            </>
+          )}
+          <Text fontWeight={'bold'}>{numberOfDays} days</Text>
+          <Box pt={2}>
+            <RequestStatus status={status} />
+          </Box>
+          <Flex alignItems={'center'}>
+            <Spacer />
+            <Accordion defaultIndex={[1]} allowToggle {...styles.accordion}>
+              <AccordionItem pt={2}>
+                <h2>
+                  <AccordionButton onClick={toggleAccordion}>
+                    <Box color={'gray.500'}>
+                      {isAccordionOpen ? 'See less' : 'See more'}
+                    </Box>
+                    <AccordionIcon />
+                  </AccordionButton>
+                </h2>
+                <MoreInformationPanel
+                  user={user}
+                  time={time}
+                  requestedDates={requestedDates}
+                  response={response}
+                  status={status}
+                  type={type}
+                />
+              </AccordionItem>
+            </Accordion>
+          </Flex>
         </Box>
-        <Flex alignItems={'center'}>
-          <Spacer />
-          <Accordion defaultIndex={[1]} allowToggle {...styles.accordion}>
-            <AccordionItem pt={2}>
-              <h2>
-                <AccordionButton onClick={toggleAccordion}>
-                  <Box color={'gray.500'}>
-                    {isAccordionOpen ? 'See less' : 'See more'}
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-              </h2>
-              <MoreInformationPanel
-                user={user}
-                time={time}
-                requestedDates={requestedDates}
-                response={response}
-                status={status}
-              />
-            </AccordionItem>
-          </Accordion>
-        </Flex>
       </Box>
-    </Box>
+    )
   );
 };
 
