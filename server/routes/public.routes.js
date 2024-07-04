@@ -19,9 +19,9 @@ router.use(cookieParser());
 
 router.use('/', authRouter);
 router.use(csrfProtection);
+router.use('/csrf-token', csrfRouter);
 router.use(attachUser);
 
-router.use('/csrf-token', csrfRouter);
 router.use('/dashboard-data', dashboardRouter);
 router.use('/', userRouter);
 router.use('/bio', bioRouter);
