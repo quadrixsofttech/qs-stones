@@ -51,12 +51,7 @@ const RequestPTO = ({
             </Text>
           </>
         )}
-        <Tooltip label={requestedDates} hasArrow placement="bottom">
-          <Flex alignItems={'center'}>
-            <Text fontWeight={'bold'}>{numberOfDays} days</Text>
-            <Icon as={MdOutlineKeyboardArrowDown} boxSize={3} ml={1} />
-          </Flex>
-        </Tooltip>
+        <Text fontWeight={'bold'}>{numberOfDays} days</Text>
         <Box pt={2}>
           <RequestStatus status={status} />
         </Box>

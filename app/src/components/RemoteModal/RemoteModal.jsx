@@ -15,7 +15,6 @@ import {
   Box,
 } from '@chakra-ui/react';
 import styles from '../RequestPTOModal/RequestPTOModal.styles';
-import { Scrollbars } from 'react-custom-scrollbars-2';
 import { Calendar } from 'react-multi-date-picker';
 import { useCalendar } from '../../hooks/useCalendar';
 import { InfoIcon } from '@chakra-ui/icons';
@@ -75,70 +74,75 @@ export const RemoteModal = ({ isOpen, onClose }) => {
         onClose();
       }}
       motionPreset="slideInBottom"
+      size={'3xl'}
     >
       <ModalOverlay />
-      <ModalContent {...styles.modalContent}>
-        <Scrollbars style={{ height: '100%' }}>
-          <ModalHeader {...styles.modalHeader}>
-            Schedule when you will work from home
-          </ModalHeader>
-          <Divider />
-          <ModalCloseButton />
-          <ModalBody>
-            <Flex gap={2} alignItems={'center'}>
-              <Text {...styles.modalTitle}>Remote</Text>
-              <Tooltip
-                label="*Double-click to select a date on the calendar. 
+      <ModalContent>
+        <ModalHeader {...styles.modalHeader}>
+          Schedule when you will work from home
+        </ModalHeader>
+        <Divider />
+        <ModalCloseButton />
+        <ModalBody>
+          <Flex gap={2} alignItems={'center'}>
+            <Text {...styles.modalTitle}>Remote</Text>
+            <Tooltip
+              label="*Double-click to select a date on the calendar. 
                     *Single-click to select a range of dates on the calendar."
-                hasArrow
-                placement="right"
+              hasArrow
+              placement="right"
+            >
+              <InfoIcon color={'gray.400'} mt="1" />
+            </Tooltip>
+          </Flex>
+          <Flex alignItems="center" justifyContent="center">
+            <Calendar
+              minDate={new moment().format('YYYY-MM-DD')}
+              range
+              numberOfMonths={2}
+              multiple
+              onChange={handleRemoteDates}
+              value={RemoteDates}
+              className="custom-calendar"
+            />
+          </Flex>
+          <Box>
+            <Text {...styles.textRequestDates}>
+              Requested dates for Remote:
+            </Text>
+            {RemoteDates.map((x) => {
+              return (
+                <RenderRangeTags
+                  range={x}
+                  key={Math.random()}
+                  handleClose={() => removeRemoteTag(x)}
+                />
+              );
+            })}
+            <Divider marginTop="4" />
+          </Box>
+          <ModalFooter>
+            <>
+              <Button
+                onClick={() => {
+                  onClose();
+                  setRemoteDates([]);
+                }}
+                variant={'outline'}
               >
-                <InfoIcon color={'gray.400'} mt="1" />
-              </Tooltip>
-            </Flex>
-            <Flex alignItems="center" justifyContent="center">
-              <Calendar
-                minDate={new moment().format('YYYY-MM-DD')}
-                range
-                numberOfMonths={2}
-                multiple
-                onChange={handleRemoteDates}
-                value={RemoteDates}
-                className="custom-calendar"
-              />
-            </Flex>
-            <Box>
-              <Text {...styles.textRequestDates}>
-                Requested dates for Remote:
-              </Text>
-              {RemoteDates.map((x) => {
-                return (
-                  <RenderRangeTags
-                    range={x}
-                    key={Math.random()}
-                    handleClose={() => removeRemoteTag(x)}
-                  />
-                );
-              })}
-              <Divider marginTop="4" />
-            </Box>
-            <ModalFooter>
-              <>
-                <Button onClick={onClose} variant={'outline'}>
-                  Cancel
-                </Button>
-                <Button
-                  onClick={() => {
-                    submitRemote();
-                  }}
-                  {...styles.button}
-                >
-                  Submit
-                </Button>
-              </>
-            </ModalFooter>
-          </ModalBody>
-        </Scrollbars>
+                Cancel
+              </Button>
+              <Button
+                onClick={() => {
+                  submitRemote();
+                }}
+                {...styles.button}
+              >
+                Submit
+              </Button>
+            </>
+          </ModalFooter>
+        </ModalBody>
       </ModalContent>
     </Modal>
   );

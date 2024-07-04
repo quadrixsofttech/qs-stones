@@ -169,7 +169,6 @@ const approvePTO = async (id, reviewerId) => {
     const ptoType = pto.type;
 
     if (
-      ptoType === 'remote' ||
       ptoType === 'paid time off' ||
       ptoType === 'unpaid time off' ||
       ptoType === 'sick leave'

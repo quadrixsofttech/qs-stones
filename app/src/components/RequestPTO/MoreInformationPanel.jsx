@@ -11,10 +11,10 @@ export const MoreInformationPanel = ({
 }) => {
   const userText = (
     <Text fontWeight="bold">
-      {user?.firstName +" "+ user?.lastName + " "} 
+      {user?.firstName + ' ' + user?.lastName + ' '}
       <Text fontWeight="normal" as="span" fontSize={'0.9rem'}>
-        {status === 'approved' ? 'approved' : 'rejected'} your Request
-        PTO/Remote
+        {status === 'approved' ? 'approved' : 'rejected'} your Request TO/Remote
+        for {requestedDates}
       </Text>
     </Text>
   );
@@ -27,7 +27,7 @@ export const MoreInformationPanel = ({
       ) : status !== 'approved' ? (
         <Flex flexDirection="column">
           {userText}
-          <Textarea {...styles.textAreaPanel} placeholder={response}/>
+          <Textarea {...styles.textAreaPanel} placeholder={response} />
           <Button {...styles.button}>Send Request Again</Button>
         </Flex>
       ) : (

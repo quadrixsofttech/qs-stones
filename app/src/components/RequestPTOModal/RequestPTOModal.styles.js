@@ -1,6 +1,4 @@
 const modalContent = {
-  maxW: '750',
-  height: '670',
   display: 'flex',
 };
 const modalHeader = {
