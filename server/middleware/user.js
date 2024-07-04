@@ -3,7 +3,7 @@ const jwtDecode = require('jwt-decode');
 const { StatusCodes } = require('http-status-codes');
 
 const attachUser = (req, res, next) => {
-  const token = req.cookies.token;
+  const token = req.cookies?.token;
   if (!token) {
     return res
       .status(StatusCodes.UNAUTHORIZED)

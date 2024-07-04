@@ -5,9 +5,9 @@ import CalendarBox from './CalendarBox';
 import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
 import useEmployees from '../../hooks/useEmployees';
 import moment from 'moment';
-import useUser from '../../hooks/useUser';
 import { years, months, daysOfWeek } from './constants/calendarInfo';
 import { timeOffTypes } from '../../constants/TimeOffTypes';
+import useHolidays from '../../hooks/useHolidays';
 
 const Calendar = () => {
   const [date, setDate] = useState(new Date());
@@ -16,7 +16,7 @@ const Calendar = () => {
   const [type, setType] = useState('Vacation');
 
   const { data, isLoading, refetchPTO } = useEmployees(type);
-  const { holidays, holidaysLoading } = useUser();
+  const { holidays, holidaysLoading } = useHolidays();
 
   const ptoCalendarTypes = [{ ...timeOffTypes, remote: 'Remote' }];
 
