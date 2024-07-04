@@ -20,8 +20,6 @@ const Calendar = () => {
 
   const ptoCalendarTypes = [{ remote: 'Remote', ...timeOffTypes }];
 
-  console.log(data);
-
   const handleTypeChange = (e) => {
     setType(e.target.value);
     localStorage.setItem('type', e.target.value);
