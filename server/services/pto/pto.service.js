@@ -1,8 +1,9 @@
 const PaidTimeOff = require('../../models/pto.model');
 const moment = require('moment');
-const User = require('../../models/user.model');
+const User = require('../../models/user.model.js');
 const { holidays } = require('../../utils/utils.js');
 const CustomError = require('../../utils/CustomError.js');
+const { sendEmail } = require('../../utils/mailer.js');
 
 const weekendDays = [6, 0];
 
@@ -57,6 +58,10 @@ const createPTO = async ({
   reviewerId,
   comment,
 }) => {
+  const user = await User.findById(userId);
+  const admins = await User.find({role:"admin"}).select("email");
+  const adminEmails = admins.map(admin => admin.email);
+
   try {
     const days = dates.reduce((acc, [startDate, endDate]) => {
       const start = moment(startDate);
@@ -96,6 +101,7 @@ const createPTO = async ({
       });
 
       await pto.save();
+      if(type != 'remote') await sendEmail(adminEmails, `Request for ${type}`, `${user.firstName} ${user.lastName} has sent you a request for ${type}`);
       return pto;
     } else if (type === 'vacation') {
       const user = await User.findById(userId);
@@ -130,6 +136,7 @@ const createPTO = async ({
           comment,
         });
         await pto.save();
+        await sendEmail(adminEmails, `Request for ${type}`, `${user.firstName} ${user.lastName} has sent you a request for ${type}`);
         return pto;
       } else {
         throw new Error({
