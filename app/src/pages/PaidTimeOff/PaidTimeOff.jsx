@@ -6,6 +6,8 @@ import { MyVacationInfo } from '../../components/MyVacationInfo/MyVacationInfo';
 import { RequestPTOModal } from '../../components/RequestPTOModal/RequestPTOModal';
 import PTOCalendar from '../../components/PTOCalendar/PTOCalendar';
 import { RemoteModal } from '../../components/RemoteModal/RemoteModal';
+import useEmployees from '../../hooks/useEmployees';
+import { useState } from 'react';
 
 const PaidTimeOff = () => {
   const {
@@ -20,6 +22,8 @@ const PaidTimeOff = () => {
     onOpen: onOpenTImeOff,
   } = useDisclosure();
 
+  const [refetchCalendarData, setRefetchCalendarData] = useState(false);
+
   return (
     <DashboardLayout>
       <Flex mb="4">
@@ -32,11 +36,11 @@ const PaidTimeOff = () => {
           Remote
         </Button>
       </Flex>
-      <RemoteModal isOpen={isOpenRemote} onClose={onCloseRemote} />
+      <RemoteModal isOpen={isOpenRemote} onClose={onCloseRemote} setRefetchCalendarData={setRefetchCalendarData} />
       <RequestPTOModal isOpen={isOpenTimeOff} onClose={onCloseTimeOff} />
       <Flex gap={4} pb={4}>
         <Flex flexDir={'column'}>
-          <PTOCalendar />
+          <PTOCalendar refetchCalendarData={refetchCalendarData} />
           <MyVacationInfo />
         </Flex>
         <Flex flexDir={'column'} width={'100%'}>

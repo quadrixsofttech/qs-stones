@@ -23,7 +23,7 @@ import useEmployees from '../../hooks/useEmployees';
 import moment from 'moment';
 import { RenderRangeTags } from '../RequestPTOModal/RenderRangeTags';
 
-export const RemoteModal = ({ isOpen, onClose }) => {
+export const RemoteModal = ({ isOpen, onClose,setRefetchCalendarData }) => {
   const { RemoteDates, setRemoteDates, handleRemoteDates, removeRemoteTag } =
     useCalendar();
 
@@ -31,6 +31,10 @@ export const RemoteModal = ({ isOpen, onClose }) => {
   const { createPTO } = useEmployees();
 
   const toast = useToast();
+
+  const handleToggleRefetch = () => {
+    setRefetchCalendarData(prevRefetch => !prevRefetch);
+  }
 
   const submitRemote = async () => {
     if (RemoteDates.length >= 1) {
@@ -52,6 +56,7 @@ export const RemoteModal = ({ isOpen, onClose }) => {
         variant: 'subtle',
       });
       onClose();
+      handleToggleRefetch();
     } else {
       toast({
         title: 'Error',

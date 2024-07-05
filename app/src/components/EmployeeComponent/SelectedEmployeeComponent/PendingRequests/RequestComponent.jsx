@@ -32,7 +32,7 @@ const RequestComponent = ({
       position: 'top-right',
       status: 'success',
       variant: 'subtle',
-      description: 'You have successfully approved a remote/vacation request',
+      description: `You have successfully approved a ${type} request`,
       isClosable: true,
       colorScheme: 'green',
     });
@@ -46,7 +46,7 @@ const RequestComponent = ({
       position: 'top-right',
       status: 'warning',
       variant: 'subtle',
-      description: 'You have rejected a remote/vacation request',
+      description: `You have rejected a ${type} request`,
       isClosable: true,
       colorScheme: 'yellow',
     });
