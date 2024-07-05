@@ -13,12 +13,17 @@ const Calendar = () => {
   const [date, setDate] = useState(new Date());
   const [showSaturday, setShowSaturday] = useState(false);
 
-  const [type, setType] = useState('Vacation');
+  const [type, setType] = useState(localStorage.getItem('type') || 'remote');
 
-  const { data, isLoading, refetchPTO } = useEmployees(type);
   const { holidays, holidaysLoading } = useHolidays();
+  const { data, isLoading, refetchPTO } = useEmployees(type);
 
-  const ptoCalendarTypes = [{ ...timeOffTypes, remote: 'Remote' }];
+  const ptoCalendarTypes = [{ remote: 'Remote', ...timeOffTypes }];
+
+  const handleTypeChange = (e) => {
+    setType(e.target.value);
+    localStorage.setItem('type', e.target.value);
+  };
 
   useEffect(() => {
     refetchPTO();
@@ -91,16 +96,11 @@ const Calendar = () => {
         <Heading {...styles.headingTitle} as={'h2'}>
           Category
         </Heading>
-        <Select
-          {...styles.selectButton}
-          onChange={(e) => {
-            setType(e.target.value);
-          }}
-        >
+        <Select {...styles.selectButton} onChange={handleTypeChange}>
           {Object.values(ptoCalendarTypes[0]).map((type) => {
             return (
               <option value={type.toLowerCase()} key={type}>
-                {`${type}`}
+                {type}
               </option>
             );
           })}

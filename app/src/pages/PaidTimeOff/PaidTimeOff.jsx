@@ -23,7 +23,7 @@ const PaidTimeOff = () => {
   return (
     <DashboardLayout>
       <Flex mb="4">
-        <Heading {...styles.heading}>Paid Time Off</Heading>
+        <Heading {...styles.heading}>Time Off</Heading>
         <Spacer />
         <Button {...styles.button} onClick={onOpenTImeOff}>
           Request Time off
