@@ -9,7 +9,7 @@ import useUser from '../../hooks/useUser';
 import { years, months, daysOfWeek } from './constants/calendarInfo';
 import { timeOffTypes } from '../../constants/TimeOffTypes';
 
-const Calendar = () => {
+const Calendar = ({refetchCalendarData}) => {
   const [date, setDate] = useState(new Date());
   const [showSaturday, setShowSaturday] = useState(false);
 
@@ -22,7 +22,7 @@ const Calendar = () => {
 
   useEffect(() => {
     refetchPTO();
-  }, [type, refetchPTO]);
+  }, [type, refetchPTO,refetchCalendarData]);
 
   if (isLoading || holidaysLoading) {
     return <Spinner />;

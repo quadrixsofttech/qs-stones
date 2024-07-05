@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from 'react-query';
 import axios from 'axios';
 
-const useEmployees = (type = 'vacation') => {
+const useEmployees = (type = 'remote') => {
   const getPTO = async () => {
     const { data } = await axios.get(`/api/v1/paid-time-off/${type}`);
     return data;
