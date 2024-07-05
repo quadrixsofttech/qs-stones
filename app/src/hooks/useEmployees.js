@@ -20,7 +20,7 @@ const useEmployees = (type = 'remote') => {
     userId,
     comment,
     reviewerId,
-    paidLeaveType
+    paidLeaveType,
   }) => {
     const { data } = await axios.post('/api/v1/paid-time-off/', {
       dates,
@@ -29,7 +29,7 @@ const useEmployees = (type = 'remote') => {
       userId,
       comment,
       reviewerId,
-      paidLeaveType
+      paidLeaveType,
     });
     return data;
   };
@@ -52,11 +52,11 @@ const useEmployees = (type = 'remote') => {
     }
   };
 
-  const approvePaidTimeOff = async (id,reviewerId) => {
+  const approvePaidTimeOff = async (id, reviewerId) => {
     try {
       const response = await axios.patch(`api/v1/paid-time-off/approve`, {
         id,
-        reviewerId
+        reviewerId,
       });
       return response.data;
     } catch (error) {
@@ -69,7 +69,7 @@ const useEmployees = (type = 'remote') => {
       const response = await axios.patch(`api/v1/paid-time-off/reject`, {
         id,
         comment,
-        reviewerId
+        reviewerId,
       });
       return response.data;
     } catch (error) {

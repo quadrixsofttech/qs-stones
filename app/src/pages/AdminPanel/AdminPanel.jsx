@@ -3,12 +3,12 @@ import DashboardLayout from '../../layout/DashboardLayout';
 import ListOfEmployees from '../../components/ListOfEmployees/ListOfEmployees';
 import EmployeeComponent from '../../components/EmployeeComponent';
 import { Flex, Spinner } from '@chakra-ui/react';
-import useUser from '../../hooks/useUser';
 import { usePaidTimeOff } from '../../hooks/usePTO';
+import useGettingEmployees from '../../hooks/useGettigEmployees';
 
 const AdminPanel = () => {
   const { employees, employeesLoading, employeesError, refetchEmployees } =
-    useUser();
+    useGettingEmployees();
   const [clickedRowIndex, setClickedRowIndex] = useState(null);
   const [employeeId, setEmployeeId] = useState(null);
   const [name, setName] = useState();

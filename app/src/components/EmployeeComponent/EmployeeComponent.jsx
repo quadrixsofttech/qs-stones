@@ -14,7 +14,7 @@ import EmptyEmployeeComponent from './EmptyEmployeeComponent/EmptyEmployeeCompon
 import SelectedEmployeeComponent from './SelectedEmployeeComponent/SelectedEmployeeComponent';
 import { BiEditAlt, BiTrash } from 'react-icons/bi';
 import DeleteEmployeeDialog from './SelectedEmployeeComponent/DeleteEmployeeDialog/DeleteEmployeeDialog';
-import useUser from '../../hooks/useUser';
+import useGettingEmployees from '../../hooks/useGettigEmployees';
 
 const EmployeeComponent = ({
   isClicked,
@@ -26,7 +26,7 @@ const EmployeeComponent = ({
   refetchMyVacationInfo,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { deleteEmployee } = useUser();
+  const { deleteEmployee } = useGettingEmployees();
 
   const handleDeleteEmployee = async () => {
     try {
@@ -83,7 +83,6 @@ const EmployeeComponent = ({
       ) : (
         <EmptyEmployeeComponent />
       )}
-      {/* */}
     </Flex>
   );
 };

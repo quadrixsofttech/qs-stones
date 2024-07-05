@@ -11,7 +11,7 @@ import {
 import React from 'react';
 import styles from './PTOCalendar.styles';
 
-const CalendarPopoverContent = ({ date, employeesToday, type,holiday }) => {
+const CalendarPopoverContent = ({ date, employeesToday, type, holiday }) => {
   return (
     <PopoverContent boxShadow={'md'}>
       <PopoverArrow />

@@ -25,6 +25,7 @@ import moment from 'moment';
 import useUser from '../../hooks/useUser';
 import useAwayUsersCount from '../../hooks/useUsersWokringRemote';
 import { timeOffTypes } from '../../constants/TimeOffTypes';
+import RenderTabs from './RenderTabs';
 
 const MyHistory = () => {
   const [selectedOption, setSelectedOption] = useState(LeaveTypes.vacation);
@@ -72,12 +73,7 @@ const MyHistory = () => {
       </Flex>
       <Tabs {...styles.tabs}>
         <TabList paddingLeft={4} color={'black'}>
-          <Tab _selected={{ color: 'purple.500' }} fontWeight={500}>
-            PTO
-          </Tab>
-          <Tab _selected={{ color: 'purple.500' }} fontWeight={500}>
-            Request History
-          </Tab>
+          <RenderTabs />
         </TabList>
         <TabIndicator {...styles.tabindicator} />
         <TabPanels {...styles.tabPanels}>

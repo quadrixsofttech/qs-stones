@@ -2,8 +2,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { FetchContext } from '../context/FetchContext';
 import { publicFetch } from '../util/fetch';
-import { useMutation, useQuery } from 'react-query';
-import axios from 'axios';
+import { useMutation } from 'react-query';
 
 const useUser = () => {
   const { protectedFetch } = useContext(FetchContext);
@@ -17,7 +16,6 @@ const useUser = () => {
     });
     return data;
   };
-
 
   const registerCallback = async ({ firstName, lastName, email, password }) => {
     const { data } = await publicFetch.post(`signup`, {
@@ -71,48 +69,6 @@ const useUser = () => {
     }
   };
 
-  const getAdmins = async () => {
-    const { data } = await axios.get('/api/v1/admins');
-    return data;
-  };
-
-  const getEmployees = async () => {
-    const { data } = await axios.get('/api/v1/employees');
-    return data;
-  };
-
-  const deleteEmployeeCallback = async (id) => {
-    const { data } = await axios.delete(`/api/v1/employees/${id}`);
-    return data;
-  };
-
-  const {
-    data: admins,
-    isLoading: adminsLoading,
-    error: adminsError,
-  } = useQuery('admins', getAdmins);
-
-  const {
-    data: employees,
-    isLoading: employeesLoading,
-    error: employeesError,
-    refetch: refetchEmployees,
-  } = useQuery('employees', getEmployees);
-
-  const deleteEmployee = useMutation(deleteEmployeeCallback);
-
-  const getHolidays = async() => {
-    const {data} = await axios.get('/api/v1/holidays');
-    return data;
-  }
-
-  const {
-    data: holidays,
-    isLoading: holidaysLoading,
-    error: holidaysError,
-    refetch:refetchHolidays
-  } = useQuery('holidays',getHolidays);
-
   return {
     user,
     register,
@@ -120,19 +76,7 @@ const useUser = () => {
     authenticate,
     authenticationLoading: authenticate.isLoading,
     setUserRole,
-    admins,
-    adminsLoading,
-    adminsError,
-    employees,
-    employeesLoading,
-    employeesError,
-    refetchEmployees,
-    deleteEmployee,
     changePassword,
-    holidays,
-    holidaysLoading,
-    holidaysError,
-    refetchHolidays
   };
 };
 

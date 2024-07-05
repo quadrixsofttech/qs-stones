@@ -16,7 +16,6 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import styles from './RequestPTOModal.styles';
-import { Scrollbars } from 'react-custom-scrollbars-2';
 import { Calendar } from 'react-multi-date-picker';
 import { useState } from 'react';
 import { useCalendar } from '../../hooks/useCalendar';
@@ -27,6 +26,7 @@ import moment from 'moment';
 import { RenderRangeTags } from './RenderRangeTags';
 import { timeOffTypes } from '../../constants/TimeOffTypes';
 import { paidTimeOffTypes } from '../../constants/PaidTimeOffTypes';
+import useAdmins from '../../hooks/useAdmins';
 
 export const RequestPTOModal = ({ isOpen, onClose }) => {
   const {
@@ -36,7 +36,8 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
     removeVacationTag,
   } = useCalendar();
 
-  const { user, adminsLoading } = useUser();
+  const { user } = useUser();
+  const { adminsLoading } = useAdmins();
   const { createPTO } = useEmployees();
 
   const [selectedTimeOffType, setSelectedTimeOff] = useState(null);
@@ -123,103 +124,110 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
         onClose();
       }}
       motionPreset="slideInBottom"
+      size={'3xl'}
     >
       <ModalOverlay />
-      <ModalContent {...styles.modalContent}>
-        <Scrollbars style={{ height: '100%' }}>
-          <ModalHeader {...styles.modalHeader}>Paid Time Off</ModalHeader>
-          <Divider />
-          <ModalCloseButton />
-          <ModalBody>
-            <Flex gap={2} alignItems={'center'}>
-              <Text {...styles.modalTitle}>Time off</Text>
-              <Tooltip
-                label="*Double-click to select a date on the calendar. 
+      <ModalContent>
+        <ModalHeader {...styles.modalHeader}>
+          {' '}
+          <Flex gap={2} alignItems={'center'}>
+            <Text {...styles.modalTitle}>Time off</Text>
+            <Tooltip
+              label="*Double-click to select a date on the calendar. 
                   *Single-click to select a range of dates on the calendar."
-                hasArrow
-                placement="right"
-              >
-                <InfoIcon color={'gray.400'} mt="1" />
-              </Tooltip>
-            </Flex>
-            <Flex gap="4">
-              <Select
-                mt={2}
-                mb={2}
-                onChange={(e) => {
-                  setSelectedTimeOff(e.target.value);
-                }}
-                placeholder="Select type of time off"
-              >
-                {Object.values(timeOffTypes).map((type) => {
-                  return (
-                    <option value={type} key={type}>
-                      {`${type}`}
-                    </option>
-                  );
-                })}
-              </Select>
-              {selectedTimeOffType === 'Paid Time off' && (
-                <>
-                  <Select
-                    mt={2}
-                    mb={2}
-                    onChange={(e) => {
-                      setSelectedPaidTimeOffType(e.target.value);
-                    }}
-                    placeholder="Select type of time off"
-                  >
-                    {Object.values(paidTimeOffTypes).map((type) => {
-                      return (
-                        <option value={type} key={type}>
-                          {`${type}`}
-                        </option>
-                      );
-                    })}
-                  </Select>
-                </>
-              )}
-            </Flex>
-            <Flex alignItems="center" justifyContent="center">
-              <Calendar
-                minDate={new moment().format('YYYY-MM-DD')}
-                range
-                numberOfMonths={2}
-                multiple
-                onChange={handleVacationDates}
-                value={VacationDates}
-                className="custom-calendar"
-              />
-            </Flex>
-            <Text {...styles.textRequestDates}>
-              Requested dates for Vacation:
-            </Text>
-            {VacationDates.map((x) => {
-              return (
-                <RenderRangeTags
-                  range={x}
-                  key={Math.random()}
-                  handleClose={() => removeVacationTag(x)}
-                />
-              );
-            })}
-            <ModalFooter>
+              hasArrow
+              placement="right"
+            >
+              <InfoIcon color={'gray.400'} mt="1" />
+            </Tooltip>
+          </Flex>
+        </ModalHeader>
+        <Divider />
+        <ModalCloseButton />
+        <ModalBody>
+          <Flex gap="4">
+            <Select
+              mt={2}
+              mb={2}
+              onChange={(e) => {
+                setSelectedTimeOff(e.target.value);
+              }}
+              placeholder="Select type of time off"
+            >
+              {Object.values(timeOffTypes).map((type) => {
+                return (
+                  <option value={type} key={type}>
+                    {`${type}`}
+                  </option>
+                );
+              })}
+            </Select>
+            {selectedTimeOffType === 'Paid Time off' && (
               <>
-                <Button onClick={onClose} variant="outline">
-                  Cancel
-                </Button>
-                <Button
-                  onClick={() => {
-                    submitTORequest();
+                <Select
+                  mt={2}
+                  mb={2}
+                  onChange={(e) => {
+                    setSelectedPaidTimeOffType(e.target.value);
                   }}
-                  {...styles.button}
+                  placeholder="Select type of time off"
                 >
-                  Submit Request
-                </Button>
+                  {Object.values(paidTimeOffTypes).map((type) => {
+                    return (
+                      <option value={type} key={type}>
+                        {`${type}`}
+                      </option>
+                    );
+                  })}
+                </Select>
               </>
-            </ModalFooter>
-          </ModalBody>
-        </Scrollbars>
+            )}
+          </Flex>
+          <Flex alignItems="center" justifyContent="center">
+            <Calendar
+              minDate={new moment().format('YYYY-MM-DD')}
+              range
+              numberOfMonths={2}
+              multiple
+              onChange={handleVacationDates}
+              value={VacationDates}
+              className="custom-calendar"
+            />
+          </Flex>
+          <Text {...styles.textRequestDates}>
+            Requested dates for Vacation:
+          </Text>
+          {VacationDates.map((x) => {
+            return (
+              <RenderRangeTags
+                range={x}
+                key={Math.random()}
+                handleClose={() => removeVacationTag(x)}
+              />
+            );
+          })}
+          <ModalFooter>
+            <>
+              <Button
+                onClick={() => {
+                  onClose();
+                  setVacationDates([]);
+                }}
+                variant="outline"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={() => {
+                  submitTORequest();
+                }}
+                {...styles.button}
+              >
+                Submit Request
+              </Button>
+            </>
+          </ModalFooter>
+        </ModalBody>
       </ModalContent>
     </Modal>
   );

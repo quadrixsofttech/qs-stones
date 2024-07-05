@@ -5,20 +5,25 @@ import CalendarBox from './CalendarBox';
 import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
 import useEmployees from '../../hooks/useEmployees';
 import moment from 'moment';
-import useUser from '../../hooks/useUser';
 import { years, months, daysOfWeek } from './constants/calendarInfo';
 import { timeOffTypes } from '../../constants/TimeOffTypes';
+import useHolidays from '../../hooks/useHolidays';
 
 const Calendar = ({refetchCalendarData}) => {
   const [date, setDate] = useState(new Date());
   const [showSaturday, setShowSaturday] = useState(false);
 
-  const [type, setType] = useState('Vacation');
+  const [type, setType] = useState(localStorage.getItem('type') || 'remote');
 
+  const { holidays, holidaysLoading } = useHolidays();
   const { data, isLoading, refetchPTO } = useEmployees(type);
-  const { holidays, holidaysLoading } = useUser();
 
-  const ptoCalendarTypes = [{ ...timeOffTypes, remote: 'Remote' }];
+  const ptoCalendarTypes = [{ remote: 'Remote', ...timeOffTypes }];
+
+  const handleTypeChange = (e) => {
+    setType(e.target.value);
+    localStorage.setItem('type', e.target.value);
+  };
 
   useEffect(() => {
     refetchPTO();
@@ -91,16 +96,11 @@ const Calendar = ({refetchCalendarData}) => {
         <Heading {...styles.headingTitle} as={'h2'}>
           Category
         </Heading>
-        <Select
-          {...styles.selectButton}
-          onChange={(e) => {
-            setType(e.target.value);
-          }}
-        >
+        <Select {...styles.selectButton} onChange={handleTypeChange}>
           {Object.values(ptoCalendarTypes[0]).map((type) => {
             return (
               <option value={type.toLowerCase()} key={type}>
-                {`${type}`}
+                {type}
               </option>
             );
           })}

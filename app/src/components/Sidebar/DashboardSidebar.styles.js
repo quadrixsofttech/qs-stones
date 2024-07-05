@@ -14,8 +14,7 @@ const sideBar = {
 };
 
 const sideBarButton = {
-  marginTop:'1',
-  colorScheme: 'purple',
+  marginTop: '1',
   width: '40',
   height: '14',
   borderRadius: '6px',
@@ -32,12 +31,12 @@ const sideBarButton = {
     borderRadius: '6px',
     p: '4',
     _hover: {
-      backgroundColor:"purple.50",
-    }
+      backgroundColor: 'purple.50',
+    },
   },
   _hover: {
-    backgroundColor:"gray.50"
-  }
+    backgroundColor: 'gray.50',
+  },
 };
 
 const styles = {
