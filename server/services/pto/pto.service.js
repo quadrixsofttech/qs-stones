@@ -59,8 +59,8 @@ const createPTO = async ({
   comment,
 }) => {
   const user = await User.findById(userId);
-  const admins = await User.find({role:"admin"}).select("email");
-  const adminEmails = admins.map(admin => admin.email);
+  const admins = await User.find({ role: 'admin' }).select('email');
+  const adminEmails = admins.map((admin) => admin.email);
 
   try {
     const days = dates.reduce((acc, [startDate, endDate]) => {
@@ -102,7 +102,12 @@ const createPTO = async ({
 
       await pto.save();
       //Change recepients email to adminEmails when testing is over
-      if(type != 'remote') await sendEmail('katarina.kujundzic@quadrixsoft.com', `Request for ${type}`, `${user.firstName} ${user.lastName} has sent you a request for ${type}  http://stones.examia.io/admin`);
+      if (type != 'remote')
+        await sendEmail(
+          'katarina.kujundzic@quadrixsoft.com',
+          `Request for ${type}`,
+          `${user.firstName} ${user.lastName} has sent you a request for ${type}  http://stones.examia.io/admin`
+        );
       return pto;
     } else if (type === 'vacation') {
       const user = await User.findById(userId);
@@ -138,7 +143,11 @@ const createPTO = async ({
         });
         await pto.save();
         //Change recepients email to adminEmails when testing is over
-        await sendEmail('katarina.kujundzic@quadrixsoft.com', `Request for ${type}`, `${user.firstName} ${user.lastName} has sent you a request for ${type}   http://stones.examia.io/admin`);
+        await sendEmail(
+          'katarina.kujundzic@quadrixsoft.com',
+          `Request for ${type}`,
+          `${user.firstName} ${user.lastName} has sent you a request for ${type}   http://stones.examia.io/admin`
+        );
         return pto;
       } else {
         throw new Error({

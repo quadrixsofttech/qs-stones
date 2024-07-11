@@ -5,17 +5,14 @@ import {
   AccordionItem,
   Box,
   Flex,
-  Icon,
   Spacer,
   Text,
-  Tooltip,
 } from '@chakra-ui/react';
 import styles from './RequestPTO.styles';
 import { useState } from 'react';
 import RequestStatus from './RequestStatus/RequestStatus';
 import { MoreInformationPanel } from './MoreInformationPanel';
 import statusTypes from './status';
-import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 
 const RequestPTO = ({
   status = statusTypes.pending,
@@ -60,14 +57,14 @@ const RequestPTO = ({
             <Spacer />
             <Accordion defaultIndex={[1]} allowToggle {...styles.accordion}>
               <AccordionItem pt={2}>
-                <h2>
+                <Text as="h2">
                   <AccordionButton onClick={toggleAccordion}>
                     <Box color={'gray.500'}>
                       {isAccordionOpen ? 'See less' : 'See more'}
                     </Box>
                     <AccordionIcon />
                   </AccordionButton>
-                </h2>
+                </Text>
                 <MoreInformationPanel
                   user={user}
                   time={time}
