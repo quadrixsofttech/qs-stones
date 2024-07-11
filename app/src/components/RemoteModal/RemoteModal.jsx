@@ -59,12 +59,12 @@ export const RemoteModal = ({ isOpen, onClose,setRefetchCalendarData }) => {
       handleToggleRefetch();
     } else {
       toast({
-        title: 'Error',
-        description: 'You have to click on a date',
+        title: 'Warning',
+        description: 'Please select a date',
         position: 'top-right',
-        status: 'error',
+        status: 'warning',
         isClosable: true,
-        colorScheme: 'red',
+        colorScheme: 'yellow',
         variant: 'subtle',
       });
     }

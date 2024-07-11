@@ -97,14 +97,14 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
           position: 'top-right',
           status: 'warning',
           isClosable: true,
-          colorScheme: 'Yellow',
+          colorScheme: 'yellow',
           variant: 'subtle',
         });
       }
     } catch (err) {
       toast({
-        title: 'Something went wrong',
-        description: err.message,
+        title: 'Error',
+        description: `You haven't chosen the Time off type. Please choose the type of your leave`,
         position: 'top-right',
         status: 'error',
         isClosable: true,
