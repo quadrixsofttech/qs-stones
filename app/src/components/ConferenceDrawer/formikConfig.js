@@ -10,8 +10,8 @@ const reservationSchema = Yup.object().shape({
 
 const initialValues = {
   floor: 'Upper Floor',
-  column: '64a8185c62c2382ff77231ca',
-  confRoomName: 'Brainstorm Room',
+  column: '64a81903e616253053727684',
+  confRoomName: 'Large Conference Room',
   selectedDate: moment(),
   startTime: '',
   endTime: '',
