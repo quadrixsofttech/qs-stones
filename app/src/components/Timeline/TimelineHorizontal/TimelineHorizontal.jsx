@@ -15,6 +15,8 @@ const TimelineHorizontal = ({
   onDelete,
   user,
 }) => {
+
+  console.log(data);
   const timeSlots = useMemo(() => {
     const startTime = moment(startHour, 'HH:mm');
     const endTime = moment(endHour, 'HH:mm');
@@ -109,7 +111,7 @@ const TimelineHorizontal = ({
                         end={data.endTime}
                         description={data.description}
                         color={data.color}
-                        user={data.user}
+                        user={user}
                         enabled={data.userId === user._id}
                         orientation="horizontal"
                         onEdit={onEdit}
