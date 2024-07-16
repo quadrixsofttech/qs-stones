@@ -33,7 +33,6 @@ const ConferenceRoomReservationModal = ({
   if (!data) {
     return <></>;
   }
-  console.log(data);
   const enabled = data.userId === user._id;
   return (
     <Modal isCentered isOpen={isOpen} onClose={onClose}>

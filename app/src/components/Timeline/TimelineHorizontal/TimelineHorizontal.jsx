@@ -16,7 +16,6 @@ const TimelineHorizontal = ({
   user,
 }) => {
 
-  console.log(data);
   const timeSlots = useMemo(() => {
     const startTime = moment(startHour, 'HH:mm');
     const endTime = moment(endHour, 'HH:mm');
