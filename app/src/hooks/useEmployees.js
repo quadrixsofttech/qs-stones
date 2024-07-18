@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from 'react-query';
 import axios from 'axios';
 
-const useEmployees = (type = 'remote') => {
+const useEmployees = (type) => {
   const getPTO = async () => {
     const { data } = await axios.get(`/api/v1/paid-time-off/${type}`);
     return data;
@@ -11,7 +11,7 @@ const useEmployees = (type = 'remote') => {
     data,
     isLoading,
     refetch: refetchPTO,
-  } = useQuery(['paid-time-off'], getPTO);
+  } = useQuery(['paid-time-off', type], getPTO);
 
   const createPTOCallback = async ({
     dates,
