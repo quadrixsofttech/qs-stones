@@ -17,7 +17,7 @@ const DashboardSidebar = () => {
         </Box>
         <Flex {...styles.sideBarButton} as={NavLink} to="/dashboard">
           <BiSwim size={20} />
-          <Text>Paid Time Off</Text>
+          <Text>Remote/Time off</Text>
         </Flex>
         <Flex {...styles.sideBarButton} as={NavLink} to="/conference">
           <BiChalkboard size={20} />
@@ -34,6 +34,12 @@ const DashboardSidebar = () => {
               <Text>Add a user</Text>
             </Flex>
           </>
+        )}
+        {user.role === 'novelic-user' && (
+          <Flex {...styles.sideBarButton} as={NavLink} to="/conference">
+            <BiChalkboard size={20} />
+            <Text>Conference</Text>
+          </Flex>
         )}
       </Box>
     </Flex>

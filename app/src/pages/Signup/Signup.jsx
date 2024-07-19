@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { Link, Navigate } from 'react-router-dom';
@@ -46,6 +46,8 @@ const Signup = () => {
       setSignupSuccess(null);
     }
   };
+
+  useEffect(() => {}, []);
 
   return (
     <>
