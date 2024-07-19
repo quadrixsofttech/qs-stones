@@ -9,33 +9,32 @@ import { years, months, daysOfWeek } from './constants/calendarInfo';
 import { timeOffTypes } from '../../constants/TimeOffTypes';
 import useHolidays from '../../hooks/useHolidays';
 
-const Calendar = ({refetchCalendarData}) => {
+const Calendar = ({ refetchCalendarData }) => {
   const [date, setDate] = useState(new Date());
   const [showSaturday, setShowSaturday] = useState(false);
 
-  const [type, setType] = useState(localStorage.getItem('type') || 'remote');
+  const [type, setType] = useState('remote');
 
   const { holidays, holidaysLoading } = useHolidays();
   const { data, isLoading, refetchPTO } = useEmployees(type);
 
-  const ptoCalendarTypes = [{ remote: 'Remote', ...timeOffTypes }];
+  const ptoCalendarTypes = { remote: 'Remote', ...timeOffTypes };
 
   const handleTypeChange = (e) => {
     setType(e.target.value);
-    localStorage.setItem('type', e.target.value);
   };
 
   useEffect(() => {
     refetchPTO();
-  }, [type, refetchPTO,refetchCalendarData]);
+  }, [type, refetchPTO, refetchCalendarData]);
 
   if (isLoading || holidaysLoading) {
     return <Spinner />;
   }
 
-  if (showSaturday) {
-    daysOfWeek.push('Saturday');
-  }
+  // if (showSaturday) {
+  //   daysOfWeek.push('Saturday');
+  // }
 
   const daysInMonth = moment(date).daysInMonth();
   const firstDayOfMonth = moment(date).startOf('month').day();
@@ -96,11 +95,15 @@ const Calendar = ({refetchCalendarData}) => {
         <Heading {...styles.headingTitle} as={'h2'}>
           Category
         </Heading>
-        <Select {...styles.selectButton} onChange={handleTypeChange}>
-          {Object.values(ptoCalendarTypes[0]).map((type) => {
+        <Select
+          value={type}
+          {...styles.selectButton}
+          onChange={handleTypeChange}
+        >
+          {Object.entries(ptoCalendarTypes).map(([key, value]) => {
             return (
-              <option value={type.toLowerCase()} key={type}>
-                {type}
+              <option value={value.toLowerCase()} key={key}>
+                {value}
               </option>
             );
           })}
@@ -160,7 +163,7 @@ const Calendar = ({refetchCalendarData}) => {
             <BiChevronRight />
           </Button>
         </Flex>
-        <Select
+        {/* <Select
           {...styles.selectButton}
           onChange={(e) =>
             setShowSaturday(e.target.value === 'Weekdays + Saturday')
@@ -169,7 +172,7 @@ const Calendar = ({refetchCalendarData}) => {
         >
           <option value="Weekdays">Weekdays</option>
           <option value="Weekdays + Saturday">Weekdays + Saturday</option>
-        </Select>
+        </Select> */}
       </Flex>
 
       <Flex
