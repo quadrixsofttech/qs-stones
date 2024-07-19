@@ -7,7 +7,7 @@ const AuthenticatedNovelicUserRoutesHandler = () => {
   return auth.isAuthenticated() && auth.isNovelicUser() ? (
     <Outlet />
   ) : (
-    <Navigate to="/" />
+    <Navigate to="/conference" />
   );
 };
 

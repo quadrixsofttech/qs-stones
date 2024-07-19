@@ -6,7 +6,6 @@ import { MyVacationInfo } from '../../components/MyVacationInfo/MyVacationInfo';
 import { RequestPTOModal } from '../../components/RequestPTOModal/RequestPTOModal';
 import PTOCalendar from '../../components/PTOCalendar/PTOCalendar';
 import { RemoteModal } from '../../components/RemoteModal/RemoteModal';
-import useEmployees from '../../hooks/useEmployees';
 import { useState } from 'react';
 
 const PaidTimeOff = () => {
