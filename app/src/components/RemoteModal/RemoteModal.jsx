@@ -23,7 +23,7 @@ import useEmployees from '../../hooks/useEmployees';
 import moment from 'moment';
 import { RenderRangeTags } from '../RequestPTOModal/RenderRangeTags';
 
-export const RemoteModal = ({ isOpen, onClose,setRefetchCalendarData }) => {
+export const RemoteModal = ({ isOpen, onClose, setRefetchCalendarData }) => {
   const { RemoteDates, setRemoteDates, handleRemoteDates, removeRemoteTag } =
     useCalendar();
 
@@ -33,38 +33,50 @@ export const RemoteModal = ({ isOpen, onClose,setRefetchCalendarData }) => {
   const toast = useToast();
 
   const handleToggleRefetch = () => {
-    setRefetchCalendarData(prevRefetch => !prevRefetch);
-  }
+    setRefetchCalendarData((prevRefetch) => !prevRefetch);
+  };
 
   const submitRemote = async () => {
-    if (RemoteDates.length >= 1) {
-      await createPTO.mutateAsync({
-        dates: RemoteDates,
-        type: 'remote',
-        status: 'approved',
-        userId: user._id,
-        reviewerId: null,
-        comment: '',
-      });
+    try {
+      if (RemoteDates.length >= 1) {
+        await createPTO.mutateAsync({
+          dates: RemoteDates,
+          type: 'remote',
+          status: 'approved',
+          userId: user._id,
+          reviewerId: null,
+          comment: '',
+        });
+        toast({
+          title: 'Success',
+          description: 'You have scheduled work from home',
+          position: 'top-right',
+          status: 'success',
+          isClosable: true,
+          colorScheme: 'green',
+          variant: 'subtle',
+        });
+        onClose();
+        handleToggleRefetch();
+      } else {
+        toast({
+          title: 'Warning',
+          description: 'Please select a date',
+          position: 'top-right',
+          status: 'warning',
+          isClosable: true,
+          colorScheme: 'yellow',
+          variant: 'subtle',
+        });
+      }
+    } catch (error) {
       toast({
-        title: 'Success',
-        description: 'You have scheduled work from home',
-        position: 'top-right',
-        status: 'success',
-        isClosable: true,
-        colorScheme: 'green',
-        variant: 'subtle',
-      });
-      onClose();
-      handleToggleRefetch();
-    } else {
-      toast({
-        title: 'Warning',
-        description: 'Please select a date',
+        title: 'Error',
+        description: 'That date is already scheduled',
         position: 'top-right',
         status: 'warning',
         isClosable: true,
-        colorScheme: 'yellow',
+        colorScheme: 'red',
         variant: 'subtle',
       });
     }
