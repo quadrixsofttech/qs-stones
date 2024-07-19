@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { Navigate } from 'react-router-dom';
@@ -16,6 +16,7 @@ import {
 import styles from './Login.styles';
 import SignupLayout from '../../layout/SignupLayout/SignupLayout';
 import useUser from '../../hooks/useUser';
+import { AuthContext } from '../../context/AuthContext';
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().required('Email is required'),
@@ -27,6 +28,7 @@ const Login = () => {
   const [loginSuccess, setLoginSuccess] = useState();
   const [loginError, setLoginError] = useState();
   const [redirectOnLogin, setRedirectOnLogin] = useState(false);
+  const auth = useContext(AuthContext);
 
   const submitCredentials = async (credentials) => {
     try {
@@ -46,7 +48,9 @@ const Login = () => {
 
   return (
     <>
-      {redirectOnLogin && <Navigate to="/dashboard" />}
+      {redirectOnLogin && (
+        <Navigate to={auth.isNovelicUser() ? '/conference' : '/dashboard'} />
+      )}
       <SignupLayout title="Sign in to your account">
         <Formik
           initialValues={{

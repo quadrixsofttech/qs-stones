@@ -65,6 +65,10 @@ const AuthProvider = ({ children }) => {
     return authState.userInfo.role === 'admin';
   };
 
+  const isNovelicUser = () => {
+    return authState.userInfo.role === 'novelic-user';
+  };
+
   return (
     <Provider
       value={{
@@ -76,6 +80,7 @@ const AuthProvider = ({ children }) => {
         logout,
         isAuthenticated,
         isAdmin,
+        isNovelicUser,
       }}
     >
       {children}

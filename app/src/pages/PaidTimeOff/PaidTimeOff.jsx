@@ -6,8 +6,9 @@ import { MyVacationInfo } from '../../components/MyVacationInfo/MyVacationInfo';
 import { RequestPTOModal } from '../../components/RequestPTOModal/RequestPTOModal';
 import PTOCalendar from '../../components/PTOCalendar/PTOCalendar';
 import { RemoteModal } from '../../components/RemoteModal/RemoteModal';
-import useEmployees from '../../hooks/useEmployees';
 import { useState } from 'react';
+import useUser from '../../hooks/useUser';
+import { Navigate } from 'react-router-dom';
 
 const PaidTimeOff = () => {
   const {
@@ -23,31 +24,40 @@ const PaidTimeOff = () => {
   } = useDisclosure();
 
   const [refetchCalendarData, setRefetchCalendarData] = useState(false);
+  const { user } = useUser();
 
   return (
-    <DashboardLayout>
-      <Flex mb="4">
-        <Heading {...styles.heading}>Time Off</Heading>
-        <Spacer />
-        <Button {...styles.button} onClick={onOpenTImeOff}>
-          Request Time off
-        </Button>
-        <Button {...styles.button} variant={'outline'} onClick={onOpenRemote}>
-          Remote
-        </Button>
-      </Flex>
-      <RemoteModal isOpen={isOpenRemote} onClose={onCloseRemote} setRefetchCalendarData={setRefetchCalendarData} />
-      <RequestPTOModal isOpen={isOpenTimeOff} onClose={onCloseTimeOff} />
-      <Flex gap={4} pb={4}>
-        <Flex flexDir={'column'}>
-          <PTOCalendar refetchCalendarData={refetchCalendarData} />
-          <MyVacationInfo />
+    (user.role !== 'novelic-user' ? (
+      <DashboardLayout>
+        <Flex mb="4">
+          <Heading {...styles.heading}>Time Off</Heading>
+          <Spacer />
+          <Button {...styles.button} onClick={onOpenTImeOff}>
+            Request Time off
+          </Button>
+          <Button {...styles.button} variant={'outline'} onClick={onOpenRemote}>
+            Remote
+          </Button>
         </Flex>
-        <Flex flexDir={'column'} width={'100%'}>
-          <MyHistory />
+        <RemoteModal
+          isOpen={isOpenRemote}
+          onClose={onCloseRemote}
+          setRefetchCalendarData={setRefetchCalendarData}
+        />
+        <RequestPTOModal isOpen={isOpenTimeOff} onClose={onCloseTimeOff} />
+        <Flex gap={4} pb={4}>
+          <Flex flexDir={'column'}>
+            <PTOCalendar refetchCalendarData={refetchCalendarData} />
+            <MyVacationInfo />
+          </Flex>
+          <Flex flexDir={'column'} width={'100%'}>
+            <MyHistory />
+          </Flex>
         </Flex>
-      </Flex>
-    </DashboardLayout>
+      </DashboardLayout>
+    ) : (
+      <Navigate to="/conference" />
+    ))
   );
 };
 export default PaidTimeOff;
