@@ -212,6 +212,7 @@ const approvePTO = async (id, reviewerId) => {
       pto.status = 'approved';
       pto.reviewerId = reviewerId;
       await pto.save();
+      
     } else if (ptoType === 'vacation') {
       let vacationDays = pto.days.length;
 
@@ -275,7 +276,13 @@ const approvePTO = async (id, reviewerId) => {
       pto.reviewerId = reviewerId;
 
       await Promise.all([pto.save(), user.save()]);
+
     }
+    await sendEmail(
+      user.email,
+      `Approved request for ${ptoType}`,
+      `Your request for ${ptoType} has been approved`
+    );
     return pto;
   } catch (err) {
     throw new Error({
@@ -292,7 +299,18 @@ const rejectPTO = async (id, comment, reviewerId) => {
       reviewerId: reviewerId,
       comment: comment,
     });
+
+    const user = await User.findById(pto.userId);
+    if (!user) {
+      throw new Error('User not found');
+    }
+    await sendEmail(
+      user.email,
+      `Rejected request for ${pto.type}`,
+      `Your request for ${pto.type} has been rejected`
+    );
     return pto;
+    
   } catch (err) {
     throw new Error({
       success: false,
