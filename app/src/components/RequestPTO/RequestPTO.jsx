@@ -14,7 +14,7 @@ import { useState } from 'react';
 import RequestStatus from './RequestStatus/RequestStatus';
 import { MoreInformationPanel } from './MoreInformationPanel';
 import statusTypes from './status';
-import { FaTrash } from 'react-icons/fa6';
+import { BiTrash } from 'react-icons/bi';
 import { useRemoteRequestDeletion } from './../../hooks/useRemoteRequestDeletion';
 
 const RequestPTO = ({
@@ -52,11 +52,12 @@ const RequestPTO = ({
           <Spacer />
           {type === 'remote' ? (
             <Icon
-              as={FaTrash}
-              boxSize={3}
+              as={BiTrash}
+              boxSize={6}
+              color={'red.300'}
               onClick={handleRemoteDeletion}
               _hover={{
-                color: '#805AD5',
+                color: 'red.500',
               }}
             />
           ) : (

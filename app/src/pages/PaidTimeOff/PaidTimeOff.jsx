@@ -51,7 +51,7 @@ const PaidTimeOff = () => {
             <MyVacationInfo />
           </Flex>
           <Flex flexDir={'column'} width={'100%'}>
-            <MyHistory />
+            <MyHistory refetchCalendarData={refetchCalendarData}/>
           </Flex>
         </Flex>
       </DashboardLayout>

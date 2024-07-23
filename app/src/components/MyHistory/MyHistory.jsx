@@ -26,7 +26,7 @@ import useAwayUsersCount from '../../hooks/useUsersWokringRemote';
 import { timeOffTypes } from '../../constants/TimeOffTypes';
 import RenderTabs from './RenderTabs';
 
-const MyHistory = () => {
+const MyHistory = ({refetchCalendarData}) => {
   const [selectedOption, setSelectedOption] = useState(LeaveTypes.vacation);
   const { user } = useUser();
   const { paidTimeOffHistory, isError, isLoading, refetchPTO } = usePaidTimeOff(
@@ -48,7 +48,7 @@ const MyHistory = () => {
       setDates(flattenedDates);
     }
     refetchPTO();
-  }, [paidTimeOffHistory, selectedOption, isLoading, refetchPTO]);
+  }, [paidTimeOffHistory, selectedOption, isLoading, refetchPTO,refetchCalendarData]);
 
   if (isLoading) {
     return (
