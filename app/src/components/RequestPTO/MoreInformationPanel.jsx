@@ -10,15 +10,20 @@ export const MoreInformationPanel = ({
   time,
   type,
 }) => {
-  const userText = (
-    <Text fontWeight="bold">
-      {user?.firstName + ' ' + user?.lastName + ' '}
+  const userText =
+    type === 'remote' ? (
       <Text fontWeight="normal" as="span" fontSize={'0.9rem'}>
-        {status === 'approved' ? 'approved' : 'rejected'} your Request TO/Remote
-        for {requestedDates}
+        Approved remote request for {requestedDates}
       </Text>
-    </Text>
-  );
+    ) : (
+      <Text fontWeight="bold">
+        {user?.firstName + ' ' + user?.lastName + ' '}
+        <Text fontWeight="normal" as="span" fontSize={'0.9rem'}>
+          {status === 'approved' ? 'approved' : 'rejected'} your Request TO for
+          {requestedDates}
+        </Text>
+      </Text>
+    );
 
   return (
     <AccordionPanel {...styles.accordionpanel}>

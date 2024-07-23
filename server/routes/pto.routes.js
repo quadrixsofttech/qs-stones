@@ -9,5 +9,6 @@ router.patch('/reject', PtoController.rejectPaidTimeOff);
 router.get('/history/:userId', PtoController.getUserHistory);
 router.get('/remote-and-vacation', PtoController.getAwayUserCountForToday);
 router.get('/:type', PtoController.getPaidTimeOff);
+router.delete('/delete-remote-request/:id', PtoController.deleteRemoteRequest);
 
 module.exports = router;
