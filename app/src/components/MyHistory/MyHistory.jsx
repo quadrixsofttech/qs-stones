@@ -26,7 +26,7 @@ import useAwayUsersCount from '../../hooks/useUsersWokringRemote';
 import { timeOffTypes } from '../../constants/TimeOffTypes';
 import RenderTabs from './RenderTabs';
 
-const MyHistory = ({refetchCalendarData}) => {
+const MyHistory = ({ refetchCalendarData, setRefetchCalendarData }) => {
   const [selectedOption, setSelectedOption] = useState(LeaveTypes.vacation);
   const { user } = useUser();
   const { paidTimeOffHistory, isError, isLoading, refetchPTO } = usePaidTimeOff(
@@ -48,7 +48,13 @@ const MyHistory = ({refetchCalendarData}) => {
       setDates(flattenedDates);
     }
     refetchPTO();
-  }, [paidTimeOffHistory, selectedOption, isLoading, refetchPTO,refetchCalendarData]);
+  }, [
+    paidTimeOffHistory,
+    selectedOption,
+    isLoading,
+    refetchPTO,
+    refetchCalendarData,
+  ]);
 
   if (isLoading) {
     return (
@@ -129,6 +135,8 @@ const MyHistory = ({refetchCalendarData}) => {
                   response={pto.comment}
                   numberOfDays={pto.days.length}
                   refetchPTO={refetchPTO}
+                  setRefetchCalendarData={setRefetchCalendarData}
+                  refetchCalendarData={refetchCalendarData}
                 />
               ))}
             </TabPanel>

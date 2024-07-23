@@ -26,38 +26,39 @@ const PaidTimeOff = () => {
   const [refetchCalendarData, setRefetchCalendarData] = useState(false);
   const { user } = useUser();
 
-  return (
-    (user.role !== 'novelic-user' ? (
-      <DashboardLayout>
-        <Flex mb="4">
-          <Heading {...styles.heading}>Time Off</Heading>
-          <Spacer />
-          <Button {...styles.button} onClick={onOpenTImeOff}>
-            Request Time off
-          </Button>
-          <Button {...styles.button} variant={'outline'} onClick={onOpenRemote}>
-            Remote
-          </Button>
+  return user.role !== 'novelic-user' ? (
+    <DashboardLayout>
+      <Flex mb="4">
+        <Heading {...styles.heading}>Time Off</Heading>
+        <Spacer />
+        <Button {...styles.button} onClick={onOpenTImeOff}>
+          Request Time off
+        </Button>
+        <Button {...styles.button} variant={'outline'} onClick={onOpenRemote}>
+          Remote
+        </Button>
+      </Flex>
+      <RemoteModal
+        isOpen={isOpenRemote}
+        onClose={onCloseRemote}
+        setRefetchCalendarData={setRefetchCalendarData}
+      />
+      <RequestPTOModal isOpen={isOpenTimeOff} onClose={onCloseTimeOff} />
+      <Flex gap={4} pb={4}>
+        <Flex flexDir={'column'}>
+          <PTOCalendar refetchCalendarData={refetchCalendarData} />
+          <MyVacationInfo />
         </Flex>
-        <RemoteModal
-          isOpen={isOpenRemote}
-          onClose={onCloseRemote}
-          setRefetchCalendarData={setRefetchCalendarData}
-        />
-        <RequestPTOModal isOpen={isOpenTimeOff} onClose={onCloseTimeOff} />
-        <Flex gap={4} pb={4}>
-          <Flex flexDir={'column'}>
-            <PTOCalendar refetchCalendarData={refetchCalendarData} />
-            <MyVacationInfo />
-          </Flex>
-          <Flex flexDir={'column'} width={'100%'}>
-            <MyHistory refetchCalendarData={refetchCalendarData}/>
-          </Flex>
+        <Flex flexDir={'column'} width={'100%'}>
+          <MyHistory
+            refetchCalendarData={refetchCalendarData}
+            setRefetchCalendarData={setRefetchCalendarData}
+          />
         </Flex>
-      </DashboardLayout>
-    ) : (
-      <Navigate to="/conference" />
-    ))
+      </Flex>
+    </DashboardLayout>
+  ) : (
+    <Navigate to="/conference" />
   );
 };
 export default PaidTimeOff;

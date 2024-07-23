@@ -10,7 +10,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 import styles from './RequestPTO.styles';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import RequestStatus from './RequestStatus/RequestStatus';
 import { MoreInformationPanel } from './MoreInformationPanel';
 import statusTypes from './status';
@@ -27,6 +27,8 @@ const RequestPTO = ({
   numberOfDays,
   id,
   refetchPTO,
+  setRefetchCalendarData,
+  refetchCalendarData,
 }) => {
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
   const { deleteRemoteRequest } = useRemoteRequestDeletion(id);
@@ -38,11 +40,15 @@ const RequestPTO = ({
   const handleRemoteDeletion = async () => {
     try {
       deleteRemoteRequest(id);
-      refetchPTO();
+      setRefetchCalendarData((prevState) => !prevState);
     } catch (error) {
       throw new Error('Error in deleting remote request');
     }
   };
+
+  useEffect(() => {
+    refetchPTO();
+  }, [refetchCalendarData, refetchPTO]);
 
   return (
     <Box {...styles.box}>
