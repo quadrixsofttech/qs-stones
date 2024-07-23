@@ -27,6 +27,17 @@ const getAdmins = async () => {
   }
 };
 
+const getNovelicUser = async () => {
+  try {
+    const user = await User.find({ role: 'novelic-user' })
+      .select('_id firstName lastName')
+      .lean();
+    return user;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
 const getEmployees = async () => {
   try {
     const employees = await User.find()
@@ -51,6 +62,7 @@ const getEmployees = async () => {
     throw new Error(err);
   }
 };
+
 const getUserVacation = async (id) => {
   try {
     const vacation = await User.findOne({ _id: id }).select('vacation').lean();
@@ -135,4 +147,5 @@ module.exports = {
   removeEmployee,
   changePassword,
   getHolidays,
+  getNovelicUser,
 };

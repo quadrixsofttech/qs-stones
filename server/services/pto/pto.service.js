@@ -80,6 +80,18 @@ const createPTO = async ({
       return [...acc, ...filteredDates];
     }, []);
 
+    const existingPTO = await PaidTimeOff.find({
+      userId,
+      days: { $in: days },
+    });
+
+    if (existingPTO.length > 0) {
+      throw new CustomError(
+        'Some of the selected dates are already scheduled for remote work or PTO',
+        422
+      );
+    }
+
     if (type === 'paid time off' && days.length > 5)
       throw new CustomError('Number of days exceeds limit', 422);
 

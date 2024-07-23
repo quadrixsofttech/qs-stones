@@ -15,6 +15,17 @@ const getUsers = async (req, res) => {
   }
 };
 
+const getNovelicUser = async (req, res) => {
+  try {
+    let user = await UserService.getNovelicUser();
+    return res.send(user);
+  } catch (error) {
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ message: 'There was a problem getting the novelic user' });
+  }
+};
+
 const getAdministrators = async (req, res) => {
   try {
     const user = await UserService.getAdmins();
@@ -148,4 +159,5 @@ module.exports = {
   deleteEmployee,
   changePassword,
   getHolidays,
+  getNovelicUser,
 };
