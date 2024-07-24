@@ -152,6 +152,7 @@ export const RemoteModal = ({ isOpen, onClose, setRefetchCalendarData }) => {
               <Button
                 onClick={() => {
                   submitRemote();
+                  setRemoteDates([]);
                 }}
                 {...styles.button}
               >

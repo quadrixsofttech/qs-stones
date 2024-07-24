@@ -2,7 +2,6 @@ import {
   Flex,
   Select,
   StatGroup,
-  Tab,
   TabIndicator,
   TabList,
   TabPanel,
@@ -27,10 +26,12 @@ import useAwayUsersCount from '../../hooks/useUsersWokringRemote';
 import { timeOffTypes } from '../../constants/TimeOffTypes';
 import RenderTabs from './RenderTabs';
 
-const MyHistory = () => {
+const MyHistory = ({ refetchCalendarData, setRefetchCalendarData }) => {
   const [selectedOption, setSelectedOption] = useState(LeaveTypes.vacation);
   const { user } = useUser();
-  const { paidTimeOffHistory, isError, isLoading } = usePaidTimeOff(user._id);
+  const { paidTimeOffHistory, isError, isLoading, refetchPTO } = usePaidTimeOff(
+    user._id
+  );
   const [dates, setDates] = useState([]);
   const { awayUsers } = useAwayUsersCount();
 
@@ -46,7 +47,14 @@ const MyHistory = () => {
         .flatMap((obj) => obj.days);
       setDates(flattenedDates);
     }
-  }, [paidTimeOffHistory, selectedOption, isLoading]);
+    refetchPTO();
+  }, [
+    paidTimeOffHistory,
+    selectedOption,
+    isLoading,
+    refetchPTO,
+    refetchCalendarData,
+  ]);
 
   if (isLoading) {
     return (
@@ -110,6 +118,7 @@ const MyHistory = () => {
               {paidTimeOffHistory.map((pto) => (
                 <RequestPTO
                   key={pto._id}
+                  id={pto._id}
                   status={pto.status}
                   type={pto.type}
                   time={moment(pto.createdAt).format('YYYY-MM-DD HH:mm:ss')}
@@ -125,6 +134,9 @@ const MyHistory = () => {
                   )}
                   response={pto.comment}
                   numberOfDays={pto.days.length}
+                  refetchPTO={refetchPTO}
+                  setRefetchCalendarData={setRefetchCalendarData}
+                  refetchCalendarData={refetchCalendarData}
                 />
               ))}
             </TabPanel>

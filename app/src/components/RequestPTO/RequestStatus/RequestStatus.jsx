@@ -10,12 +10,12 @@ const RequestStatus = ({ name, color, bg }) => {
   );
 };
 
-const RequestStatusWrapper = ({ status }) => {
+const RequestStatusWrapper = ({ status, type }) => {
   return (
     <RequestStatus
-      name={StatusTypes[status].label}
-      color={StatusTypes[status].textColor}
-      bg={StatusTypes[status].backgroundColor}
+      name={type === 'remote' ? 'APPROVED' : StatusTypes[status].label}
+      color={type === 'remote' ? 'green.800' : StatusTypes[status].textColor}
+      bg={type === 'remote' ? 'green.100' : StatusTypes[status].backgroundColor}
     />
   );
 };

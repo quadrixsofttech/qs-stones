@@ -104,7 +104,7 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
     } catch (err) {
       toast({
         title: 'Error',
-        description: `You haven't chosen the Time off type. Please choose the type of your leave`,
+        description: err,
         position: 'top-right',
         status: 'error',
         isClosable: true,

@@ -121,6 +121,16 @@ const getAwayUserCountForToday = async (req, res) => {
   }
 };
 
+const deleteRemoteRequest = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deleteRequest = await PtoService.deleteRemoteRequest(id);
+    res.send(deleteRequest);
+  } catch (error) {
+    res.status(StatusCodes.BAD_REQUEST).json({ err: error.message });
+  }
+};
+
 module.exports = {
   createPaidTimeOff,
   getUserHistory,
@@ -129,4 +139,5 @@ module.exports = {
   approvePaidTimeOff,
   rejectPaidTimeOff,
   getAwayUserCountForToday,
+  deleteRemoteRequest,
 };

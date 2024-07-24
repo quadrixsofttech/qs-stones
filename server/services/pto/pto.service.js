@@ -328,6 +328,20 @@ const deletePTO = async (id) => {
   }
 };
 
+const deleteRemoteRequest = async (id) => {
+  try {
+    const remoteRequest = await PaidTimeOff.findByIdAndDelete(id, {
+      type: 'remote',
+    });
+    return remoteRequest;
+  } catch (error) {
+    throw new Error({
+      success: false,
+      message: 'There was a problem in deleting remote request',
+    });
+  }
+};
+
 const getUserHistory = async (userId) => {
   try {
     const ptoHistory = await PaidTimeOff.find({ userId }).populate({
@@ -387,4 +401,5 @@ module.exports = {
   getUserDates,
   rejectPTO,
   approvePTO,
+  deleteRemoteRequest,
 };
