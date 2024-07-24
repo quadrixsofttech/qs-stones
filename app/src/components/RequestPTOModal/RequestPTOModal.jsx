@@ -51,7 +51,7 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
 
   const submitTORequest = async () => {
     try {
-      if (VacationDates.length > 0) {
+      if (VacationDates.length >= 2) {
         if (
           VacationDates.length > 5 &&
           selectedTimeOffType === 'Paid time off'
