@@ -1,9 +1,17 @@
 import DashboardLayout from '../../layout/DashboardLayout';
-import { Flex, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
+import {
+  Flex,
+  TabIndicator,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+} from '@chakra-ui/react';
 import RenderTabs from './../../components/MyHistory/RenderTabs';
 import { adminPanelTypes } from './../../constants/AdminPanelTypes';
 import { AllUsersInfo } from './AllUsersInfo';
 import { RenderAllPendingRequests } from './RenderAllPendingRequests';
+import styles from './AdminPanel.styles';
 
 const AdminPanel = () => {
   return (
@@ -13,6 +21,7 @@ const AdminPanel = () => {
           <TabList>
             <RenderTabs objectForMapping={adminPanelTypes} />
           </TabList>
+          <TabIndicator {...styles.tabIndicator} />
           <TabPanels>
             <TabPanel>
               <RenderAllPendingRequests />
