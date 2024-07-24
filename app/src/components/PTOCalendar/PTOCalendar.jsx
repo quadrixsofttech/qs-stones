@@ -6,7 +6,6 @@ import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
 import useEmployees from '../../hooks/useEmployees';
 import moment from 'moment';
 import { years, months, daysOfWeek } from './constants/calendarInfo';
-import { timeOffTypes } from '../../constants/TimeOffTypes';
 import useHolidays from '../../hooks/useHolidays';
 
 const Calendar = ({ refetchCalendarData }) => {
@@ -18,7 +17,7 @@ const Calendar = ({ refetchCalendarData }) => {
   const { holidays, holidaysLoading } = useHolidays();
   const { data, isLoading, refetchPTO } = useEmployees(type);
 
-  const ptoCalendarTypes = { remote: 'Remote', ...timeOffTypes };
+  const ptoCalendarTypes = { remote: 'Remote', 'time off':'Time Off' };
 
   const handleTypeChange = (e) => {
     setType(e.target.value);

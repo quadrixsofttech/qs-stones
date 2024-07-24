@@ -14,6 +14,7 @@ import moment from 'moment';
 import { useTheme } from '@chakra-ui/react';
 
 const CalendarBox = ({ date, employeesToday, type, holiday }) => {
+
   const [isOpen, setIsOpen] = useState(false);
 
   const theme = useTheme();

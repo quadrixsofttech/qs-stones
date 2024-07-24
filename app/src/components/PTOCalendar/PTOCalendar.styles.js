@@ -99,6 +99,18 @@ const avatarGroup = {
   size: 'sm',
   max: '2',
 };
+const leaveTypePill = {
+  padding:'1',
+  paddingX:'2', 
+  backgroundColor:'yellow.100',
+  borderRadius:'10',
+  width:"fit-content"
+}
+const leaveTypeText = {
+  textColor:'yellow.800',
+  fontWeight:'bold',
+  fontSize:'xs'
+}
 
 const styles = {
   calendarGridStyles,
@@ -117,6 +129,8 @@ const styles = {
   calendarBox,
   calendarDateBox,
   avatarGroup,
+  leaveTypePill,
+  leaveTypeText
 };
 
 export default styles;
