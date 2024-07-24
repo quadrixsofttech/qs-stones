@@ -102,7 +102,7 @@ const MyHistory = ({ refetchCalendarData, setRefetchCalendarData }) => {
             <StatGroup width={'100%'} height={'100%'}>
               <Flex {...styles.statgroupFlex}>
                 <MyHistoryStats
-                  label="The total number of employees that are not in the office today"
+                  label="The total number of employees that are not available today"
                   userCount={awayUsers?.numberOfVacationPTOs}
                 />
                 <Divider />
