@@ -51,45 +51,47 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
 
   const submitTORequest = async () => {
     try {
-      if (VacationDates.length >= 2) {
-        if (
-          VacationDates.length > 5 &&
-          selectedTimeOffType === 'Paid time off'
-        ) {
+      if (VacationDates.every((subarray) => subarray.length === 2)) {
+        if (VacationDates.length >= 1) {
+          if (
+            VacationDates.length > 5 &&
+            selectedTimeOffType === 'Paid time off'
+          ) {
+            toast({
+              title: 'Something went wrong',
+              description: 'Number of paid time off days succeeds the limit',
+              position: 'top-right',
+              status: 'error',
+              isClosable: true,
+              colorScheme: 'red',
+              variant: 'subtle',
+            });
+          }
+          await createPTO.mutateAsync({
+            dates: VacationDates,
+            type: selectedTimeOffType.toLowerCase(),
+            paidLeaveType: selectedPaidTimeOffType
+              ? selectedPaidTimeOffType
+              : undefined,
+            status: 'pending',
+            userId: user._id,
+            reviewerId: null,
+            comment: '',
+          });
           toast({
-            title: 'Something went wrong',
-            description: 'Number of paid time off days succeeds the limit',
+            title: 'Success',
+            description:
+              'You have submitted a request to the Admins for scheduling time off work',
             position: 'top-right',
-            status: 'error',
+            status: 'success',
             isClosable: true,
-            colorScheme: 'red',
+            colorScheme: 'green',
             variant: 'subtle',
           });
+          setVacationDates([]);
+          setSelectedTimeOff(null);
+          onClose();
         }
-        await createPTO.mutateAsync({
-          dates: VacationDates,
-          type: selectedTimeOffType.toLowerCase(),
-          paidLeaveType: selectedPaidTimeOffType
-            ? selectedPaidTimeOffType
-            : undefined,
-          status: 'pending',
-          userId: user._id,
-          reviewerId: null,
-          comment: '',
-        });
-        toast({
-          title: 'Success',
-          description:
-            'You have submitted a request to the Admins for scheduling time off work',
-          position: 'top-right',
-          status: 'success',
-          isClosable: true,
-          colorScheme: 'green',
-          variant: 'subtle',
-        });
-        setVacationDates([]);
-        setSelectedTimeOff(null);
-        onClose();
       } else {
         toast({
           title: 'Warning',
