@@ -36,9 +36,10 @@ export const RemoteModal = ({ isOpen, onClose, setRefetchCalendarData }) => {
     setRefetchCalendarData((prevRefetch) => !prevRefetch);
   };
 
+
   const submitRemote = async () => {
     try {
-      if (RemoteDates.length >= 1) {
+      if (RemoteDates.length >= 2) {
         await createPTO.mutateAsync({
           dates: RemoteDates,
           type: 'remote',
