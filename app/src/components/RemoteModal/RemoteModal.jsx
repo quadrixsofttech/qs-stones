@@ -36,29 +36,30 @@ export const RemoteModal = ({ isOpen, onClose, setRefetchCalendarData }) => {
     setRefetchCalendarData((prevRefetch) => !prevRefetch);
   };
 
-
   const submitRemote = async () => {
     try {
-      if (RemoteDates.length >= 2) {
-        await createPTO.mutateAsync({
-          dates: RemoteDates,
-          type: 'remote',
-          status: 'approved',
-          userId: user._id,
-          reviewerId: null,
-          comment: '',
-        });
-        toast({
-          title: 'Success',
-          description: 'You have scheduled work from home',
-          position: 'top-right',
-          status: 'success',
-          isClosable: true,
-          colorScheme: 'green',
-          variant: 'subtle',
-        });
-        onClose();
-        handleToggleRefetch();
+      if (RemoteDates.every((subarray) => subarray.length === 2)) {
+        if (RemoteDates.length >= 1) {
+          await createPTO.mutateAsync({
+            dates: RemoteDates,
+            type: 'remote',
+            status: 'approved',
+            userId: user._id,
+            reviewerId: null,
+            comment: '',
+          });
+          toast({
+            title: 'Success',
+            description: 'You have scheduled work from home',
+            position: 'top-right',
+            status: 'success',
+            isClosable: true,
+            colorScheme: 'green',
+            variant: 'subtle',
+          });
+          onClose();
+          handleToggleRefetch();
+        }
       } else {
         toast({
           title: 'Warning',
