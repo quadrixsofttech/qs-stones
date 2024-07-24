@@ -39,7 +39,7 @@ const RequestPTO = ({
 
   const handleRemoteDeletion = async () => {
     try {
-      deleteRemoteRequest(id);
+      await deleteRemoteRequest.mutateAsync(id);
       setRefetchCalendarData((prevState) => !prevState);
     } catch (error) {
       throw new Error('Error in deleting remote request');

@@ -10,13 +10,7 @@ export const useRemoteRequestDeletion = () => {
     return response.data;
   };
 
-  const {
-    mutate: deleteRemoteRequest,
-    data,
-    isError,
-    isLoading,
-    isSuccess,
-  } = useMutation(remoteDeletionCallback);
+  const deleteRemoteRequest = useMutation(remoteDeletionCallback);
 
-  return { deleteRemoteRequest, data, isError, isLoading, isSuccess };
+  return { deleteRemoteRequest };
 };
