@@ -18,12 +18,19 @@ const getAllPTO = async () => {
 
 const getPTO = async (type) => {
   try {
-    const paidTimeOff = await PaidTimeOff.find({
-      type: type,
-      status: 'approved',
-    })
-      .populate({ path: 'userId', select: '-password' })
-      .populate({ path: 'reviewerId', select: '-password' });
+
+    const query = type === 'time off' ? {
+      type: {$ne: 'remote'},
+      status: 'approved'
+    } : {
+      type:type,
+      status:'approved'
+    };
+
+    const paidTimeOff = await PaidTimeOff.find(query)
+      .populate({path: 'userId', select:'-password'})
+      .populate({path:'reviewerId',select:'-password'});
+
 
     const formattedPaidTimeOff = paidTimeOff.map((paidtimeoff) => ({
       _id: paidtimeoff._id,
