@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Box,
   Flex,
   PopoverArrow,
   PopoverBody,
@@ -29,7 +30,12 @@ const CalendarPopoverContent = ({ date, employeesToday, type, holiday }) => {
                 gap={'10px'}
               >
                 <Avatar name={x.user.firstName} src={x.userId.image} />
-                <Text>{`${x.user.firstName}  ${x.user.lastName}`}</Text>
+                <Box>
+                  <Text>{`${x.user.firstName}  ${x.user.lastName}`}</Text>
+                  <Flex {...styles.leaveTypePill}>
+                    <Text {...styles.leaveTypeText}>{x.type.toUpperCase()}</Text>
+                  </Flex>
+                </Box>
               </Flex>
             );
           })}
