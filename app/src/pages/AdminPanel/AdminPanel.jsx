@@ -35,12 +35,17 @@ const AdminPanel = () => {
               />
             </TabPanel>
             <TabPanel>
-              <AllUsersInfo
-                employees={employees}
-                employeesLoading={employeesLoading}
-                employeesError={employeesError}
-                refetchEmployees={refetchEmployees}
-              />
+              {
+                //Ovde ispod izmeni ovah VH, nije dobro resenje. Zbog tabova je problem da bude 100%
+              }
+              <Flex maxHeight={"82vh"}>
+                <AllUsersInfo
+                  employees={employees}
+                  employeesLoading={employeesLoading}
+                  employeesError={employeesError}
+                  refetchEmployees={refetchEmployees}
+                />
+              </Flex>
             </TabPanel>
           </TabPanels>
         </Tabs>
