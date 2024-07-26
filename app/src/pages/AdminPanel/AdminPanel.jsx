@@ -1,64 +1,54 @@
-import React, { useEffect, useState } from 'react';
-import DashboardLayout from '../../layout/DashboardLayout';
-import ListOfEmployees from '../../components/ListOfEmployees/ListOfEmployees';
-import EmployeeComponent from '../../components/EmployeeComponent';
-import { Flex, Spinner } from '@chakra-ui/react';
-import { usePaidTimeOff } from '../../hooks/usePTO';
-import useGettingEmployees from '../../hooks/useGettigEmployees';
+import DashboardLayout from "../../layout/DashboardLayout";
+import {
+  Flex,
+  TabIndicator,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+} from "@chakra-ui/react";
+import RenderTabs from "./../../components/MyHistory/RenderTabs";
+import { adminPanelTypes } from "./../../constants/AdminPanelTypes";
+import { AllUsersInfo } from "./AllUsersInfo";
+import { RenderAllPendingRequests } from "./RenderAllPendingRequests";
+import styles from "./AdminPanel.styles";
+import useGettingEmployees from "../../hooks/useGettigEmployees";
 
 const AdminPanel = () => {
   const { employees, employeesLoading, employeesError, refetchEmployees } =
     useGettingEmployees();
-  const [clickedRowIndex, setClickedRowIndex] = useState(null);
-  const [employeeId, setEmployeeId] = useState(null);
-  const [name, setName] = useState();
-
-  const { paidTimeOffHistory, isError, isLoading, refetchPTO } =
-    usePaidTimeOff(employeeId);
-
-  useEffect(() => {
-    refetchPTO(employeeId);
-  }, [employeeId, refetchPTO]);
-
-  if (
-    employeesLoading ||
-    employeesError ||
-    !employees ||
-    isError ||
-    isLoading ||
-    !paidTimeOffHistory
-  ) {
-    return <Spinner />;
-  }
-
-  const handleRowClick = (rowIndex) => {
-    if (rowIndex === clickedRowIndex) {
-      setClickedRowIndex(null);
-    } else {
-      setClickedRowIndex(rowIndex);
-      setName(
-        `${employees[rowIndex].firstName} ${employees[rowIndex].lastName}`
-      );
-      setEmployeeId(employees[rowIndex]._id);
-    }
-  };
   return (
     <DashboardLayout>
-      <Flex gap="4" height={'100%'}>
-        <ListOfEmployees
-          employees={employees}
-          handleRowClick={(index) => handleRowClick(index)}
-          clickedRowIndex={clickedRowIndex}
-        />
-        <EmployeeComponent
-          isClicked={clickedRowIndex !== null}
-          name={name}
-          employeeId={employeeId}
-          paidTimeOff={paidTimeOffHistory}
-          refetchPTO={refetchPTO}
-          refetchEmployees={refetchEmployees}
-          refetchMyVacationInfo={employeeId}
-        />
+      <Flex gap="4" height={"100%"}>
+        <Tabs w={"100%"}>
+          <TabList>
+            <RenderTabs objectForMapping={adminPanelTypes} />
+          </TabList>
+          <TabIndicator {...styles.tabIndicator} />
+          <TabPanels>
+            <TabPanel>
+              <RenderAllPendingRequests
+                employees={employees}
+                employeesLoading={employeesLoading}
+                employeesError={employeesError}
+                refetchEmployees={refetchEmployees}
+              />
+            </TabPanel>
+            <TabPanel>
+              {
+                //Ovde ispod izmeni ovah VH, nije dobro resenje. Zbog tabova je problem da bude 100%
+              }
+              <Flex maxHeight={"82vh"}>
+                <AllUsersInfo
+                  employees={employees}
+                  employeesLoading={employeesLoading}
+                  employeesError={employeesError}
+                  refetchEmployees={refetchEmployees}
+                />
+              </Flex>
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
       </Flex>
     </DashboardLayout>
   );

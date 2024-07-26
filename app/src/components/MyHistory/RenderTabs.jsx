@@ -1,10 +1,9 @@
 import { Tab } from '@chakra-ui/react';
-import { tabTypes } from './constants/constants';
 
-const RenderTabs = () => {
+const RenderTabs = ({ objectForMapping }) => {
   return (
     <>
-      {Object.values(tabTypes).map((type) => {
+      {Object.values(objectForMapping).map((type) => {
         return (
           <Tab _selected={{ color: 'purple.500' }} fontWeight={500} key={type}>
             {type}

@@ -17,7 +17,7 @@ import RequestPTO from '../RequestPTO/RequestPTO';
 import { useState, useEffect } from 'react';
 import { Calendar } from 'react-multi-date-picker';
 import { MyHistoryStats } from './MyHistoryStats';
-import { LeaveTypes, headerOrder } from './constants/constants';
+import { LeaveTypes, headerOrder, tabTypes } from './constants/constants';
 import Scrollbars from 'react-custom-scrollbars-2';
 import { usePaidTimeOff } from '../../hooks/usePTO';
 import moment from 'moment';
@@ -81,7 +81,7 @@ const MyHistory = ({ refetchCalendarData, setRefetchCalendarData }) => {
       </Flex>
       <Tabs {...styles.tabs}>
         <TabList paddingLeft={4} color={'black'}>
-          <RenderTabs />
+          <RenderTabs objectForMapping={tabTypes} />
         </TabList>
         <TabIndicator {...styles.tabindicator} />
         <TabPanels {...styles.tabPanels}>
