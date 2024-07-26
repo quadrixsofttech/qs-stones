@@ -1,7 +1,7 @@
-import { Box } from '@chakra-ui/react';
-import React from 'react';
-import styles from './PendingRequests.styles';
-import RequestComponent from './RequestComponent';
+import { Box } from "@chakra-ui/react";
+import React from "react";
+import styles from "./PendingRequests.styles";
+import RequestComponent from "./RequestComponent";
 
 const PendingRequests = ({ pendingRequests, refetchPTO, refetchEmployees }) => {
   return (

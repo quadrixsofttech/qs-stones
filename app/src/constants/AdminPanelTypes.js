@@ -1,4 +1,4 @@
 export const adminPanelTypes = {
-  pendingRequests: 'All pending requests',
-  users: 'All users',
+  pendingRequests: "Pending requests",
+  users: "Users",
 };

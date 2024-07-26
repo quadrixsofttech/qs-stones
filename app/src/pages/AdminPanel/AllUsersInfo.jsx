@@ -1,13 +1,16 @@
-import { Flex, Spinner } from '@chakra-ui/react';
-import ListOfEmployees from '../../components/ListOfEmployees/ListOfEmployees';
-import EmployeeComponent from '../../components/EmployeeComponent';
-import useGettingEmployees from '../../hooks/useGettigEmployees';
-import { useEffect, useState } from 'react';
-import { usePaidTimeOff } from '../../hooks/usePTO';
+import { Flex, Spinner } from "@chakra-ui/react";
+import ListOfEmployees from "../../components/ListOfEmployees/ListOfEmployees";
+import EmployeeComponent from "../../components/EmployeeComponent";
+import useGettingEmployees from "../../hooks/useGettigEmployees";
+import { useEffect, useState } from "react";
+import { usePaidTimeOff } from "../../hooks/usePTO";
 
-export const AllUsersInfo = () => {
-  const { employees, employeesLoading, employeesError, refetchEmployees } =
-    useGettingEmployees();
+export const AllUsersInfo = ({
+  employees,
+  employeesLoading,
+  employeesError,
+  refetchEmployees,
+}) => {
   const [clickedRowIndex, setClickedRowIndex] = useState(null);
   const [employeeId, setEmployeeId] = useState(null);
   const [name, setName] = useState();
@@ -42,7 +45,7 @@ export const AllUsersInfo = () => {
     }
   };
   return (
-    <Flex w={'100%'} gap={3}>
+    <Flex w={"100%"} gap={3}>
       <ListOfEmployees
         employees={employees}
         handleRowClick={(index) => handleRowClick(index)}
