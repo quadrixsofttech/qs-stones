@@ -1,6 +1,6 @@
-import { Box, Divider, Text } from '@chakra-ui/react';
-import styles from './RenderDates.styles';
-import { RenderRangeTags } from './RenderRangeTags';
+import { Box, Divider, Text } from "@chakra-ui/react";
+import styles from "./RenderDates.styles";
+import { RenderRangeTags } from "./RenderRangeTags";
 
 const RenderDates = ({
   remotePage,
@@ -27,7 +27,7 @@ const RenderDates = ({
       ) : (
         <Box>
           <Text {...styles.textRequestDates}>
-            Requested dates for Vacation:
+            Requested dates for time off:
           </Text>
           {vacationDates.map((x) => {
             return (
@@ -40,7 +40,7 @@ const RenderDates = ({
           })}
 
           <Divider marginTop="4" />
-          <Text {...styles.textRequestDates} color={'gray.400'}>
+          <Text {...styles.textRequestDates} color={"gray.400"}>
             Requested dates for Remote:
           </Text>
           {remoteDates.map((x) => {
