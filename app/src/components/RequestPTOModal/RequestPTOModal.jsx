@@ -106,7 +106,7 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
     } catch (err) {
       toast({
         title: "Error",
-        description: err,
+        description: err.response.data.message,
         position: "top-right",
         status: "error",
         isClosable: true,
