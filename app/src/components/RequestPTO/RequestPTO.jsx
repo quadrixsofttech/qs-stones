@@ -66,6 +66,16 @@ const RequestPTO = ({
                 color: 'red.500',
               }}
             />
+          ) : status === 'pending' ? (
+            <Icon
+              as={BiTrash}
+              boxSize={6}
+              color={'red.300'}
+              onClick={handleRemoteDeletion}
+              _hover={{
+                color: 'red.500',
+              }}
+            />
           ) : (
             ''
           )}

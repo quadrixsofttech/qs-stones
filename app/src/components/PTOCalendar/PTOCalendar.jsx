@@ -10,6 +10,7 @@ import useHolidays from "../../hooks/useHolidays";
 
 const Calendar = ({ refetchCalendarData }) => {
   const [date, setDate] = useState(new Date());
+  // eslint-disable-next-line
   const [showSaturday, setShowSaturday] = useState(false);
 
   const [type, setType] = useState("remote");

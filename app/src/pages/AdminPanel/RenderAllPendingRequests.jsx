@@ -1,18 +1,15 @@
-import React from "react";
-import { Box, Spinner, Text } from "@chakra-ui/react";
-import RequestComponent from "../../components/EmployeeComponent/SelectedEmployeeComponent/PendingRequests/RequestComponent";
+import React from 'react';
+import { Box, Spinner } from '@chakra-ui/react';
+import RequestComponent from '../../components/EmployeeComponent/SelectedEmployeeComponent/PendingRequests/RequestComponent';
 
 export const RenderAllPendingRequests = ({
   employees,
   employeesLoading,
-  employeesError,
   refetchEmployees,
 }) => {
   if (employeesLoading) {
     return <Spinner />;
   }
-
-  console.log(employees);
 
   return (
     <Box>
