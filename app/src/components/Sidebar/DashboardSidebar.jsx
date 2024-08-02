@@ -1,11 +1,11 @@
-import React from 'react';
-import { Box, Flex, Text } from '@chakra-ui/react';
-import { NavLink } from 'react-router-dom';
-import { BiSwim, BiChalkboard, BiUser, BiUserPlus } from 'react-icons/bi';
+import React from "react";
+import { Box, Flex, Text } from "@chakra-ui/react";
+import { NavLink } from "react-router-dom";
+import { BiSwim, BiChalkboard, BiUser, BiUserPlus } from "react-icons/bi";
 
-import styles from './DashboardSidebar.styles';
-import QuadrixSoftLogo from '../QuadrixSoftLogo/QuadrixSoftLogo';
-import useUser from '../../hooks/useUser';
+import styles from "./DashboardSidebar.styles";
+import QuadrixSoftLogo from "../QuadrixSoftLogo/QuadrixSoftLogo";
+import useUser from "../../hooks/useUser";
 
 const DashboardSidebar = () => {
   const { user } = useUser();
@@ -13,20 +13,20 @@ const DashboardSidebar = () => {
   return (
     <Flex>
       <Box as="aside" {...styles.sideBar}>
-        <Box marginBottom={'6'}>
+        <Box marginBottom={"6"}>
           <QuadrixSoftLogo />
         </Box>
-        {user.role !== 'novelic-user' && (
+        {user.role !== "novelic-user" && (
           <Flex {...styles.sideBarButton} as={NavLink} to="/dashboard">
             <BiSwim size={20} />
-            <Text>Remote/Time off</Text>
+            <Text>Remote/TO</Text>
           </Flex>
         )}
         <Flex {...styles.sideBarButton} as={NavLink} to="/conference">
           <BiChalkboard size={20} />
           <Text>Conference</Text>
         </Flex>
-        {user.role === 'admin' && (
+        {user.role === "admin" && (
           <>
             <Flex {...styles.sideBarButton} as={NavLink} to="/admin">
               <BiUser size={20} />
