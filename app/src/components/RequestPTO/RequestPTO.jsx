@@ -113,7 +113,7 @@ const RequestPTO = ({
           onClose={onClose}
           handleRemoteDeletion={handleRemoteDeletion}
         />
-        <EditModal isOpen={isOpenEdit} onClose={onCloseEdit} />
+        <EditModal isOpen={isOpenEdit} onClose={onCloseEdit} requestId={id} />
         {status === 'pending' ? (
           <>
             <Text {...styles.mainText}>You sent a request for {type}</Text>

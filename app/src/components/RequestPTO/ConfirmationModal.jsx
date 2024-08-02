@@ -25,7 +25,7 @@ export default function ConfirmationModal({
         </ModalBody>
         <ModalFooter>
           <Button onClick={onClose}>Cancel</Button>
-          <Button colorScheme="red" mr={3} onClick={handleRemoteDeletion}>
+          <Button colorScheme="red" ml={3} onClick={handleRemoteDeletion}>
             Delete
           </Button>
         </ModalFooter>
