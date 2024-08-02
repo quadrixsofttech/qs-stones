@@ -8,6 +8,7 @@ import {
   Icon,
   Spacer,
   Text,
+  useDisclosure,
 } from '@chakra-ui/react';
 import styles from './RequestPTO.styles';
 import { useEffect, useState } from 'react';
@@ -16,6 +17,9 @@ import { MoreInformationPanel } from './MoreInformationPanel';
 import statusTypes from './status';
 import { BiTrash } from 'react-icons/bi';
 import { useRemoteRequestDeletion } from './../../hooks/useRemoteRequestDeletion';
+import { BsThreeDots } from 'react-icons/bs';
+import ConfirmationModal from './ConfirmationModal';
+import EditModal from './EditModal';
 
 const RequestPTO = ({
   status = statusTypes.pending,
@@ -32,6 +36,12 @@ const RequestPTO = ({
 }) => {
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
   const { deleteRemoteRequest } = useRemoteRequestDeletion(id);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isOpenEdit,
+    onOpen: onOpenEdit,
+    onClose: onCloseEdit,
+  } = useDisclosure();
 
   const toggleAccordion = () => {
     setIsAccordionOpen(!isAccordionOpen);
@@ -44,6 +54,14 @@ const RequestPTO = ({
     } catch (error) {
       throw new Error('Error in deleting remote request');
     }
+  };
+
+  const handleOpen = () => {
+    onOpen();
+  };
+
+  const handleEdit = () => {
+    onOpenEdit();
   };
 
   useEffect(() => {
@@ -59,27 +77,43 @@ const RequestPTO = ({
           {type === 'remote' ? (
             <Icon
               as={BiTrash}
-              boxSize={6}
+              boxSize={5}
               color={'red.300'}
-              onClick={handleRemoteDeletion}
+              onClick={handleOpen}
               _hover={{
                 color: 'red.500',
               }}
             />
           ) : status === 'pending' ? (
-            <Icon
-              as={BiTrash}
-              boxSize={6}
-              color={'red.300'}
-              onClick={handleRemoteDeletion}
-              _hover={{
-                color: 'red.500',
-              }}
-            />
+            <Flex gap={1}>
+              <Icon
+                as={BsThreeDots}
+                boxSize={5}
+                onClick={handleEdit}
+                _hover={{
+                  color: 'purple.500',
+                }}
+              />
+              <Icon
+                as={BiTrash}
+                boxSize={5}
+                color={'red.300'}
+                onClick={handleOpen}
+                _hover={{
+                  color: 'red.500',
+                }}
+              />
+            </Flex>
           ) : (
             ''
           )}
         </Flex>
+        <ConfirmationModal
+          isOpen={isOpen}
+          onClose={onClose}
+          handleRemoteDeletion={handleRemoteDeletion}
+        />
+        <EditModal isOpen={isOpenEdit} onClose={onCloseEdit} />
         {status === 'pending' ? (
           <>
             <Text {...styles.mainText}>You sent a request for {type}</Text>

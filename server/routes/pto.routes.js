@@ -3,6 +3,7 @@ const router = express.Router();
 const PtoController = require('../controllers/pto.controller');
 
 router.post('/', PtoController.createPaidTimeOff);
+router.get('/', PtoController.getPendingPTO);
 router.patch('/', PtoController.updatePaidTimeOff);
 router.patch('/approve', PtoController.approvePaidTimeOff);
 router.patch('/reject', PtoController.rejectPaidTimeOff);

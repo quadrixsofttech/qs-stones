@@ -23,6 +23,18 @@ const createPaidTimeOff = async (req, res) => {
   }
 };
 
+const getPendingPTO = async (req, res) => {
+  try {
+    const { type } = req.params;
+    const allPtos = PtoService.getPendingPTO(type);
+    res.send(allPtos);
+  } catch (error) {
+    res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ success: false, message: error.message });
+  }
+};
+
 const updatePaidTimeOff = async (req, res) => {
   try {
     const { id, status, comment } = req.body;
@@ -140,4 +152,5 @@ module.exports = {
   rejectPaidTimeOff,
   getAwayUserCountForToday,
   deleteRemoteRequest,
+  getPendingPTO,
 };

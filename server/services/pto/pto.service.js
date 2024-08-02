@@ -7,10 +7,42 @@ const { sendEmail } = require('../../utils/mailer.js');
 
 const weekendDays = [6, 0];
 
-const getAllPTO = async () => {
+const getPendingPTO = async () => {
   try {
-    const pto = await PaidTimeOff.find().lean();
-    return pto;
+    const query =
+      type === 'time off'
+        ? {
+            type: { $ne: 'remote' },
+            status: 'pending',
+          }
+        : {
+            type: type,
+            status: 'pending',
+          };
+
+    const paidTimeOff = await PaidTimeOff.find(query)
+      .populate({ path: 'userId', select: '-password' })
+      .populate({ path: 'reviewerId', select: '-password' });
+
+    const formattedPaidTimeOff = paidTimeOff.map((paidtimeoff) => ({
+      _id: paidtimeoff._id,
+      dates: paidtimeoff.dates,
+      days: paidtimeoff.days,
+      createdAt: paidtimeoff.createdAt,
+      updatedAt: paidtimeoff.updatedAt,
+      type: paidtimeoff.type,
+      status: paidtimeoff.status,
+      userId: paidtimeoff.userId,
+      reviewerId: paidtimeoff.reviewerId,
+      comment: paidtimeoff.comment,
+      user: {
+        firstName: paidtimeoff.userId.firstName,
+        lastName: paidtimeoff.userId.lastName,
+      },
+    }));
+    return {
+      pto: formattedPaidTimeOff,
+    };
   } catch (err) {
     throw new Error(err);
   }
@@ -18,19 +50,20 @@ const getAllPTO = async () => {
 
 const getPTO = async (type) => {
   try {
-
-    const query = type === 'time off' ? {
-      type: {$ne: 'remote'},
-      status: 'approved'
-    } : {
-      type:type,
-      status:'approved'
-    };
+    const query =
+      type === 'time off'
+        ? {
+            type: { $ne: 'remote' },
+            status: 'approved',
+          }
+        : {
+            type: type,
+            status: 'approved',
+          };
 
     const paidTimeOff = await PaidTimeOff.find(query)
-      .populate({path: 'userId', select:'-password'})
-      .populate({path:'reviewerId',select:'-password'});
-
+      .populate({ path: 'userId', select: '-password' })
+      .populate({ path: 'reviewerId', select: '-password' });
 
     const formattedPaidTimeOff = paidTimeOff.map((paidtimeoff) => ({
       _id: paidtimeoff._id,
@@ -219,7 +252,6 @@ const approvePTO = async (id, reviewerId) => {
       pto.status = 'approved';
       pto.reviewerId = reviewerId;
       await pto.save();
-      
     } else if (ptoType === 'vacation') {
       let vacationDays = pto.days.length;
 
@@ -283,7 +315,6 @@ const approvePTO = async (id, reviewerId) => {
       pto.reviewerId = reviewerId;
 
       await Promise.all([pto.save(), user.save()]);
-
     }
     await sendEmail(
       user.email,
@@ -317,7 +348,6 @@ const rejectPTO = async (id, comment, reviewerId) => {
       `Your request for ${pto.type} has been rejected`
     );
     return pto;
-    
   } catch (err) {
     throw new Error({
       success: false,
@@ -398,7 +428,7 @@ const getUserDates = async (userId) => {
 };
 
 module.exports = {
-  getAllPTO,
+  getPendingPTO,
   getPTO,
   createPTO,
   updatePTO,
