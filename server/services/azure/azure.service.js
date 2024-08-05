@@ -64,7 +64,6 @@ const createCalendarEvent = async (accessToken, userId, eventData) => {
         dateTime: endDate,
         timeZone: "UTC",
       },
-      isAllDay: true,
       showAs: "free",
       originalStartTimeZone: "UTC",
       originalEndTimeZone: "UTC",
