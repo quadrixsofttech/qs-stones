@@ -19,7 +19,7 @@ const DashboardSidebar = () => {
         {user.role !== "novelic-user" && (
           <Flex {...styles.sideBarButton} as={NavLink} to="/dashboard">
             <BiSwim size={20} />
-            <Text>Remote/TO</Text>
+            <Text>TEST</Text>
           </Flex>
         )}
         <Flex {...styles.sideBarButton} as={NavLink} to="/conference">
