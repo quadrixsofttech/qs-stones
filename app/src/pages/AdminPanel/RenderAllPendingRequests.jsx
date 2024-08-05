@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Spinner, Text } from "@chakra-ui/react";
+import { Box, Spinner } from "@chakra-ui/react";
 import RequestComponent from "../../components/EmployeeComponent/SelectedEmployeeComponent/PendingRequests/RequestComponent";
 
 export const RenderAllPendingRequests = ({
@@ -16,7 +16,7 @@ export const RenderAllPendingRequests = ({
     <Box>
       {employees.map((user) =>
         user.pendingRequests.map((request) => (
-          <Box>
+          <Box key={request._id}>
             <RequestComponent
               employee={user}
               singleRequest={true}

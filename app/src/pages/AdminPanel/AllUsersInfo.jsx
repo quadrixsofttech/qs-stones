@@ -1,7 +1,6 @@
 import { Flex, Spinner } from "@chakra-ui/react";
 import ListOfEmployees from "../../components/ListOfEmployees/ListOfEmployees";
 import EmployeeComponent from "../../components/EmployeeComponent";
-import useGettingEmployees from "../../hooks/useGettigEmployees";
 import { useEffect, useState } from "react";
 import { usePaidTimeOff } from "../../hooks/usePTO";
 
