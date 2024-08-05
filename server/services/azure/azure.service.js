@@ -51,17 +51,19 @@ const createCalendarEvent = async (accessToken, userId, eventData) => {
     const startDate = new Date(parseInt(dates[0]));
     const endDate = new Date(parseInt(dates[1]) + 24 * 60 * 60 * 1000);
 
+    const formatDate = (date) => date.toISOString().split("T")[0];
+
     startDate.setHours(0, 0, 0, 0);
     endDate.setHours(0, 0, 0, 0);
 
     return {
       subject: eventData.type,
       start: {
-        dateTime: startDate,
+        dateTime: formatDate(startDate),
         timeZone: "UTC",
       },
       end: {
-        dateTime: endDate,
+        dateTime: formatDate(endDate),
         timeZone: "UTC",
       },
     };
