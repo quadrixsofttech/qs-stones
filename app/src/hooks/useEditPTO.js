@@ -11,21 +11,9 @@ const editPTO = async ({ id, type, dates }) => {
 };
 
 export const useEditPTO = () => {
-  const mutation = useMutation({
-    mutationFn: editPTO,
-    onSuccess: (data) => {
-      console.log('Request updated successfully', data);
-    },
-    onError: (error) => {
-      console.error('Error in updating PTO', error);
-    },
-  });
+  const mutation = useMutation(editPTO);
 
   return {
-    editPTO: mutation.mutate,
-    isLoading: mutation.isLoading,
-    isError: mutation.isError,
-    error: mutation.error,
-    isSuccess: mutation.isSuccess,
+    editPTO: mutation.mutateAsync,
   };
 };

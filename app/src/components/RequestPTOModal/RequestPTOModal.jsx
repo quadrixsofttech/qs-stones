@@ -37,6 +37,7 @@ export const RequestPTOModal = ({
   onClose,
   isOpenEdit,
   onCloseEdit,
+  setRefetchCalendarData,
 }) => {
   const { user } = useUser();
   const { paidTimeOffHistory } = usePaidTimeOff(user._id);
@@ -64,13 +65,14 @@ export const RequestPTOModal = ({
     useState(undefined);
   const toast = useToast();
 
-  const handleSubmitOnEdit = () => {
+  const handleSubmitOnEdit = async () => {
     try {
-      editPTO({
+      await editPTO({
         id: matchingRequest?._id,
         type: selectedTimeOffType.toLowerCase(),
         dates: VacationDates,
       });
+      setRefetchCalendarData((prevState) => !prevState);
       toast({
         title: 'Success',
         description: 'You have successfully updated your request',
@@ -84,7 +86,7 @@ export const RequestPTOModal = ({
     } catch (err) {
       toast({
         title: 'Something went wrong',
-        description: 'Error in updateing request',
+        description: 'Error in updating request',
         position: 'top-right',
         status: 'error',
         isClosable: true,

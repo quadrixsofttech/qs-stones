@@ -118,7 +118,11 @@ const RequestPTO = ({
           handleRemoteDeletion={handleRemoteDeletion}
         />
         {isEditMode && (
-          <RequestPTOModal isOpenEdit={isOpenEdit} onCloseEdit={onCloseEdit} />
+          <RequestPTOModal
+            isOpenEdit={isOpenEdit}
+            onCloseEdit={onCloseEdit}
+            setRefetchCalendarData={setRefetchCalendarData}
+          />
         )}
         {status === 'pending' ? (
           <>
