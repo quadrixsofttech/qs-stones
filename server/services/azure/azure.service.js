@@ -47,23 +47,33 @@ const createCalendarEvent = async (accessToken, userId, eventData) => {
     "Content-type": "application/json",
   };
 
-  const event = {
-    subject: eventData.type,
-    start: {
-      dateTime: new Date(eventData.startDate).toISOString(),
-      timeZone: "UTC",
-    },
-    end: {
-      dateTime: new Date(eventData.endDate).toISOString(),
-      timeZone: "UTC",
-    },
-  };
+  const events = eventData.range.map((dates) => {
+    const startDate = new Date(parseInt(dates[0]));
+    const endDate = new Date(parseInt(dates[1]) + 24 * 60 * 60 * 1000);
+
+    startDate.setHours(0, 0, 0, 0);
+    endDate.setHours(0, 0, 0, 0);
+
+    return {
+      subject: eventData.type,
+      start: {
+        dateTime: startDate,
+        timeZone: "UTC",
+      },
+      end: {
+        dateTime: endDate,
+        timeZone: "UTC",
+      },
+    };
+  });
 
   try {
-    const response = await axios.post(graphEndpoint, event, { headers });
-    return response.data;
+    events.forEach(async (event) => {
+      await axios.post(graphEndpoint, event, { headers });
+      console.log(`Event created successfully: ${event.subject}`);
+    });
   } catch (error) {
-    console.error("Error creating Event", error);
+    console.error("Error creating event:", error);
     throw error;
   }
 };

@@ -1,7 +1,6 @@
 const express = require("express");
 const { requireAuth } = require("../middleware/user");
 const UserController = require("../controllers/user.controller");
-const AzureController = require("../controllers/azure.controller");
 
 const router = express.Router();
 
@@ -14,7 +13,5 @@ router.get("/vacations/:id", UserController.getVacations);
 router.patch("/user-role", UserController.updateRole);
 router.patch("/change-password", UserController.changePassword);
 router.get("/holidays", UserController.getHolidays);
-router.get("/get-office-user", AzureController.getOfficeUser);
-router.post("/create-event", AzureController.createEvent);
 
 module.exports = router;

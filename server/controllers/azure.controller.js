@@ -14,19 +14,8 @@ const createEvent = async (req, res) => {
     res.status(201).json(event);
   } catch (error) {
     console.error("Error in creatign Event", error);
-    res.status(500).json({ error: "Ovde puca" });
+    res.status(500).json({ error: "Something went wrong when creating event" });
   }
 };
 
-const getOfficeUser = async (req, res) => {
-  const { email } = req.body;
-  try {
-    const accessToken = await AzureService.acquireToken(email);
-    const user = await AzureService.getUserId(accessToken, email);
-    return res.json(user);
-  } catch (error) {
-    return res.json("Error");
-  }
-};
-
-module.exports = { createEvent, getOfficeUser };
+module.exports = { createEvent };
