@@ -5,7 +5,7 @@ export const formatCurrency = (num) => {
 };
 
 export const capitalizeFirstLetter = (string) => {
-  return string.charAt(0).toUpperCase() + string.slice(1);
+  return string?.charAt(0).toUpperCase() + string?.slice(1);
 };
 
 export const showDateRangesAsString = (range) => {
@@ -37,4 +37,19 @@ export function groupDatesIntoRanges(dates) {
     }
   }
   return groupedRanges;
+}
+
+export function formatDateRange(startDate, endDate) {
+  const formatSingleDate = (date) => {
+    return typeof date === 'string' ? date : date?.format('YYYY/MM/DD');
+  };
+
+  const formattedStartDate = formatSingleDate(startDate);
+  const formattedEndDate = formatSingleDate(endDate);
+
+  if (formattedStartDate === formattedEndDate) {
+    return formattedStartDate;
+  }
+
+  return `${formattedStartDate}-${formattedEndDate}`;
 }

@@ -42,7 +42,7 @@ export const RequestPTOModal = ({
   const { isEditMode, requestPTOId, setEditMode } = useContext(DatesContext);
 
   const matchingRequest = paidTimeOffHistory.find(
-    (request) => request._id === requestPTOId
+    (request) => request?._id === requestPTOId
   );
 
   const {
