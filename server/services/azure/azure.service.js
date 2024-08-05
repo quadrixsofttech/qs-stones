@@ -57,13 +57,16 @@ const createCalendarEvent = async (accessToken, userId, eventData) => {
     return {
       subject: eventData.type,
       start: {
-        dateTime: startDate,
-        timeZone: "UTC",
+        dateTime: startDate.toDateString(),
+        timeZone: "Europe/Belgrade",
       },
       end: {
-        dateTime: endDate,
-        timeZone: "UTC",
+        dateTime: endDate.toDateString(),
+        timeZone: "Europe/Belgrade",
       },
+      showAs: "free",
+      originalStartTimeZone: "Europe/Belgrade",
+      originalEndTimeZone: "Europe/Belgrade",
     };
   });
 
