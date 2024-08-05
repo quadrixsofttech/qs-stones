@@ -56,11 +56,16 @@ const createCalendarEvent = async (accessToken, userId, eventData) => {
 
     return {
       subject: eventData.type,
-      start: {
-        date: startDate.toDateString(),
-      },
-      end: {
-        date: endDate.toDateString(),
+      // start: {
+      //   date: startDate.toDateString(),
+      // },
+      // end: {
+      //   date: endDate.toDateString(),
+      // },
+      range: {
+        type: "endDate",
+        startDate: startDate.toDateString(),
+        endDate: endDate.toDateString(),
       },
       showAs: "free",
       originalStartTimeZone: "UTC",
