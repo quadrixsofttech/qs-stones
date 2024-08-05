@@ -219,16 +219,75 @@ const createPTO = async ({
   }
 };
 
-const updatePTO = async (id, updates) => {
+const updatePTO = async (id, type, dates) => {
   try {
-    const pto = await PaidTimeOff.findByIdAndUpdate(
-      id,
-      { $set: updates },
-      { new: true }
+    const pto = await PaidTimeOff.findById(id);
+    if (!pto) {
+      throw new CustomError('PTO record not found', 404);
+    }
+
+    const user = await User.findById(pto.userId);
+    if (!user) {
+      throw new CustomError('User not found', 404);
+    }
+
+    if (
+      !Array.isArray(dates) ||
+      dates.some((d) => !Array.isArray(d) || d.length !== 2)
+    ) {
+      throw new CustomError('Invalid dates format', 400);
+    }
+
+    const days = dates.reduce((acc, [startDate, endDate]) => {
+      const start = moment(startDate);
+      const end = moment(endDate);
+      const totalDays = end.diff(start, 'days') + 1;
+      const generatedDates = Array.from({ length: totalDays }, (_, index) =>
+        start.clone().add(index, 'days').format('YYYY-MM-DD')
+      );
+
+      const filteredDates = generatedDates.filter((date) => {
+        const isHoliday = holidays.some((holiday) => holiday.date === date);
+        const isWeekend = weekendDays.includes(moment(date).day());
+        return !isHoliday && !isWeekend;
+      });
+
+      return [...acc, ...filteredDates];
+    }, []);
+
+    const existingPTO = await PaidTimeOff.find({
+      userId: pto.userId,
+      days: { $in: days },
+      _id: { $ne: id },
+    });
+
+    if (existingPTO.length > 0) {
+      throw new CustomError(
+        'Some of the selected dates are already scheduled for remote work or PTO',
+        422
+      );
+    }
+
+    if (type === 'paid time off' && days.length > 5) {
+      throw new CustomError('Number of days exceeds limit', 422);
+    }
+
+    pto.type = type;
+    pto.dates = dates;
+    pto.days = days;
+
+    await pto.save();
+    
+    await sendEmail(
+      'katarina.kujundzic@quadrixsoft.com',
+      `Request for ${type}`,
+      `${user.firstName} ${user.lastName} has updated their request for ${type} at http://stones.examia.io/admin`
     );
+
     return pto;
   } catch (err) {
-    throw new Error({ success: false, message: 'Problem in updateing pto' });
+    console.error('Error in updatePTO:', err);
+    throw new CustomError('Something went wrong', 500);
   }
 };
 

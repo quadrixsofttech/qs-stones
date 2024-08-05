@@ -5,6 +5,7 @@ const PtoController = require('../controllers/pto.controller');
 router.post('/', PtoController.createPaidTimeOff);
 router.get('/', PtoController.getPendingPTO);
 router.patch('/', PtoController.updatePaidTimeOff);
+router.patch('/edit', PtoController.updateOnEdit);
 router.patch('/approve', PtoController.approvePaidTimeOff);
 router.patch('/reject', PtoController.rejectPaidTimeOff);
 router.get('/history/:userId', PtoController.getUserHistory);

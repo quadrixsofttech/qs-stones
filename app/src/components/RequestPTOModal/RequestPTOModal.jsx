@@ -30,6 +30,7 @@ import useAdmins from '../../hooks/useAdmins';
 import { usePaidTimeOff } from './../../hooks/usePTO';
 import { DatesContext } from '../../context/DatesContext';
 import { capitalizeFirstLetter } from '../../util';
+import { useEditPTO } from '../../hooks/useEditPTO';
 
 export const RequestPTOModal = ({
   isOpen,
@@ -40,6 +41,7 @@ export const RequestPTOModal = ({
   const { user } = useUser();
   const { paidTimeOffHistory } = usePaidTimeOff(user._id);
   const { isEditMode, requestPTOId, setEditMode } = useContext(DatesContext);
+  const { editPTO } = useEditPTO();
 
   const matchingRequest = paidTimeOffHistory.find(
     (request) => request?._id === requestPTOId
@@ -56,11 +58,41 @@ export const RequestPTOModal = ({
   const { createPTO } = useEmployees();
 
   const [selectedTimeOffType, setSelectedTimeOff] = useState(
-    matchingRequest ? capitalizeFirstLetter(matchingRequest.type) : null
+    isEditMode ? capitalizeFirstLetter(matchingRequest?.type) : null
   );
   const [selectedPaidTimeOffType, setSelectedPaidTimeOffType] =
     useState(undefined);
   const toast = useToast();
+
+  const handleSubmitOnEdit = () => {
+    try {
+      editPTO({
+        id: matchingRequest?._id,
+        type: selectedTimeOffType.toLowerCase(),
+        dates: VacationDates,
+      });
+      toast({
+        title: 'Success',
+        description: 'You have successfully updated your request',
+        position: 'top-right',
+        status: 'success',
+        isClosable: true,
+        colorScheme: 'green',
+        variant: 'subtle',
+      });
+      onCloseEdit();
+    } catch (err) {
+      toast({
+        title: 'Something went wrong',
+        description: 'Error in updateing request',
+        position: 'top-right',
+        status: 'error',
+        isClosable: true,
+        colorScheme: 'red',
+        variant: 'subtle',
+      });
+    }
+  };
 
   if (adminsLoading) {
     return <Spinner />;
@@ -175,9 +207,7 @@ export const RequestPTOModal = ({
                 setSelectedTimeOff(e.target.value);
               }}
               placeholder="Select type of time off"
-              value={
-                isEditMode ? capitalizeFirstLetter(matchingRequest?.type) : null
-              }
+              value={selectedTimeOffType}
             >
               {Object.values(timeOffTypes).map((type) => {
                 return (
@@ -249,9 +279,7 @@ export const RequestPTOModal = ({
                 Cancel
               </Button>
               <Button
-                onClick={() => {
-                  submitTORequest();
-                }}
+                onClick={isEditMode ? handleSubmitOnEdit : submitTORequest}
                 {...styles.button}
               >
                 Submit Request

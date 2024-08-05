@@ -57,17 +57,21 @@ const updatePaidTimeOff = async (req, res) => {
 
 const updateOnEdit = async (req, res) => {
   try {
-    const { id, startDate, endDate } = req.body;
-    const updatedPTO = await PtoService.updatePTO(id, { startDate, endDate });
-
-    if (!updatedPTO) {
-      return res
-        .status(StatusCodes.INTERNAL_SERVER_ERROR)
-        .json({ success: false, message: 'PTO not found' });
+    const { id, type, dates } = req.body;
+    if (!id || !type || !dates) {
+      return res.status(StatusCodes.BAD_REQUEST).json({
+        success: false,
+        message: 'Missing required fields: id, type, or dates',
+      });
     }
-    res
-      .status(StatusCodes.OK)
-      .json({ success: true, message: 'PTO updated successfully', updatedPTO });
+
+    const updatedPTO = await PtoService.updatePTO(id, type, dates);
+
+    res.status(StatusCodes.OK).json({
+      success: true,
+      message: 'TO updated successfully',
+      updatedPTO,
+    });
   } catch (err) {
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
@@ -173,5 +177,5 @@ module.exports = {
   getAwayUserCountForToday,
   deleteRemoteRequest,
   getPendingPTO,
-  updateOnEdit
+  updateOnEdit,
 };
