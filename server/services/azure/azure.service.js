@@ -49,7 +49,7 @@ const createCalendarEvent = async (accessToken, userId, eventData) => {
 
   const events = eventData.range.map((dates) => {
     const startDate = new Date(parseInt(dates[0]));
-    const endDate = new Date(parseInt(dates[1]));
+    const endDate = new Date(parseInt(dates[1]) + 24 * 60 * 60 * 1000);
 
     startDate.setHours(0, 0, 0, 0);
     endDate.setHours(0, 0, 0, 0);
