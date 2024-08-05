@@ -12,8 +12,6 @@ export const RenderAllPendingRequests = ({
     return <Spinner />;
   }
 
-  console.log(employees);
-
   return (
     <Box>
       {employees.map((user) =>

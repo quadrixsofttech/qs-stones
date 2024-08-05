@@ -14,6 +14,7 @@ import { capitalizeFirstLetter } from "../../../../util";
 import useEmployees from "../../../../hooks/useEmployees";
 import RejectRequestModal from "../RejectRequestModal/RejectRequestModal";
 import useUser from "../../../../hooks/useUser";
+import { useAzure } from "../../../../hooks/useAzure";
 
 const RequestComponent = ({
   type,
@@ -28,6 +29,7 @@ const RequestComponent = ({
   employee,
 }) => {
   const { approvePaidTimeOff, rejectPaidTimeOff } = useEmployees();
+  const { createCalendarEvent } = useAzure();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
 
@@ -35,6 +37,14 @@ const RequestComponent = ({
 
   const handleApproveRequst = async (id) => {
     await approvePaidTimeOff(id, user._id);
+    await createCalendarEvent.mutateAsync({
+      email: employee.email,
+      eventData: {
+        type: type.toUpperCase(),
+        range: range,
+      },
+    });
+
     refetchEmployees();
     toast({
       position: "top-right",
