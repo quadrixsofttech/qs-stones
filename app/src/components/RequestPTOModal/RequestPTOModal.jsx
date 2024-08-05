@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Divider,
   Flex,
@@ -27,6 +28,7 @@ import { RenderRangeTags } from "./RenderRangeTags";
 import { timeOffTypes } from "../../constants/TimeOffTypes";
 import { paidTimeOffTypes } from "../../constants/PaidTimeOffTypes";
 import useAdmins from "../../hooks/useAdmins";
+import ClearAllBtn from "./ClearAllBtn";
 
 export const RequestPTOModal = ({ isOpen, onClose }) => {
   const {
@@ -208,6 +210,11 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
               />
             );
           })}
+          <Box marginTop={"2"} height={"20px"}>
+            {VacationDates.length >= 2 && (
+              <ClearAllBtn handleClick={() => setVacationDates([])} />
+            )}
+          </Box>
           <ModalFooter>
             <>
               <Button

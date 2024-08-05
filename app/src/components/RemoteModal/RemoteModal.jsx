@@ -13,15 +13,16 @@ import {
   Tooltip,
   useToast,
   Box,
-} from '@chakra-ui/react';
-import styles from '../RequestPTOModal/RequestPTOModal.styles';
-import { Calendar } from 'react-multi-date-picker';
-import { useCalendar } from '../../hooks/useCalendar';
-import { InfoIcon } from '@chakra-ui/icons';
-import useUser from '../../hooks/useUser';
-import useEmployees from '../../hooks/useEmployees';
-import moment from 'moment';
-import { RenderRangeTags } from '../RequestPTOModal/RenderRangeTags';
+} from "@chakra-ui/react";
+import styles from "../RequestPTOModal/RequestPTOModal.styles";
+import { Calendar } from "react-multi-date-picker";
+import { useCalendar } from "../../hooks/useCalendar";
+import { InfoIcon } from "@chakra-ui/icons";
+import useUser from "../../hooks/useUser";
+import useEmployees from "../../hooks/useEmployees";
+import moment from "moment";
+import { RenderRangeTags } from "../RequestPTOModal/RenderRangeTags";
+import ClearAllBtn from "../RequestPTOModal/ClearAllBtn";
 
 export const RemoteModal = ({ isOpen, onClose, setRefetchCalendarData }) => {
   const { RemoteDates, setRemoteDates, handleRemoteDates, removeRemoteTag } =
@@ -42,44 +43,44 @@ export const RemoteModal = ({ isOpen, onClose, setRefetchCalendarData }) => {
         if (RemoteDates.length >= 1) {
           await createPTO.mutateAsync({
             dates: RemoteDates,
-            type: 'remote',
-            status: 'approved',
+            type: "remote",
+            status: "approved",
             userId: user._id,
             reviewerId: null,
-            comment: '',
+            comment: "",
           });
           toast({
-            title: 'Success',
-            description: 'You have scheduled work from home',
-            position: 'top-right',
-            status: 'success',
+            title: "Success",
+            description: "You have scheduled work from home",
+            position: "top-right",
+            status: "success",
             isClosable: true,
-            colorScheme: 'green',
-            variant: 'subtle',
+            colorScheme: "green",
+            variant: "subtle",
           });
           onClose();
           handleToggleRefetch();
         }
       } else {
         toast({
-          title: 'Warning',
-          description: 'Please select a date',
-          position: 'top-right',
-          status: 'warning',
+          title: "Warning",
+          description: "Please select a date",
+          position: "top-right",
+          status: "warning",
           isClosable: true,
-          colorScheme: 'yellow',
-          variant: 'subtle',
+          colorScheme: "yellow",
+          variant: "subtle",
         });
       }
     } catch (error) {
       toast({
-        title: 'Error',
-        description: 'That date is already scheduled',
-        position: 'top-right',
-        status: 'warning',
+        title: "Error",
+        description: "That date is already scheduled",
+        position: "top-right",
+        status: "warning",
         isClosable: true,
-        colorScheme: 'red',
-        variant: 'subtle',
+        colorScheme: "red",
+        variant: "subtle",
       });
     }
   };
@@ -93,7 +94,7 @@ export const RemoteModal = ({ isOpen, onClose, setRefetchCalendarData }) => {
         onClose();
       }}
       motionPreset="slideInBottom"
-      size={'3xl'}
+      size={"3xl"}
     >
       <ModalOverlay />
       <ModalContent>
@@ -103,7 +104,7 @@ export const RemoteModal = ({ isOpen, onClose, setRefetchCalendarData }) => {
         <Divider />
         <ModalCloseButton />
         <ModalBody>
-          <Flex gap={2} alignItems={'center'}>
+          <Flex gap={2} alignItems={"center"}>
             <Text {...styles.modalTitle}>Remote</Text>
             <Tooltip
               label="*Double-click to select a date on the calendar. 
@@ -111,12 +112,12 @@ export const RemoteModal = ({ isOpen, onClose, setRefetchCalendarData }) => {
               hasArrow
               placement="right"
             >
-              <InfoIcon color={'gray.400'} mt="1" />
+              <InfoIcon color={"gray.400"} mt="1" />
             </Tooltip>
           </Flex>
           <Flex alignItems="center" justifyContent="center">
             <Calendar
-              minDate={new moment().format('YYYY-MM-DD')}
+              minDate={new moment().format("YYYY-MM-DD")}
               range
               numberOfMonths={2}
               multiple
@@ -138,6 +139,12 @@ export const RemoteModal = ({ isOpen, onClose, setRefetchCalendarData }) => {
                 />
               );
             })}
+
+            <Box marginTop={"2"} height={"20px"}>
+              {RemoteDates.length >= 2 && (
+                <ClearAllBtn handleClick={() => setRemoteDates([])} />
+              )}
+            </Box>
             <Divider marginTop="4" />
           </Box>
           <ModalFooter>
@@ -147,7 +154,7 @@ export const RemoteModal = ({ isOpen, onClose, setRefetchCalendarData }) => {
                   onClose();
                   setRemoteDates([]);
                 }}
-                variant={'outline'}
+                variant={"outline"}
               >
                 Cancel
               </Button>
