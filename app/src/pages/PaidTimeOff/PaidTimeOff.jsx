@@ -46,6 +46,7 @@ const PaidTimeOff = () => {
       <RequestPTOModal
         isOpen={isOpenTimeOff}
         onClose={onCloseTimeOff}
+        setRefetchCalendarData={setRefetchCalendarData}
       />
       <Flex gap={4} pb={4}>
         <Flex flexDir={'column'}>

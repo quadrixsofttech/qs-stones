@@ -65,6 +65,10 @@ export const RequestPTOModal = ({
     useState(undefined);
   const toast = useToast();
 
+  const handleToggleRefetch = () => {
+    setRefetchCalendarData((prevRefetch) => !prevRefetch);
+  };
+
   const handleSubmitOnEdit = async () => {
     try {
       await editPTO({
@@ -72,7 +76,6 @@ export const RequestPTOModal = ({
         type: selectedTimeOffType.toLowerCase(),
         dates: VacationDates,
       });
-      setRefetchCalendarData((prevState) => !prevState);
       toast({
         title: 'Success',
         description: 'You have successfully updated your request',
@@ -82,6 +85,7 @@ export const RequestPTOModal = ({
         colorScheme: 'green',
         variant: 'subtle',
       });
+      handleToggleRefetch();
       onCloseEdit();
     } catch (err) {
       toast({
@@ -129,6 +133,7 @@ export const RequestPTOModal = ({
             reviewerId: null,
             comment: '',
           });
+          handleToggleRefetch();
           toast({
             title: 'Success',
             description:
