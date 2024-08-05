@@ -49,7 +49,7 @@ const createCalendarEvent = async (accessToken, userId, eventData) => {
 
   const events = eventData.range.map((dates) => {
     const startDate = new Date(parseInt(dates[0]));
-    const endDate = new Date(parseInt(dates[1]) + 24 * 60 * 60 * 1000);
+    const endDate = new Date(parseInt(dates[1]));
 
     const formatDate = (date) => date.toISOString().split("T")[0];
 
@@ -66,6 +66,10 @@ const createCalendarEvent = async (accessToken, userId, eventData) => {
         dateTime: formatDate(endDate),
         timeZone: "UTC",
       },
+      isAllDay: true,
+      showAs: "free",
+      originalStartTimeZone: "UTC",
+      originalEndTimeZone: "UTC",
     };
   });
 
