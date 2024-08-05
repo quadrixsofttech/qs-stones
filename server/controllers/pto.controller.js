@@ -55,6 +55,26 @@ const updatePaidTimeOff = async (req, res) => {
   }
 };
 
+const updateOnEdit = async (req, res) => {
+  try {
+    const { id, startDate, endDate } = req.body;
+    const updatedPTO = await PtoService.updatePTO(id, { startDate, endDate });
+
+    if (!updatedPTO) {
+      return res
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ success: false, message: 'PTO not found' });
+    }
+    res
+      .status(StatusCodes.OK)
+      .json({ success: true, message: 'PTO updated successfully', updatedPTO });
+  } catch (err) {
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ success: false, message: err.message });
+  }
+};
+
 const approvePaidTimeOff = async (req, res) => {
   try {
     const { id, reviewerId } = req.body;
@@ -153,4 +173,5 @@ module.exports = {
   getAwayUserCountForToday,
   deleteRemoteRequest,
   getPendingPTO,
+  updateOnEdit
 };

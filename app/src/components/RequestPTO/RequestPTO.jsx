@@ -11,7 +11,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import styles from './RequestPTO.styles';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import RequestStatus from './RequestStatus/RequestStatus';
 import { MoreInformationPanel } from './MoreInformationPanel';
 import statusTypes from './status';
@@ -19,7 +19,8 @@ import { BiTrash } from 'react-icons/bi';
 import { useRemoteRequestDeletion } from './../../hooks/useRemoteRequestDeletion';
 import { BsThreeDots } from 'react-icons/bs';
 import ConfirmationModal from './ConfirmationModal';
-import EditModal from './EditModal';
+import { DatesContext } from '../../context/DatesContext';
+import { RequestPTOModal } from '../RequestPTOModal/RequestPTOModal';
 
 const RequestPTO = ({
   status = statusTypes.pending,
@@ -42,6 +43,7 @@ const RequestPTO = ({
     onOpen: onOpenEdit,
     onClose: onCloseEdit,
   } = useDisclosure();
+  const { setId, setEditMode, isEditMode } = useContext(DatesContext);
 
   const toggleAccordion = () => {
     setIsAccordionOpen(!isAccordionOpen);
@@ -60,8 +62,10 @@ const RequestPTO = ({
     onOpen();
   };
 
-  const handleEdit = () => {
+  const handleEdit = (id) => {
     onOpenEdit();
+    setId(id);
+    setEditMode(true);
   };
 
   useEffect(() => {
@@ -89,7 +93,7 @@ const RequestPTO = ({
               <Icon
                 as={BsThreeDots}
                 boxSize={5}
-                onClick={handleEdit}
+                onClick={() => handleEdit(id)}
                 _hover={{
                   color: 'purple.500',
                 }}
@@ -113,7 +117,9 @@ const RequestPTO = ({
           onClose={onClose}
           handleRemoteDeletion={handleRemoteDeletion}
         />
-        <EditModal isOpen={isOpenEdit} onClose={onCloseEdit} requestId={id} />
+        {isEditMode && (
+          <RequestPTOModal isOpenEdit={isOpenEdit} onCloseEdit={onCloseEdit} />
+        )}
         {status === 'pending' ? (
           <>
             <Text {...styles.mainText}>You sent a request for {type}</Text>

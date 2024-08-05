@@ -13,6 +13,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 import theme from './theme';
+import { DatesProvider } from './context/DatesContext';
 
 const queryClient = new QueryClient();
 
@@ -24,7 +25,9 @@ function App() {
           <Suspense fallback={<Loading />}>
             <AuthProvider>
               <FetchProvider>
-                <AppRoutes />
+                <DatesProvider>
+                  <AppRoutes />
+                </DatesProvider>
               </FetchProvider>
             </AuthProvider>
           </Suspense>
