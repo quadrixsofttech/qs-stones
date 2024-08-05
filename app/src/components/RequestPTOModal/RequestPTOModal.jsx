@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Divider,
   Flex,
@@ -31,6 +32,7 @@ import { usePaidTimeOff } from './../../hooks/usePTO';
 import { DatesContext } from '../../context/DatesContext';
 import { capitalizeFirstLetter } from '../../util';
 import { useEditPTO } from '../../hooks/useEditPTO';
+import ClearAllBtn from "./ClearAllBtn";
 
 export const RequestPTOModal = ({
   isOpen,
@@ -273,6 +275,11 @@ export const RequestPTOModal = ({
               />
             );
           })}
+          <Box marginTop={"2"} height={"20px"}>
+            {VacationDates.length >= 2 && (
+              <ClearAllBtn handleClick={() => setVacationDates([])} />
+            )}
+          </Box>
           <ModalFooter>
             <>
               <Button
