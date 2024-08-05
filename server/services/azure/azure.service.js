@@ -51,25 +51,22 @@ const createCalendarEvent = async (accessToken, userId, eventData) => {
     const startDate = new Date(parseInt(dates[0]));
     const endDate = new Date(parseInt(dates[1]));
 
-    // startDate.setHours(0, 0, 0, 0);
-    // endDate.setHours(0, 0, 0, 0);
+    startDate.setHours(0, 0, 0, 0);
+    endDate.setHours(0, 0, 0, 0);
 
     return {
       subject: eventData.type,
-      // start: {
-      //   date: startDate.toDateString(),
-      // },
-      // end: {
-      //   date: endDate.toDateString(),
-      // },
-      range: {
-        type: "endDate",
-        startDate: startDate.toDateString(),
-        endDate: endDate.toDateString(),
+      start: {
+        dateTime: startDate.toDateString(),
+        timeZone: "Europe/Belgrade",
+      },
+      end: {
+        dateTime: endDate.toDateString(),
+        timeZone: "Europe/Belgrade",
       },
       showAs: "free",
-      originalStartTimeZone: "UTC",
-      originalEndTimeZone: "UTC",
+      originalStartTimeZone: "Europe/Belgrade",
+      originalEndTimeZone: "Europe/Belgrade",
     };
   });
 
