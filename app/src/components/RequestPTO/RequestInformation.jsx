@@ -1,4 +1,4 @@
-import { Text } from '@chakra-ui/react';
+import { Box, Text } from '@chakra-ui/react';
 import styles from './RequestPTO.styles';
 
 export const RequestInformation = ({ status, type, requestedDates, user }) => {
@@ -13,15 +13,17 @@ export const RequestInformation = ({ status, type, requestedDates, user }) => {
           {type === 'remote' ? (
             <Text {...styles.mainText}>
               You applied for remote work for{' '}
-              <Text color={'purple.500'}>{requestedDates}</Text>
+              <Box as="span" color={'purple.500'}>
+                {requestedDates}
+              </Box>
             </Text>
           ) : (
             <Text {...styles.mainText}>
               You sent request for {type} to
-              <Text {...styles.adminText} as="span">
+              <Box as="span" {...styles.adminText}>
                 {' '}
                 {user?.firstName} {user?.lastName} (ADMIN)
-              </Text>
+              </Box>
             </Text>
           )}
         </>
