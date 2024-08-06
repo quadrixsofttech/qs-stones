@@ -1,5 +1,5 @@
 import { Tag, TagCloseButton, TagLabel } from '@chakra-ui/react';
-import styles from './RenderDates.styles';
+import styles from './styles/RenderDates.styles';
 import { formatDateRange } from '../../util';
 
 export const RenderRangeTags = ({

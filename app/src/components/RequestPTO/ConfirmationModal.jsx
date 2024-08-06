@@ -12,7 +12,7 @@ import {
 export default function ConfirmationModal({
   isOpen,
   onClose,
-  handleRemoteDeletion,
+  handleRequestDeletion,
 }) {
   return (
     <Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose}>
@@ -25,7 +25,7 @@ export default function ConfirmationModal({
         </ModalBody>
         <ModalFooter>
           <Button onClick={onClose}>Cancel</Button>
-          <Button colorScheme="red" ml={3} onClick={handleRemoteDeletion}>
+          <Button colorScheme="red" ml={3} onClick={handleRequestDeletion}>
             Delete
           </Button>
         </ModalFooter>

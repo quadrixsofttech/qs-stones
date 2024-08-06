@@ -49,7 +49,7 @@ const RequestPTO = ({
     setIsAccordionOpen(!isAccordionOpen);
   };
 
-  const handleRemoteDeletion = async () => {
+  const handleRequestDeletion = async () => {
     try {
       await deleteRemoteRequest.mutateAsync(id);
       setRefetchCalendarData((prevState) => !prevState);
@@ -115,13 +115,14 @@ const RequestPTO = ({
         <ConfirmationModal
           isOpen={isOpen}
           onClose={onClose}
-          handleRemoteDeletion={handleRemoteDeletion}
+          handleRequestDeletion={handleRequestDeletion}
         />
         {isEditMode && (
           <RequestPTOModal
             isOpenEdit={isOpenEdit}
             onCloseEdit={onCloseEdit}
             setRefetchCalendarData={setRefetchCalendarData}
+            handleRequestDeletion={handleRequestDeletion}
           />
         )}
         {status === 'pending' ? (

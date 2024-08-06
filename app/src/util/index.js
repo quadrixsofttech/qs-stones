@@ -1,7 +1,7 @@
-import moment from "moment";
+import moment from 'moment';
 
 export const formatCurrency = (num) => {
-  return `$${num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
+  return `$${num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}`;
 };
 
 export const capitalizeFirstLetter = (string) => {
@@ -9,13 +9,13 @@ export const capitalizeFirstLetter = (string) => {
 };
 
 export const showDateRangesAsString = (range) => {
-  var formattedDates = "";
+  var formattedDates = '';
   range.forEach((dateRange) => {
     const startDate = moment(parseInt(dateRange[0]));
     const endDate = moment(parseInt(dateRange[1]));
 
-    const formattedStartDate = startDate.format("YYYY/MM/DD");
-    const formattedEndDate = endDate.format("YYYY/MM/DD");
+    const formattedStartDate = startDate.format('YYYY/MM/DD');
+    const formattedEndDate = endDate.format('YYYY/MM/DD');
 
     const formattedDate = `${formattedStartDate}-${formattedEndDate}; `;
     formattedDates += formattedDate;
@@ -53,3 +53,13 @@ export function formatDateRange(startDate, endDate) {
 
   return `${formattedStartDate}-${formattedEndDate}`;
 }
+
+export const formatTimestampToDate = (timestamp) => {
+  const ts = Number(timestamp);
+  const dateObj = ts > 1000000000000 ? new Date(ts) : new Date(ts * 1000);
+
+  const year = dateObj.getFullYear();
+  const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+  const day = String(dateObj.getDate()).padStart(2, '0');
+  return `${year}/${month}/${day}`;
+};
