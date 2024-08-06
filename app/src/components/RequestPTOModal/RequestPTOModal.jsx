@@ -15,136 +15,198 @@ import {
   Text,
   Tooltip,
   useToast,
-} from "@chakra-ui/react";
-import styles from "./RequestPTOModal.styles";
-import { Calendar } from "react-multi-date-picker";
-import { useState } from "react";
-import { useCalendar } from "../../hooks/useCalendar";
-import { InfoIcon } from "@chakra-ui/icons";
-import useUser from "../../hooks/useUser";
-import useEmployees from "../../hooks/useEmployees";
-import moment from "moment";
-import { RenderRangeTags } from "./RenderRangeTags";
-import { timeOffTypes } from "../../constants/TimeOffTypes";
-import { paidTimeOffTypes } from "../../constants/PaidTimeOffTypes";
-import useAdmins from "../../hooks/useAdmins";
-import ClearAllBtn from "./ClearAllBtn";
+} from '@chakra-ui/react';
+import styles from './styles/RequestPTOModal.styles';
+import { Calendar } from 'react-multi-date-picker';
+import { useContext, useState } from 'react';
+import { useCalendar } from '../../hooks/useCalendar';
+import { InfoIcon } from '@chakra-ui/icons';
+import useUser from '../../hooks/useUser';
+import useEmployees from '../../hooks/useEmployees';
+import moment from 'moment';
+import { RenderRangeTags } from './RenderRangeTags';
+import { timeOffTypes } from '../../constants/TimeOffTypes';
+import { paidTimeOffTypes } from '../../constants/PaidTimeOffTypes';
+import useAdmins from '../../hooks/useAdmins';
+import { usePaidTimeOff } from './../../hooks/usePTO';
+import { DatesContext } from '../../context/DatesContext';
+import { capitalizeFirstLetter } from '../../util';
+import { useEditPTO } from '../../hooks/useEditPTO';
+import ClearAllBtn from './ClearAllBtn';
+import {
+  validatePTOConditions,
+  validateTimeOffType,
+  validateVacationDates,
+} from './helpers';
+import { Header } from './Header';
+import { Footer } from './Footer';
 
-export const RequestPTOModal = ({ isOpen, onClose }) => {
+export const RequestPTOModal = ({
+  isOpen,
+  onClose,
+  isOpenEdit,
+  onCloseEdit,
+  setRefetchCalendarData,
+  handleRequestDeletion,
+}) => {
+  const { user } = useUser();
+  const { paidTimeOffHistory } = usePaidTimeOff(user._id);
+  const { isEditMode, requestPTOId, setEditMode } = useContext(DatesContext);
+  const { editPTO } = useEditPTO();
+
+  const matchingRequest = paidTimeOffHistory.find(
+    (request) => request?._id === requestPTOId
+  );
+
   const {
     VacationDates,
     setVacationDates,
     handleVacationDates,
     removeVacationTag,
-  } = useCalendar();
+  } = useCalendar(isEditMode, matchingRequest);
 
-  const { user } = useUser();
   const { adminsLoading } = useAdmins();
   const { createPTO } = useEmployees();
 
-  const [selectedTimeOffType, setSelectedTimeOff] = useState(null);
+  const [selectedTimeOffType, setSelectedTimeOff] = useState(
+    isEditMode ? capitalizeFirstLetter(matchingRequest?.type) : undefined
+  );
   const [selectedPaidTimeOffType, setSelectedPaidTimeOffType] =
     useState(undefined);
   const toast = useToast();
+
+  const handleToggleRefetch = () => {
+    setRefetchCalendarData((prevRefetch) => !prevRefetch);
+  };
+
+  const showToast = (title, description, status, colorScheme) => {
+    toast({
+      title,
+      description,
+      position: 'top-right',
+      status,
+      isClosable: true,
+      colorScheme,
+      variant: 'subtle',
+    });
+  };
+
+  const handleSubmitOnEdit = async () => {
+    try {
+      await editPTO({
+        id: matchingRequest?._id,
+        type: selectedTimeOffType.toLowerCase(),
+        dates: VacationDates,
+      });
+      if (VacationDates.length === 0) {
+        handleRequestDeletion();
+      }
+      showToast(
+        'Success',
+        'You have successfully updated your request.',
+        'success',
+        'green'
+      );
+      handleToggleRefetch();
+      onCloseEdit();
+    } catch (err) {
+      showToast(
+        'Something went wrong',
+        'Error in updating request.',
+        'error',
+        'red'
+      );
+    }
+  };
+
+  const submitTORequest = async () => {
+    try {
+      if (!validateVacationDates(VacationDates)) {
+        showToast(
+          'Warning',
+          'Please select valid dates. You have selected only the starting date.',
+          'error',
+          'yellow'
+        );
+        return;
+      }
+
+      if (!validateTimeOffType(selectedTimeOffType)) {
+        showToast(
+          'Warning',
+          'Please select a time off type',
+          'warning',
+          'yellow'
+        );
+        return;
+      }
+
+      if (VacationDates.length >= 1) {
+        if (validatePTOConditions(VacationDates, selectedTimeOffType)) {
+          showToast(
+            'Something went wrong',
+            'Number of paid time off days exceeds the limit',
+            'error',
+            'red'
+          );
+          return;
+        }
+
+        await createPTO.mutateAsync({
+          dates: VacationDates,
+          type: selectedTimeOffType.toLowerCase(),
+          paidLeaveType: selectedPaidTimeOffType || undefined,
+          status: 'pending',
+          userId: user._id,
+          reviewerId: null,
+          comment: '',
+        });
+
+        handleToggleRefetch();
+        showToast(
+          'Success',
+          'You have submitted a request to the Admins for scheduling time off work',
+          'success',
+          'green'
+        );
+
+        setVacationDates([]);
+        setSelectedTimeOff(null);
+        onClose();
+      }
+    } catch (err) {
+      showToast(
+        'Error',
+        err.response?.data?.message || 'Something went wrong',
+        'error',
+        'red'
+      );
+    }
+  };
+
+  const handleClose = () => {
+    setVacationDates([]);
+    setSelectedTimeOff(null);
+    isEditMode ? onCloseEdit() : onClose();
+    setEditMode(false);
+  };
 
   if (adminsLoading) {
     return <Spinner />;
   }
 
-  const submitTORequest = async () => {
-    try {
-      if (VacationDates.every((subarray) => subarray.length === 2)) {
-        if (VacationDates.length >= 1) {
-          if (
-            VacationDates.length > 5 &&
-            selectedTimeOffType === "Paid time off"
-          ) {
-            toast({
-              title: "Something went wrong",
-              description: "Number of paid time off days succeeds the limit",
-              position: "top-right",
-              status: "error",
-              isClosable: true,
-              colorScheme: "red",
-              variant: "subtle",
-            });
-          }
-          await createPTO.mutateAsync({
-            dates: VacationDates,
-            type: selectedTimeOffType.toLowerCase(),
-            paidLeaveType: selectedPaidTimeOffType
-              ? selectedPaidTimeOffType
-              : undefined,
-            status: "pending",
-            userId: user._id,
-            reviewerId: null,
-            comment: "",
-          });
-          toast({
-            title: "Success",
-            description:
-              "You have submitted a request to the Admins for scheduling time off work",
-            position: "top-right",
-            status: "success",
-            isClosable: true,
-            colorScheme: "green",
-            variant: "subtle",
-          });
-          setVacationDates([]);
-          setSelectedTimeOff(null);
-          onClose();
-        }
-      } else {
-        toast({
-          title: "Warning",
-          description: "Please select a date",
-          position: "top-right",
-          status: "warning",
-          isClosable: true,
-          colorScheme: "yellow",
-          variant: "subtle",
-        });
-      }
-    } catch (err) {
-      toast({
-        title: "Error",
-        description: err.response.data.message,
-        position: "top-right",
-        status: "error",
-        isClosable: true,
-        colorScheme: "red",
-        variant: "subtle",
-      });
-    }
-  };
-
   return (
     <Modal
       isCentered
-      isOpen={isOpen}
-      onClose={() => {
-        setVacationDates([]);
-        setSelectedTimeOff(null);
-        onClose();
-      }}
+      isOpen={isEditMode ? isOpenEdit : isOpen}
+      onClose={handleClose}
       motionPreset="slideInBottom"
-      size={"3xl"}
+      size={'3xl'}
     >
       <ModalOverlay />
       <ModalContent>
         <ModalHeader {...styles.modalHeader}>
-          {" "}
-          <Flex gap={2} alignItems={"center"}>
-            <Text {...styles.modalTitle}>Time off</Text>
-            <Tooltip
-              label="*Double-click to select a date on the calendar. 
-                  *Single-click to select a range of dates on the calendar."
-              hasArrow
-              placement="right"
-            >
-              <InfoIcon color={"gray.400"} mt="1" />
-            </Tooltip>
-          </Flex>
+          <Header isEditMode={isEditMode} />
         </ModalHeader>
         <Divider />
         <ModalCloseButton />
@@ -157,6 +219,7 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
                 setSelectedTimeOff(e.target.value);
               }}
               placeholder="Select type of time off"
+              value={selectedTimeOffType}
             >
               {Object.values(timeOffTypes).map((type) => {
                 return (
@@ -166,30 +229,33 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
                 );
               })}
             </Select>
-            {selectedTimeOffType === "Paid Time off" && (
-              <>
-                <Select
-                  mt={2}
-                  mb={2}
-                  onChange={(e) => {
-                    setSelectedPaidTimeOffType(e.target.value);
-                  }}
-                  placeholder="Select type of time off"
-                >
-                  {Object.values(paidTimeOffTypes).map((type) => {
-                    return (
-                      <option value={type} key={type}>
-                        {`${type}`}
-                      </option>
-                    );
-                  })}
-                </Select>
-              </>
+            {selectedTimeOffType === 'Paid Time off' && (
+              <Select
+                mt={2}
+                mb={2}
+                onChange={(e) => {
+                  setSelectedPaidTimeOffType(e.target.value);
+                }}
+                placeholder="Select type of time off"
+                value={
+                  isEditMode
+                    ? capitalizeFirstLetter(matchingRequest?.paidLeaveType)
+                    : null
+                }
+              >
+                {Object.values(paidTimeOffTypes).map((type) => {
+                  return (
+                    <option value={type} key={type}>
+                      {`${type}`}
+                    </option>
+                  );
+                })}
+              </Select>
             )}
           </Flex>
           <Flex alignItems="center" justifyContent="center">
             <Calendar
-              minDate={new moment().format("YYYY-MM-DD")}
+              minDate={new moment().format('YYYY-MM-DD')}
               range
               numberOfMonths={2}
               multiple
@@ -210,31 +276,21 @@ export const RequestPTOModal = ({ isOpen, onClose }) => {
               />
             );
           })}
-          <Box marginTop={"2"} height={"20px"}>
+          <Box marginTop={'2'} height={'20px'}>
             {VacationDates.length >= 2 && (
               <ClearAllBtn handleClick={() => setVacationDates([])} />
             )}
           </Box>
           <ModalFooter>
-            <>
-              <Button
-                onClick={() => {
-                  onClose();
-                  setVacationDates([]);
-                }}
-                variant="outline"
-              >
-                Cancel
-              </Button>
-              <Button
-                onClick={() => {
-                  submitTORequest();
-                }}
-                {...styles.button}
-              >
-                Submit Request
-              </Button>
-            </>
+            <Footer
+              isEditMode={isEditMode}
+              onCloseEdit={onCloseEdit}
+              onClose={onClose}
+              setEditMode={setEditMode}
+              handleSubmitOnEdit={handleSubmitOnEdit}
+              submitTORequest={submitTORequest}
+              setVacationDates={setVacationDates}
+            />
           </ModalFooter>
         </ModalBody>
       </ModalContent>

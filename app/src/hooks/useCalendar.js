@@ -1,8 +1,12 @@
 import { useState } from 'react';
+import { groupDatesIntoRanges } from '../util';
 
-export const useCalendar = () => {
+export const useCalendar = (isEditMode, matchingRequest) => {
   const [RemoteDates, setRemoteDates] = useState([]);
-  const [VacationDates, setVacationDates] = useState([]);
+  const groupedDates = groupDatesIntoRanges(matchingRequest?.days);
+  const [VacationDates, setVacationDates] = useState(
+    isEditMode ? groupedDates : []
+  );
 
   const handleRemoteDates = (selectedDates) => {
     setRemoteDates(selectedDates);

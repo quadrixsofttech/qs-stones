@@ -7,10 +7,42 @@ const { sendEmail } = require('../../utils/mailer.js');
 
 const weekendDays = [6, 0];
 
-const getAllPTO = async () => {
+const getPendingPTO = async () => {
   try {
-    const pto = await PaidTimeOff.find().lean();
-    return pto;
+    const query =
+      type === 'time off'
+        ? {
+            type: { $ne: 'remote' },
+            status: 'pending',
+          }
+        : {
+            type: type,
+            status: 'pending',
+          };
+
+    const paidTimeOff = await PaidTimeOff.find(query)
+      .populate({ path: 'userId', select: '-password' })
+      .populate({ path: 'reviewerId', select: '-password' });
+
+    const formattedPaidTimeOff = paidTimeOff.map((paidtimeoff) => ({
+      _id: paidtimeoff._id,
+      dates: paidtimeoff.dates,
+      days: paidtimeoff.days,
+      createdAt: paidtimeoff.createdAt,
+      updatedAt: paidtimeoff.updatedAt,
+      type: paidtimeoff.type,
+      status: paidtimeoff.status,
+      userId: paidtimeoff.userId,
+      reviewerId: paidtimeoff.reviewerId,
+      comment: paidtimeoff.comment,
+      user: {
+        firstName: paidtimeoff.userId.firstName,
+        lastName: paidtimeoff.userId.lastName,
+      },
+    }));
+    return {
+      pto: formattedPaidTimeOff,
+    };
   } catch (err) {
     throw new Error(err);
   }
@@ -18,19 +50,20 @@ const getAllPTO = async () => {
 
 const getPTO = async (type) => {
   try {
-
-    const query = type === 'time off' ? {
-      type: {$ne: 'remote'},
-      status: 'approved'
-    } : {
-      type:type,
-      status:'approved'
-    };
+    const query =
+      type === 'time off'
+        ? {
+            type: { $ne: 'remote' },
+            status: 'approved',
+          }
+        : {
+            type: type,
+            status: 'approved',
+          };
 
     const paidTimeOff = await PaidTimeOff.find(query)
-      .populate({path: 'userId', select:'-password'})
-      .populate({path:'reviewerId',select:'-password'});
-
+      .populate({ path: 'userId', select: '-password' })
+      .populate({ path: 'reviewerId', select: '-password' });
 
     const formattedPaidTimeOff = paidTimeOff.map((paidtimeoff) => ({
       _id: paidtimeoff._id,
@@ -186,16 +219,75 @@ const createPTO = async ({
   }
 };
 
-const updatePTO = async (id, updates) => {
+const updatePTO = async (id, type, dates) => {
   try {
-    const pto = await PaidTimeOff.findByIdAndUpdate(
-      id,
-      { $set: updates },
-      { new: true }
+    const pto = await PaidTimeOff.findById(id);
+    if (!pto) {
+      throw new CustomError('PTO record not found', 404);
+    }
+
+    const user = await User.findById(pto.userId);
+    if (!user) {
+      throw new CustomError('User not found', 404);
+    }
+
+    if (
+      !Array.isArray(dates) ||
+      dates.some((d) => !Array.isArray(d) || d.length !== 2)
+    ) {
+      throw new CustomError('Invalid dates format', 400);
+    }
+
+    const days = dates.reduce((acc, [startDate, endDate]) => {
+      const start = moment(startDate);
+      const end = moment(endDate);
+      const totalDays = end.diff(start, 'days') + 1;
+      const generatedDates = Array.from({ length: totalDays }, (_, index) =>
+        start.clone().add(index, 'days').format('YYYY-MM-DD')
+      );
+
+      const filteredDates = generatedDates.filter((date) => {
+        const isHoliday = holidays.some((holiday) => holiday.date === date);
+        const isWeekend = weekendDays.includes(moment(date).day());
+        return !isHoliday && !isWeekend;
+      });
+
+      return [...acc, ...filteredDates];
+    }, []);
+
+    const existingPTO = await PaidTimeOff.find({
+      userId: pto.userId,
+      days: { $in: days },
+      _id: { $ne: id },
+    });
+
+    if (existingPTO.length > 0) {
+      throw new CustomError(
+        'Some of the selected dates are already scheduled for remote work or PTO',
+        422
+      );
+    }
+
+    if (type === 'paid time off' && days.length > 5) {
+      throw new CustomError('Number of days exceeds limit', 422);
+    }
+
+    pto.type = type;
+    pto.dates = dates;
+    pto.days = days;
+
+    await pto.save();
+    
+    await sendEmail(
+      'katarina.kujundzic@quadrixsoft.com',
+      `Request for ${type}`,
+      `${user.firstName} ${user.lastName} has updated their request for ${type} at http://stones.examia.io/admin`
     );
+
     return pto;
   } catch (err) {
-    throw new Error({ success: false, message: 'Problem in updateing pto' });
+    console.error('Error in updatePTO:', err);
+    throw new CustomError('Something went wrong', 500);
   }
 };
 
@@ -219,7 +311,6 @@ const approvePTO = async (id, reviewerId) => {
       pto.status = 'approved';
       pto.reviewerId = reviewerId;
       await pto.save();
-      
     } else if (ptoType === 'vacation') {
       let vacationDays = pto.days.length;
 
@@ -283,7 +374,6 @@ const approvePTO = async (id, reviewerId) => {
       pto.reviewerId = reviewerId;
 
       await Promise.all([pto.save(), user.save()]);
-
     }
     await sendEmail(
       user.email,
@@ -317,7 +407,6 @@ const rejectPTO = async (id, comment, reviewerId) => {
       `Your request for ${pto.type} has been rejected`
     );
     return pto;
-    
   } catch (err) {
     throw new Error({
       success: false,
@@ -398,7 +487,7 @@ const getUserDates = async (userId) => {
 };
 
 module.exports = {
-  getAllPTO,
+  getPendingPTO,
   getPTO,
   createPTO,
   updatePTO,

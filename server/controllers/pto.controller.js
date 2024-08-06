@@ -23,6 +23,18 @@ const createPaidTimeOff = async (req, res) => {
   }
 };
 
+const getPendingPTO = async (req, res) => {
+  try {
+    const { type } = req.params;
+    const allPtos = PtoService.getPendingPTO(type);
+    res.send(allPtos);
+  } catch (error) {
+    res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ success: false, message: error.message });
+  }
+};
+
 const updatePaidTimeOff = async (req, res) => {
   try {
     const { id, status, comment } = req.body;
@@ -36,6 +48,30 @@ const updatePaidTimeOff = async (req, res) => {
     res
       .status(StatusCodes.OK)
       .json({ success: true, message: 'PTO updated successfully', updatedPTO });
+  } catch (err) {
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ success: false, message: err.message });
+  }
+};
+
+const updateOnEdit = async (req, res) => {
+  try {
+    const { id, type, dates } = req.body;
+    if (!id || !type || !dates) {
+      return res.status(StatusCodes.BAD_REQUEST).json({
+        success: false,
+        message: 'Missing required fields: id, type, or dates',
+      });
+    }
+
+    const updatedPTO = await PtoService.updatePTO(id, type, dates);
+
+    res.status(StatusCodes.OK).json({
+      success: true,
+      message: 'TO updated successfully',
+      updatedPTO,
+    });
   } catch (err) {
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
@@ -140,4 +176,6 @@ module.exports = {
   rejectPaidTimeOff,
   getAwayUserCountForToday,
   deleteRemoteRequest,
+  getPendingPTO,
+  updateOnEdit,
 };

@@ -1,5 +1,5 @@
 import { Flex, Tag, TagLabel } from "@chakra-ui/react";
-import styles from "./ClearAllBtn.styles";
+import styles from "./styles/ClearAllBtn.styles";
 
 const ClearAllBtn = ({ handleClick }) => {
   return (

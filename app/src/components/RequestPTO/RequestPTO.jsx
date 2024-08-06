@@ -8,14 +8,19 @@ import {
   Icon,
   Spacer,
   Text,
+  useDisclosure,
 } from '@chakra-ui/react';
 import styles from './RequestPTO.styles';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import RequestStatus from './RequestStatus/RequestStatus';
 import { MoreInformationPanel } from './MoreInformationPanel';
 import statusTypes from './status';
 import { BiTrash } from 'react-icons/bi';
 import { useRemoteRequestDeletion } from './../../hooks/useRemoteRequestDeletion';
+import { BsThreeDots } from 'react-icons/bs';
+import ConfirmationModal from './ConfirmationModal';
+import { DatesContext } from '../../context/DatesContext';
+import { RequestPTOModal } from '../RequestPTOModal/RequestPTOModal';
 
 const RequestPTO = ({
   status = statusTypes.pending,
@@ -32,18 +37,35 @@ const RequestPTO = ({
 }) => {
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
   const { deleteRemoteRequest } = useRemoteRequestDeletion(id);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isOpenEdit,
+    onOpen: onOpenEdit,
+    onClose: onCloseEdit,
+  } = useDisclosure();
+  const { setId, setEditMode, isEditMode } = useContext(DatesContext);
 
   const toggleAccordion = () => {
     setIsAccordionOpen(!isAccordionOpen);
   };
 
-  const handleRemoteDeletion = async () => {
+  const handleRequestDeletion = async () => {
     try {
       await deleteRemoteRequest.mutateAsync(id);
       setRefetchCalendarData((prevState) => !prevState);
     } catch (error) {
       throw new Error('Error in deleting remote request');
     }
+  };
+
+  const handleOpen = () => {
+    onOpen();
+  };
+
+  const handleEdit = (id) => {
+    onOpenEdit();
+    setId(id);
+    setEditMode(true);
   };
 
   useEffect(() => {
@@ -59,17 +81,50 @@ const RequestPTO = ({
           {type === 'remote' ? (
             <Icon
               as={BiTrash}
-              boxSize={6}
+              boxSize={5}
               color={'red.300'}
-              onClick={handleRemoteDeletion}
+              onClick={handleOpen}
               _hover={{
                 color: 'red.500',
               }}
             />
+          ) : status === 'pending' ? (
+            <Flex gap={1}>
+              <Icon
+                as={BsThreeDots}
+                boxSize={5}
+                onClick={() => handleEdit(id)}
+                _hover={{
+                  color: 'purple.500',
+                }}
+              />
+              <Icon
+                as={BiTrash}
+                boxSize={5}
+                color={'red.300'}
+                onClick={handleOpen}
+                _hover={{
+                  color: 'red.500',
+                }}
+              />
+            </Flex>
           ) : (
             ''
           )}
         </Flex>
+        <ConfirmationModal
+          isOpen={isOpen}
+          onClose={onClose}
+          handleRequestDeletion={handleRequestDeletion}
+        />
+        {isEditMode && (
+          <RequestPTOModal
+            isOpenEdit={isOpenEdit}
+            onCloseEdit={onCloseEdit}
+            setRefetchCalendarData={setRefetchCalendarData}
+            handleRequestDeletion={handleRequestDeletion}
+          />
+        )}
         {status === 'pending' ? (
           <>
             <Text {...styles.mainText}>You sent a request for {type}</Text>
