@@ -19,7 +19,7 @@ export const MoreInformationPanel = ({
       <Text fontWeight="bold">
         {user?.firstName + ' ' + user?.lastName + ' '}
         <Text fontWeight="normal" as="span" fontSize={'0.9rem'}>
-          {status === 'approved' ? 'approved' : 'rejected'} your Request TO for
+          {status === 'approved' ? 'approved' : 'rejected'} your Request TO for{' '}
           {requestedDates}
         </Text>
       </Text>
