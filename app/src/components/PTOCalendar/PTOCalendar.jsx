@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from "react";
-import { Box, Flex, Button, Select, Heading, Spinner } from "@chakra-ui/react";
-import styles from "./PTOCalendar.styles";
-import CalendarBox from "./CalendarBox";
-import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
-import useEmployees from "../../hooks/useEmployees";
-import moment from "moment";
-import { years, months, daysOfWeek } from "./constants/calendarInfo";
-import useHolidays from "../../hooks/useHolidays";
+import React, { useEffect, useState } from 'react';
+import { Box, Flex, Button, Select, Heading, Spinner } from '@chakra-ui/react';
+import styles from './PTOCalendar.styles';
+import CalendarBox from './CalendarBox';
+import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
+import useEmployees from '../../hooks/useEmployees';
+import moment from 'moment';
+import { years, months, daysOfWeek } from './constants/calendarInfo';
+import useHolidays from '../../hooks/useHolidays';
 
 const Calendar = ({ refetchCalendarData }) => {
   const [date, setDate] = useState(new Date());
   // eslint-disable-next-line
   const [showSaturday, setShowSaturday] = useState(false);
 
-  const [type, setType] = useState("remote");
+  const [type, setType] = useState('remote');
 
   const { holidays, holidaysLoading } = useHolidays();
   const { data, isLoading, refetchPTO } = useEmployees(type);
 
-  const ptoCalendarTypes = { remote: "Remote", "time off": "Time Off" };
+  const ptoCalendarTypes = { remote: 'Remote', 'time off': 'Time Off' };
 
   const handleTypeChange = (e) => {
     setType(e.target.value);
@@ -37,11 +37,11 @@ const Calendar = ({ refetchCalendarData }) => {
   // }
 
   const daysInMonth = moment(date).daysInMonth();
-  const firstDayOfMonth = moment(date).startOf("month").day();
+  const firstDayOfMonth = moment(date).startOf('month').day();
 
   const blanks = [];
   for (let i = 0; i < firstDayOfMonth - 1; i++) {
-    blanks.push(<Box backgroundColor={"blackAlpha.50"} key={`blank-${i}`} />);
+    blanks.push(<Box backgroundColor={'blackAlpha.50'} key={`blank-${i}`} />);
   }
 
   const days = [];
@@ -50,7 +50,7 @@ const Calendar = ({ refetchCalendarData }) => {
     const dayOfWeek = moment(date).date(i).day();
 
     const getDate = () => {
-      return moment(date).date(i).format("YYYY-MM-DD");
+      return moment(date).date(i).format('YYYY-MM-DD');
     };
 
     const employeesToday = data
@@ -78,13 +78,13 @@ const Calendar = ({ refetchCalendarData }) => {
     const { name, value } = e.target;
     let newDate;
 
-    if (name === "year") {
+    if (name === 'year') {
       newDate = moment(date).year(parseInt(value));
-    } else if (name === "month") {
+    } else if (name === 'month') {
       newDate = moment(date).month(value);
     }
 
-    setDate(newDate.format("YYYY-MM-DD"));
+    setDate(newDate.format('YYYY-MM-DD'));
   };
 
   const totalDays = [...blanks, ...days];
@@ -92,7 +92,7 @@ const Calendar = ({ refetchCalendarData }) => {
   return (
     <Box {...styles.calendarContainerStyles}>
       <Flex {...styles.header}>
-        <Heading {...styles.headingTitle} as={"h2"}>
+        <Heading {...styles.headingTitle} as={'h2'}>
           Category
         </Heading>
         <Select
@@ -110,12 +110,13 @@ const Calendar = ({ refetchCalendarData }) => {
         </Select>
       </Flex>
       <Flex {...styles.selectionBox}>
-        <Flex width={"48"} gap={"2.5"}>
+        <Flex gap={'2.5'}>
           <Select
             {...styles.selectButton}
+            width={'40%'}
             onChange={(e) => handleDateChange(e)}
             name="year"
-            value={moment(date).format("YYYY")}
+            value={moment(date).format('YYYY')}
           >
             {years.map((year) => {
               return (
@@ -142,22 +143,22 @@ const Calendar = ({ refetchCalendarData }) => {
         </Flex>
         <Flex {...styles.prevNextBox}>
           <Button
-            size={"xs"}
-            backgroundColor={"blackAlpha.50"}
+            size={'xs'}
+            backgroundColor={'blackAlpha.50'}
             onClick={() => {
-              const newDate = moment(date).subtract(1, "month");
-              setDate(newDate.format("YYYY-MM-DD"));
+              const newDate = moment(date).subtract(1, 'month');
+              setDate(newDate.format('YYYY-MM-DD'));
             }}
           >
             <BiChevronLeft />
           </Button>
 
           <Button
-            size={"xs"}
-            backgroundColor={"blackAlpha.50"}
+            size={'xs'}
+            backgroundColor={'blackAlpha.50'}
             onClick={() => {
-              const newDate = moment(date).add(1, "month");
-              setDate(newDate.format("YYYY-MM-DD"));
+              const newDate = moment(date).add(1, 'month');
+              setDate(newDate.format('YYYY-MM-DD'));
             }}
           >
             <BiChevronRight />

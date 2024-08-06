@@ -65,7 +65,6 @@ const onClickBox = {
   borderColor: "purple.400",
 };
 const selectionBox = {
-  //justifyContent: "flex-start",
   alignItems: "center",
   p: "2.5",
 };

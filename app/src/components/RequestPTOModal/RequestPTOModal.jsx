@@ -226,7 +226,7 @@ export const RequestPTOModal = ({
                 );
               })}
             </Select>
-            {selectedTimeOffType === 'Paid Time off' && (
+            {selectedTimeOffType === 'Paid time off' && (
               <Select
                 mt={2}
                 mb={2}
