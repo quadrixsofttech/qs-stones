@@ -9,7 +9,6 @@ const container = {
   justifyContent: 'center',
   width: '100%',
   height: '100%',
-  overflow: 'hidden',
 };
 
 const tabindicator = {
@@ -62,7 +61,8 @@ const tabPanelRequestHistory = {
 const tabPanels = {
   p: '0',
   width: '100%',
-  height: '100%',
+  height: '90%',
+  overflow: 'hidden',
 };
 
 const tabPanelPTO = {
@@ -71,7 +71,7 @@ const tabPanelPTO = {
   justifyContent: 'center',
   flexDir: 'column',
   height: '100%',
-  width: '100%',
+  overflow: 'scroll',
 };
 
 const styles = {

@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Divider,
   Flex,
   Modal,
@@ -13,14 +12,12 @@ import {
   Select,
   Spinner,
   Text,
-  Tooltip,
   useToast,
 } from '@chakra-ui/react';
 import styles from './styles/RequestPTOModal.styles';
 import { Calendar } from 'react-multi-date-picker';
 import { useContext, useState } from 'react';
 import { useCalendar } from '../../hooks/useCalendar';
-import { InfoIcon } from '@chakra-ui/icons';
 import useUser from '../../hooks/useUser';
 import useEmployees from '../../hooks/useEmployees';
 import moment from 'moment';

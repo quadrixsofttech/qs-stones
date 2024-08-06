@@ -4,8 +4,8 @@ import {
   AccordionIcon,
   AccordionItem,
   Box,
+  Divider,
   Flex,
-  Icon,
   Spacer,
   Text,
   useDisclosure,
@@ -15,12 +15,12 @@ import { useContext, useEffect, useState } from 'react';
 import RequestStatus from './RequestStatus/RequestStatus';
 import { MoreInformationPanel } from './MoreInformationPanel';
 import statusTypes from './status';
-import { BiTrash } from 'react-icons/bi';
 import { useRemoteRequestDeletion } from './../../hooks/useRemoteRequestDeletion';
-import { BsThreeDots } from 'react-icons/bs';
 import ConfirmationModal from './ConfirmationModal';
 import { DatesContext } from '../../context/DatesContext';
 import { RequestPTOModal } from '../RequestPTOModal/RequestPTOModal';
+import { RenderIcons } from './RenderIcons';
+import { RequestInformation } from './RequestInformation';
 
 const RequestPTO = ({
   status = statusTypes.pending,
@@ -76,41 +76,14 @@ const RequestPTO = ({
     <Box {...styles.box}>
       <Box as="span">
         <Flex>
-          <Text {...styles.grayText}>{time}</Text>
-          <Spacer />
-          {type === 'remote' ? (
-            <Icon
-              as={BiTrash}
-              boxSize={5}
-              color={'red.300'}
-              onClick={handleOpen}
-              _hover={{
-                color: 'red.500',
-              }}
-            />
-          ) : status === 'pending' ? (
-            <Flex gap={1}>
-              <Icon
-                as={BsThreeDots}
-                boxSize={5}
-                onClick={() => handleEdit(id)}
-                _hover={{
-                  color: 'purple.500',
-                }}
-              />
-              <Icon
-                as={BiTrash}
-                boxSize={5}
-                color={'red.300'}
-                onClick={handleOpen}
-                _hover={{
-                  color: 'red.500',
-                }}
-              />
-            </Flex>
-          ) : (
-            ''
-          )}
+          <RenderIcons
+            time={time}
+            type={type}
+            id={id}
+            status={status}
+            handleEdit={handleEdit}
+            handleOpen={handleOpen}
+          />
         </Flex>
         <ConfirmationModal
           isOpen={isOpen}
@@ -125,54 +98,47 @@ const RequestPTO = ({
             handleRequestDeletion={handleRequestDeletion}
           />
         )}
-        {status === 'pending' ? (
+        <RequestInformation
+          status={status}
+          type={type}
+          requestedDates={requestedDates}
+          user={user}
+        />
+        <Text fontWeight={'bold'}>
+          {type !== 'remote' && numberOfDays + ' days'}
+        </Text>
+        {type === 'remote' && <Divider mt={2} />}
+        {type !== 'remote' && (
           <>
-            <Text {...styles.mainText}>You sent a request for {type}</Text>
-          </>
-        ) : (
-          <>
-            {type === 'remote' ? (
-              <Text {...styles.mainText}>
-                Your request for remote has been approved
-              </Text>
-            ) : (
-              <Text {...styles.mainText}>
-                You sent request for {type} to
-                <Text {...styles.adminText} as="span">
-                  {' '}
-                  {user?.firstName} {user?.lastName} (ADMIN)
-                </Text>
-              </Text>
-            )}
+            <Box pt={2}>
+              <RequestStatus status={status} type={type} />
+            </Box>
+            <Flex alignItems={'center'}>
+              <Spacer />
+              <Accordion defaultIndex={[1]} allowToggle {...styles.accordion}>
+                <AccordionItem pt={2}>
+                  <Text as="h2">
+                    <AccordionButton onClick={toggleAccordion}>
+                      <Box color={'gray.500'}>
+                        {isAccordionOpen ? 'See less' : 'See more'}
+                      </Box>
+                      <AccordionIcon />
+                    </AccordionButton>
+                  </Text>
+                  <MoreInformationPanel
+                    user={user}
+                    time={time}
+                    requestedDates={requestedDates}
+                    response={response}
+                    status={status}
+                    type={type}
+                  />
+                </AccordionItem>
+              </Accordion>
+            </Flex>
+            <Divider />
           </>
         )}
-        <Text fontWeight={'bold'}>{numberOfDays} days</Text>
-        <Box pt={2}>
-          <RequestStatus status={status} type={type} />
-        </Box>
-        <Flex alignItems={'center'}>
-          <Spacer />
-          <Accordion defaultIndex={[1]} allowToggle {...styles.accordion}>
-            <AccordionItem pt={2}>
-              <Text as="h2">
-                <AccordionButton onClick={toggleAccordion}>
-                  <Box color={'gray.500'}>
-                    {isAccordionOpen ? 'See less' : 'See more'}
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-              </Text>
-              <MoreInformationPanel
-                user={user}
-                time={time}
-                requestedDates={requestedDates}
-                response={response}
-                status={status}
-                type={type}
-              />
-            </AccordionItem>
-          </Accordion>
-        </Flex>
       </Box>
     </Box>
   );
