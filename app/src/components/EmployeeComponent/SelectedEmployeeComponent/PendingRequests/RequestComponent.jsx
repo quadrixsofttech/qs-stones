@@ -68,6 +68,10 @@ const RequestComponent = ({
     });
   };
 
+  if (rangeInDays === 0) {
+    return null;
+  }
+
   return (
     <Flex flexDir={'column'} flex={1}>
       {singleRequest && (
