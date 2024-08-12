@@ -182,10 +182,12 @@ export const RequestPTOModal = ({
   };
 
   const handleClose = () => {
+    if (isEditMode) {
+      setEditMode();
+    }
     setVacationDates([]);
     setSelectedTimeOff(null);
     isEditMode ? onCloseEdit() : onClose();
-    setEditMode(false);
   };
 
   if (adminsLoading) {

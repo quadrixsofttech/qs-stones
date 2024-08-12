@@ -11,16 +11,17 @@ export const Footer = ({
   submitTORequest,
   setVacationDates,
 }) => {
+  const handleClose = () => {
+    if (isEditMode) {
+      setEditMode();
+    }
+    isEditMode ? onCloseEdit() : onClose();
+    !isEditMode && setVacationDates([]);
+  };
+
   return (
     <>
-      <Button
-        onClick={() => {
-          isEditMode ? onCloseEdit() : onClose();
-          !isEditMode && setVacationDates([]);
-          setEditMode(false);
-        }}
-        variant="outline"
-      >
+      <Button onClick={handleClose} variant="outline">
         Cancel
       </Button>
       <Button
