@@ -40,6 +40,17 @@ export const RemoteModal = ({ isOpen, onClose, setRefetchCalendarData }) => {
   const submitRemote = async () => {
     try {
       if (RemoteDates.every((subarray) => subarray.length === 2)) {
+        if (RemoteDates.length === 0) {
+          toast({
+            title: 'Warning',
+            description: 'Please select a date',
+            position: 'top-right',
+            status: 'warning',
+            isClosable: true,
+            colorScheme: 'yellow',
+            variant: 'subtle',
+          });
+        }
         if (RemoteDates.length >= 1) {
           await createPTO.mutateAsync({
             dates: RemoteDates,
@@ -61,16 +72,6 @@ export const RemoteModal = ({ isOpen, onClose, setRefetchCalendarData }) => {
           onClose();
           handleToggleRefetch();
         }
-      } else {
-        toast({
-          title: 'Warning',
-          description: 'Please select a date',
-          position: 'top-right',
-          status: 'warning',
-          isClosable: true,
-          colorScheme: 'yellow',
-          variant: 'subtle',
-        });
       }
     } catch (error) {
       toast({
