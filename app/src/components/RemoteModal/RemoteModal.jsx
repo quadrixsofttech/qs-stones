@@ -125,6 +125,12 @@ export const RemoteModal = ({ isOpen, onClose, setRefetchCalendarData }) => {
               onChange={handleRemoteDates}
               value={RemoteDates}
               className="custom-calendar"
+              mapDays={({ date }) => {
+                let isWeekend =
+                  date.weekDay.index === 6 || date.weekDay.index === 0;
+                if (isWeekend)
+                  return { disabled: true, className: 'disabled-weekend' };
+              }}
             />
           </Flex>
           <Box>
