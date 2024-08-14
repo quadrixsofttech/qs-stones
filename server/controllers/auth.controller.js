@@ -79,28 +79,16 @@ const signUp = async (req, res) => {
     const savedUser = await newUser.save();
 
     if (savedUser) {
-      const token = createToken(savedUser);
-      const decodedToken = jwtDecode(token);
-      const expiresAt = decodedToken.exp;
-
-      const { _id, firstName, lastName, email, role, vacation } = savedUser;
-
-      const userInfo = {
-        _id,
-        firstName,
-        lastName,
-        email,
-        role,
-        vacation,
-      };
-
-      res.cookie('token', token, { httpOnly: true });
-
-      return res.json({
-        message: 'User created!',
-        token,
-        userInfo,
-        expiresAt,
+      return res.status(StatusCodes.CREATED).json({
+        message: 'User created successfully! You can now log in.',
+        userInfo: {
+          _id: savedUser._id,
+          firstName: savedUser.firstName,
+          lastName: savedUser.lastName,
+          email: savedUser.email,
+          role: savedUser.role,
+          vacation: savedUser.vacation,
+        },
       });
     } else {
       return res.status(StatusCodes.BAD_REQUEST).json({
