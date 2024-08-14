@@ -277,7 +277,7 @@ const updatePTO = async (id, type, dates) => {
     pto.days = days;
 
     await pto.save();
-    
+
     await sendEmail(
       'katarina.kujundzic@quadrixsoft.com',
       `Request for ${type}`,
@@ -404,7 +404,8 @@ const rejectPTO = async (id, comment, reviewerId) => {
     await sendEmail(
       user.email,
       `Rejected request for ${pto.type}`,
-      `Your request for ${pto.type} has been rejected`
+      `Your request for ${pto.type} has been rejected`,
+      `Comment: ${pto?.comment}`
     );
     return pto;
   } catch (err) {
