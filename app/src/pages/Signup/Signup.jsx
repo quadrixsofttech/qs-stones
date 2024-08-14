@@ -14,6 +14,7 @@ import {
   Input,
   Stack,
   Text,
+  useToast,
 } from '@chakra-ui/react';
 import styles from './Signup.styles';
 import useUser from './../../hooks/useUser';
@@ -30,6 +31,7 @@ const Signup = () => {
   const { register, registerIsLoading } = useUser();
   const [signupSuccess, setSignupSuccess] = useState(false);
   const [signupError, setSignupError] = useState(false);
+  const toast = useToast();
 
   const submitCredentials = async (credentials) => {
     try {
@@ -39,6 +41,14 @@ const Signup = () => {
       setTimeout(() => {
         setRedirectOnLogin(!redirectOnLogin);
       }, 700);
+      toast({
+        position: 'top-right',
+        status: 'success',
+        variant: 'subtle',
+        description: `You have successfully created a new user`,
+        isClosable: true,
+        colorScheme: 'green',
+      });
     } catch (error) {
       setSignupError(
         error.response?.data?.message || 'An unknown error occurred'

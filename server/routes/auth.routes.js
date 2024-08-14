@@ -8,7 +8,7 @@ const AzureController = require("../controllers/azure.controller");
 
 router.post("/authenticate", AuthController.authenticate);
 
-router.post("/signup", requireAdmin, AuthController.signUp);
+router.post("/signup", AuthController.signUp);
 
 router.post("/create-event", AzureController.createEvent);
 
