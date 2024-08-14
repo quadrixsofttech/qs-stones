@@ -13,6 +13,7 @@ import {
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { RenderRangeTags } from '../../../RequestPTOModal/RenderRangeTags';
+import { formatTimestampToDate } from '../../../../util';
 
 const RejectRequestModal = ({
   isOpen,
@@ -43,9 +44,14 @@ const RejectRequestModal = ({
               </Text>
               <Flex flexWrap={'wrap'} gap="1">
                 {range.map((x) => {
+                  let startDate = x[0];
+                  let endDate = x[1];
+                  let dates = [];
+                  dates.push(formatTimestampToDate(startDate));
+                  dates.push(formatTimestampToDate(endDate));
                   return (
                     <RenderRangeTags
-                      range={x}
+                      range={dates}
                       key={Math.random()}
                       showClose={false}
                     />

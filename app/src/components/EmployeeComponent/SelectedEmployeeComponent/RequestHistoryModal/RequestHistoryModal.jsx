@@ -13,7 +13,7 @@ import {
 import RequestStatusWrapper from '../../../RequestPTO/RequestStatus/RequestStatus';
 import { RenderRangeTags } from '../../../RequestPTOModal/RenderRangeTags';
 import moment from 'moment';
-import { capitalizeFirstLetter } from '../../../../util';
+import { capitalizeFirstLetter, formatTimestampToDate } from '../../../../util';
 import styles from './RequestHistoryModal.styles';
 
 const RequestHistoryModal = ({
@@ -44,9 +44,14 @@ const RequestHistoryModal = ({
         <ModalBody p="4">
           <Flex flexWrap={'wrap'} mb="4">
             {dates.map((range) => {
+              let startDate = range[0];
+              let endDate = range[1];
+              let dates = [];
+              dates.push(formatTimestampToDate(startDate));
+              dates.push(formatTimestampToDate(endDate));
               return (
                 <RenderRangeTags
-                  range={range}
+                  range={dates}
                   key={Math.random()}
                   showClose={false}
                 />
