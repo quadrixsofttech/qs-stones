@@ -150,6 +150,7 @@ const createPTO = async ({
         dates,
         reviewerId,
         comment,
+        createdAt: Date.now(),
       });
 
       await pto.save();
@@ -192,6 +193,7 @@ const createPTO = async ({
           dates,
           reviewerId,
           comment,
+          createdAt: Date.now(),
         });
         await pto.save();
         //Change recepients email to adminEmails when testing is over
