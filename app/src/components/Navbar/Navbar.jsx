@@ -22,11 +22,8 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              <Button {...styles.loginButton} as={Link} to="/login">
+              <Button {...styles.signupButton} as={Link} to="/login">
                 Sign In
-              </Button>
-              <Button {...styles.signupButton} as={Link} to="/signup">
-                Sign Up
               </Button>
             </>
           )}

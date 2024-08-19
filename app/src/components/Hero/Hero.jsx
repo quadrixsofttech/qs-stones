@@ -1,21 +1,16 @@
-import { Link } from 'react-router-dom';
+import { Flex, Image } from '@chakra-ui/react';
+import image from '../../images/qs-stones-HOME.jpg';
 
-import { Stack, Flex, Button, Text, VStack } from '@chakra-ui/react';
-import styles from './Hero.styles';
-
-const Hero = ({ title, buttonTitle, buttonLink }) => {
+const Hero = () => {
   return (
-    <Flex {...styles.wrapper}>
-      <VStack {...styles.vStack}>
-        <Stack {...styles.content}>
-          <Text {...styles.title}>{title}</Text>
-          <Stack>
-            <Button as={Link} to={buttonLink} {...styles.button}>
-              {buttonTitle}
-            </Button>
-          </Stack>
-        </Stack>
-      </VStack>
+    <Flex h={'50%'} w={'80%'} mt={5}>
+      <Image
+        src={image}
+        alt="qs-image"
+        w={'100%'}
+        h={'100%'}
+        objectFit={'cover'}
+      ></Image>
     </Flex>
   );
 };

@@ -6,7 +6,7 @@ const PublicLayout = ({ children }) => {
   return (
     <Flex flexDir="column">
       <Navbar />
-      <Flex flex={1} mt={14}>
+      <Flex h="100%" w="100%" justifyContent={'center'}>
         {children}
       </Flex>
     </Flex>
