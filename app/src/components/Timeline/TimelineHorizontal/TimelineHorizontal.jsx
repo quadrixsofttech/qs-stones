@@ -15,7 +15,6 @@ const TimelineHorizontal = ({
   onDelete,
   user,
 }) => {
-
   const timeSlots = useMemo(() => {
     const startTime = moment(startHour, 'HH:mm');
     const endTime = moment(endHour, 'HH:mm');
@@ -66,21 +65,21 @@ const TimelineHorizontal = ({
             );
           })}
         </Grid>
-        {title.map((title, index) => {
+        {title.map((x, index) => {
           return (
             <Grid
               templateColumns={`250px repeat(${timeSlots.length},176px)`}
               gap="1px"
               position="relative"
-              key={`key-${title} index-${index}`}
+              key={`key-${x} index-${index}`}
             >
               <GridItem height={'52px'} backgroundColor={'white'}>
                 <Flex p="4" pl="2">
                   <Heading {...styles.headingConference}>
                     <Heading {...styles.underlineHeading} as="span">
-                      {title.id}
+                      {x.id}
                     </Heading>
-                    {title.name}
+                    {x.name}
                   </Heading>
                 </Flex>
               </GridItem>
@@ -94,7 +93,7 @@ const TimelineHorizontal = ({
                 );
               })}
               {data.map((data, index) => {
-                if (data.column === title.name) {
+                if (data.conferenceRoomName === x.name) {
                   return (
                     <GridItem
                       {...styles.horizontalCard}
