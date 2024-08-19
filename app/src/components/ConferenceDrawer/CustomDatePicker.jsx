@@ -19,7 +19,7 @@ export default function CustomDatePicker({ name, isEditMode }) {
         format={'YYYY-MM-DD'}
         value={
           isEditMode
-            ? values.selectedDate.format('YYYY-MM-DD')
+            ? moment(values.selectedDate).format('YYYY-MM-DD')
             : new moment().format('YYYY-MM-DD')
         }
         onChange={(value) => {
