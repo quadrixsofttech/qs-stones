@@ -48,7 +48,7 @@ const signupButton = {
   display: 'inline-flex',
   fontSize: 'sm',
   fontWeight: 600,
-  colorScheme: 'blue',
+  colorScheme: 'purple',
 };
 
 const avatarWrapper = {
