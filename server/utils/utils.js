@@ -10,8 +10,16 @@ const holidays = [
   { date: '2024-05-04', name: 'Vaskrsnji praznici' },
   { date: '2024-05-05', name: 'Vaskrsnji praznici' },
   { date: '2024-05-06', name: 'Vaskrsnji praznici' },
-  { date: '2024-11-11', name: 'Dan primirja u Prvom svetskom ratu' }
+  { date: '2024-11-11', name: 'Dan primirja u Prvom svetskom ratu' },
+  { date: '2025-01-01', name: 'Nova godina' },
+  { date: '2025-01-02', name: 'Nova godina' },
+  { date: '2025-01-07', name: 'Bozic' },
+  { date: '2025-02-17', name: 'Dan drzavnosti' },
+  { date: '2025-04-18', name: 'Veliki petak' },
+  { date: '2025-04-21', name: 'Vaskrsnji ponedeljak' },
+  { date: '2025-05-01', name: 'Praznik rada' },
+  { date: '2025-05-02', name: 'Praznik rada' },
+  { date: '2025-11-11', name: 'Dan primirja u Prvom svetskom ratu' },
 ];
 
-module.exports =  { holidays };
-
+module.exports = { holidays };
