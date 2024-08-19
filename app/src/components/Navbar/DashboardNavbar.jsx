@@ -44,11 +44,7 @@ const DashboardNavbar = () => {
                   ml={'2.5'}
                 >
                   <Flex alignItems={'center'} gap={'8px'}>
-                    <Avatar
-                      size={'sm'}
-                      marginRight={'1'}
-                      src={image}
-                    />
+                    <Avatar size={'sm'} marginRight={'1'} src={image} />
                     <Flex
                       alignItems={'flex-start'}
                       flexDirection={'column'}
@@ -71,11 +67,11 @@ const DashboardNavbar = () => {
                 </MenuButton>
               </Flex>
               <MenuList>
-                {auth?.isAdmin() && (
+                {/* {auth?.isAdmin() && (
                   <MenuItem as={Link} to="/users">
                     Users
                   </MenuItem>
-                )}
+                )} */}
                 <MenuItem as={Link} to="/change-password">
                   Change password
                 </MenuItem>
