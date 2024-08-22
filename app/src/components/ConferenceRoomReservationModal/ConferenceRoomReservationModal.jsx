@@ -33,7 +33,9 @@ const ConferenceRoomReservationModal = ({
   if (!data) {
     return <></>;
   }
+
   const enabled = data.userId === user._id;
+
   return (
     <Modal isCentered isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -66,7 +68,9 @@ const ConferenceRoomReservationModal = ({
         <ModalBody p="0" mt="4">
           <Flex alignItems={'center'} gap="2">
             <BiChalkboard />
-            <Text color={'gray.700'}>{data.id + ' ' + data.conferenceRoomName}</Text>
+            <Text color={'gray.700'}>
+              {data.id + ' ' + data.conferenceRoomName}
+            </Text>
             <Tag {...styles.tag}>{data.floor}</Tag>
           </Flex>
           <Flex {...styles.infoBox}>
@@ -87,7 +91,7 @@ const ConferenceRoomReservationModal = ({
           </Text>
           <Divider mt="4" />
           <Flex {...styles.modalFooter}>
-            <Avatar size="xs" src={user.image} />
+            <Avatar size="xs" src={data.user.image} />
             <Text color={'gray.700'} fontSize="xs">
               {data.user.firstName + ' ' + data.user.lastName}
             </Text>

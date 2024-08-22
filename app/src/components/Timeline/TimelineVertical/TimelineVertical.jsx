@@ -156,6 +156,7 @@ const TimelineVertical = ({
                           onEdit={onEdit}
                           onDelete={onDelete}
                           onOpen={onOpen}
+                          data={data}
                         />
                       </GridItem>
                     );

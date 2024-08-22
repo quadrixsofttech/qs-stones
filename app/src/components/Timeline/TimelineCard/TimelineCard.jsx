@@ -29,9 +29,12 @@ const TimelineCard = ({
   onEdit,
   onDelete,
   onOpen,
+  data,
 }) => {
   const [cardHover, setCardHover] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
+
+  console.log('data', data);
 
   return (
     <Flex
@@ -67,8 +70,8 @@ const TimelineCard = ({
           >
             <Flex gap="0.5">
               {type === 'small' && (
-                <Tooltip hasArrow label={user.firstName} placement="top">
-                  <Avatar size={'xs'} src={user.image} />
+                <Tooltip hasArrow label={data.user.firstName} placement="top">
+                  <Avatar size={'xs'} src={data.user.image} />
                 </Tooltip>
               )}
               <Tooltip hasArrow label="Settings" placement="top">
@@ -105,9 +108,9 @@ const TimelineCard = ({
             <Text {...styles.description}>{description}</Text>
           </Flex>
           <Flex gap="1" alignItems={'center'}>
-            <Avatar size={'xs'} src={user.image} />
+            <Avatar size={'xs'} src={data.user.image} />
             <Text fontSize={'xs'} color="gray.700">
-              {user.firstName + ' ' + user.lastName}
+              {data.user.firstName + ' ' + data.user.lastName}
             </Text>
           </Flex>
         </>

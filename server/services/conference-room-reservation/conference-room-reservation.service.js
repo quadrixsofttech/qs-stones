@@ -69,7 +69,7 @@ const getReservations = async (date) => {
     const reservationsFull = await ConferenceRoomReservation.find({
       date: date,
     })
-      .populate({ path: 'userId', select: '_id firstName lastName' })
+      .populate({ path: 'userId', select: '_id firstName lastName image' })
       .populate('conferenceRoom');
 
     const reservations = reservationsFull.map((reservation) => ({
@@ -88,6 +88,7 @@ const getReservations = async (date) => {
       user: {
         firstName: reservation.userId.firstName,
         lastName: reservation.userId.lastName,
+        image: reservation.userId.image
       },
     }));
 
