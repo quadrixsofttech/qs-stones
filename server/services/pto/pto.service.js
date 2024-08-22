@@ -157,7 +157,7 @@ const createPTO = async ({
       //Change recepients email to adminEmails when testing is over
       if (type != 'remote')
         await sendEmail(
-          'katarina.kujundzic@quadrixsoft.com',
+          'martin.bonderovic@quadrixsoft.com',
           `Request for ${type}`,
           `${user.firstName} ${user.lastName} has sent you a request for ${type}  http://stones.examia.io/admin`
         );
@@ -198,7 +198,7 @@ const createPTO = async ({
         await pto.save();
         //Change recepients email to adminEmails when testing is over
         await sendEmail(
-          'katarina.kujundzic@quadrixsoft.com',
+          'martin.bonderovic@quadrixsoft.com',
           `Request for ${type}`,
           `${user.firstName} ${user.lastName} has sent you a request for ${type}   http://stones.examia.io/admin`
         );
@@ -281,7 +281,7 @@ const updatePTO = async (id, type, dates) => {
     await pto.save();
 
     await sendEmail(
-      'katarina.kujundzic@quadrixsoft.com',
+      'martin.bonderovic@quadrixsoft.com',
       `Request for ${type}`,
       `${user.firstName} ${user.lastName} has updated their request for ${type} at http://stones.examia.io/admin`
     );
@@ -403,11 +403,11 @@ const rejectPTO = async (id, comment, reviewerId) => {
     if (!user) {
       throw new Error('User not found');
     }
+
     await sendEmail(
       user.email,
       `Rejected request for ${pto.type}`,
-      `Your request for ${pto.type} has been rejected`,
-      `Comment: ${pto?.comment}`
+      `Your request for ${pto.type} has been rejected, \n Comment: ${comment}`
     );
     return pto;
   } catch (err) {
