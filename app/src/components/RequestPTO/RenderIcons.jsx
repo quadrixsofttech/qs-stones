@@ -1,7 +1,7 @@
 import { Flex, Icon, Spacer, Text } from '@chakra-ui/react';
 import styles from './RequestPTO.styles';
 import { BiTrash } from 'react-icons/bi';
-import { BsThreeDots } from 'react-icons/bs';
+import { FiEdit } from 'react-icons/fi';
 
 export const RenderIcons = ({
   id,
@@ -10,12 +10,13 @@ export const RenderIcons = ({
   time,
   handleOpen,
   handleEdit,
+  isHovered,
 }) => {
   return (
     <>
       <Text {...styles.grayText}>{time}</Text>
       <Spacer />
-      {type === 'remote' ? (
+      {type === 'remote' && isHovered ? (
         <Icon
           as={BiTrash}
           boxSize={5}
@@ -25,11 +26,11 @@ export const RenderIcons = ({
             color: 'red.500',
           }}
         />
-      ) : status === 'pending' ? (
-        <Flex gap={1}>
+      ) : status === 'pending' && isHovered ? (
+        <Flex gap={1} alignItems={'center'}>
           <Icon
-            as={BsThreeDots}
-            boxSize={5}
+            as={FiEdit}
+            boxSize={4}
             onClick={() => handleEdit(id)}
             _hover={{
               color: 'purple.500',

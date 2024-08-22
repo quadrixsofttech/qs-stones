@@ -36,6 +36,7 @@ const RequestPTO = ({
   refetchCalendarData,
 }) => {
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const { deleteRemoteRequest } = useRemoteRequestDeletion(id);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
@@ -73,7 +74,11 @@ const RequestPTO = ({
   }, [refetchCalendarData, refetchPTO]);
 
   return (
-    <Box {...styles.box}>
+    <Box
+      {...styles.box}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <Box as="span">
         <Flex>
           <RenderIcons
@@ -83,6 +88,7 @@ const RequestPTO = ({
             status={status}
             handleEdit={handleEdit}
             handleOpen={handleOpen}
+            isHovered={isHovered}
           />
         </Flex>
         <ConfirmationModal
@@ -105,7 +111,9 @@ const RequestPTO = ({
           user={user}
         />
         <Text fontWeight={'bold'}>
-          {type !== 'remote' && numberOfDays + ' days'}
+          {type !== 'remote' && numberOfDays === 1
+            ? `${numberOfDays} day`
+            : `${numberOfDays} days`}
         </Text>
         {type === 'remote' && <Divider mt={2} />}
         {type !== 'remote' && (
