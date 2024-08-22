@@ -34,7 +34,6 @@ export const MoreInformationPanel = ({
         <Flex flexDirection="column">
           {userText}
           <Textarea {...styles.textAreaPanel} placeholder={response} />
-          <Button {...styles.button}>Send Request Again</Button>
         </Flex>
       ) : (
         <Flex flexDirection="column">{userText}</Flex>

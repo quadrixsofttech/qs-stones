@@ -30,7 +30,7 @@ const button = {
 };
 
 const accordionpanel = {
-  width: '90%',
+  width: '100%',
   border: 0,
 };
 
@@ -41,8 +41,7 @@ const accordion = {
 
 const textAreaPanel = {
   mt: '2',
-  width: '50',
-  minHeight: '20vh',
+  minHeight: '10vh',
   fontSize: '0.9rem',
 };
 
