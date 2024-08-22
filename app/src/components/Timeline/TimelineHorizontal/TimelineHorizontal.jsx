@@ -15,6 +15,7 @@ const TimelineHorizontal = ({
   onDelete,
   user,
 }) => {
+  console.log(data);
   const timeSlots = useMemo(() => {
     const startTime = moment(startHour, 'HH:mm');
     const endTime = moment(endHour, 'HH:mm');
@@ -115,6 +116,7 @@ const TimelineHorizontal = ({
                         onEdit={onEdit}
                         onDelete={onDelete}
                         onOpen={onOpen}
+                        data={data}
                       />
                     </GridItem>
                   );

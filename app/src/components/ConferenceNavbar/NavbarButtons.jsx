@@ -34,7 +34,7 @@ const NavbarButtons = ({
       >
         {TodayButtonType.TODAY}
       </Box>
-      <Divider orientation="vertical" h={8} />
+      {/* <Divider orientation="vertical" h={8} />
       <Box
         {...styles.buttonStyles}
         onClick={() => handleClick('TIMELINE DAY')}
@@ -52,7 +52,7 @@ const NavbarButtons = ({
         _hover={{ backgroundColor: 'gray.200' }}
       >
         TIMELINE WEEK
-      </Box>
+      </Box> */}
     </Flex>
   );
 };
