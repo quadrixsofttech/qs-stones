@@ -61,7 +61,7 @@ const tabPanelRequestHistory = {
 const tabPanels = {
   p: '0',
   width: '100%',
-  height: '90%',
+  height: '100%',
   overflow: 'hidden',
 };
 

@@ -24,6 +24,7 @@ const conferenceCard = {
     '.icon-box': {
       visibility: 'hidden',
     },
+    cursor: 'pointer',
   },
 };
 
