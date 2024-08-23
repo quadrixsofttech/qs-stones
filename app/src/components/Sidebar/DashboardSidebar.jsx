@@ -1,40 +1,87 @@
-import React from "react";
-import { Box, Flex, Text } from "@chakra-ui/react";
-import { NavLink } from "react-router-dom";
-import { BiSwim, BiChalkboard, BiUser, BiUserPlus } from "react-icons/bi";
-
-import styles from "./DashboardSidebar.styles";
-import QuadrixSoftLogo from "../QuadrixSoftLogo/QuadrixSoftLogo";
-import useUser from "../../hooks/useUser";
+import React, { useState } from 'react';
+import { Box, Fade, Flex, Icon, Image, Text } from '@chakra-ui/react';
+import { NavLink } from 'react-router-dom';
+import { BiSwim, BiChalkboard, BiUser, BiUserPlus } from 'react-icons/bi';
+import styles from './DashboardSidebar.styles';
+import QuadrixSoftLogo from '../QuadrixSoftLogo/QuadrixSoftLogo';
+import useUser from '../../hooks/useUser';
+import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from 'react-icons/md';
+import QSLogo from '../../images/qs-logo.png';
 
 const DashboardSidebar = () => {
   const { user } = useUser();
+  const [shrinkSidebar, setShrinkSidebar] = useState(
+    JSON.parse(localStorage.getItem('shrink-state')) || false
+  );
+
+  const handleShrinkSidebar = () => {
+    const newShrinkState = !shrinkSidebar;
+    setShrinkSidebar(newShrinkState);
+    localStorage.setItem('shrink-state', JSON.stringify(newShrinkState));
+  };
 
   return (
     <Flex>
-      <Box as="aside" {...styles.sideBar}>
-        <Box marginBottom={"6"}>
-          <QuadrixSoftLogo />
+      <Box
+        as="aside"
+        {...(shrinkSidebar ? styles.colapsedSidebar : styles.sideBar)}
+      >
+        <Flex {...styles.shrinker} onClick={handleShrinkSidebar}>
+          <Icon
+            as={shrinkSidebar ? MdKeyboardArrowRight : MdKeyboardArrowLeft}
+            boxSize={5}
+          />
+        </Flex>
+        <Box marginBottom={'6'}>
+          {shrinkSidebar ? (
+            <Image src={QSLogo} w={8} h={8} />
+          ) : (
+            <QuadrixSoftLogo />
+          )}
         </Box>
-        {user.role !== "novelic-user" && (
-          <Flex {...styles.sideBarButton} as={NavLink} to="/dashboard">
+        {user.role !== 'novelic-user' && (
+          <Flex
+            {...(shrinkSidebar
+              ? styles.colapsedSideBarButton
+              : styles.sideBarButton)}
+            as={NavLink}
+            to="/dashboard"
+          >
             <BiSwim size={20} />
-            <Text>Remote/TO</Text>
+            {!shrinkSidebar && <Text>Remote/TO</Text>}
           </Flex>
         )}
-        <Flex {...styles.sideBarButton} as={NavLink} to="/conference">
+        <Flex
+          {...(shrinkSidebar
+            ? styles.colapsedSideBarButton
+            : styles.sideBarButton)}
+          as={NavLink}
+          to="/conference"
+        >
           <BiChalkboard size={20} />
-          <Text>Conference</Text>
+          {!shrinkSidebar && <Text>Conference</Text>}
         </Flex>
-        {user.role === "admin" && (
+        {user.role === 'admin' && (
           <>
-            <Flex {...styles.sideBarButton} as={NavLink} to="/admin">
+            <Flex
+              {...(shrinkSidebar
+                ? styles.colapsedSideBarButton
+                : styles.sideBarButton)}
+              as={NavLink}
+              to="/admin"
+            >
               <BiUser size={20} />
-              <Text>Admin</Text>
+              {!shrinkSidebar && <Text>Admin</Text>}
             </Flex>
-            <Flex {...styles.sideBarButton} as={NavLink} to="/signup">
+            <Flex
+              {...(shrinkSidebar
+                ? styles.colapsedSideBarButton
+                : styles.sideBarButton)}
+              as={NavLink}
+              to="/signup"
+            >
               <BiUserPlus size={25} />
-              <Text>Add a user</Text>
+              {!shrinkSidebar && <Text>Add a user</Text>}
             </Flex>
           </>
         )}

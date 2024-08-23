@@ -34,8 +34,6 @@ const TimelineCard = ({
   const [cardHover, setCardHover] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
 
-  console.log('data', data);
-
   return (
     <Flex
       {...styles.timelineCard}
@@ -50,6 +48,7 @@ const TimelineCard = ({
         enabled && {
           _hover: {
             backgroundColor: 'gray.50',
+            cursor: 'pointer',
           },
         }
       }
