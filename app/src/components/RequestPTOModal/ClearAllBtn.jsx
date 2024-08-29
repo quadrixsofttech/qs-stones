@@ -1,11 +1,11 @@
 import { Flex, Tag, TagLabel } from "@chakra-ui/react";
 import styles from "./styles/ClearAllBtn.styles";
 
-const ClearAllBtn = ({ handleClick }) => {
+const ClearAllBtn = ({ handleClick, text }) => {
   return (
     <Tag {...styles.clearAllButton} onClick={handleClick}>
       <Flex align="center">
-        <TagLabel>Clear all</TagLabel>
+        <TagLabel>{text}</TagLabel>
       </Flex>
     </Tag>
   );
