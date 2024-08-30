@@ -1,15 +1,15 @@
-const User = require('../../models/user.model');
-const PaidTimeOff = require('../../models/pto.model');
-const ConferenceRoomReservation = require('../../models/conference-room-reservation');
-const moment = require('moment');
-const bcrypt = require('bcryptjs');
-const holidays = require('../../utils/utils.js');
+const User = require("../../models/user.model");
+const PaidTimeOff = require("../../models/pto.model");
+const ConferenceRoomReservation = require("../../models/conference-room-reservation");
+const moment = require("moment");
+const bcrypt = require("bcryptjs");
+const holidays = require("../../utils/utils.js");
 
 const getAllUsers = async () => {
   try {
     const users = await User.find()
       .lean()
-      .select('_id firstName lastName avatar email');
+      .select("_id firstName lastName avatar email");
     return users;
   } catch (err) {
     throw new Error(err);
@@ -18,8 +18,8 @@ const getAllUsers = async () => {
 
 const getAdmins = async () => {
   try {
-    const admins = await User.find({ role: 'admin' })
-      .select('_id firstName lastName')
+    const admins = await User.find({ role: "admin" })
+      .select("_id firstName lastName")
       .lean();
     return admins;
   } catch (err) {
@@ -29,8 +29,8 @@ const getAdmins = async () => {
 
 const getNovelicUser = async () => {
   try {
-    const user = await User.find({ role: 'novelic-user' })
-      .select('_id firstName lastName')
+    const user = await User.find({ role: "novelic-user" })
+      .select("_id firstName lastName")
       .lean();
     return user;
   } catch (error) {
@@ -40,14 +40,14 @@ const getNovelicUser = async () => {
 
 const getEmployees = async () => {
   try {
-    const employees = await User.find()
-      .select('_id firstName lastName avatar email image')
+    const employees = await User.find({ role: { $ne: "novelic-user" } })
+      .select("_id firstName lastName avatar email image")
       .lean();
 
     const employeeWithPendingRequests = await Promise.all(
       employees.map(async (employee) => {
         const pendingRequests = await PaidTimeOff.find({
-          status: 'pending',
+          status: "pending",
           userId: employee._id,
         });
         return {
@@ -65,7 +65,7 @@ const getEmployees = async () => {
 
 const getUserVacation = async (id) => {
   try {
-    const vacation = await User.findOne({ _id: id }).select('vacation').lean();
+    const vacation = await User.findOne({ _id: id }).select("vacation").lean();
     return vacation;
   } catch (err) {
     throw new Error(err);
@@ -73,13 +73,13 @@ const getUserVacation = async (id) => {
 };
 const updateUserRole = async (role, userId) => {
   try {
-    const allowedRoles = ['user', 'admin'];
+    const allowedRoles = ["user", "admin"];
     if (!allowedRoles.includes(role)) {
-      throw new Error('Role not allowed');
+      throw new Error("Role not allowed");
     }
     await User.findOneAndUpdate({ _id: userId }, { role });
     return {
-      message: 'User role updated',
+      message: "User role updated",
     };
   } catch (err) {
     throw new Error(err);
@@ -98,7 +98,7 @@ const removeEmployee = async (id) => {
 };
 
 async function getTotalUsersWorkingToday() {
-  const currentDate = moment().format('YYYY/MM/DD');
+  const currentDate = moment().format("YYYY/MM/DD");
   const activeUsers = await User.find({ active: true, days: currentDate });
   return activeUsers.length;
 }
@@ -107,12 +107,12 @@ const changePassword = async (userId, oldPassword, newPassword) => {
   try {
     const user = await User.findById(userId);
     if (!user) {
-      throw new Error('User not found');
+      throw new Error("User not found");
     }
 
     const isMatch = await bcrypt.compare(oldPassword, user.password);
     if (!isMatch) {
-      throw new Error('Incorrect old password');
+      throw new Error("Incorrect old password");
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -122,10 +122,10 @@ const changePassword = async (userId, oldPassword, newPassword) => {
     await user.save();
 
     return {
-      message: 'Password changed successfully',
+      message: "Password changed successfully",
     };
   } catch (error) {
-    throw new Error(error.message || 'Error in changing passsword');
+    throw new Error(error.message || "Error in changing passsword");
   }
 };
 
