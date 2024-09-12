@@ -13,7 +13,7 @@ const ConferenceOverview = () => {
     return <Spinner />;
   }
 
-  const floors = ['Upper Floor', 'Lower Floor'];
+  const floors = ['Upper Floor'];
 
   const handleFloorChange = (e) => {
     setFloor(() => {

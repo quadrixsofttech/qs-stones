@@ -28,7 +28,6 @@ const PickTimeAndRoom = ({ isEditMode, reservationData, setValuesForBE }) => {
     color,
   } = reservationData;
 
-
   useEffect(() => {
     setFieldValue('userId', user._id);
     setValuesForBE({
@@ -91,7 +90,7 @@ const PickTimeAndRoom = ({ isEditMode, reservationData, setValuesForBE }) => {
     return <Spinner />;
   }
 
-  const floors = ['Upper Floor', 'Lower Floor'];
+  const floors = ['Upper Floor'];
 
   const handleFloorChange = (e) => {
     setFieldValue('floor', e.target.value);
