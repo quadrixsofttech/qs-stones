@@ -7,7 +7,7 @@ import { Scrollbars } from 'react-custom-scrollbars-2';
 
 const DashboardLayout = ({ children, Padding = '4' }) => {
   return (
-    <Flex height={'100vh'} overflow={'hidden'}>
+    <Flex overflow={'hidden'}>
       <DashboardSidebar />
 
       <Flex flexDir="column" flexGrow={1}>
