@@ -87,6 +87,7 @@ const popoverBox = {
 };
 const calendarBox = {
   padding: "2",
+  cursor:"pointer"
 };
 const calendarDateBox = {
   textColor: "gray.700",
