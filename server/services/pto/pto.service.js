@@ -122,6 +122,7 @@ const createPTO = async ({
 
     const existingPTO = await PaidTimeOff.find({
       userId,
+      status: { $ne: "rejected" },
       days: { $in: days },
     });
 
@@ -257,6 +258,7 @@ const updatePTO = async (id, type, dates) => {
 
     const existingPTO = await PaidTimeOff.find({
       userId: pto.userId,
+      status: { $ne: "rejected" },
       days: { $in: days },
       _id: { $ne: id },
     });
