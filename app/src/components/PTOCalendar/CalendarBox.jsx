@@ -5,13 +5,13 @@ import {
   Flex,
   Popover,
   PopoverTrigger,
-} from '@chakra-ui/react';
-import styles from './PTOCalendar.styles';
-import { useState } from 'react';
-import CalendarPopoverContent from './CalendarPopoverContent';
-import moment from 'moment';
+} from "@chakra-ui/react";
+import styles from "./PTOCalendar.styles";
+import { useState } from "react";
+import CalendarPopoverContent from "./CalendarPopoverContent";
+import moment from "moment";
 
-import { useTheme } from '@chakra-ui/react';
+import { useTheme } from "@chakra-ui/react";
 
 const CalendarBox = ({ date, employeesToday, type, holiday }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,11 +21,11 @@ const CalendarBox = ({ date, employeesToday, type, holiday }) => {
 
   const isToday = () => {
     const currentDate = moment();
-    const formattedDate = currentDate.format('YYYY-MM-DD');
+    const formattedDate = currentDate.format("YYYY-MM-DD");
     return date === formattedDate;
   };
   const getDay = () => {
-    return moment(date).format('DD');
+    return moment(date).format("DD");
   };
   return (
     <Popover
@@ -36,23 +36,23 @@ const CalendarBox = ({ date, employeesToday, type, holiday }) => {
       <PopoverTrigger>
         <Flex
           {...styles.calendarBox}
-          boxShadow={isOpen ? `inset 0px 0px 0px 1px ${purple500}` : ''}
+          boxShadow={isOpen ? `inset 0px 0px 0px 1px ${purple500}` : ""}
           _hover={
-            isOpen ? '' : { backgroundColor: holiday ? 'red.200' : 'gray.50' }
+            isOpen ? "" : { backgroundColor: holiday ? "red.200" : "gray.100" }
           }
           backgroundColor={
             holiday
-              ? 'red.100'
+              ? "red.100"
               : isOpen
-              ? 'gray.200'
+              ? "gray.200"
               : isToday()
-              ? 'purple.50'
-              : 'white'
+              ? "purple.100"
+              : "white"
           }
         >
-          <Flex flexDirection={'column'}>
+          <Flex flexDirection={"column"}>
             <Box {...styles.calendarDateBox}>{getDay()}</Box>
-            <Box height={'8'}>
+            <Box height={"8"}>
               <AvatarGroup {...styles.avatarGroup}>
                 {employeesToday.map((x) => {
                   return (
@@ -60,7 +60,7 @@ const CalendarBox = ({ date, employeesToday, type, holiday }) => {
                       src={x.userId.image}
                       key={x.id + Math.random().toString()}
                       name={x.user.firstName}
-                      bg={'white'}
+                      bg={"white"}
                     />
                   );
                 })}
