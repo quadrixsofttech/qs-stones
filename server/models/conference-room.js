@@ -1,4 +1,6 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+const moment = require("moment-timezone");
+
 const Schema = mongoose.Schema;
 
 const ConferenceRoomSchema = new Schema({
@@ -18,7 +20,7 @@ const ConferenceRoomSchema = new Schema({
     {
       type: {
         type: String,
-        enum: ['laptop', 'chalkboard', 'tv', 'wifi'],
+        enum: ["laptop", "chalkboard", "tv", "wifi"],
         required: true,
       },
       name: {
@@ -33,20 +35,20 @@ const ConferenceRoomSchema = new Schema({
   },
   floor: {
     type: String,
-    enum: ['Upper Floor', 'Lower Floor'],
+    enum: ["Upper Floor", "Lower Floor"],
     required: true,
   },
   createdAt: {
     type: Date,
-    default: Date.now(),
+    default: moment().tz("Europe/Belgrade").toDate(),
   },
   updatedAt: {
     type: Date,
-    default: Date.now(),
+    default: moment().tz("Europe/Belgrade").toDate(),
   },
 });
 
 module.exports = mongoose.model(
-  'conference-room-overview',
+  "conference-room-overview",
   ConferenceRoomSchema
 );

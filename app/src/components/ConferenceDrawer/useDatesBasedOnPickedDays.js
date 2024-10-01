@@ -1,6 +1,6 @@
-import { useFormikContext } from 'formik';
-import moment from 'moment';
-import { useEffect } from 'react';
+import { useFormikContext } from "formik";
+import moment from "moment";
+import { useEffect } from "react";
 
 export const useDatesBasedOnPickedDays = (
   selectedColorIndices,
@@ -10,9 +10,9 @@ export const useDatesBasedOnPickedDays = (
 
   useEffect(() => {
     switch (values.meetingRepetition) {
-      case 'Never':
+      case "Never":
         if (!values.selectedDate || selectedColorIndices.length === 0) {
-          setFieldValue('selectedDatesInDays', []);
+          setFieldValue("selectedDatesInDays", []);
           return;
         }
 
@@ -20,7 +20,7 @@ export const useDatesBasedOnPickedDays = (
         let datesForThisWeek = [];
 
         for (let week = 0; week < 52; week++) {
-          let currentDayOfTheWeek = values.selectedDate.format('d');
+          let currentDayOfTheWeek = values.selectedDate.format("d");
 
           selectedColorIndices.forEach((index) => {
             let daysUntilNextDate = (index - currentDayOfTheWeek + 6) % 7;
@@ -33,23 +33,23 @@ export const useDatesBasedOnPickedDays = (
 
             const nextSelectedDate = newDate
               .clone()
-              .add(week * 7 + daysUntilNextDate, 'days');
+              .add(week * 7 + daysUntilNextDate, "days");
             const formattedNextSelectedDay =
-              nextSelectedDate.format('YYYY-MM-DD');
+              nextSelectedDate.format("YYYY-MM-DD");
             datesForThisWeek.push([formattedNextSelectedDay]);
           });
         }
         calculatedDatesArray = [
-          [moment.utc(values.selectedDate.format('YYYY-MM-DD'))],
+          [moment.utc(values.selectedDate.format("YYYY-MM-DD"))],
           ...datesForThisWeek,
         ];
 
-        setFieldValue('selectedDatesInDays', calculatedDatesArray);
+        setFieldValue("selectedDatesInDays", calculatedDatesArray);
 
         break;
-      case 'After n occurences':
+      case "After n occurences":
         if (!values.selectedDate || selectedColorIndices.length === 0) {
-          setFieldValue('selectedDatesInDays', []);
+          setFieldValue("selectedDatesInDays", []);
           return;
         }
 
@@ -57,7 +57,7 @@ export const useDatesBasedOnPickedDays = (
         let datesForThisWeekOccurences = [];
 
         for (let week = 0; week < values.numberOfOccurences; week++) {
-          let currentDayOfTheWeek = values.selectedDate.format('d');
+          let currentDayOfTheWeek = values.selectedDate.format("d");
 
           selectedColorIndices.forEach((index) => {
             let daysUntilNextDate = (index - currentDayOfTheWeek + 6) % 7;
@@ -70,27 +70,27 @@ export const useDatesBasedOnPickedDays = (
 
             const nextSelectedDate = newDate
               .clone()
-              .add(week * 7 + daysUntilNextDate, 'days');
+              .add(week * 7 + daysUntilNextDate, "days");
             const formattedNextSelectedDay =
-              nextSelectedDate.format('YYYY-MM-DD');
+              nextSelectedDate.format("YYYY-MM-DD");
             datesForThisWeekOccurences.push([formattedNextSelectedDay]);
           });
         }
 
         calculatedDatesArrayForOccureces = [
-          [moment.utc(values.selectedDate.format('YYYY-MM-DD'))],
+          [moment.utc(values.selectedDate.format("YYYY-MM-DD"))],
           ...datesForThisWeekOccurences,
         ];
 
-        setFieldValue('selectedDatesInDays', calculatedDatesArrayForOccureces);
+        setFieldValue("selectedDatesInDays", calculatedDatesArrayForOccureces);
         break;
-      case 'On specific date':
+      case "On specific date":
         if (
           !values.selectedDate ||
           !values.selectedDateFromInput ||
           selectedColorIndices.length === 0
         ) {
-          setFieldValue('selectedDatesInDays', []);
+          setFieldValue("selectedDatesInDays", []);
           return;
         }
 
@@ -99,8 +99,8 @@ export const useDatesBasedOnPickedDays = (
 
         let currentDate = moment(new Date(values.selectedDate));
 
-        while (currentDate.isBefore(values.selectedDateFromInput, 'day')) {
-          let currentDayOfTheWeek = currentDate.format('d');
+        while (currentDate.isBefore(values.selectedDateFromInput, "day")) {
+          let currentDayOfTheWeek = currentDate.format("d");
 
           selectedColorIndices.forEach((index) => {
             let daysUntilNextDate = (index - currentDayOfTheWeek + 6) % 7;
@@ -111,21 +111,21 @@ export const useDatesBasedOnPickedDays = (
 
             const nextSelectedDate = currentDate
               .clone()
-              .add(daysUntilNextDate, 'days');
+              .add(daysUntilNextDate, "days");
             const formattedNextSelectedDay =
-              nextSelectedDate.format('YYYY-MM-DD');
+              nextSelectedDate.format("YYYY-MM-DD");
             datesForThisWeekSelectedDate.push([formattedNextSelectedDay]);
           });
 
-          currentDate.add(7, 'days');
+          currentDate.add(7, "days");
         }
 
         calculatedDatesArrayForDate = [
-          [moment.utc(values.selectedDate.format('YYYY-MM-DD'))],
+          [moment.utc(values.selectedDate.format("YYYY-MM-DD"))],
           ...datesForThisWeekSelectedDate,
         ];
 
-        setFieldValue('selectedDatesInDays', calculatedDatesArrayForDate);
+        setFieldValue("selectedDatesInDays", calculatedDatesArrayForDate);
         break;
       default:
         break;

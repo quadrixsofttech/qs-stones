@@ -14,6 +14,7 @@
     "formik": "^2.1.4",
     "framer-motion": "^10.11.6",
     "moment": "^2.29.4",
+    "moment-timezone": "^0.5.45",
     "nodemailer": "^6.9.14",
     "react": "^18.2.0",
     "react-custom-scrollbars-2": "^4.5.0",

@@ -151,7 +151,6 @@ const createPTO = async ({
         dates,
         reviewerId,
         comment,
-        createdAt: Date.now(),
       });
 
       await pto.save();
@@ -193,7 +192,6 @@ const createPTO = async ({
           dates,
           reviewerId,
           comment,
-          createdAt: Date.now(),
         });
         await pto.save();
         await sendEmail(

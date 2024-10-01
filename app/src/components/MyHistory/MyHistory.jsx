@@ -13,22 +13,22 @@ import {
   Box,
   Button,
   useDisclosure,
-} from '@chakra-ui/react';
-import styles from './MyHistory.styles';
-import RequestPTO from '../RequestPTO/RequestPTO';
-import { useState, useEffect } from 'react';
-import { Calendar } from 'react-multi-date-picker';
-import { MyHistoryStats } from './MyHistoryStats';
-import { LeaveTypes, headerOrder, tabTypes } from './constants/constants';
-import Scrollbars from 'react-custom-scrollbars-2';
-import { usePaidTimeOff } from '../../hooks/usePTO';
-import moment from 'moment';
-import useUser from '../../hooks/useUser';
-import useAwayUsersCount from '../../hooks/useUsersWokringRemote';
-import { timeOffTypes } from '../../constants/TimeOffTypes';
-import RenderTabs from './RenderTabs';
-import { BiFilterAlt } from 'react-icons/bi';
-import MyHistoryFilterModalCompoenent from './FilterModalComponent/MyHistoryFilterModalCompoenent';
+} from "@chakra-ui/react";
+import styles from "./MyHistory.styles";
+import RequestPTO from "../RequestPTO/RequestPTO";
+import { useState, useEffect } from "react";
+import { Calendar } from "react-multi-date-picker";
+import { MyHistoryStats } from "./MyHistoryStats";
+import { LeaveTypes, headerOrder, tabTypes } from "./constants/constants";
+import Scrollbars from "react-custom-scrollbars-2";
+import { usePaidTimeOff } from "../../hooks/usePTO";
+import moment from "moment-timezone";
+import useUser from "../../hooks/useUser";
+import useAwayUsersCount from "../../hooks/useUsersWokringRemote";
+import { timeOffTypes } from "../../constants/TimeOffTypes";
+import RenderTabs from "./RenderTabs";
+import { BiFilterAlt } from "react-icons/bi";
+import MyHistoryFilterModalCompoenent from "./FilterModalComponent/MyHistoryFilterModalCompoenent";
 
 const MyHistory = ({ refetchCalendarData, setRefetchCalendarData }) => {
   const [selectedOption, setSelectedOption] = useState(LeaveTypes.vacation);
@@ -53,7 +53,7 @@ const MyHistory = ({ refetchCalendarData, setRefetchCalendarData }) => {
     if (!isLoading) {
       const flattenedDates = paidTimeOffHistory
         .filter((select) => select.type === selectedOption.toLowerCase())
-        .filter((select) => select.status === 'approved')
+        .filter((select) => select.status === "approved")
         .flatMap((obj) => obj.days);
       setDates(flattenedDates);
     }
@@ -104,7 +104,7 @@ const MyHistory = ({ refetchCalendarData, setRefetchCalendarData }) => {
         </Heading>
       </Flex>
       <Tabs {...styles.tabs}>
-        <TabList paddingLeft={4} color={'black'}>
+        <TabList paddingLeft={4} color={"black"}>
           <RenderTabs objectForMapping={tabTypes} />
         </TabList>
         <TabIndicator {...styles.tabindicator} />
@@ -112,7 +112,7 @@ const MyHistory = ({ refetchCalendarData, setRefetchCalendarData }) => {
           <TabPanel {...styles.tabPanelPTO}>
             <Select size="sm" mb={2} onChange={handleSelectChange}>
               {Object.values(LeaveTypes).map((type) => (
-                <option value={type} key={timeOffTypes.id + '-' + type}>
+                <option value={type} key={timeOffTypes.id + "-" + type}>
                   {type}
                 </option>
               ))}
@@ -123,7 +123,7 @@ const MyHistory = ({ refetchCalendarData, setRefetchCalendarData }) => {
               className="custom-calendar-history"
               value={dates}
             />
-            <StatGroup width={'100%'} height={'100%'}>
+            <StatGroup width={"100%"} height={"100%"}>
               <Flex {...styles.statgroupFlex}>
                 <MyHistoryStats
                   label="The total number of employees that are not available today"
@@ -137,13 +137,13 @@ const MyHistory = ({ refetchCalendarData, setRefetchCalendarData }) => {
               </Flex>
             </StatGroup>
           </TabPanel>
-          <Scrollbars style={{ height: '90%' }}>
+          <Scrollbars style={{ height: "90%" }}>
             <TabPanel {...styles.tabPanelRequestHistory}>
               <Flex
-                width={'100%'}
-                alignContent={'center'}
-                alignItems={'center'}
-                justifyContent={'flex-end'}
+                width={"100%"}
+                alignContent={"center"}
+                alignItems={"center"}
+                justifyContent={"flex-end"}
                 marginBottom={2}
               >
                 <Button
@@ -168,7 +168,9 @@ const MyHistory = ({ refetchCalendarData, setRefetchCalendarData }) => {
                   id={pto._id}
                   status={pto.status}
                   type={pto.type}
-                  time={moment(pto.createdAt).format('YYYY-MM-DD HH:mm:ss')}
+                  time={moment(pto.createdAt)
+                    .tz("Europe/Belgrade")
+                    .format("y-MM-DD HH:mm:ss")}
                   user={{
                     firstName: pto.reviewerId?.firstName,
                     lastName: pto.reviewerId?.lastName,
@@ -176,8 +178,8 @@ const MyHistory = ({ refetchCalendarData, setRefetchCalendarData }) => {
                   requestedDates={pto.dates.map(
                     ([startDate, endDate]) =>
                       `${moment(startDate * 1).format(
-                        'YYYY-MM-DD'
-                      )} to ${moment(endDate * 1).format('YYYY-MM-DD')}; `
+                        "YYYY-MM-DD"
+                      )} to ${moment(endDate * 1).format("YYYY-MM-DD")}; `
                   )}
                   response={pto.comment}
                   numberOfDays={pto.days.length}

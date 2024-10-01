@@ -1,10 +1,10 @@
-import { Divider, Flex, Text, useDisclosure } from '@chakra-ui/react';
-import React from 'react';
-import styles from './RequestHistory.styles';
-import RequestStatusWrapper from '../../../RequestPTO/RequestStatus/RequestStatus';
-import { BiCommentDetail } from 'react-icons/bi';
-import moment from 'moment';
-import RequestHistoryModal from '../RequestHistoryModal/RequestHistoryModal';
+import { Divider, Flex, Text, useDisclosure } from "@chakra-ui/react";
+import React from "react";
+import styles from "./RequestHistory.styles";
+import RequestStatusWrapper from "../../../RequestPTO/RequestStatus/RequestStatus";
+import { BiCommentDetail } from "react-icons/bi";
+import moment from "moment";
+import RequestHistoryModal from "../RequestHistoryModal/RequestHistoryModal";
 
 const RequestHistoryComponent = ({
   createdAt,
@@ -16,21 +16,20 @@ const RequestHistoryComponent = ({
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-
   return (
     <>
       <Flex
         {...styles.requestHistoryBox}
         onClick={onOpen}
-        borderColor={isOpen ? 'purple.400' : 'gray.200'}
+        borderColor={isOpen ? "purple.400" : "gray.200"}
       >
-        <Flex height={'100%'} alignItems="center">
+        <Flex height={"100%"} alignItems="center">
           <Text {...styles.createdAt}>
-            {moment(createdAt).format('YYYY-MM-DD hh:mm')}
+            {moment(createdAt).format("YYYY-MM-DD hh:mm")}
           </Text>
           <Divider {...styles.divider} />
           <Text {...styles.dates}>
-            {datesInDays} {datesInDays === 1 ? 'day' : 'days'}
+            {datesInDays} {datesInDays === 1 ? "day" : "days"}
           </Text>
         </Flex>
         <Flex {...styles.statusBox}>

@@ -1,11 +1,13 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+const moment = require("moment");
+
 const Schema = mongoose.Schema;
 
 const ConferenceRoomReservationSchema = new Schema({
   conferenceRoom: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: 'conference-room-overview',
+    ref: "conference-room-overview",
   },
   date: {
     type: Date,
@@ -38,19 +40,19 @@ const ConferenceRoomReservationSchema = new Schema({
   userId: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: 'user',
+    ref: "user",
   },
   createdAt: {
     type: Date,
-    default: Date.now(),
+    default: moment().format("y-MM-DD HH:mm:ss"),
   },
   updatedAt: {
     type: Date,
-    default: Date.now(),
+    default: moment().format("y-MM-DD HH:mm:ss"),
   },
 });
 
 module.exports = mongoose.model(
-  'conference-room-reservation',
+  "conference-room-reservation",
   ConferenceRoomReservationSchema
 );
