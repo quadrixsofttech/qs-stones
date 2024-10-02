@@ -4,14 +4,17 @@ const pageWrapper = {
   alignItems: "center",
   justifyContent: "center",
   bg: "gray.50",
+  flex: 1,
+  // eslint-disable-next-line no-dupe-keys
+  justifyContent: "center",
 };
 
 const contentWrapper = {
   spacing: 8,
   mx: "auto",
-  maxW: "lg",
-  py: 12,
-  px: 6,
+  maxW: "md",
+  // py: 12,
+  // px: 6,
 };
 
 const logo = {
@@ -25,7 +28,7 @@ const card = {
   bg: "white",
   boxShadow: "lg",
   p: 8,
-  w: "md",
+  w: "sm",
 };
 
 const styles = {

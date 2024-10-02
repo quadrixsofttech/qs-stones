@@ -56,6 +56,7 @@ const Login = () => {
         bgColor={"#222222"}
         justifyContent={"center"}
         alignItems={"center"}
+        display={{ base: "none", md: "flex" }}
       >
         {" "}
         {/* <QSpaceLogo /> */}
