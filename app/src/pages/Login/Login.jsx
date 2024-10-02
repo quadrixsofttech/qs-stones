@@ -90,28 +90,28 @@ const Login = () => {
               )}
               <Stack spacing={3}>
                 <FormControl isInvalid={!!errors.email && touched.email}>
-                  <FormLabel>Email address</FormLabel>
+                  <FormLabel fontWeight={"normal"}>Email address</FormLabel>
                   <Field
                     as={Input}
                     focusBorderColor="purple.500"
                     id="email"
                     type="email"
                     name="email"
-                    placeholder="Email address"
+                    placeholder="Enter your email"
                   />
                   {errors.email && touched.email ? (
                     <FormErrorMessage>{errors.email}</FormErrorMessage>
                   ) : null}
                 </FormControl>
                 <FormControl isInvalid={!!errors.password && touched.password}>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel fontWeight={"normal"}>Password</FormLabel>
                   <Field
                     as={Input}
                     focusBorderColor="purple.500"
                     id="password"
                     type="password"
                     name="password"
-                    placeholder="Password"
+                    placeholder="Enter your password"
                   />
                   {errors.password && touched.password ? (
                     <FormErrorMessage>{errors.password}</FormErrorMessage>
