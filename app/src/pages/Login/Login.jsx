@@ -1,7 +1,7 @@
-import React, { useContext, useState } from 'react';
-import { Field, Form, Formik } from 'formik';
-import * as Yup from 'yup';
-import { Navigate } from 'react-router-dom';
+import React, { useContext, useState } from "react";
+import { Field, Form, Formik } from "formik";
+import * as Yup from "yup";
+import { Navigate } from "react-router-dom";
 import {
   FormControl,
   FormLabel,
@@ -11,16 +11,19 @@ import {
   Alert,
   AlertIcon,
   FormErrorMessage,
-} from '@chakra-ui/react';
+  Flex,
+  Image,
+} from "@chakra-ui/react";
 
-import styles from './Login.styles';
-import SignupLayout from '../../layout/SignupLayout/SignupLayout';
-import useUser from '../../hooks/useUser';
-import { AuthContext } from '../../context/AuthContext';
+import styles from "./Login.styles";
+import SignupLayout from "../../layout/SignupLayout/SignupLayout";
+import useUser from "../../hooks/useUser";
+import { AuthContext } from "../../context/AuthContext";
+import QSBigLogo from "../../images/QS-BigLogo.svg";
 
 const LoginSchema = Yup.object().shape({
-  email: Yup.string().required('Email is required'),
-  password: Yup.string().required('Password is required'),
+  email: Yup.string().required("Email is required"),
+  password: Yup.string().required("Password is required"),
 });
 
 const Login = () => {
@@ -33,29 +36,39 @@ const Login = () => {
   const submitCredentials = async (credentials) => {
     try {
       await authenticate.mutateAsync(credentials);
-      setLoginSuccess('Login successful!');
+      setLoginSuccess("Login successful!");
       setLoginError(null);
       setTimeout(() => {
         setRedirectOnLogin(true);
       }, 700);
     } catch (error) {
       setLoginError(
-        error.response?.data?.message || 'An unknown error occurred'
+        error.response?.data?.message || "An unknown error occurred"
       );
       setLoginSuccess(null);
     }
   };
 
   return (
-    <>
+    <Flex>
+      <Flex
+        minWidth={"50%"}
+        bgColor={"#222222"}
+        justifyContent={"center"}
+        alignItems={"center"}
+      >
+        {" "}
+        {/* <QSpaceLogo /> */}
+        <Image src={QSBigLogo} alt="QSpace Logo" />
+      </Flex>
       {redirectOnLogin && (
-        <Navigate to={auth.isNovelicUser() ? '/conference' : '/dashboard'} />
+        <Navigate to={auth.isNovelicUser() ? "/conference" : "/dashboard"} />
       )}
       <SignupLayout title="Sign in to your account">
         <Formik
           initialValues={{
-            email: '',
-            password: '',
+            email: "",
+            password: "",
           }}
           onSubmit={(values) => submitCredentials(values)}
           validationSchema={LoginSchema}
@@ -79,6 +92,7 @@ const Login = () => {
                   <FormLabel>Email address</FormLabel>
                   <Field
                     as={Input}
+                    focusBorderColor="purple.500"
                     id="email"
                     type="email"
                     name="email"
@@ -92,6 +106,7 @@ const Login = () => {
                   <FormLabel>Password</FormLabel>
                   <Field
                     as={Input}
+                    focusBorderColor="purple.500"
                     id="password"
                     type="password"
                     name="password"
@@ -106,6 +121,7 @@ const Login = () => {
                     {...styles.button}
                     type="submit"
                     isLoading={authenticationLoading}
+                    colorScheme={"purple"}
                   >
                     Sign In
                   </Button>
@@ -115,7 +131,7 @@ const Login = () => {
           )}
         </Formik>
       </SignupLayout>
-    </>
+    </Flex>
   );
 };
 export default Login;

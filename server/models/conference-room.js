@@ -40,11 +40,11 @@ const ConferenceRoomSchema = new Schema({
   },
   createdAt: {
     type: Date,
-    default: moment().tz("Europe/Belgrade").toDate(),
+    default: moment().format("y-MM-DD HH:mm:ss"),
   },
   updatedAt: {
     type: Date,
-    default: moment().tz("Europe/Belgrade").toDate(),
+    default: moment().format("y-MM-DD HH:mm:ss"),
   },
 });
 

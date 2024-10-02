@@ -1,8 +1,8 @@
-import { Route } from 'react-router-dom';
+import { Route } from "react-router-dom";
 
-import Home from '../../pages/Home';
-import Login from '../../pages/Login';
-import NotFound from '../../pages/NotFound';
+import Home from "../../pages/Home";
+import Login from "../../pages/Login";
+import NotFound from "../../pages/NotFound";
 
 const PublicRoutes = [
   <Route key="login" path="/login" element={<Login />} />,

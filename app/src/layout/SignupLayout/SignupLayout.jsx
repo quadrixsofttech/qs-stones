@@ -1,18 +1,18 @@
-import { Box, Flex, Heading, Icon, Stack, Text } from '@chakra-ui/react';
-import styles from './SignupLayout.styles';
-import { Link } from 'react-router-dom';
-import { QuadrixSoftLogoSmall } from '../../components/QuadrixSoftLogo';
+import { Box, Flex, Heading, Image, Stack, Text } from "@chakra-ui/react";
+import styles from "./SignupLayout.styles";
+import { Link } from "react-router-dom";
+import QSpaceLogo from "../../images/QSpace-Logo.svg";
 
 const SignupLayout = ({ title, subtitle, children }) => {
   return (
     <Flex {...styles.pageWrapper}>
       <Stack {...styles.contentWrapper}>
-        <Stack align={'center'}>
+        <Stack align={"center"}>
           <Link to="/">
-            <Icon as={QuadrixSoftLogoSmall} {...styles.logo}></Icon>
+            <Image src={QSpaceLogo} marginBottom={"46px"} />
           </Link>
-          <Heading fontSize={'4xl'}>{title}</Heading>
-          <Text fontSize={'lg'} color={'gray.600'}>
+          <Heading fontSize={"3xl"}>{title}</Heading>
+          <Text fontSize={"lg"} color={"gray.600"}>
             {subtitle}
           </Text>
         </Stack>

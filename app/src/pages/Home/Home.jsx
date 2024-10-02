@@ -1,12 +1,23 @@
-import React from 'react';
-import PublicLayout from '../../layout/PublicLayout/PublicLayout';
-import Hero from '../../components/Hero';
+import React, { useContext, useEffect } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const auth = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (auth?.isAuthenticated()) {
+      navigate("/dashboard");
+    } else {
+      navigate("/login");
+    }
+  }, [auth, navigate]);
   return (
-    <PublicLayout>
-      <Hero />
-    </PublicLayout>
+    <div></div>
+    // <PublicLayout>
+    //   <Hero />
+    // </PublicLayout>
   );
 };
 
