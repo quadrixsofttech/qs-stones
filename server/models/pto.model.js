@@ -50,11 +50,11 @@ const PtoSchema = new Schema({
   },
   createdAt: {
     type: Date,
-    default: moment().format("y-MM-DD HH:mm:ss"),
+    default: moment(),
   },
   updatedAt: {
     type: Date,
-    default: moment().format("y-MM-DD HH:mm:ss"),
+    default: moment(),
   },
 });
 
