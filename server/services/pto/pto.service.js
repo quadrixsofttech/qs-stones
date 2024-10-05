@@ -1,5 +1,5 @@
 const PaidTimeOff = require("../../models/pto.model");
-const moment = require("moment");
+const moment = require("moment-timezone");
 const User = require("../../models/user.model.js");
 const { holidays } = require("../../utils/utils.js");
 const CustomError = require("../../utils/CustomError.js");
@@ -104,8 +104,8 @@ const createPTO = async ({
 
   try {
     const days = dates.reduce((acc, [startDate, endDate]) => {
-      const start = moment(startDate);
-      const end = moment(endDate);
+      const start = moment(startDate).add(2, "hours");
+      const end = moment(endDate).add(2, "hours"); //TODO: Implement timezone instead of hardcoding it. moment-timezone isn't solving this problem. If you change to a new date library, pay attention to other calculations that involve moment object
       const totalDays = end.diff(start, "days") + 1;
       const generatedDates = Array.from({ length: totalDays }, (_, index) =>
         start.clone().add(index, "days").format("YYYY-MM-DD")
@@ -151,6 +151,8 @@ const createPTO = async ({
         dates,
         reviewerId,
         comment,
+        createdAt: moment(),
+        updatedAt: moment(),
       });
 
       await pto.save();
@@ -160,7 +162,9 @@ const createPTO = async ({
           `Request for ${type}`,
           `${user.firstName} ${user.lastName} has sent you a request for ${type}  http://stones.examia.io/admin`
         );
-      return pto;
+      return {
+        pto,
+      };
     } else if (type === "vacation") {
       const user = await User.findById(userId);
 
@@ -192,6 +196,8 @@ const createPTO = async ({
           dates,
           reviewerId,
           comment,
+          createdAt: moment(),
+          updatedAt: moment(),
         });
         await pto.save();
         await sendEmail(
